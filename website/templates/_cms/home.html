@@ -1,0 +1,197 @@
+{% extends "cms_base.html" %}
+{% load cms_tags  webdesign %}
+
+{% block body_extra_class %}cms cms-home{% endblock %}
+
+{% block splash %}
+
+<!-- large player!! -->
+<section data-livebg id="bplayer_full">
+
+    <div class="row">
+        <div class="small-12 columns text-center">
+            <div id="station_time">
+                <span>00:00:00</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="small-12 large-4 columns">AA</div>
+        <div class="small-12 large-4 columns text-center">
+
+            <div class="info-container">
+
+                <!--
+                <div class="history-items">
+
+                    <div class="item info active">
+                        <div class="image large">
+                            <img src="http://claudiabasel.ch/proto/openbroadcast/img/cover_2.jpg">
+                        </div>
+
+                    </div>
+
+                </div>
+                -->
+
+                <div class="items">
+
+                    <div class="item info active hide_">
+                        <div class="image large">
+                            <img src="http://claudiabasel.ch/proto/openbroadcast/img/cover_2.jpg">
+
+                            <div class="action hoverable">
+                                <span>
+                                    <a href="#" data-action="listen">Listen</a>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="item info active hide">
+                        <img src="http://claudiabasel.ch/proto/openbroadcast/img/cover_2.jpg">
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div class="rating-container">
+                <div class="text-center">
+                    <a class="up">
+                        <small>4</small>
+                        <i class="fa fa-thumbs-up"></i></a>
+                    <span class="separator">|</span>
+                    <a class="down"><i class="fa fa-thumbs-down fa-flip-horizontal"></i>
+                        <small>17</small>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="small-12 large-4 columns">
+            <div class="meta-container">
+
+                <!-- playlist related -->
+                <dl>
+                    <dt>Playlist</dt>
+                    <dd><a href="#">Everything is Nice</a></dd>
+
+                    <dt>by</dt>
+                    <dd><a href="#">Ann-Sophie</a></dd>
+                </dl>
+
+                <div class="separator"></div>
+
+                <!-- track related -->
+                <dl>
+                    <dt>Song</dt>
+                    <dd><a href="#">Everything is Nice</a></dd>
+
+                    <dt>by</dt>
+                    <dd><a href="#">Ann-Sophie</a></dd>
+
+                    <dt>Release</dt>
+                    <dd><a href="#">Ann-Sophie</a></dd>
+
+                    <dt>Label</dt>
+                    <dd><a href="#">Ann-Sophie</a></dd>
+                </dl>
+
+                <div class="separator"></div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div id="media_prev_next" class="show-for-large-up">
+
+        <div class="previous">
+            <a href="{{ related_object.get_absolute_url }}"
+               title="Previous Track">
+                <div class="icon">
+                    <svg version="1.1"
+                         xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink"
+                         x="0px" y="0px"
+	                    width="40px" height="72px"
+                        viewBox="0 0 40 72"
+                        enable-background="new 0 0 40 72" xml:space="preserve">
+                        <polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="37.854,71 2.927,36.073 38,1 "/>
+                    </svg>
+                </div>
+            </a>
+        </div>
+
+        <div class="next">
+            <a href="{{ related_object.get_absolute_url }}"
+               title="Next Track">
+                <div class="icon">
+                    <svg version="1.1"
+                         xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink"
+                         x="0px" y="0px"
+	                    width="40px" height="72px"
+                        viewBox="0 0 40 72"
+                        enable-background="new 0 0 40 72" xml:space="preserve">
+                        <polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="3.073,71 38,36.073 2.927,1 "/>
+                    </svg>
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<section id="achat_container">
+
+
+    <div class="row">
+        <div class="small-4 small-centered columns">
+            <form>
+                <div class="row collapse">
+                    <div class="small-10 columns">
+                        <textarea class="chat-message" type="text" placeholder="Your Message"></textarea>
+                    </div>
+                    <div class="small-2 columns">
+                        <a data-action="submit" href="#" class="button postfix">Talk!</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="row messages">
+        <div class="small-12 columns">
+
+            <ul class="messages-container small-block-grid-1 medium-block-grid-2 large-block-grid-4">
+                <!-- loaded dynamically -->
+            </ul>
+
+
+        </div>
+    </div>
+
+</section>
+
+
+{% endblock %}
+
+{% block cms_content %}
+<div class="row">
+    <div class="small-12 columns main-content">
+        <!--
+        {% placeholder "content" or %}There is no content.{% endplaceholder %}
+        -->
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Invoice #123</title>
+    <style type="text/css">
+
+        /* structure */
+        @page {
+
+            size: a4;
+            margin: 1.7cm;
+
+            @frame address {
+                -pdf-frame-content: address_content;
+                top: 5.5cm;
+                left: 12.2cm;
+                width: 7.1cm;
+                height: 2.5cm;
+
+            }
+
+            @frame summary {
+                -pdf-frame-content: summary_content;
+                top: 5.5cm;
+                left: 1.7cm;
+                width: 7.1cm;
+                height: 2.5cm;
+
+            }
+
+            @frame text {
+                top: 8.5cm;
+                left: 1.7cm;
+                right: 1.7cm;
+                bottom: 4cm;
+
+            }
+
+            @frame footer {
+                bottom: 1.7cm;
+                height: 2cm;
+                left: 1.7cm;
+                right: 1.7cm;
+                -pdf-frame-content: footer;
+
+            }
+
+            @frame logo {
+                top: 1.2cm;
+                height: 1.2cm;
+                left: 1.7cm;
+                width: 3.2cm;
+                -pdf-frame-content: logo;
+
+            }
+
+            @frame header {
+                top: 1.2cm;
+                height: 2cm;
+                right: 1.7cm;
+                width: 10cm;
+                -pdf-frame-content: header;
+
+            }
+
+
+            @frame page_number {
+                bottom: 1.1cm;
+                height: 0.5cm;
+                left: 1.7cm;
+                right: 1.7cm;
+                -pdf-frame-content: page_number;
+
+            }
+
+        }
+
+
+        table > tr > th {
+            color: #ff00ff;
+            text-align: left !important;
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 0;
+            padding: 0;
+            line-height: 10px;
+        }
+
+        #logo img {
+            width: 3cm;
+        }
+
+        #header table {
+            color: #333333;
+            font-size: 85%;
+        }
+
+        #header table td {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* styling */
+        #footer {
+            color: #333333;
+            font-size: 85%;
+        }
+
+        #page_number p {
+            text-align: center;
+        }
+
+
+
+    </style>
+</head>
+<body>
+
+
+
+<div id="logo">
+    <img src="site-static/img/base/logo.osogna.tif">
+</div>
+
+<div id="header">
+
+    <table style="width: 100%;">
+
+        <tr>
+            <td>pavian design GmbH</td>
+            <td>T: +49 711 83 1470</td>
+            <td style="width: 50px;">infoopenbroadcast.ch</td>
+        </tr>
+
+        <tr>
+            <td>Beustweg 4</td>
+            <td>F: +49 711 83 1471</td>
+            <td>www.openbroadcast.ch</td>
+        </tr>
+
+        <tr>
+            <td>CH-8032 Zuerich</td>
+            <td></td>
+            <td></td>
+        </tr>
+
+    </table>
+
+</div>
+
+
+
+<div id="footer">
+    <!--
+    <table>
+        <tr>
+            <td>
+                page
+
+                        Hausanschrift:<br>
+                        Platanenallee 12 - 16<br>
+                        D-12345 Musterhausen
+            </td>
+            <td>
+                Geschrer:<br>
+                Klaus Mustermann
+            </td>
+            <td>
+                Deutsche Sparbank<br>
+                BLZ 123 345 56<br>
+                Konto 123 345 567
+            </td>
+            <td>
+                Girokasse Musterhausen<br>
+                BLZ 987 654 01<br>
+                Konto 654 432 210
+            </td>
+        </tr>
+    </table>
+    -->
+</div>
+
+<div id="page_number">
+    <p>
+        <pdf:pagenumber>
+        /
+        <pdf:pagecount>
+    </p>
+</div>
+
+
+
+{% block content %}{% endblock %}
+
+
+
+</body>
+</html>

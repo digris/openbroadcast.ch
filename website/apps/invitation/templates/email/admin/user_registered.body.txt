@@ -1,0 +1,18 @@
+{% extends 'emailit/base_email.body.txt' %}
+{% load absolute %}
+{% block content %}
+Hi crew!!
+
+Someone requested an account on {{ site }} - pleace decide what to do!
+
+// registration details
+
+user:    {{ user.email }}
+
+
+// handle registration (accept / reject)
+
+ - {% site 'admin:registration_registrationprofile_change' profile.id %}
+
+
+{% endblock %}

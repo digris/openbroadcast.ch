@@ -1,0 +1,117 @@
+@charset "UTF-8"
+
+//////////////////////////////////////////////////////////////////////////////////////
+// global styles
+// only for generic styling! specific/detailed styles in own files please!
+//////////////////////////////////////////////////////////////////////////////////////
+body, html
+  height: 100%
+  letter-spacing: 1px
+
+///////////////////////////////////////////////////////////////////////
+// global layout
+///////////////////////////////////////////////////////////////////////
+body
+  > .container
+    //padding-top: 30px
+
+
+  section.content
+    padding: 20px 0
+
+    &:first-child
+      padding: 0px 0px 20px 0
+
+///////////////////////////////////////////////////////////////////////
+// special actions
+///////////////////////////////////////////////////////////////////////
+.item-actions
+  input.button, a.button, button.button
+    &.tiny, &.small
+      background: scale-color($secondary-color, $lightness: -1%)
+      text-transform: uppercase
+      font-weight: normal
+      color: $body-bg
+
+      text-align: left
+      padding: 3px 3px 3px 10px
+
+      span
+        line-height: 22px
+
+      small
+        text-transform: none
+        font-size: rem-calc(9)
+        padding-left: 5px
+      i
+        margin-right: 10px
+        +opacity(0.9)
+
+      &:hover
+        background: scale-color($secondary-color, $lightness: -20%)
+
+
+///////////////////////////////////////////////////////////////////////
+// helpers
+///////////////////////////////////////////////////////////////////////
+.dim
+  +opacity(0.5)
+
+.upper
+  text-transform: uppercase
+
+.center-vertical
+  display: table !important
+  width: 100%
+
+  > div, ul
+    display: table-cell !important
+    text-align: center !important
+    vertical-align: middle !important
+
+.item[data-permalink]
+  cursor: pointer
+
+///////////////////////////////////////////////////////////////////////
+// content formatting
+///////////////////////////////////////////////////////////////////////
+dl.horizontal
+  dt
+    font-weight: normal
+    +opacity(0.5)
+    margin: 0 0 4px 0
+    float: left
+    clear: left
+    width: 160px
+
+  dd
+    margin: 0 0 4px 100px
+    &:after
+      content: ''
+      display: block
+      clear: both
+
+
+///////////////////////////////////////////////////////////////////////
+// custom button & button-group styles
+///////////////////////////////////////////////////////////////////////
+.button-group
+  &.simple
+    li:first-child button, .button-group li:first-child .button
+      border-left: 1px solid red
+      border-left-width: 1px
+    button, .button
+      margin-left: 20px
+      min-width: 160px
+  &.bottom
+    margin-top: 20px !important
+
+.button
+  @include button($bg:#fff)
+  border-color: #999999 !important
+  //min-width: 120px
+
+  &.disabled, &[disabled]
+    @include button-style($bg:$grey-light, $disabled:true)
+    cursor: wait
+

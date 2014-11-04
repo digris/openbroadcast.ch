@@ -1,0 +1,32 @@
+
+<div class="{{ additional_classes|default_if_none:'small-12' }} columns">
+    <label class="{% if item.errors %}error{% endif %}">{{ item.label_tag }}
+        {{ item }}
+    </label>
+
+    {% if item.errors %}
+    <small class="error">
+        {% for error in item.errors %}
+            <span>{{ error|escape }}</span>
+        {% endfor %}
+    </small>
+    {% endif %}
+
+    {% if item.field.help_text %}
+    <!--
+    <small class="help-text">
+        <span>{{ item.field.help_text|escape }}</span>
+    </small>
+    -->
+    {% endif %}
+
+
+</div>
+
+
+<!--
+<tr class="{{ additional_classes|default_if_none:"" }} {% if item.field.required %}required {% endif %}{% if item.errors %}invalid {% endif %} {{ type_class }}">
+    <th>{{ item.label_tag }}</th>
+    <td>{{ item }}{% if item.field.help_text %}<p class="help">{{ item.field.help_text }}</p>{% endif %}</td>
+</tr>
+-->

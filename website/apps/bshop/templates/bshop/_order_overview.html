@@ -1,0 +1,123 @@
+{% load i18n %}
+
+{% with order.addresses as addresses %}
+    <div class="block">
+        <div class="row">
+
+            <div class="small-12 medium-6 columns">
+                <h3>{% trans "Billing address" %}</h3>
+
+                <p>{% with addresses.billing as address %}{% include "plata/_address.html" %}{% endwith %}</p>
+            </div>
+
+            <div class="small-12 medium-6 columns">
+                <h3>{% trans "Shipping address" %}</h3>
+
+                <p>{% with addresses.shipping as address %}{% include "plata/_address.html" %}{% endwith %}</p>
+            </div>
+
+        </div>
+    </div>
+{% endwith %}
+
+<div class="block">
+    <div class="row">
+
+        <div class="small-12 columns">
+            <h3>{% trans "Order items" %} <small>({{ order.currency }})</small></h3>
+        </div>
+
+    </div>
+
+    {% for item in order.items.all %}
+    <div class="row striped">
+        <div class="small-6 columns">
+            <p>{{ item.product.sku }} &#147;{{ item.product.product.name }}&#8221;</p>
+        </div>
+        <div class="small-3 columns">
+            <p class="right">{{ item.quantity }} * {{ item.unit_price|floatformat:2 }}</p>
+        </div>
+        <div class="small-3 columns">
+            <p class="right">{{ item.discounted_subtotal|floatformat:2 }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% with order.applied_discounts.all as discounts %}
+
+    {% if discounts %}
+    <div class="block">
+        <div class="row">
+
+            <div class="small-12 columns">
+                <h3>{% trans "Discounts" %}</h3>
+            </div>
+
+            {% for discount in discounts %}
+            <div class="small-3 columns">
+                <p>{{ discount.name }}</p>
+            </div>
+            <div class="small-9 columns">
+                <p>{{ discount.code }}</p>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="block">
+        <div class="row">
+
+            <div class="small-12 columns">
+                <h3>{% trans "Total" %} <small>({{ order.currency }})</small></h3>
+            </div>
+
+
+            <!-- TODO: make this better html!! -->
+
+            <div class="small-6 columns">
+                <p>{% trans "subtotal"|capfirst %}</p>
+            </div>
+            <div class="small-6 columns">
+                <p class="right">{{ order.subtotal|floatformat:2 }}</p>
+            </div>
+
+
+            {% if discounts %}
+                <div class="small-6 columns">
+                    <p>{% trans "discount"|capfirst %}</p>
+                </div>
+                <div class="small-6 columns">
+                    <p class="right">{{ order.discount|floatformat:2 }}</p>
+                </div>
+            {% endif %}
+
+            <div class="small-6 columns">
+                <p>{% trans "shipping"|capfirst %}</p>
+            </div>
+            <div class="small-6 columns">
+                <p class="right">{{ order.shipping|floatformat:2 }}</p>
+            </div>
+
+            <div class="small-6 columns">
+                <p>{% trans "tax"|capfirst %}</p>
+            </div>
+            <div class="small-6 columns">
+                <p class="right">{{ order.tax|floatformat:2 }}</p>
+            </div>
+
+            <div class="small-6 columns">
+                <p>{% trans "total"|capfirst %}</p>
+            </div>
+            <div class="small-6 columns">
+                <p class="right">{{ order.total|floatformat:2 }}</p>
+            </div>
+
+        </div>
+    </div>
+
+
+{% endwith %}

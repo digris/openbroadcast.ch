@@ -1,0 +1,44 @@
+{% load menu_tags i18n  %}
+
+
+
+{% if user.is_authenticated  and 1 == 2 %}
+
+    <li class="has-dropdown not-click"_>
+        <a href="{%  url "profiles-profile-detail" user %}"><i class="fa fa-fw fa-user"></i> {% firstof user.get_full_name user.username %}</a>
+        <ul class="dropdown">
+            <li class="title back js-generated"><h5><a href="javascript:void(0)">Back</a></h5></li>
+            <li><a href="{%  url "profiles-profile-edit" %}"><i class="fa fa-fw fa-cog"></i> {% trans 'Edit Profile' %}</a>
+            </li>
+            {% if user.is_staff %}
+                <li><a target="_blank" href="/admin/"><i class="fa fa-fw fa-dashboard"></i> {% trans 'Administration' %}</a></li>
+            {% endif %}
+            <li class="divider"></li>
+            <li><a href="{% url "auth_logout" %}?next=/"><i class="fa fa-fw fa-sign-out"></i> {% trans 'Logout' %}</a></li>
+        </ul>
+    </li>
+
+
+    <li>
+        <a href="{% url "postman_inbox" %}"><i class="fa fa-fw fa-envelope"></i><span> {% trans 'Messages' %} [{{ postman_unread_count }}]</span></a>
+    </li>
+
+{% else %}
+
+
+
+    <li>
+        <a href="{% url 'auth_login' %}?next={{ request.get_full_path }}" data-reveal-id="myModal" data-reveal-ajax="true">Login</a>
+    </li>
+    <div id="myModal" class="reveal-modal tiny" data-reveal></div>
+
+
+{% endif %}
+
+
+
+<!--
+<li>
+    <a target="_blank" href="https://lab.hazelfire.com/projects/2014-sonicsquirrel-net/issues/new"><i class="fa fa-fw fa-bug"></i><span> {% trans 'Bug Report' %}</span></a>
+</li>
+-->

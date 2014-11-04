@@ -1,0 +1,19 @@
+{% load i18n %}
+
+<h1>{% trans "Or use" %}</h1>
+
+<ul class="social-auth no-bullet">
+    {% for name in social_auth.backends %}
+        <li>
+
+            <a data-no-turbolink class="button tiny expand" href="{% url "socialauth_begin" name %}?{{ redirect_querystring }}">
+                {% if name != "soundcloud" %}
+                <i class="fa-fw fa fa-{{ name }}{% if name == "google" %}-plus{% endif %}"></i>
+                {% else %}
+                <i class="fa-fw fa icon-{{ name }}"></i>
+                {% endif %}
+                {{ name|title }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>

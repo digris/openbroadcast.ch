@@ -1,0 +1,11 @@
+{% load sekizai_tags %}
+
+
+
+
+
+{% addtoblock "js-post" %}
+<script src="http://127.0.0.1:8088/socket.io/socket.io.js"></script>
+<script src="{{ STATIC_URL }}js/ptype/levelbridge.js"></script>
+<script src="{{ STATIC_URL }}js/ptype/bplayer.js"></script>
+{% endaddtoblock %}

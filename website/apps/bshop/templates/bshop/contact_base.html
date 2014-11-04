@@ -1,0 +1,17 @@
+{% extends "app_base.html" %}
+
+{% block body_extra_class %}app bshop contact{% endblock %}
+
+{% block main_content %}
+    <section class="content-container app">
+        <div class="row">
+            <div class="small-12 medium-12 columns">
+                {% block content %}{% endblock %}
+            </div>
+            <div class="small-12 medium-12 columns sidebar">
+                {% block sidebar %}{% endblock %}
+            </div>
+        </div>
+
+    </section>
+{% endblock %}

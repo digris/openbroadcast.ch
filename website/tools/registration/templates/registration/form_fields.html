@@ -1,0 +1,35 @@
+{% comment %}
+{% for field in form %}
+  <fieldset class="control-group {% if field.errors %}error{% endif %}">
+    <label class="control-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+    <div class="controls">
+      {{ field }}
+      {% if field.help_text %}
+        <span class="help-inline">{{ field.help_text }}</span>
+      {% endif %}
+      {% if field.errors %}
+        <span class="help-inline">{{ field.errors|striptags }}</span>
+      {% endif %}
+    </div>
+  </fieldset>
+{% endfor %}
+{% endcomment %}
+
+{% for field in form %}
+
+    <div class="row">
+        <div class="small-12 columns">
+            <div class="row{% if field.errors %} error{% endif %}">
+                <div class="small-3 columns">
+                    <label for="{{ field.auto_id }}" class="right_ inline{% if field.errors %} error{% endif %}">{{ field.label }}</label>
+                </div>
+                <div class="small-9 columns">
+                    {{ field }}
+                    {% if field.errors %}
+                        <small class="error">{{ field.errors|striptags }}</small>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

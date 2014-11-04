@@ -1,0 +1,61 @@
+#achat_container
+
+
+  form
+    margin: 20px 0
+
+
+  .messages
+
+    padding: 5px 0
+
+    font-weight: $body-font-weight
+    p
+      font-weight: $body-font-weight
+      margin-bottom: 0
+    
+    
+    .item.message
+
+      margin-bottom: 20px
+      +single-transition(opacity, 2.0s)
+      &.new
+        +opacity(0.0)
+        +single-transition(opacity, 1.0s)
+
+      .body
+        padding: 10px
+        background: #efefef
+        font-style: italic
+        position: relative
+
+        &:after
+          content: ''
+          position: absolute
+          top: 100%
+          left: 0
+          right: 0
+          margin: 0 auto
+          width: 0
+          height: 0
+          border-top: solid 9px #efefef
+          border-left: solid 9px transparent
+          border-right: solid 9px transparent
+
+      .author
+        margin-top: 12px
+        font-size: 80%
+        +opacity(0.5)
+
+    // type dependant styles
+    .item.message
+      &.me
+        .body
+          background: #000
+          color: #fff
+
+          &:after
+            border-top: solid 9px #000
+
+
+

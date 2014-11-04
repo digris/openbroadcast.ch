@@ -1,0 +1,178 @@
+{% extends base_template|default:"base.html" %}
+
+{% load i18n plata_tags fd5_form_tags %}
+
+{% block title %}{% trans "Contact" %} - {{ block.super }}{% endblock %}
+
+{% block sidebar %}
+
+
+
+{% if loginform %}
+<form method="post" action=".">{% csrf_token %}
+    <input type="hidden" name="_login" value="1"/>
+    {% form_errors loginform %}
+
+    <table>
+        {{ loginform }}
+        <tr>
+            <td></td>
+            <td>
+                <button type="submit">{% trans "Submit" %}</button>
+            </td>
+        </tr>
+    </table>
+</form>
+{% endif %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="checkout">
+
+    <div class="section-header">
+        <div class="row">
+
+            <div class="small-12 column">
+                <h2>{% trans "Contact" %}</h2>
+            </div>
+
+            <div class="small-12 column">
+                <div class="info">
+                    <p>(( Text? ))</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% with step=2 %}
+    {% include "bshop/_checkout_progress.html" %}
+    {% endwith %}
+
+
+    <form method="post" action=".">
+
+        {% csrf_token %}
+        <input type="hidden" name="_checkout" value="1"/>
+
+
+        <!--
+        <div class="row">
+            <div class="small-12 columns">
+                {% form_errors orderform %}
+            </div>
+        </div>
+        -->
+
+        <div class="row">
+            <div class="small-12 medium-6 columns">
+
+                <div class="address-header">
+                    <h3>{% trans "Billing address" %}</h3>
+                </div>
+
+                <div class="row">
+                    {% fd5_form_item orderform.billing_company %}
+                    {% fd5_form_item orderform.billing_name %}
+                    {% fd5_form_item orderform.billing_phone "small-6" %}
+                    {% fd5_form_item orderform.billing_fax "small-6" %}
+                    {% fd5_form_item orderform.email %}
+                    <div class="small-12 columns">
+                        <label class="readonly disabled"><label for="id_order-taxid">{% trans "Tax ID" %}</label>
+                            <input id="id_order-taxid" maxlength="75" type="text" disabled readonly value="{{order.user.contactuser.tax_id}}">
+                        </label>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    {% fd5_form_item orderform.billing_address "address-ta" %}
+                    {% fd5_form_item orderform.billing_zip_code "small-4" %}
+                    {% fd5_form_item orderform.billing_city "small-8" %}
+                    {% fd5_form_item orderform.billing_country %}
+                </div>
+
+            </div>
+            <div class="small-12 medium-6 columns">
+
+
+                <div class="address-header">
+                    <h3>{% trans "Shipping address" %}</h3>
+
+
+                    <table>
+                        <tr>
+                            <td class="checkbox">{% form_item_plain orderform.shipping_same_as_billing %}</td>
+                            <td class="message">{{ orderform.shipping_same_as_billing.label_tag }}</td>
+                        </tr>
+                    </table>
+
+                </div>
+
+
+                <div class="row">
+                    {% fd5_form_item orderform.shipping_company %}
+                    {% fd5_form_item orderform.shipping_name %}
+                    {% fd5_form_item orderform.shipping_phone "small-6" %}
+                    {% fd5_form_item orderform.shipping_fax "small-6" %}
+                    <div class="small-12 columns email-placeholder">*</div>
+                    <div class="small-12 columns email-placeholder">*</div>
+                </div>
+
+
+
+                <div class="row">
+                    {% fd5_form_item orderform.shipping_address "address-ta" %}
+                    {% fd5_form_item orderform.shipping_zip_code "small-4" %}
+                    {% fd5_form_item orderform.shipping_city "small-8" %}
+                    {% fd5_form_item orderform.shipping_country %}
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="small-12 columns">
+
+                <h3>{% trans "More" %}</h3>
+
+                <div class="row">
+                    {% fd5_form_item orderform.notes "notes-ta" %}
+                </div>
+
+                {% if orderform.create_account %}
+                <table>
+                    <tr>
+                        <td class="checkbox">{% form_item_plain orderform.create_account %}</td>
+                        <td class="message">{{ orderform.create_account.label_tag }}</td>
+                    </tr>
+                </table>
+                {% endif %}
+
+            </div>
+        </div>
+
+
+
+
+
+
+        <div class="row">
+            <div class="small-12 columns">
+                <ul class="button-group right simple bottom">
+                    <li>
+                        <button class="button simple small" type="submit"><i class="fa fa-credit-card"></i> {% trans " Submit" %}</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+    </form>
+
+</section>
+
+{% endblock %}

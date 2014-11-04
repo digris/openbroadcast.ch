@@ -1,0 +1,17 @@
+{% extends "layout_base.html" %}
+
+{% block inner %}
+    <div class="row">
+        <div class="small-12 large-8 columns">
+            <h1>{% block title %}{% endblock %}</h1>
+            {% block inner_content %}{% endblock %}
+        </div>
+        <div class="small-12 large-4 columns">
+        {% block sidebar %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+
+
+

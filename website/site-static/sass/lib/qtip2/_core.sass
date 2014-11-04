@@ -1,0 +1,101 @@
+.qtip
+  position: absolute
+  left: -28000px
+  top: -28000px
+  display: none
+  max-width: 280px
+  min-width: 50px
+  font-size: 10.5px
+  line-height: 12px
+  direction: ltr
+  box-shadow: none
+  padding: 0
+
+.qtip-content
+  position: relative
+  padding: 5px 9px
+  overflow: hidden
+  text-align: left
+  word-wrap: break-word
+
+.qtip-titlebar
+  position: relative
+  padding: 5px 35px 5px 10px
+  overflow: hidden
+  border-width: 0 0 1px
+  font-weight: bold
+  + .qtip-content
+    border-top-width: 0 !important
+
+
+.qtip-close
+  position: absolute
+  right: -9px
+  top: -9px
+  z-index: 11
+  /* Overlap .qtip-tip
+  cursor: pointer
+  outline: medium none
+  border: 1px solid transparent
+
+.qtip-titlebar .qtip-close
+  right: 4px
+  top: 50%
+  margin-top: -9px
+
+* html .qtip-titlebar .qtip-close
+  top: 16px
+
+
+.qtip-titlebar .ui-icon
+  display: block
+  text-indent: -1000em
+  direction: ltr
+
+.qtip-icon
+  .ui-icon
+    display: block
+    text-indent: -1000em
+    direction: ltr
+    -moz-border-radius: 3px
+    -webkit-border-radius: 3px
+    border-radius: 3px
+    text-decoration: none
+    width: 18px
+    height: 14px
+    line-height: 14px
+    text-align: center
+    text-indent: 0
+    font: normal bold 10px/13px Tahoma,sans-serif
+    color: inherit
+    background: transparent none no-repeat -100em -100em
+  -moz-border-radius: 3px
+  -webkit-border-radius: 3px
+  border-radius: 3px
+  text-decoration: none
+
+
+// we use dark as default. the yellow one is so ugly!!
+.qtip-default
+  background-color: #505050
+  border-color: #303030
+  color: #f3f3f3
+  .qtip-titlebar
+    background-color: #404040
+  .qtip-icon
+    border-color: #444
+  .qtip-titlebar .ui-state-hover
+    border-color: #303030
+
+.qtip-markdown
+  padding: 10px 20px
+  .qtip-content
+    padding: 0
+    p, ul, dl
+      margin-bottom: 0
+
+    ul, dl
+      list-style-position: inside
+      margin-left: 7px
+      > li
+        line-height: 110%

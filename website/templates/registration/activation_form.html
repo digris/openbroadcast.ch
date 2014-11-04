@@ -1,0 +1,50 @@
+{% extends "registration/registration_base.html" %}
+{% load i18n sekizai_tags fd5_form_tags %}
+
+{% block app_title %}{% trans "Activate your account" %}{% endblock %}
+
+{% block app_content %}
+<form method="post" action=".">
+  {% csrf_token %}
+
+
+    {% if form.errors and form.non_field_errors %}
+    <div class="row">
+        <div class="small-12 columns">
+            <div data-alert class="alert-box warning">
+            {% for error in form.non_field_errors %}
+
+                    <p>{{ error|escape }}</p>
+
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
+    <!--<h3>{% trans "Headline" %}</h3>-->
+
+    <div class="row">
+        <div class="small-12 columns text-center">
+            <p>{% trans 'Please fill the password to complete account activation' %}</p>
+        </div>
+
+
+        {% fd5_form_item form.password1 "small-12 medium-6" %}
+        {% fd5_form_item form.password2 "small-12 medium-6" %}
+    </div>
+
+    <div class="row">
+        <div class="small-12 columns">
+            <ul class="button-group clearfix simple bottom">
+                <li class="right">
+                    <button class="button simple small" type="submit"><i class="fa fa-floppy-o"></i> {% trans 'Activate' %}</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</form>
+
+{% endblock %}

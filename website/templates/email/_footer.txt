@@ -1,0 +1,8 @@
+////////////////////////////////////////////////////////
+{{ protocol }}://{{ domain }}/
+
+Impressum, Konzept und Copyright
+© {%now "Y"%} pavian design GmbH · Beustweg 4 · CH-8032 Zürich
+Tel: +49 (0) 711 83 14 70
+Fax: +49 (0) 711 83 14 63
+info@openbroadcast.ch

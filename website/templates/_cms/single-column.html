@@ -1,0 +1,12 @@
+{% extends "cms_base.html" %}
+{% load cms_tags %}
+
+{% block cms_content %}
+
+    <div class="row">
+        <div class="small-12 columns main-content">
+            {% placeholder content %}
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,223 @@
+{% extends "bshop/contact_base.html" %}
+{% load cms_tags menu_tags i18n plata_tags sekizai_tags fd5_form_tags %}
+
+{% block title %}{% trans "Contact" %} - {{ block.super }}{% endblock %}
+
+{% block body_extra_class %}bshop accounts{% endblock %}
+
+
+{% block content %}
+<section class="account">
+
+<div class="section-header">
+    <div class="row">
+
+        <div class="small-12 column">
+            {% if object.company %}
+            <h2>{{ object.company }}</h2>
+            {% else %}
+            <h2>{% firstof object.user.name object.user.email %}</h2>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="small-12 columns">
+        <h3>{% trans "Contact details" %}</h3>
+
+        <div class="row">
+
+
+            <div class="small-12 medium-6 columns">
+
+                <div class="contact">
+
+                    <h4>{% trans "Billing address" %}</h4>
+
+                    <ul class="no-bullet">
+
+                        {% if object.billing_company %}
+                        <li><strong>{{ object.billing_company }}</strong></li>
+                        {% endif %}
+
+                        {% if object.billing_name %}
+                        <li>{{ object.billing_name }}</li>
+                        {% endif %}
+
+                        {% if object.billing_phone %}
+                        <li><span class="key">{% trans "Phone" %}:</span> {{ object.billing_phone }}</li>
+                        {% endif %}
+
+                        {% if object.billing_fax %}
+                        <li><span class="key">{% trans "Fax" %}:</span> {{ object.billing_fax }}</li>
+                        {% endif %}
+
+                        <li><span class="key">{% trans "Tax ID" %}:</span> {{ object.tax_id|default_if_none:"None" }}</li>
+
+                        <li><a href="mailto:{{ object.user.email }}">{{ object.user.email }}</a></li>
+
+                    </ul>
+
+                    <ul class="no-bullet address">
+
+                        {% if object.billing_address %}
+                        <li>
+                            <p>
+                                {{ object.billing_address|linebreaksbr }}
+                            </p>
+                        </li>
+                        {% endif %}
+
+
+                        {% if object.billing_zip_code or object.billing_city %}
+                        <li>
+                            {{ object.billing_zip_code|default_if_none:"" }}
+                            {{ object.billing_city|default_if_none:"" }}
+                        </li>
+                        {% endif %}
+
+                        {% if object.billing_country %}
+                        <li>{{ object.billing_country.name|upper }}</li>
+                        {% endif %}
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+            <div class="small-12 medium-6 columns">
+
+                <div class="contact">
+
+                    <h4>{% trans "Shipping address" %}</h4>
+
+                    {% if object.shipping_same_as_billing %}
+                    <p><em>{% trans "shipping address equals billing address" %}</em></p>
+                    {% else %}
+                    <ul class="no-bullet">
+
+                        {% if object.billing_company %}
+                        <li>{{ object.billing_company }}</li>
+                        {% endif %}
+
+                        {% if object.billing_name %}
+                        <li>{{ object.billing_name }}</li>
+                        {% endif %}
+
+                        {% if object.billing_phone %}
+                        <li>{% trans "Phone" %}: {{ object.billing_phone }}</li>
+                        {% endif %}
+
+                        {% if object.billing_fax %}
+                        <li>{% trans "Fax" %}: {{ object.billing_fax }}</li>
+                        {% endif %}
+
+                        <li><a href="mailto:{{ object.user.email }}">{{ object.user.email }}</a></li>
+
+
+                    </ul>
+                    {% endif %}
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="row">
+            <div class="small-12 columns">
+                <a href="{% url 'bshop-contact-update' %}" class="button simple small right"><i class="fa fa-pencil-square"></i> {% trans "Edit Contact details" %}</a>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div class="small-12 columns">
+
+        <div class="info-panel">
+
+            <h3>{% trans "Information" %}</h3>
+            <p>(( contitions etc ))</p>
+
+            <ul>
+                <li>(( a ))</li>
+                <li>(( b ))</li>
+                <li>(( c ))</li>
+            </ul>
+
+            <p><em>(( text ))</em></p>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<div class="row">
+
+
+    <div class="small-12 medium-12 columns">
+
+        <div class="order-history">
+
+            <h3>{% trans "Order history" %}</h3>
+
+            {% for order in order_history.all %}
+            <div class="history-item hoverable{% if order.status == 40 %} completed{% endif %}">
+                <div class="row">
+                    <div class="small-4 columns">
+
+                        <a href="#"># {{ order.created|date:"Y" }}-{{ order.pk }}</a>
+
+
+                    </div>
+                    <div class="small-8 columns">
+                        {{ order.created|date:"SHORT_DATE_FORMAT" }}
+                    </div>
+
+                    <div class="small-4 columns">
+
+                        {% if order.status == 30 %}
+                        {% trans "Pemding" %}
+                        {% endif %}
+                        {% if order.status == 40 %}
+                        {% trans "Completed" %}
+                        {% endif %}
+
+
+                    </div>
+
+                    <div class="small-4 columns">
+                        {{order.currency}} {{ order.paid|floatformat:2 }}
+                    </div>
+
+                    <div class="small-4 columns">
+                        {{order.currency}} {{ order.total|floatformat:2 }}
+                    </div>
+                </div>
+            </div>
+
+
+            {% endfor %}
+
+
+        </div>
+    </div>
+</div>
+
+
+</section>
+{% endblock %}
+
+{% block footer %}
+{% placeholder "footer" inherit or %}{% show_placeholder "footer" "base" %}{% endplaceholder %}
+{% endblock %}
+

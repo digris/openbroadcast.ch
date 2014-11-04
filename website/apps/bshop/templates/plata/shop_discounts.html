@@ -1,0 +1,47 @@
+{% extends base_template|default:"base.html" %}
+
+{% load i18n plata_tags fd5_form_tags %}
+
+{% block title %}{% trans "Discounts" %} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<section class="confirmation">
+
+    {% with step=3 %}
+    {% include "bshop/_checkout_progress.html" %}
+    {% endwith %}
+
+    <div class="order-overview">
+        {% include "bshop/_order_overview.html" %}
+    </div>
+
+    <form method="post" action=".">
+
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="small-12 columns">
+
+                <h3>{% trans "Voucher code" %}</h3>
+
+                <div class="row">
+                    {% fd5_form_item form.code %}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="small-12 columns">
+                <ul class="button-group right">
+                    <li>
+                        <button class="button simple small" type="submit" name="save"><i class="fa fa-credit-card"></i> {% trans "Add voucher" %}</button>
+                        <button class="button simple small" type="submit" name="proceed"><i class="fa fa-credit-card"></i> {% trans "Proceed to confirmation" %}</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+</form>
+{% endblock %}

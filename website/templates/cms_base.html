@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block body_extra_class %}cms{% endblock %}
+
+{% block main_content %}
+    <div class="content-container cms">
+        {% block cms_content %}{% endblock %}
+    </div>
+{% endblock %}

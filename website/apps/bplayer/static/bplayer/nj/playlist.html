@@ -1,0 +1,19 @@
+<table style="width: 100%;">
+  <tbody>
+  {% for item in objects %}
+    <tr
+      class="item"
+      data-uuid="{{ item.uuid }}"
+      >
+      <td>
+          <i class="fa fa-play-circle visible-while-playing fa-fw"></i>
+          {{ item.name }}
+      </td>
+      <td class="right">{{ item.duration|ms2time() }}</td>
+      <td><a href="{{ item.artist.absolute_url }}">{{ item.artist.name }}</a></td>
+      <td><a href="{{ item.release.absolute_url }}">{{ item.release.name }}</a></td>
+      <td>{{ item.release.label.name }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>

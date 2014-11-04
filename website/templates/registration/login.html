@@ -1,0 +1,55 @@
+{% extends "registration/registration_base.html" %}
+{% load i18n sekizai_tags fd5_form_tags  %}
+
+{% block app_title %}{% trans "Login" %}{% endblock %}
+
+
+{% block app_extra %}
+
+{% endblock %}
+
+
+{% block app_content %}
+<form method="post" action=".">
+    {% csrf_token %}
+
+
+    {% if form.errors and form.non_field_errors %}
+    <div class="row">
+        <div class="small-12 columns">
+            <div data-alert class="alert-box warning">
+                {% for error in form.non_field_errors %}
+                <p>{{ error|escape }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
+    <!--<h3>{% trans "Headline" %}</h3>-->
+
+    <div class="row">
+        {% fd5_form_item form.username "small-12 medium-6" %}
+        {% fd5_form_item form.password "small-12 medium-6" %}
+    </div>
+
+    <div class="row">
+        <div class="small-12 columns">
+            <ul class="button-group clearfix simple bottom">
+                <li class="left">
+                    <a href="{# url 'password_reset' #}">{% trans "Forgot password" %}?</a>
+                    <span> – </span>
+                    <a href="{# url 'registration_register' #}">{% trans "Create Account" %}?</a>
+                </li>
+                <li class="right">
+                    <button class="button simple small" type="submit"><i class="fa fa-floppy-o"></i> {% trans 'Log in' %}</button>
+                    <input type="hidden" name="next" value="{{ next }}"/>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</form>
+
+{% endblock %}

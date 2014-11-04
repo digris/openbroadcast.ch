@@ -1,0 +1,240 @@
+{% load cms_tags compress sekizai_tags i18n menu_tags bplayer_tags backfeed_tags %}<!doctype html>
+<html class="no-js" lang="{{ LANGUAGE_CODE }}">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <title>{% block title %}{% page_attribute 'page_title' %}{% endblock %}{% block title-page %}{% endblock %}</title>
+
+        <meta name="description" content="{% block meta_description %}{% page_attribute 'meta_description' %}{% endblock %}{% block meta_description_page %}{% endblock %}"/>
+        <meta name="keywords" content="{% block meta_keywords %}{% endblock %}"/>
+        <meta name="author" content="palmbeach interactive"/>
+        <meta name="generator" content="A.W.F."/>
+        <meta name="version" content="14.05.01"/>
+
+        <meta http-equiv="last-modified" content="{% page_attribute 'changed_date' %} UTC"/>
+
+        {% block meta_opengraph %}{% endblock %}
+
+        <link rel="icon" type="image/png" href="{{ STATIC_URL }}img/base/icon.png"/>
+
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/screen.css" id="style_light"  />
+        <!--
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/screen-dark.css" id="style_dark" disabled />
+        -->
+
+        {% compress css %}
+
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/print.css" media="print"/>
+        {% endcompress %}
+
+        <!--[if lt IE 9]>
+        <script src="{{ STATIC_URL }}js/browser_hacks/html5shiv.js"></script>
+        <script src="{{ STATIC_URL }}js/browser_hacks/nwmatcher-1.2.5-min.js"></script>
+        <script src="{{ STATIC_URL }}js/browser_hacks/selectivizr-1.0.3b.js"></script>
+        <script src="{{ STATIC_URL }}js/browser_hacks/respond.min.js"></script>
+        <![endif]-->
+
+        {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
+
+        <script src="{{ STATIC_URL }}js/lib/modernizr.js"></script>
+        <script src="{{ STATIC_URL }}js/lib/jquery-2.1.0.js"></script>
+
+        <!--<script src="{{ STATIC_URL }}turbolinks/turbolinks.js"></script>-->
+        <script src="{{ STATIC_URL }}js/lib/textcomplete-0.3.3/jquery.textcomplete.js"></script>
+
+
+        <script src="{{ STATIC_URL }}bplayer/js/lib/sm2/soundmanager2.js"></script>
+        <script src="{{ STATIC_URL }}bplayer/js/inline.js"></script>
+
+
+
+        {% block link %}{% endblock link %}
+
+        {% comment %}
+        {% block script %}{% endblock script %}
+        {% endcomment %}
+
+        {% render_block "css" %}
+        <!--
+        <script type="text/javascript" src="http://fast.fonts.net/jsapi/1ca04628-74f1-4059-8dd2-c91d0a2a63bc.js"></script>
+        -->
+    </head>
+    <body id="base" class="{% block body_extra_class %}{% endblock %}">
+
+        {% cms_toolbar %}
+        <div class="sticky contain-to-grid_">
+            <nav class="top-bar" data-topbar data-livebg>
+
+
+                <ul class="title-area">
+                    <!-- Title Area -->
+                    <li class="name">
+                        <h1>
+                            <a href="/">
+                                <!--<img src="{{ STATIC_URL }}img/base/logo.black.svg">-->
+                                <div id="levelbridge_icon">
+                                    <ul></ul>
+                                </div>
+                            </a>
+                        </h1>
+                    </li>
+                    <!--<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>-->
+                    <li class="toggle-topbar menu-icon"><a data-no-turbolink href="#">Menu</a></li>
+                </ul>
+
+
+                <section class="top-bar-section">
+                    <ul class="left">
+                        <!--<li class="divider"></li>-->
+                        {% show_menu 0 100 100 100 "_layout/_navigation.html" %}
+                    </ul>
+
+                    <ul class="right">
+                        {% include "_layout/_socialbar.html" %}
+                    </ul>
+
+                    <ul class="right">
+                        {% include "_layout/_accountbar.html" %}
+                    </ul>
+
+
+                </section>
+            </nav>
+        </div>
+        <header>
+            {% block teaser %}{% endblock %}
+        </header>
+
+
+
+
+        <div class="container" id="content_base">
+
+
+            {% block splash %}<!-- passed by: _cms/home.html -->{% endblock %}
+
+            <!-- message container -->
+            {% if messages %}
+            <div class="row">
+                <div class="small-12 columns">
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|linebreaksbr }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+            <!-- end message container -->
+
+
+            {% block main_content %}{% endblock %}
+            {# block content #}{# endblock #}
+            {# include "_layout/_footer.html" #}
+
+            {% include "_ptype/_levelbridge.html" %}
+
+            {% bplayer_inline %}
+
+            {% if user.is_authenticated %}
+            {# backfeed_inline #}
+            {% endif %}
+
+
+
+        </div>
+
+        <div id="at_content"></div>
+
+        <div id="fb-root"></div>
+
+        {% compress js %}
+        <script src="{{ STATIC_URL }}js/lib/jquery-ui-1.10.4.custom.js"></script>
+        <script src="{{ STATIC_URL }}js/lib/fastclick.js"></script>
+        <script src="{{ STATIC_URL }}js/lib/fd5/foundation.min.js"></script>
+
+        <!-- other libraries -->
+        <script src="{{ STATIC_URL }}js/lib/nunjucks/nunjucks-dev.js"></script>
+        <script src="{{ STATIC_URL }}js/lib/nunjucks/filters.js"></script>
+        <script src="{{ STATIC_URL }}js/lib/featherlight.js"></script>
+        <script src="{{ STATIC_URL }}js/lib/jquery.imageloader.js"></script>
+        <script src="{{ STATIC_URL }}js/lib/jquery.hoverIntent-1.8.0.js"></script>
+        <script src="{{ STATIC_URL }}js/lib/jquery.color-2.1.2.js"></script>
+        <script src="{{ STATIC_URL }}js/lib/lorem.js"></script>
+
+
+
+        <!-- global scripts -->
+        <script src="{{ STATIC_URL }}js/lib/ba-debug.js"></script>
+        <script src="{{ STATIC_URL }}js/site.js"></script>
+        <script src="{{ STATIC_URL }}js/util.base.js"></script>
+
+        <!-- app scripts -->
+        <script src="{{ STATIC_URL }}achat/js/base.js"></script>
+        <script src="{{ STATIC_URL }}stationtime/js/base.js"></script>
+
+
+        {% endcompress %}
+
+
+
+
+        <script>
+
+
+
+
+            $(document).foundation({
+                reveal: {
+                    animation: 'fade',
+                    animation_speed: 50
+                },
+                tooltip: {
+                    disable_for_touch: true
+                },
+                topbar: {
+                    custom_back_text: false,
+                    is_hover: false,
+                    mobile_show_parent_link: true
+                }
+            });
+
+
+            $(function(){
+                if (!nunjucks.env) {
+                    nunjucks.env = new nunjucks.Environment(new nunjucks.HttpLoader('{{ STATIC_URL }}'));
+                }
+                nj = nunjucks.env;
+            });
+
+
+
+            // stationtime
+            st = new StationTimeApp();
+            st.api_url = '{% url "stationtime-current-time" %}';
+            st.container = $('#station_time');
+            st.init();
+
+
+        </script>
+
+
+
+        {% render_block "js_ext" %}
+        {% render_block "js" postprocessor "compressor.contrib.sekizai.compress" %}
+
+        {% render_block "js-post" %}
+
+        <!--[if lt IE 9]>
+        <script src="{{ STATIC_URL }}js/browser_hacks/rem.js"></script>
+        <![endif]-->
+
+        <!-- add this sidebar -->
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-54071ec501612877"></script>
+
+
+
+    </body>
+</html>

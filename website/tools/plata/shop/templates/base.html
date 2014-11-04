@@ -1,0 +1,143 @@
+<html>
+{% load i18n %}
+{% load url from future %}
+<head>
+<title>{% block title %}Plata{% endblock %}</title>
+<style type="text/css">
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 13px;
+}
+
+#navigation {
+    background: #444;
+    font-size: 16px;
+    padding: 0px 10px;
+    margin: 0 0 10px 0;
+}
+
+#navigation a {
+    color: #fff;
+    float: left;
+}
+
+#navigation a span {
+    display: block;
+    padding: 5px 10px;
+}
+
+ul.messages {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul.messages li {
+    background: #ffc;
+    border: 1px solid #cfcfcf;
+    padding: 5px 8px 6px 8px;
+    font-size: 12px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+
+ul.messages li.error { background: #fcc; }
+ul.messages li.info { background: #ccf; }
+ul.messages li.warning { background: #fec; }
+ul.messages li.success { background: #cfc; }
+
+div.pagination ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+div.pagination ul li {
+    float: left;
+}
+
+div.pagination ul li a {
+    display: block;
+    padding: 2px 3px;
+}
+
+form tr label {
+    font-weight: normal;
+}
+
+form tr.invalid label {
+    color: red;
+}
+
+form tr.required label {
+    font-weight: bold;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table th,
+table td {
+    padding: 3px 5px 2px 5px;
+    border: 1px solid #ccc;
+    vertical-align: top;
+    text-align: left;
+}
+</style>
+</head>
+<body>
+
+<div id="navigation">
+<a href="/"><span>{% trans "Home" %}</span></a>
+<a href="/products/"><span>{% trans "Products" %}</span></a>
+<a href="/cart/"><span>{% trans "Cart" %}</span></a>
+<br style="clear:left" />
+</div>
+
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% block content %}
+{% endblock %}
+
+<hr />
+<a href="{% url "plata_shop_cart" %}">{% trans "Go to cart" %}</a>
+<hr />
+<h2>{% trans "That's what we know about you:" %}</h2>
+<table>
+    <tr>
+        <th>{% trans "User" %}</th>
+        <td>{{ user }}</td>
+    </tr>
+    <tr>
+        <th>{% trans "Contact" %}</th>
+        <td>{{ plata.contact }}</td>
+    </tr>
+    <tr>
+        <th>{% trans "Order" %}</th>
+        <td>
+            {{ plata.order }}, {{ plata.order.currency }} {{ plata.order.total|floatformat:2 }}
+            <ul>
+                {% for item in plata.order.items.all %}
+                <li><a href="{{ item.product.get_absolute_url }}">{{ item }}</a></li>
+                {% endfor %}
+            </ul>
+            {% if plata.order.id %}
+            {% url "plata_reporting_invoice_pdf" plata.order.id as invoice_url %}
+            {% if invoice_url %}<a href="{{ invoice_url }}">Invoice</a>{% endif %}
+            {% endif %}
+            {% url "plata_reporting_product_xls" as product_xls_url %}
+            {% if product_xls_url %}<a href="{{ product_xls_url }}">Products</a>{% endif %}
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+form.form-base
+  @include exports("form")
+  small.error
+    @include form-error-message
+    border-left: 1px solid #333
+    border-right: 1px solid #333
+
+  &.form-invers
+    //background: green
+
+
+  select
+    color: $input-font-color
+
+
+  legend
+    text-align: right
+    text-transform: uppercase
+    +opacity(0.5)
+
+  label
+    text-transform: uppercase
+    +opacity(0.7)
+  
+  ul.button-group
+    &.right
+      li
+        padding-left: 4px
+
+
+  .notes-inline
+    h1, h2, h3, h4
+      font-size: rem-calc(15)
+      color: $secondary-color
+    p
+      font-style: italic
+      //font-family: $serif-font-family
+
+  // special inputs
+  .input-image
+    margin-top: 10px
+    ul
+      +clearfix()
+      list-style: none
+      margin: 10px 0 0 0
+      li
+        float: left
+        padding-right: 10px
+
+
+  // service-row
+  .row.service-row, .row.link-row
+    margin-bottom: 10px
+    border-bottom: 1px solid #474747
+    .form-delete
+      padding-top: 25px
+    .form-icon
+      padding-top: 25px
+      ul
+        list-style: none
+        margin-bottom: 0
+        li i
+          color: #fff
+
+
+  .form-autogrow
+    &.hidden
+      display: none
+
+input.button, a.button, button.button
+  &.tiny
+    text-transform: uppercase
+    font-weight: bold
+    color: #333
+    &:hover
+      color: #fff

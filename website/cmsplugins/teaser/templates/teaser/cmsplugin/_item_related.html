@@ -1,0 +1,53 @@
+{% load thumbnail sekizai_tags richimage_tags catalog_tags %}
+
+<div class="relations product-{{ product.pk }} clickable" data-permalink="{{ product.get_absolute_url }}">
+    <div class="content center-vertical "> <!-- center-vertical -->
+        <div class="row">
+
+            <div class="small-8 medium-6 small-centered columns">
+                <img src="{% thumbnail product.main_image 600x225 upscale crop %}" style="width: 100%;"/>
+
+                <h2 class="text-center">{{ product.name|upper }}</h2>
+
+                <p class="text-center">{% if product.subline %}{{ product.subline|upper }}, {% endif %} {{ product.product_start|date:"Y" }}</p>
+            </div>
+
+
+            <!-- color combos TODO: show-for-medium-up and others not working, strange?-->
+            <div class="medium-6 medium-centered columns">
+                <div class="combo-navigation">
+                    <div class="wrap">
+
+                        <ul class="no-bullet inline-list">
+                            {% for item in product.get_combos %}
+                                {% sizes_for_group_sku item.group_sku as combo_sizes %}
+                                {% ifchanged item.group_sku %}
+                                    <li>
+                                        <a data-sku="{{ item.sku }}" href="#">
+                                            <figure>
+                                                {% triangle_svg item %}
+                                                {% comment %}
+                                                <figcaption>
+                                                    <p class="text-center">
+                                                        <small>{{ item.group_sku }}</small>
+                                                        <!---({% for sized_combo in combo_sizes reversed %}{{ sized_combo.size|upper }}{% if not forloop.last %}/{% endif %}{% endfor %})-->
+                                                        <br>
+                                                        EUR {{ item.price }}
+                                                    </p>
+                                                </figcaption>
+                                                {% endcomment %}
+                                            </figure>
+                                        </a>
+                                    </li>
+                                {% endifchanged %}
+                            {% endfor %}
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <!-- color combos -->
+
+        </div>
+    </div>
+</div>

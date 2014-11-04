@@ -1,0 +1,25 @@
+# ignore
+.DS_Store
+*.pyc
+*.bak
+.idea
+.project
+.pydevproject
+env
+website/env
+changelog.txt
+website/project/local_settings.py
+website/smedia
+website/data.sqlite3
+website/logs
+website/media
+website/components
+website/static
+website/site-static/css
+website/site-static/.sass-cache
+website/reports
+website/device_data
+website/dev
+website/static/CACHE
+
+doc/_build

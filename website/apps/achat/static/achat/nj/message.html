@@ -1,0 +1,21 @@
+<li class="item message new {% if message.user.is_me %}me{% endif %}">
+
+    <div class="body">
+        <p>
+        {{ message.body }}
+        </p>
+    </div>
+
+    <div class="author text-center">
+        <span class="user">
+            {% if message.user.is_me %}
+            << me >>
+            {% else %}
+            <a href="#">Jonas</a>
+            {% endif %}
+        </span>
+        <span class="separator">|</span>
+        <span class="timestamp">23:15:12</span>
+    </div>
+
+</li>

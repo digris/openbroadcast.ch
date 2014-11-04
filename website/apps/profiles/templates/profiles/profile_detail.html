@@ -1,0 +1,24 @@
+{% extends "app_base.html" %}
+{% load cms_tags menu_tags i18n sekizai_tags %}
+
+{% block body_extra_class %}accounts{% endblock %}
+
+
+{% block content %}
+<section class="account">
+    <div class="row">
+        <div class="small-8 columns">
+            (( profile ))
+        </div>
+        <div class="small-4 columns">
+            (( sidebar ))
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block footer %}
+	{% placeholder "footer" inherit or %}{% show_placeholder "footer" "base" %}{% endplaceholder %}
+{% endblock %}
+
+
