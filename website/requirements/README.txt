@@ -5,7 +5,7 @@ modules/tools/libs not covered by pip
 
 ## debian
 
-aptitude ***
+aptitude install libxml2-dev libxslt1-dev python-dev
 
 
 

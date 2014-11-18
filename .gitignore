@@ -15,7 +15,7 @@ website/logs
 website/media
 website/components
 website/static
-website/site-static/css
+# website/site-static/css
 website/site-static/.sass-cache
 website/reports
 website/device_data

@@ -1,6 +1,6 @@
 proc_name = "openbroadcast.ch"
 backlog = 2048
-bind = "0.0.0.0:8004"
+bind = "0.0.0.0:8002"
 pidfile = "/home/django/run/openbroadcast.ch.pid"
 daemon = False
 debug = False
