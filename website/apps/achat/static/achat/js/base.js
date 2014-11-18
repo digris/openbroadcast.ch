@@ -147,7 +147,7 @@ AchatApp = function () {
     };
 
     this.load = function () {
-        var url = 'http://local.openbroadcast.ch:8081/api/v1/chat/message/' + '?limit=' + self.max_messages;
+        var url = '/api/v1/chat/message/' + '?limit=' + self.max_messages;
         $.get(url, function (data) {
             $.each(data.objects.reverse(), function (i, message) {
                 self.add_message(message);
