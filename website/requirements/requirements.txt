@@ -28,8 +28,7 @@ django-compressor==1.3
 django-countries==2.1.2
 django-crispy-forms==1.4.0
 django-debug-toolbar==1.2.1
-django-crispy-forms
--e git+https://github.com/hzlf/django-easy-badbrowser.git@0fc653338562854d96a2e9b8d793e8c7ad01ec38#egg=django_easy_badbrowser-master
+-e git+https://github.com/hzlf/django-easy-badbrowser.git#egg=django_easy_badbrowser-master
 django-email-as-username==1.6.7
 django-emailit==0.2.1
 django-extensions==1.4.0
@@ -76,7 +75,7 @@ python-mimeparse==0.1.4
 pytz==2014.7
 raven==5.0.0
 redis==2.10.3
--e git+https://github.com/hzlf/django-relatedadminlinks.git@efb52ccb6ada9146c990ae924f31969999f53518#egg=relatedadminlink-dev
+-e git+https://github.com/hzlf/django-relatedadminlinks.git#egg=relatedadminlink-dev
 reportlab==3.1.8
 requests==2.4.1
 requests-oauthlib==0.4.1

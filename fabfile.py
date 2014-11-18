@@ -23,13 +23,13 @@ definition instances
 """
 def openbroadcast_ch():
     env.site_id = 'openbroadcast.ch'
-    env.hosts = ['node05.scd.hazelfire.com',]
+    env.hosts = ['node05.obp',]
     env.ci_host = 'ci.lab.anorg.net'
     env.git_url = 'git@lab.hazelfire.com:hazelfire/obp/openbroadcast-ch.git'
     env.git_branch = 'development'
     #env.git_branch = 'master'
     env.path = '/var/www/openbroadcast.ch'
-    env.storage = '/storage/shared/openbroadcast.ch'
+    env.storage = '/nas/storage/prod.openbroadcast.ch'
     env.user = 'root'
 
 
@@ -214,59 +214,19 @@ def deploy():
                 pass
 
             """
-            additional configs
-            """
-            try:
-                run('rm %s/%s' % (env.nginx, env.site_id))
-                run('ln -s %s/src/conf/%s.nginx.conf %s/%s' % (env.path, env.site_id, env.nginx, env.site_id))
-            except Exception, e:
-                pass
-
-
-            """
             (re)start supervisor workers
             """
-            try:
-                # restart gunicorn webserver
-                pass
-                #run('supervisorctl reread')
-                #run('supervisorctl update')
-                #run('supervisorctl restart %s' % env.site_id)
-            except Exception, e:
-                pass
-
-            #reload_gunicorn()
             print green('reloading application server')
             run('supervisorctl restart %s' % env.site_id)
             print green('status for: %s' % env.site_id)
             run('supervisorctl status | grep %s' % env.site_id)
             print green('*' * 72)
 
-
-
             with cd(env.path):
                 try:
                     run('rm -R src_old')
                 except Exception, e:
                     print e
-
-
-def reload_gunicorn():
-
-
-    try:
-        r = run('supervisorctl status %s' % env.site_id)
-        pid = r.split()[3].rstrip(', ')
-        pid = int(pid)
-        print 'PID: %s' % pid
-        run('kill -s HUP %s' % pid)
-
-    except Exception, e:
-        print '!!!!!!!!! WARNING !!!!!!!!!!!!!'
-        print 'unable to send HUP to gunicorn'
-        print e
-        print '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-
 
 """
 translation related
