@@ -17,7 +17,8 @@ def ajax_login(request):
             login(request, form.get_user())
             return HttpResponse(json.dumps({'success': 'ok'})
                 , mimetype='application/json')
-    return render(request, 'templates/ajax_login.html', {'form': form})
+    return render(request, 'ajaxlogin/ajax_registration_modal.html', {'form': form})
+    #return render(request, 'ajaxlogin/ajax_login.html', {'form': form})
 
 
 def ajax_registration(request):
@@ -27,9 +28,9 @@ def ajax_registration(request):
         if form.is_valid():
             return HttpResponse(json.dumps({'success': 'ok', 'mail_activation': True})
                 , mimetype='application/json')
-    return render(request, 'templates/ajax_registration.html', {'form': form})
+    return render(request, 'ajaxlogin/ajax_registration.html', {'form': form})
 
 
 def socialauth_success(request):
-    return render(request, 'templates/socialauth_success.html', {})
+    return render(request, 'ajaxlogin/socialauth_success.html', {})
 

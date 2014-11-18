@@ -1,11 +1,11 @@
 {% load crispy_forms_tags i18n %}
-    <form method="post" action="{% url 'views.ajax_login' %}" class="form-horizontal">{% csrf_token %}
-{{ crispy form }}
+    <form method="post" action="{% url 'auth_login_ajax' %}" class="form-horizontal">{% csrf_token %}
+{% crispy form %}
     </form>
 <hr />
     <div class="social_auth">
         <h4 class="text-center">{% trans 'Login using' %}</h4>
-{% include 'templates/social_backends.html' with ajax=True %}
+{% include 'ajaxlogin/social_backends.html' with ajax=True %}
     </div>
 <script>
     /* Auth Providers */

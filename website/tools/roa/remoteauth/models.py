@@ -26,7 +26,7 @@ class Permission(Model, DjangoPermission):
 
     @staticmethod
     def get_resource_url_list():
-        return u'http://127.0.0.1:8081/auth/permission/'
+        return u'http://127.0.0.1:8080/auth/permission/'
 
     @classmethod
     def serializer(cls):
@@ -45,7 +45,7 @@ class Group(Model, DjangoGroup):
 
     @staticmethod
     def get_resource_url_list():
-        return u'http://127.0.0.1:8081/auth/group/'
+        return u'http://127.0.0.1:8080/auth/group/'
 
     @classmethod
     def serializer(cls):
@@ -101,7 +101,7 @@ class User(Model, DjangoUser):
 
     @staticmethod
     def get_resource_url_list():
-        return u'http://127.0.0.1:8081/auth/user/'
+        return u'http://127.0.0.1:8080/auth/user/'
 
     @classmethod
     def serializer(cls):
@@ -121,4 +121,4 @@ if DjangoMessage:
 
         @staticmethod
         def get_resource_url_list():
-            return u'http://127.0.0.1:8081/auth/message/'
+            return u'http://127.0.0.1:8080/auth/message/'

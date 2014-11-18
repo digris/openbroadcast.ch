@@ -89,9 +89,9 @@ CMS_PLACEHOLDER_CONF = {
     },
 }
 
-#CMS_PLUGIN_PROCESSORS = (
-#    'base.cms_plugin_processors.wrap_text',
-#)
+CMS_PLUGIN_PROCESSORS = (
+    'base.cms_plugin_processors.wrap_text',
+)
 
 TEMPLATE_LOADERS = (
     'django_mobile.loader.Loader',

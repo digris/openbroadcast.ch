@@ -30,7 +30,7 @@ var LevelBridge = function () {
             self.socket.on('push', function (data) {
 
                 if (self.debug) {
-                    //console.log('PushyApp - push:', data);
+                    console.log('PushyApp - push:', data);
                 }
 
                 if (data.peak != undefined) {
@@ -53,7 +53,7 @@ var LevelBridge = function () {
 
     this.draw = function(level) {
 
-        var max_element = 386;
+        var max_element = 410;
         var num_element = $('li', self.container).length;
 
         var height = Number(level * 0.6);

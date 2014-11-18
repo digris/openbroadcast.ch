@@ -84,8 +84,9 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'django.contrib.humanize',
-    'authtools',
+    #'authtools',
     'registration',
+    'ajaxlogin',
 
 
     # wip only
@@ -98,6 +99,7 @@ INSTALLED_APPS = (
     # api
 
     # life-savers
+    'crispy_forms',
     'raven.contrib.django.raven_compat',
     'south',
     #'reversion',
@@ -137,7 +139,8 @@ INSTALLED_APPS = (
     # new-school-plugins
     'djangocms_text_ckeditor',
 
-
+    'remoteauth',
+    'apiproxy',
 
     # APPS MIGRATED
     'django_extensions',
@@ -157,10 +160,12 @@ INSTALLED_APPS = (
     'base',
     'bplayer',
     'achat',
+    'onair',
     'backfeed',
     'stationtime',
     #'stories',
     'teaser',
+    'profiles',
 
     # shop
     #'plata',
@@ -170,8 +175,7 @@ INSTALLED_APPS = (
 
 )
 
-
-#AUTH_USER_MODEL = 'authtools.User'
+AUTH_USER_MODEL = 'remoteauth.User'
 
 REGISTRATION_SUPPLEMENT_CLASS = 'wholesale.models.DealerRegistration'
 REGISTRATION_DJANGO_AUTH_URL_NAMES_PREFIX = 'auth_'
@@ -226,8 +230,11 @@ CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
 AUTHENTICATION_BACKENDS = (
     #'emailusernames.backends.EmailAuthBackend',
     # Uncomment the following to make Django tests pass:
-    'django.contrib.auth.backends.ModelBackend',
-    'guardian.backends.ObjectPermissionBackend',
+    #'django.contrib.auth.backends.ModelBackend',
+    #'guardian.backends.ObjectPermissionBackend',
+
+    'remoteauth.backends.RemoteUserBackend',
+
 )
 ANONYMOUS_USER_ID = -1
 ACCOUNT_ACTIVATION_DAYS = 7

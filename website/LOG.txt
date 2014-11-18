@@ -1,0 +1,10 @@
+
+
+
+# adding roa
+
+ - https://bitbucket.org/david/django-roa/wiki/GettingStarted
+
+
+pip install djangorestframework
+pip install restkit

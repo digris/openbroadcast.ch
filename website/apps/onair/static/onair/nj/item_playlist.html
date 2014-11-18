@@ -1,0 +1,65 @@
+{% set item = object.emission.content_object %}
+
+{% if item %}
+    <div data-ct="playlist" class="ct-panel">
+
+        <div class="row header">
+            <div class="small-6 columns">
+                {% if item.main_image %}
+                <img src="{{ base_url }}{{ item.main_image }}">
+                {% else %}
+                <span>*</span>
+                {% endif %}
+            </div>
+            <div class="small-6 columns">
+                <div class="text-left">
+                    <h1>{{ item.name|truncate(24) }}</h1>
+                    <ul class="no-bullet">
+
+                        <li>
+                            {{ object.emission.time_start|datetime2hhmm }}
+                            -
+                            {{ object.emission.time_end|datetime2hhmm }}
+                        </li>
+
+                        {% if item.duration %}
+                        <li>
+                            {{ item.duration|ms2time }}
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row body">
+            <div class="small-12 columns">
+                {% if item.description %}
+                <p>
+                    {{ item.description|truncate(240) }}
+                </p>
+                {% endif %}
+
+
+                {% if debug %}
+                <p>
+                    <a href="{{ item.resource_uri }}">{{ item.resource_uri }}</a>
+                </p>
+                <p>
+                    <a href="{{ object.item.resource_uri }}">{{ object.item.resource_uri }}</a>
+                </p>
+                {% endif %}
+
+            </div>
+        </div>
+
+        {% if item.d_tags %}
+        <div class="row tags">
+            <div class="small-12 columns">
+                {{ item.d_tags }}
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+{% endif %}

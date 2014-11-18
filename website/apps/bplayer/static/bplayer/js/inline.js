@@ -1,3 +1,6 @@
+
+
+;
 var BPlayerApp = function () {
 
     var self = this;
@@ -9,6 +12,8 @@ var BPlayerApp = function () {
     this.playing_uuids = [];
     this.sm2;
     this.current_sound;
+    this.stream_url = 'http://stream.openbroadcast.ch:80/openbroadcast';
+    // this.stream_url = 'http://pypo:80/master.mp3';
     this.r;
     this.style = 'large'
     this.states = ['init', 'ready', 'playing', 'stopped', 'paused', 'loading', 'error'];
@@ -52,14 +57,16 @@ var BPlayerApp = function () {
             url: self.static_url + 'bplayer/swf/lib/soundmanager2_flash9_debug.swf',
             flashVersion: 9,
             preferFlash: false,
-            debugMode: false,
-            //debugFlash: true,
+            //debugMode: false,
+            debugFlash: true,
             onready: function () {
+
                 console.log('sm2 ready');
 
                 self.current_sound = soundManager.createSound({
                     autoLoad: true,
                     autoPlay: false,
+                    stream: true,
                     onplay: self.events.play,
                     onstop: self.events.stop,
                     onpause: self.events.pause,
@@ -98,6 +105,7 @@ var BPlayerApp = function () {
             self.controls({action: 'next'});
         },
         whileloading: function () {
+            //self.state_change('loading');
             self.loading(this);
         },
         whileplaying: function () {
@@ -115,8 +123,32 @@ var BPlayerApp = function () {
         var classes = removeA(self.states.slice(0), state).join(' ');
 
         self.container.addClass(state).removeClass(classes);
-
         self.state = state;
+
+
+
+        // TODO: this is a hack!!! implement properly if wished to use!
+        if (state == 'paused' || state == 'stopped') {
+
+
+            var heights = [50, 90, 50, 40, 20, 30, 70];
+            $('#levelbridge_icon span').each(function (i, el) {
+                $(this).animate({
+                    height: heights[i] + '%'
+                }, {
+                  duration: 1500,
+                  //easing: "easein"
+                })
+            });
+
+            $('.info-container .action').fadeIn(500);
+
+        };
+        if (state == 'playing') {
+            $('.info-container .action').fadeOut(200);
+        };
+
+
 
     };
 
@@ -174,8 +206,7 @@ var BPlayerApp = function () {
             e.preventDefault();
 
             var sound = {
-                url: 'http://stream.openbroadcast.ch:80/openbroadcast'
-                //url: 'http://node06.obp:8000/master.mp3'
+                url: self.stream_url
             }
             self.current_sound.load(sound);
             self.current_sound.play();
@@ -183,17 +214,15 @@ var BPlayerApp = function () {
         });
 
 
-        $('body').on('click', 'a[data-action="listen"]', function (e) {
+        $('body').on('click', '[data-action="listen"]', function (e) {
             e.preventDefault();
 
             var sound = {
-                url: 'http://stream.openbroadcast.ch:80/openbroadcast'
-                //url: 'http://node06.obp:8000/master.mp3'
+                url: self.stream_url
             }
             self.current_sound.load(sound);
             self.current_sound.play();
 
-            $(this).parents('.action').fadeOut(1000)
 
         });
 
@@ -390,6 +419,7 @@ var BPlayerApp = function () {
                 url: decodeURI(url),
                 autoLoad: true,
                 autoPlay: false,
+                stream: true,
                 onplay: self.events.play,
                 onstop: self.events.stop,
                 onpause: self.events.pause,

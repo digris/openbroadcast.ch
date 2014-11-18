@@ -1,0 +1,38 @@
+<!-- item in this context: "track" - active or history -->
+<div
+    class="item info {{ extra_classes }}"
+    id="{{ dom_id }}">
+
+    <!-- base container - media -->
+    <div class="container front"
+         {% if object.item.release.main_image %}
+         style="background: url({{ base_url }}{{ object.item.release.main_image }});">
+         {% else %}
+         style="background: #000;">
+         {% endif %}
+
+        <div class="wrapper">
+            <div data-action="listen" class="action hoverable">
+                <span>
+                    <a href="#" data-action="listen">Listen</a>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- swapable container - artist/label/etc -->
+    <div class="container back">
+
+
+        {% include "onair/nj/item_playlist.html" %}
+
+        {% include "onair/nj/item_media.html" %}
+        {% include "onair/nj/item_artist.html" %}
+        {% include "onair/nj/item_release.html" %}
+
+
+
+    </div>
+
+</div>
+<!-- item end -->

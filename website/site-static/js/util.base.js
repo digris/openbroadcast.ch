@@ -5,6 +5,7 @@
 
 var util = util || {};
 
+
 util.uri_param_insert = function(sourceUrl, parameterName, parameterValue, replaceDuplicates) {
 
 	if((sourceUrl == null) || (sourceUrl.length == 0))
@@ -152,6 +153,28 @@ util.get_position = function(e) {
 		"y" : y
 	};
 };
+
+
+/**
+ * checks if url is on external site
+ * @param url
+ * @returns {boolean}
+ */
+util.is_external = function(url) {
+    // chek if relative
+    if(url.substring(0,1) == '/') {
+        return false;
+    };
+    // compare to current domain
+    var domain = function(url) {
+        return url.replace('http://','').replace('https://','').split('/')[0];
+    };
+    return domain(location.href) !== domain(url);
+};
+
+
+
+
 
 /*
  * seen at:

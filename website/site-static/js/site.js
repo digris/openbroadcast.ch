@@ -1,10 +1,19 @@
 var SiteUI = function () {
 
     var self = this;
-    self.navigation_active = false;
-    self.is_retina = false;
+    this.navigation_active = false;
+    this.is_retina = false;
+    this.colors = [
+        '#21D9EA',
+        '#6C74EE',
+        '#75DB87',
+        '#609E80'
+    ];
+    this.current_color = 0;
 
-    self.hover_timeouts = [];
+    this.remote_window = false;
+
+    this.hover_timeouts = [];
 
     this.bindings = function () {
 
@@ -47,27 +56,43 @@ var SiteUI = function () {
             self.layout();
         });
 
+
+        // handling urls on external sites
+        $('body__').on('click', 'a', function(e){
+
+            var url = $(this).attr('href');
+
+            if(url != '#' && util.is_external(url)) {
+                e.preventDefault();
+                self.remote_window = window.open(url);
+            }
+
+        });
+
     };
 
 
+    this.set_color = function() {
+
+        var color = self.colors[self.current_color];
+
+        var color = self.colors[Math.floor(Math.random() * self.colors.length)];
 
 
+        $('html *[data-livebg]').animate({
+            backgroundColor: color
+        }, 500 );
+    };
 
+
+    /*
+    layout method, called as well on window resize
+     */
     this.layout = function() {
 
-        //$('body *[data-livebg]').css('background', '#00ffff');
-
-		var rgb = new Array();
-		rgb[0] = Math.round(Math.random() * 155 + 100) ;
-    	rgb[1] = Math.round(Math.random() * 155 + 100) ;
-    	rgb[2] = Math.round(Math.random() * 155 + 100) ;
-
-        var new_color = 'rgb('+rgb[0]+','+rgb[1]+','+rgb[2]+')';
-
-        $('body *[data-livebg]').animate({
-            backgroundColor: new_color
-        }, 500 );
-
+        // hack!
+        var ice = $('.info-container .items');
+        ice.height(ice.width());
     };
 
 
@@ -77,6 +102,7 @@ var SiteUI = function () {
         self.is_retina = isRetinaDisplay();
 
         self.layout();
+        self.set_color();
         self.bindings();
 
     })();

@@ -1,240 +1,253 @@
 {% load cms_tags compress sekizai_tags i18n menu_tags bplayer_tags backfeed_tags %}<!doctype html>
 <html class="no-js" lang="{{ LANGUAGE_CODE }}">
-    <head>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        <title>{% block title %}{% page_attribute 'page_title' %}{% endblock %}{% block title-page %}{% endblock %}</title>
+    <title>{% block title %}{% page_attribute 'page_title' %}{% endblock %}{% block title-page %}{% endblock %}</title>
 
-        <meta name="description" content="{% block meta_description %}{% page_attribute 'meta_description' %}{% endblock %}{% block meta_description_page %}{% endblock %}"/>
-        <meta name="keywords" content="{% block meta_keywords %}{% endblock %}"/>
-        <meta name="author" content="palmbeach interactive"/>
-        <meta name="generator" content="A.W.F."/>
-        <meta name="version" content="14.05.01"/>
+    <meta name="description"
+          content="{% block meta_description %}{% page_attribute 'meta_description' %}{% endblock %}{% block meta_description_page %}{% endblock %}"/>
+    <meta name="keywords" content="{% block meta_keywords %}{% endblock %}"/>
+    <meta name="author" content="palmbeach interactive"/>
+    <meta name="generator" content="A.W.F."/>
+    <meta name="version" content="14.05.01"/>
 
-        <meta http-equiv="last-modified" content="{% page_attribute 'changed_date' %} UTC"/>
+    <meta http-equiv="last-modified" content="{% page_attribute 'changed_date' %} UTC"/>
 
-        {% block meta_opengraph %}{% endblock %}
+    {% block meta_opengraph %}{% endblock %}
 
-        <link rel="icon" type="image/png" href="{{ STATIC_URL }}img/base/icon.png"/>
+    <link rel="icon" type="image/png" href="{{ STATIC_URL }}img/base/icon.png"/>
 
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/screen.css" id="style_light"  />
-        <!--
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/screen-dark.css" id="style_dark" disabled />
-        -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/screen.css" id="style_light"/>
+    <!--
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/screen-dark.css" id="style_dark" disabled />
+    -->
 
-        {% compress css %}
+    {% compress css %}
 
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/print.css" media="print"/>
-        {% endcompress %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/print.css" media="print"/>
+    {% endcompress %}
 
-        <!--[if lt IE 9]>
-        <script src="{{ STATIC_URL }}js/browser_hacks/html5shiv.js"></script>
-        <script src="{{ STATIC_URL }}js/browser_hacks/nwmatcher-1.2.5-min.js"></script>
-        <script src="{{ STATIC_URL }}js/browser_hacks/selectivizr-1.0.3b.js"></script>
-        <script src="{{ STATIC_URL }}js/browser_hacks/respond.min.js"></script>
-        <![endif]-->
+    <!--[if lt IE 9]>
+    <script src="{{ STATIC_URL }}js/browser_hacks/html5shiv.js"></script>
+    <script src="{{ STATIC_URL }}js/browser_hacks/nwmatcher-1.2.5-min.js"></script>
+    <script src="{{ STATIC_URL }}js/browser_hacks/selectivizr-1.0.3b.js"></script>
+    <script src="{{ STATIC_URL }}js/browser_hacks/respond.min.js"></script>
+    <![endif]-->
 
-        {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
+    {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
 
-        <script src="{{ STATIC_URL }}js/lib/modernizr.js"></script>
-        <script src="{{ STATIC_URL }}js/lib/jquery-2.1.0.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/modernizr.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/jquery-2.1.0.js"></script>
 
-        <!--<script src="{{ STATIC_URL }}turbolinks/turbolinks.js"></script>-->
-        <script src="{{ STATIC_URL }}js/lib/textcomplete-0.3.3/jquery.textcomplete.js"></script>
-
-
-        <script src="{{ STATIC_URL }}bplayer/js/lib/sm2/soundmanager2.js"></script>
-        <script src="{{ STATIC_URL }}bplayer/js/inline.js"></script>
+    <!--<script src="{{ STATIC_URL }}turbolinks/turbolinks.js"></script>-->
+    <script src="{{ STATIC_URL }}js/lib/textcomplete-0.3.3/jquery.textcomplete.js"></script>
 
 
-
-        {% block link %}{% endblock link %}
-
-        {% comment %}
-        {% block script %}{% endblock script %}
-        {% endcomment %}
-
-        {% render_block "css" %}
-        <!--
-        <script type="text/javascript" src="http://fast.fonts.net/jsapi/1ca04628-74f1-4059-8dd2-c91d0a2a63bc.js"></script>
-        -->
-    </head>
-    <body id="base" class="{% block body_extra_class %}{% endblock %}">
-
-        {% cms_toolbar %}
-        <div class="sticky contain-to-grid_">
-            <nav class="top-bar" data-topbar data-livebg>
+    <script src="{{ STATIC_URL }}bplayer/js/lib/sm2/soundmanager2.js"></script>
+    <script src="{{ STATIC_URL }}bplayer/js/inline.js"></script>
 
 
-                <ul class="title-area">
-                    <!-- Title Area -->
-                    <li class="name">
-                        <h1>
-                            <a href="/">
-                                <!--<img src="{{ STATIC_URL }}img/base/logo.black.svg">-->
-                                <div id="levelbridge_icon">
-                                    <ul></ul>
-                                </div>
-                            </a>
-                        </h1>
-                    </li>
-                    <!--<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>-->
-                    <li class="toggle-topbar menu-icon"><a data-no-turbolink href="#">Menu</a></li>
-                </ul>
+    {% block link %}{% endblock link %}
+
+    {% comment %}
+    {% block script %}{% endblock script %}
+    {% endcomment %}
+
+    {% render_block "css" %}
+    <!--
+    <script type="text/javascript" src="http://fast.fonts.net/jsapi/1ca04628-74f1-4059-8dd2-c91d0a2a63bc.js"></script>
+    -->
+</head>
+<body id="base" class="{% block body_extra_class %}{% endblock %}" data-livebg__>
+
+{% cms_toolbar %}
+<div class="sticky contain-to-grid_">
+    <nav class="top-bar" data-topbar data-livebg>
 
 
-                <section class="top-bar-section">
-                    <ul class="left">
-                        <!--<li class="divider"></li>-->
-                        {% show_menu 0 100 100 100 "_layout/_navigation.html" %}
-                    </ul>
+        <ul class="title-area">
+            <!-- Title Area -->
+            <li class="name">
+                    <!--<img src="{{ STATIC_URL }}img/base/logo.black.svg">-->
+                <a href="/">
+                    <div id="levelbridge_icon" class="logo-icon">
+                        <ul>
+                            <li><span style="height: 50%;"></span></li>
+                            <li><span style="height: 90%;"></span></li>
+                            <li><span style="height: 50%;"></span></li>
+                            <li><span style="height: 40%;"></span></li>
+                            <li><span style="height: 20%;"></span></li>
+                            <li><span style="height: 30%;"></span></li>
+                            <li><span style="height: 70%;"></span></li>
+                        </ul>
+                    </div>
+                    <div class="logo-text">
+                        <span>open broadcast</span>
+                    </div>
+                </a>
+            </li>
+            <!--<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>-->
+            <li class="toggle-topbar menu-icon"><a data-no-turbolink href="#">Menu</a></li>
+        </ul>
 
-                    <ul class="right">
-                        {% include "_layout/_socialbar.html" %}
-                    </ul>
 
-                    <ul class="right">
-                        {% include "_layout/_accountbar.html" %}
-                    </ul>
+        <section class="top-bar-section center">
+            <ul>
+                {% show_menu 0 100 100 100 "_layout/_navigation.html" %}
+            </ul>
+        </section>
+
+        <section class="top-bar-section right">
+            <!--
+            <ul>
+                {% include "_layout/_socialbar.html" %}
+            </ul>
+            -->
+            <ul>
+                {% include "_layout/_accountbar.html" %}
+            </ul>
+
+        </section>
+    </nav>
+</div>
+<header>
+    {% block teaser %}{% endblock %}
+</header>
 
 
-                </section>
-            </nav>
+<div class="container" id="content_base">
+
+
+    {% block splash %}<!-- passed by: _cms/home.html -->{% endblock %}
+
+    <!-- message container -->
+    {% if messages %}
+    <div class="row">
+        <div class="small-12 columns">
+            <ul class="messages">
+                {% for message in messages %}
+                <li
+                {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|linebreaksbr }}</li>
+                {% endfor %}
+            </ul>
         </div>
-        <header>
-            {% block teaser %}{% endblock %}
-        </header>
+    </div>
+    {% endif %}
+    <!-- end message container -->
+
+
+    {% block main_content %}{% endblock %}
+
+    {% bplayer_inline %}
 
 
 
-
-        <div class="container" id="content_base">
-
-
-            {% block splash %}<!-- passed by: _cms/home.html -->{% endblock %}
-
-            <!-- message container -->
-            {% if messages %}
-            <div class="row">
-                <div class="small-12 columns">
-                    <ul class="messages">
-                        {% for message in messages %}
-                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|linebreaksbr }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            {% endif %}
-            <!-- end message container -->
+    {% if user.is_authenticated %}
+    {# backfeed_inline #}
+    {% endif %}
 
 
-            {% block main_content %}{% endblock %}
-            {# block content #}{# endblock #}
-            {# include "_layout/_footer.html" #}
+</div>
 
-            {% include "_ptype/_levelbridge.html" %}
+<div id="at_content"></div>
 
-            {% bplayer_inline %}
+<div id="fb-root"></div>
 
-            {% if user.is_authenticated %}
-            {# backfeed_inline #}
-            {% endif %}
-
-
-
-        </div>
-
-        <div id="at_content"></div>
-
-        <div id="fb-root"></div>
-
-        {% compress js %}
-        <script src="{{ STATIC_URL }}js/lib/jquery-ui-1.10.4.custom.js"></script>
-        <script src="{{ STATIC_URL }}js/lib/fastclick.js"></script>
-        <script src="{{ STATIC_URL }}js/lib/fd5/foundation.min.js"></script>
-
-        <!-- other libraries -->
-        <script src="{{ STATIC_URL }}js/lib/nunjucks/nunjucks-dev.js"></script>
-        <script src="{{ STATIC_URL }}js/lib/nunjucks/filters.js"></script>
-        <script src="{{ STATIC_URL }}js/lib/featherlight.js"></script>
-        <script src="{{ STATIC_URL }}js/lib/jquery.imageloader.js"></script>
-        <script src="{{ STATIC_URL }}js/lib/jquery.hoverIntent-1.8.0.js"></script>
-        <script src="{{ STATIC_URL }}js/lib/jquery.color-2.1.2.js"></script>
-        <script src="{{ STATIC_URL }}js/lib/lorem.js"></script>
+<script>
+    var settings = {
+        'username': '{{ request.user.username }}'
+    };
+</script>
 
 
+{% compress js %}
+<script src="{{ STATIC_URL }}js/lib/jquery-ui-1.10.4.custom.js"></script>
+<script src="{{ STATIC_URL }}js/lib/fastclick.js"></script>
+<script src="{{ STATIC_URL }}js/lib/fd5/foundation.min.js"></script>
 
-        <!-- global scripts -->
-        <script src="{{ STATIC_URL }}js/lib/ba-debug.js"></script>
-        <script src="{{ STATIC_URL }}js/site.js"></script>
-        <script src="{{ STATIC_URL }}js/util.base.js"></script>
-
-        <!-- app scripts -->
-        <script src="{{ STATIC_URL }}achat/js/base.js"></script>
-        <script src="{{ STATIC_URL }}stationtime/js/base.js"></script>
-
-
-        {% endcompress %}
-
-
-
-
-        <script>
+<!-- other libraries -->
+<script src="{{ STATIC_URL }}js/lib/nunjucks/nunjucks-dev.js"></script>
+<script src="{{ STATIC_URL }}js/lib/nunjucks/filters.js"></script>
+<script src="{{ STATIC_URL }}js/lib/featherlight.js"></script>
+<script src="{{ STATIC_URL }}js/lib/jquery.imageloader.js"></script>
+<script src="{{ STATIC_URL }}js/lib/jquery.hoverIntent-1.8.0.js"></script>
+<script src="{{ STATIC_URL }}js/lib/jquery.color-2.1.2.js"></script>
+<script src="{{ STATIC_URL }}js/lib/lorem.js"></script>
 
 
+<!-- global scripts -->
+<script src="{{ STATIC_URL }}js/lib/ba-debug.js"></script>
+<script src="{{ STATIC_URL }}js/site.js"></script>
+<script src="{{ STATIC_URL }}js/util.base.js"></script>
 
 
-            $(document).foundation({
-                reveal: {
-                    animation: 'fade',
-                    animation_speed: 50
-                },
-                tooltip: {
-                    disable_for_touch: true
-                },
-                topbar: {
-                    custom_back_text: false,
-                    is_hover: false,
-                    mobile_show_parent_link: true
-                }
-            });
+<!-- prototype scripts -->
+<script src="http://127.0.0.1:8088/socket.io/socket.io.js"></script>
+<script src="{{ STATIC_URL }}js/ptype/levelbridge.js"></script>
+<script src="{{ STATIC_URL }}onair/js/base.js"></script>
+<script src="{{ STATIC_URL }}js/ptype/home.js"></script>
+
+<!-- app scripts -->
+<script src="{{ STATIC_URL }}achat/js/base.js"></script>
+<script src="{{ STATIC_URL }}stationtime/js/base.js"></script>
 
 
-            $(function(){
-                if (!nunjucks.env) {
-                    nunjucks.env = new nunjucks.Environment(new nunjucks.HttpLoader('{{ STATIC_URL }}'));
-                }
-                nj = nunjucks.env;
-            });
+{% endcompress %}
 
 
-
-            // stationtime
-            st = new StationTimeApp();
-            st.api_url = '{% url "stationtime-current-time" %}';
-            st.container = $('#station_time');
-            st.init();
+<script>
 
 
-        </script>
+    $(document).foundation({
+        reveal: {
+            animation: 'fade',
+            animation_speed: 50
+        },
+        tooltip: {
+            disable_for_touch: true
+        },
+        topbar: {
+            custom_back_text: false,
+            is_hover: false,
+            mobile_show_parent_link: true
+        }
+    });
 
 
-
-        {% render_block "js_ext" %}
-        {% render_block "js" postprocessor "compressor.contrib.sekizai.compress" %}
-
-        {% render_block "js-post" %}
-
-        <!--[if lt IE 9]>
-        <script src="{{ STATIC_URL }}js/browser_hacks/rem.js"></script>
-        <![endif]-->
-
-        <!-- add this sidebar -->
-        <!-- Go to www.addthis.com/dashboard to customize your tools -->
-        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-54071ec501612877"></script>
+    $(function () {
+        if (!nunjucks.env) {
+            nunjucks.env = new nunjucks.Environment(new nunjucks.HttpLoader('{{ STATIC_URL }}'));
+        }
+        nj = nunjucks.env;
+        nj = nunjucks_register_filters(nj);
+    });
 
 
+    // stationtime
+    st = new StationTimeApp();
+    st.api_url = '{% url "stationtime-current-time" %}';
+    st.container = $('#station_time');
+    st.init();
 
-    </body>
+
+</script>
+
+
+{% render_block "js_ext" %}
+{% render_block "js" postprocessor "compressor.contrib.sekizai.compress" %}
+
+{% render_block "js-post" %}
+
+<!--[if lt IE 9]>
+<script src="{{ STATIC_URL }}js/browser_hacks/rem.js"></script>
+<![endif]-->
+
+<!-- add this sidebar -->
+<!-- Go to www.addthis.com/dashboard to customize your tools
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-54071ec501612877"></script>
+ -->
+
+</body>
 </html>

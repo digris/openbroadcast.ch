@@ -15,14 +15,15 @@ def wrap_text(instance, placeholder, rendered_content, original_context):
 
 
         # For simplicity's sake, construct the template from a string:
-        t = Template('<div class="' + str(instance.plugin_type).lower() + '_holder cmsplugin_holder"><div class="clearfix"></div></div>')
+        t = Template('<div class="' + str(instance.plugin_type).lower() + '_holder cmsplugin_holder">{{ content }}</div>')
         # Prepare that template's context:
+        print '?????'
+        print rendered_content
         c = Context({
             'content': rendered_content,
-            # Some plugin models might allow you to customize the colors,
-            # for others, use default colors:
-            'background_color': instance.background_color if hasattr(instance, 'background_color') else 'lightyellow',
-            'border_color': instance.border_color if hasattr(instance, 'border_color') else 'lightblue',
         })
         # Finally, render the content through that template, and return the output
+
+        print t.render(c)
+
         return t.render(c)

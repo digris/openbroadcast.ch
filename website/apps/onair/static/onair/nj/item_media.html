@@ -1,0 +1,66 @@
+{% set item = object.item %}
+
+<div data-ct="media" class="ct-panel">
+
+    <div class="row header">
+        <div class="small-6 columns">
+            {% if item.release.main_image %}
+            <img src="{{ base_url }}{{ item.release.main_image }}">
+            {% else %}
+            <span>*</span>
+            {% endif %}
+        </div>
+        <div class="small-6 columns">
+            <div class="text-left">
+                <h1>{{ item.name|truncate(24) }}</h1>
+                <ul class="no-bullet">
+                    {% if item.mediatype or item.version %}
+                    <li>
+                        {% if item.mediatype %}
+                            {{ item.mediatype|capitalize }}
+                        {% endif %}
+                        {% if item.version %}
+                            ({{ item.version|capitalize }})
+                        {% endif %}
+                    </li>
+                    {% endif %}
+                    {% if item.duration %}
+                    <li>
+                        {{ item.duration|ms2time }}
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row body">
+        <div class="small-12 columns">
+            {% if item.description %}
+            <p>
+                {{ item.description|truncate(240) }}
+            </p>
+            {% endif %}
+
+
+            {% if debug %}
+            <p>
+                <a href="{{ item.resource_uri }}">{{ item.resource_uri }}</a>
+            </p>
+            <p>
+                <a href="{{ object.item.resource_uri }}">{{ object.item.resource_uri }}</a>
+            </p>
+            {% endif %}
+
+        </div>
+    </div>
+
+    {% if item.d_tags %}
+    <div class="row tags">
+        <div class="small-12 columns">
+            {{ item.d_tags }}
+        </div>
+    </div>
+    {% endif %}
+
+</div>

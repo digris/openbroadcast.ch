@@ -1,37 +1,58 @@
+// global cms container
+.content-container.cms
+  //background: #ffff00
+  // background handled through 'livebg'
+
 // text styling
+.textplugin_holder
+  max-width: 740px
+  margin: 16px auto
+  font-weight: 300
 
-.cmsplugin_holder
+  padding: 4px 0 16px
+  border-bottom: 2px solid #000
 
-  margin-bottom: 14px
-  padding-bottom: 14px
-
-  border-bottom: 1px solid $grey-light
-  &:last-child, &:first-child
-    border-bottom: none
-
-
-  h1, h2, h3, h4, h5, h6
-    color: $grey-dark
-
-    &.highlight
-      color: $primary-color
-
-  h1.highlight
-    margin-top: 70px
-    font-size: rem-calc(50)
+  &:first-child
+    border-top: 2px solid #000
+    padding-top: 16px
+    margin-top: 54px
 
   p
-    max-width: 720px
-    padding: 0 0 12px 0
+    text-indent: 30px
 
-    &.unpadded
-      padding: 0
-      margin: 0
 
-  blockquote
-    margin: 16px 0
-    padding: 0 16px 0 16px
-    border-left-width: 4px
+
+  &.__disabled__
+    margin-bottom: 14px
+    padding-bottom: 14px
+
+    border-bottom: 1px solid $grey-light
+    &:last-child, &:first-child
+      border-bottom: none
+
+
+    h1, h2, h3, h4, h5, h6
+      color: $grey-dark
+
+      &.highlight
+        color: $primary-color
+
+    h1.highlight
+      margin-top: 70px
+      font-size: rem-calc(50)
+
     p
-      padding: 0
-      margin: 0
+      //max-width: 720px
+      //padding: 0 0 12px 0
+
+      &.unpadded
+        padding: 0
+        margin: 0
+
+    blockquote
+      margin: 16px 0
+      padding: 0 16px 0 16px
+      border-left-width: 4px
+      p
+        padding: 0
+        margin: 0

@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 
 admin.autodiscover()
 
-from bshop.views import shop
+#from bshop.views import shop
 
 urlpatterns = i18n_patterns('',
     # Examples:
@@ -30,19 +30,15 @@ urlpatterns = i18n_patterns('',
     #url(r'^accounts/', include('bshop.urls')),
 
     url(r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^ajaxlogin/', include('ajaxlogin.urls')),
     url(r'^sa/', include('social_auth.urls')),
     url(r'^feedback/', include('backfeed.urls')),
     url(r'^stationtime/', include('stationtime.urls')),
 
-    # "dealer"
-    url(r'^wholesale/', include('wholesale.urls')),
-
-    url(r'^shop/', include(shop.urls)),
-    url(r'^shop/reporting/',  include('plata.reporting.urls')),
 
     # api
     #url(r'^api/', include(api.urls)),
-    url(r'^api/', include('project.urls_api')),
+
     url(r'^docs/(?P<path>.*)', login_required(serve), {'document_root': '../doc/_build/html'}, 'docs'),
 
     # browser detectioin
@@ -52,6 +48,14 @@ urlpatterns = i18n_patterns('',
     #url(r'^accounts/', include('registration.backends.default.urls')),
 
 
+
+)
+
+urlpatterns += patterns('',
+    url(r'^api/', include('project.urls_api')),
+)
+
+urlpatterns += i18n_patterns('',
     url(r'^', include('cms.urls')),
 )
 

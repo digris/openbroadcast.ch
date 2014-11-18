@@ -26,8 +26,6 @@ var nunjucks_register_filters = function (nj) {
         } catch (e) {
             return '';
         }
-
-
     });
 
     nj.addFilter('highlight', function (str, query) {
@@ -142,11 +140,12 @@ var nunjucks_register_filters = function (nj) {
             if (seconds < 10) {
                 out += '0';
             }
-            out += seconds + ':';
+            out += seconds + '';
         } else {
-            out += '00' + ':';
+            out += '00' + '';
         }
 
+        /*
         if (millis && millis > 0) {
             if (millis < 10) {
                 out += '0';
@@ -155,6 +154,7 @@ var nunjucks_register_filters = function (nj) {
         } else {
             out += '000' + '';
         }
+        */
 
         /*
          if(hours && hours > 0) out += hours + "" + ((hours == 1)?":":":") + "";
@@ -211,6 +211,13 @@ var nunjucks_register_filters = function (nj) {
         }
 
         return out.trim();
+    });
+
+    nj.addFilter('datetime2hhmm', function (datetime) {
+
+        var hhmm = datetime.substr(11, 5);
+
+        return hhmm
     });
 
     nj.addFilter('linebreaksbr', function (str) {

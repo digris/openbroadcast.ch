@@ -494,6 +494,7 @@ if (typeof jQuery === 'undefined') {
     },
 
     _onKeydown: function (e) {
+
       if (!this.shown) { return; }
       if (this.isUp(e)) {
         e.preventDefault();
@@ -1002,6 +1003,8 @@ if (typeof jQuery === 'undefined') {
     // Update the content with the given value and strategy.
     // When an dropdown item is selected, it is executed.
     select: function (value, strategy) {
+
+      /*
       var pre = this.getTextFromHeadToCaret();
       var sel = window.getSelection()
       var range = sel.getRangeAt(0);
@@ -1023,6 +1026,37 @@ if (typeof jQuery === 'undefined') {
       range.collapse(true);
       sel.removeAllRanges();
       sel.addRange(range);
+      */
+
+
+        var pre = this.getTextFromHeadToCaret();
+        var sel = window.getSelection()
+        var range = sel.getRangeAt(0);
+        var selection = range.cloneRange();
+        selection.selectNodeContents(range.startContainer);
+        var content = selection.toString();
+        var post = content.substring(range.startOffset);
+        var newSubstr = strategy.replace(value);
+        if ($.isArray(newSubstr)) {
+            post = newSubstr[1] + post;
+            newSubstr = newSubstr[0];
+        }
+        pre = pre.replace(strategy.match, newSubstr);
+        range.selectNodeContents(range.startContainer);
+        range.deleteContents();
+
+        var dummy = document.createElement('span');
+        dummy.innerHTML = ' ';
+        range.insertNode(dummy);
+
+        var node = range.createContextualFragment(pre + post);
+        range.insertNode(node);
+        range.setStartAfter(dummy);
+        range.collapse(true);
+
+        sel.removeAllRanges();
+        sel.addRange(range);
+
     },
 
     // Private methods

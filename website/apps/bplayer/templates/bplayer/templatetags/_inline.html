@@ -15,16 +15,19 @@
                 <!--
                 <li><a data-bplayer-controls="prev" href="#"><i class="fa fa-fast-backward"></i></a></li>
                 -->
-                <li><a data-bplayer-controls="pause" href="#"><i class="fa fa-pause"></i></a></li>
-                <li><a data-bplayer-controls="resume" href="#"><i class="fa fa-play"></i></a></li>
+                <li style="margin-left: 10px;"><a data-bplayer-controls="pause" href="#"><i class="fa fa-pause"></i></a></li>
+                <!---->
+                <li style="margin-left: 10px;"><a data-bplayer-controls="resume" href="#"><i class="fa fa-play"></i></a></li>
+
                 <!--
                 <li><a data-bplayer-controls="next" href="#"><i class="fa fa-fast-forward"></i></a></li>
                 -->
 
                 <li id="totals_container" class="totals"></li>
 
-
+                <!--
                 <li><a id="bplayer_ios" href="#"><i class="fa fa-play"></i></a></li>
+                -->
 
             </ul>
         </div>
@@ -43,7 +46,12 @@
     </div>
 
     <div class="row">
-        <div class="small-12 columns">
+        <div class="small-1 columns">
+            <div id="__">
+                <img src="http://localhost:8080/media/playlists/7dacf3cf/58d1/41b1/8f35/bf8aa8acfe68.jpg" style="height: 84px; width: 84px;">
+            </div>
+        </div>
+        <div class="small-11 columns">
             <div id="levelbridge">
             <ul>
 
@@ -54,7 +62,9 @@
 
     <div class="row">
         <div class="small-12 columns">
-            <div id="bplayer_playlist_container" class="hidden"></div>
+            <div id="bplayer_playlist_container" class="hidden">
+                <!-- toggled by 'expand' ('toggle-playlist') button in bplayer -->
+            </div>
         </div>
     </div>
 

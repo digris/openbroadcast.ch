@@ -1,0 +1,397 @@
+///////////////////////////////////////////////////
+// full-size screen, used in teaser block / home
+///////////////////////////////////////////////////
+#station_time
+  height: 60px
+  >span
+    border: 2px solid #000
+    padding: 5px 20px 6px
+    font-weight: 300
+    font-size: 16px
+    line-height: 25px
+    letter-spacing: 1px
+
+
+///////////////////////////////////////////////////
+// full width player
+///////////////////////////////////////////////////
+#onair_container
+  background: $primary-color
+  padding: 20px 0
+  position: relative
+
+  // state switches
+  &.onair, &.history
+    .fallback-item
+      display: none
+  &.fallback
+    .info-container
+      .items > .item
+        &:not(.fallback-item)
+          display: none
+          opacity: 0.0
+        &.previous, &.next
+          display: none
+        &.fallback-item
+          opacity: 1.0
+    .meta-container
+      opacity: 0.0
+
+
+  &.history
+    .action
+      display: none !important
+
+
+  .info-container
+    position: relative
+
+    .items
+      z-index: 5
+      //height: 431px
+      -webkit-perspective: 800px
+
+    // slide history
+    .item
+      .container
+        background-color: #000
+
+      &.fallback-item
+        background: #000
+        .action a
+          color: #fff !important
+
+        // open broadcast radio text
+        .header
+          position: absolute
+          top: 20px
+          left: 20px
+          color: #FFF
+          text-align: left
+          font-size: 40px
+          font-weight: normal
+
+        // dab logo
+        .footer
+          position: absolute
+          bottom: 20px
+          right: 20px
+          color: #FFF
+          text-align: right
+          .text
+            position: relative
+            padding-right: 10px
+            +opacity(0.5)
+          img.logo
+            width: 80px
+
+      &.current
+        z-index: 5
+
+      &.next
+        &.next-1
+          -webkit-transform: rotateY(0deg) translateX(1850px) scale(1.3)
+        &.next-2
+          display: none
+        &.next-x
+          display: none
+
+
+      &.previous
+        +opacity(0.5)
+        cursor: pointer
+        z-index: 0
+        .back, .action
+          display: none
+
+        &:hover
+          z-index: 4 !important
+          opacity: 1.0 !important
+
+        &.previous-1
+          -webkit-transform: rotateY(0deg) translateX(-140px) scale(0.9)
+          +opacity(0.7)
+          z-index: 3
+        &.previous-2
+          -webkit-transform: rotateY(0deg) translateX(-280px) scale(0.7)
+          +opacity(0.5)
+          z-index: 2
+        &.previous-3
+          -webkit-transform: rotateY(0deg) translateX(-400px) scale(0.5)
+          +opacity(0.2)
+          display: block !important
+          z-index: 1
+        &.previous-x
+          +opacity(0.0)
+          display: none
+
+    .item.info
+      position: relative
+      width: 100%
+      height: 100%
+      position: absolute
+      -webkit-transition: -webkit-transform 1.0s, opacity 1.0s
+      -webkit-transform-style: preserve-3d
+      &.flipped
+        -webkit-transform: rotateY( -179.999deg )
+        //div.action
+        //  display: none
+
+      .container
+        display: block
+        height: 100%
+        width: 100%
+        position: absolute
+        -webkit-backface-visibility: hidden
+        box-shadow: 2px 2px 14px rgba(0, 0, 0, 0.5)
+
+        background-size: 100% !important
+
+
+
+      .front
+        position: relative
+
+        > div.wrapper
+          padding: 150px 0 0 150px
+
+          .action
+            cursor: pointer
+            width: 120px
+            height: 120px
+            border-radius: 60px
+            background: rgba(255, 255, 255, 0.2)
+            +single-transition(background, 0.4s)
+            span
+              +single-transition(color, 0.4s)
+              font-size: 200%
+              line-height: 411%%
+              font-weight: 300
+              color: #000
+
+            &.hover
+              background: rgba(0, 0, 0, 1.0)
+              +single-transition(background, 0.2s)
+              span a
+                +single-transition(color, 0.5s)
+                color: #fff
+
+
+      .back
+        //box-shadow: -1px -1px 4px rgba(0, 0, 0, 0.3)
+        //position: absolute
+        //top: 100%
+        padding: 20px
+        top: 0
+        background: #000
+        -webkit-transform: rotateY( 180deg )
+        color: #fff
+
+        // inner panels: artist, release, track empty-cells
+        // generic styles & needed overrides
+        // templates in: onair/nj/item_<ct>.html
+        .ct-panel
+          height: 100%
+          overflow: hidden
+          .header
+            h1
+              font-size: rem-calc(22)
+              font-weight: 300
+              color: #fff
+              margin-bottom: 0
+            ul > li
+              font-size: rem-calc(14)
+              +opacity(0.7)
+
+
+          .body
+            margin-top: 20px
+            text-align: left
+            p
+              font-size: rem-calc(14)
+              line-height: 150%
+
+          .tags
+            bottom: 20px
+            position: absolute
+            width: 100%
+
+
+  .meta-container
+
+    a:hover
+      background: #000
+      padding: 4px 8px
+      color: white
+
+    dl
+      margin: 0
+      dt, dd
+        margin-bottom: 0
+        line-height: 155%
+
+      dt
+        font-weight: $body-font-weight
+        +opacity(0.5)
+        float: left
+        padding-right: 7px
+    .separator
+      width: 40%
+      border-top: 2px solid #000
+      margin: 12px 0px
+
+
+
+
+
+  ///////////////////////////////////////////////////
+  // right/left sided arrows/buttons
+  ///////////////////////////////////////////////////
+  @media #{$medium-up}
+    #media_prev_next
+      div.next,
+      div.previous
+        position: absolute
+        top: 45%
+        &.disabled
+          +opacity(0.3)
+          &:hover .icon
+            cursor: not-allowed
+            background: transparent !important
+
+        .icon
+          +single-transition(background, 0.1s)
+          background: rgba(0, 0, 0, 0.0)
+          width: 120px
+          height: 120px
+          border-radius: 50%
+          line-hrigh: 50px
+
+          polyline
+            stroke: #000
+
+          &:hover
+            polyline
+              stroke: #fff
+
+        &:hover
+          .icon
+            +single-transition(background, 0.1s)
+            background: rgba(0, 0, 0, 1.0)
+
+
+      div.previous
+        left: 30px
+        .icon
+          padding: 24px 0 0 30px
+
+      div.next
+        right: 30px
+        .icon
+          padding: 24px 0 0 44px
+
+
+
+///////////////////////////////////////////////////
+// rating
+///////////////////////////////////////////////////
+
+$vote-icon-size: 33px
+
+.rating-container
+  margin: 24px auto 8px
+  height: 51px
+  width: 230px
+  position: relative
+  +clearfix()
+
+  &.disabled
+    +opacity(0.3)
+    div.vote, div.vote a
+      cursor: not-allowed
+
+  div.separator
+    position: absolute
+    left: 50%
+    width: 2px
+    height: 62px
+    background: #000
+
+  div.vote
+    padding-top: 8px
+
+    a
+      display: block
+      height: $vote-icon-size
+      position: relative
+      width: $vote-icon-size * 2
+
+    span
+      font-size: rem-calc(18)
+      position: absolute
+      padding: 3px
+      top: 11px
+
+    svg
+      position: absolute
+      //width: $vote-icon-size
+      //height: $vote-icon-size
+      polyline, rect
+        +single-transition(fill, .5s)
+        stroke: #000
+
+
+    &.vote-up
+      span
+        right: $vote-icon-size + 8px
+      svg
+        right: 0
+
+
+    &.vote-down
+      span
+        right: 0
+      svg
+        transform: rotateZ(180deg)
+        top: 13px
+        right: $vote-icon-size
+
+
+
+    &:hover, &:active
+      a
+        color: #000
+      polyline, rect
+        fill: #fff
+        +single-transition(fill, .2s)
+
+
+
+
+
+
+
+// state dependant overrides
+
+// responsive overrides
+@media #{$small-only}
+  #onair_container
+
+    .meta-container
+      text-align: center
+      dt
+        display: none
+
+      .separator
+        margin: 12px auto
+
+@media #{$medium-only}
+  #onair_container
+
+    .meta-container
+      text-align: center
+      dt
+        display: none
+
+      .separator
+        margin: 12px auto
