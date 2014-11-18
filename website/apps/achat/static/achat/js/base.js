@@ -132,7 +132,7 @@ AchatApp = function () {
             });
 
             $.ajax({
-                url: 'http://local.openbroadcast.ch:8081/api/v1/chat/message/',
+                url: '/api/v1/chat/message/',
                 type: 'POST',
                 contentType: 'application/json',
                 data: data,

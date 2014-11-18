@@ -138,6 +138,10 @@ def deploy():
                 run('ln -s %s/media %s/src_new/website/media' % (env.storage, env.path))
             except Exception, e:
                 pass
+            try:
+                run('ln -s %s/static %s/src_new/website/static' % (env.storage, env.path))
+            except Exception, e:
+                pass
 
             """
             run migrations
