@@ -5,7 +5,7 @@
 
     <!-- base container - media -->
     <div class="container front"
-         {% if object.item.release.main_image %}
+         {% if object.item and object.item.release and object.item.release.main_image %}
          style="background: url({{ base_url }}{{ object.item.release.main_image }});">
          {% else %}
          style="background: #000;">

@@ -1,4 +1,4 @@
-{% load cms_tags compress sekizai_tags i18n menu_tags bplayer_tags backfeed_tags %}<!doctype html>
+{% load cms_tags compress sekizai_tags i18n menu_tags bplayer_tags backfeed_tags pushy_client_tags %}<!doctype html>
 <html class="no-js" lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="utf-8"/>
@@ -46,7 +46,7 @@
 
 
     <script src="{{ STATIC_URL }}bplayer/js/lib/sm2/soundmanager2.js"></script>
-    <script src="{{ STATIC_URL }}bplayer/js/inline.js"></script>
+
 
 
     {% block link %}{% endblock link %}
@@ -183,19 +183,17 @@
 <script src="{{ STATIC_URL }}js/util.base.js"></script>
 
 
-<!-- prototype scripts -->
-<script src="http://127.0.0.1:8088/socket.io/socket.io.js"></script>
-<script src="{{ STATIC_URL }}js/ptype/levelbridge.js"></script>
-<script src="{{ STATIC_URL }}onair/js/base.js"></script>
-<script src="{{ STATIC_URL }}js/ptype/home.js"></script>
-
 <!-- app scripts -->
 <script src="{{ STATIC_URL }}achat/js/base.js"></script>
+<script src="{{ STATIC_URL }}bplayer/js/inline.js"></script>
+<script src="{{ STATIC_URL }}bplayer/js/levelbridge.js"></script>
+<script src="{{ STATIC_URL }}onair/js/base.js"></script>
 <script src="{{ STATIC_URL }}stationtime/js/base.js"></script>
-
 
 {% endcompress %}
 
+<!-- scripts exposed by apps/templatetags -->
+{% pushy_client_scripts %}
 
 <script>
 
@@ -217,6 +215,7 @@
 
 
     $(function () {
+        // templateing
         if (!nunjucks.env) {
             nunjucks.env = new nunjucks.Environment(new nunjucks.HttpLoader('{{ STATIC_URL }}'));
         }
@@ -225,11 +224,58 @@
     });
 
 
-    // stationtime
-    st = new StationTimeApp();
-    st.api_url = '{% url "stationtime-current-time" %}';
-    st.container = $('#station_time');
-    st.init();
+
+    $(function() {
+
+        /////////////////////////////////////////////
+        // player
+        /////////////////////////////////////////////
+        var bplayer = new BPlayerApp();
+        bplayer.mode = 'inline';
+        bplayer.debug = false;
+        bplayer.static_url = '{{ STATIC_URL }}';
+
+        var lb = new LevelBridge();
+
+        setTimeout(function () {
+            bplayer.init();
+            lb.init();
+        }, 200);
+
+
+        /////////////////////////////////////////////
+        // chat
+        /////////////////////////////////////////////
+        var achat = new AchatApp();
+        achat.container = $('#achat_container');
+        achat.username = settings.username;
+
+        setTimeout(function () {
+            achat.init();
+            achat.load();
+        }, 200);
+
+
+        /////////////////////////////////////////////
+        // on-air
+        /////////////////////////////////////////////
+        var onair = new OnAirApp();
+        setTimeout(function () {
+            onair.init();
+        }, 10);
+
+
+        /////////////////////////////////////////////
+        // station time
+        /////////////////////////////////////////////
+        var stationtime = new StationTimeApp();
+        stationtime.api_url = "{% url 'stationtime-current-time' %}";
+        stationtime.container = $('#station_time');
+        setTimeout(function () {
+            stationtime.init();
+        }, 1000);
+
+    });
 
 
 </script>

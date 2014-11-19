@@ -4,7 +4,7 @@
 
     <div class="row header">
         <div class="small-6 columns">
-            {% if item.release.main_image %}
+            {% if item.release and item.release.main_image %}
             <img src="{{ base_url }}{{ item.release.main_image }}">
             {% else %}
             <span>*</span>
@@ -12,7 +12,7 @@
         </div>
         <div class="small-6 columns">
             <div class="text-left">
-                <h1>{{ item.name|truncate(24) }}</h1>
+                <h1>{% if item.name %}{{ item.name|truncate(24) }}{% endif %}</h1>
                 <ul class="no-bullet">
                     {% if item.mediatype or item.version %}
                     <li>
@@ -41,17 +41,6 @@
                 {{ item.description|truncate(240) }}
             </p>
             {% endif %}
-
-
-            {% if debug %}
-            <p>
-                <a href="{{ item.resource_uri }}">{{ item.resource_uri }}</a>
-            </p>
-            <p>
-                <a href="{{ object.item.resource_uri }}">{{ object.item.resource_uri }}</a>
-            </p>
-            {% endif %}
-
         </div>
     </div>
 

@@ -13912,7 +13912,6 @@ body {
 /* line 115, ../sass/site/apps/_achat.sass */
 #achat_container .messages .item.message.question .body {
   position: relative;
-  min-height: 54px;
 }
 /* line 118, ../sass/site/apps/_achat.sass */
 #achat_container .messages .item.message.question .body p {
@@ -13927,7 +13926,8 @@ body {
 }
 /* line 125, ../sass/site/apps/_achat.sass */
 #achat_container .messages .item.message.question .body .question-mark span {
-  font-size: 2.13333rem;
+  font-size: 1.86667rem;
+  font-weight: bold;
 }
 
 /* line 1, ../sass/site/apps/_backfeed.sass */

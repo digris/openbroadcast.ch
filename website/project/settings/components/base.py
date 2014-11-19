@@ -141,6 +141,7 @@ INSTALLED_APPS = (
 
     'remoteauth',
     'apiproxy',
+    'pushy_client',
 
     # APPS MIGRATED
     'django_extensions',

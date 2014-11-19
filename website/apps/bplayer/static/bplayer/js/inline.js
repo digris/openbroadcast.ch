@@ -57,8 +57,8 @@ var BPlayerApp = function () {
             url: self.static_url + 'bplayer/swf/lib/soundmanager2_flash9_debug.swf',
             flashVersion: 9,
             preferFlash: false,
-            //debugMode: false,
-            debugFlash: true,
+            debugMode: false,
+            debugFlash: false,
             onready: function () {
 
                 console.log('sm2 ready');

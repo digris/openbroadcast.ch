@@ -10,7 +10,7 @@ var OnAirApp = function () {
     this.container;
     this.info_container;
     this.meta_container;
-    this.meta_container;
+    this.meta_rating;
     this.prevnext_container;
     this.info_timeout = false;
     this.local_data = [];
@@ -39,7 +39,9 @@ var OnAirApp = function () {
 
         var url = self.api_url + self.channel_id + '/' + 'on-air/';
 
-        $.get(url, function (data) {
+
+        $.get(url).done(function (data) {
+
             console.log('on air:', data);
 
             if (!data.start_next) {
@@ -55,7 +57,12 @@ var OnAirApp = function () {
                 self.set_mode('fallback');
                 console.log('nothing on air -> load splash-screen');
             }
-        });
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.error('OnAirApp - load ' + errorThrown);
+            self.set_mode('fallback');
+            setTimeout(self.load, 10000);
+        })
+
     };
 
     this.set_mode = function (mode) {
@@ -94,16 +101,16 @@ var OnAirApp = function () {
         });
 
 
-        self.prevnext_container.on('click', 'a', function(e) {
+        self.prevnext_container.on('click', 'a', function (e) {
             e.preventDefault();
-            if(! $(this).parent().hasClass('disabled')) {
+            if (!$(this).parent().hasClass('disabled')) {
                 self.handle_prevnext($(this).data('direction'));
             }
         });
 
     };
 
-    this.show_meta_for = function(ct) {
+    this.show_meta_for = function (ct) {
 
         console.log('OnAirApp - show_meta_for: ' + ct);
 
@@ -112,7 +119,6 @@ var OnAirApp = function () {
 
 
     };
-
 
 
     this.load_current = function (playing) {
@@ -152,7 +158,6 @@ var OnAirApp = function () {
     this.load_history = function (options) {
 
 
-
         var url = self.api_url + self.channel_id + '/' + 'history/';
         $.get(url, function (history) {
             $.each(history.objects, function (i, item) {
@@ -187,7 +192,6 @@ var OnAirApp = function () {
                 }
             ]
         }
-
 
 
     };
@@ -248,13 +252,22 @@ var OnAirApp = function () {
             // check if present in dom
             // create in case that not
             if (!item.el) {
-                var html = $(nj.render('onair/nj/item.html', {
-                    dom_id: dom_id,
-                    debug: self.debug,
-                    object: item,
-                    extra_classes: classes,
-                    base_url: self.base_url
-                }));
+
+                try {
+                    var html = $(nj.render('onair/nj/item.html', {
+                        dom_id: dom_id,
+                        debug: self.debug,
+                        object: item,
+                        extra_classes: classes,
+                        base_url: self.base_url
+                    }));
+                } catch(e) {
+                    var html = $('<div>ERROR</div>')
+                    console.warn(e);
+                    console.warn(item);
+                }
+
+
                 $('.info-container .items').append(html)
 
                 item.el = $('#' + dom_id);
@@ -264,8 +277,8 @@ var OnAirApp = function () {
             }
         });
 
-        setTimeout(function(){
-           self.handle_timeline();
+        setTimeout(function () {
+            self.handle_timeline();
         }, 5)
 
 
@@ -279,7 +292,7 @@ var OnAirApp = function () {
     this.update_meta_display = function (item, fast) {
 
 
-        if(fast == undefined) {
+        if (fast == undefined) {
             var fast = false;
         }
 
@@ -290,13 +303,13 @@ var OnAirApp = function () {
         }));
 
 
-        if(fast) {
-            setTimeout(function(){
+        if (fast) {
+            setTimeout(function () {
                 self.meta_container.html(html);
                 self.meta_container.fadeIn(200);
             }, 150);
         } else {
-            setTimeout(function(){
+            setTimeout(function () {
                 self.meta_container.html(html);
                 self.meta_container.fadeIn(500);
             }, 1000);
@@ -304,11 +317,21 @@ var OnAirApp = function () {
 
 
     };
+    this.update_rating_display = function (item) {
+
+        var rating_container = $('.rating-container', self.container);
+        rating_container.removeClass('disabled');
+        // set current values
+        $('.vote-up a > span', rating_container).html(item.item.votes.up);
+        $('.vote-down  a > span', rating_container).html(item.item.votes.down);
+
+
+    };
 
     /**
      * handles timeline display: prev/next etc.
      */
-    this.handle_timeline = function() {
+    this.handle_timeline = function () {
 
         // cases: on_air mode -> item with on_air flag is set to current
         // cases: history mode -> item with <to-be-defined> flag is set to current
@@ -325,18 +348,18 @@ var OnAirApp = function () {
             }
         });
 
-        if(! onair) {
+        if (!onair) {
             self.set_mode('fallback')
         }
 
         // TODO: think about a more elegant solution
-        if(self.timeline_offset == 0) {
+        if (self.timeline_offset == 0) {
             // on-air _is_ current item
             self.set_mode('onair');
         } else {
             // on-air _IS NOT__ current item (and not fallback mode)
             //if(! self.mode == 'fallback') {
-                self.set_mode('history');
+            self.set_mode('history');
             //}
         }
         current_index = onair_index + self.timeline_offset;
@@ -345,25 +368,26 @@ var OnAirApp = function () {
         $.each(self.local_data, function (i, item) {
 
             item.el.removeClass().addClass('item info');
-            if(i < current_index) {
+            if (i < current_index) {
                 item.el.addClass('previous');
                 item.el.addClass('previous-' + Math.abs(current_index - i));
 
-                console.log('index / prev:',  Math.abs(current_index - i))
+                console.log('index / prev:', Math.abs(current_index - i))
 
-                if(Math.abs(current_index - i) > 3) {
+                if (Math.abs(current_index - i) > 3) {
                     item.el.addClass('previous-x');
                 }
             }
-            if(i == current_index) {
+            if (i == current_index) {
                 item.el.addClass('current');
                 self.update_meta_display(item, false);
+                self.update_rating_display(item);
             }
-            if(i > current_index) {
+            if (i > current_index) {
                 item.el.addClass('next');
                 item.el.addClass('next-' + Math.abs(current_index - i));
 
-                if(Math.abs(current_index - i) > 1) {
+                if (Math.abs(current_index - i) > 1) {
                     item.el.addClass('next-x');
                 }
             }
@@ -373,7 +397,7 @@ var OnAirApp = function () {
         // handle prev/next actions
         console.log('current_index', current_index + 1, 'num_items', num_items)
 
-        if(current_index + 1 <= num_items
+        if (current_index + 1 <= num_items
             && num_items > 1
             && current_index > 0) {
             $('.previous', self.prevnext_container).removeClass('disabled');
@@ -381,7 +405,7 @@ var OnAirApp = function () {
             $('.previous', self.prevnext_container).addClass('disabled');
         }
 
-        if(current_index + 1 < num_items && num_items > 1) {
+        if (current_index + 1 < num_items && num_items > 1) {
             $('.next', self.prevnext_container).removeClass('disabled');
         } else {
             $('.next', self.prevnext_container).addClass('disabled');
@@ -392,15 +416,17 @@ var OnAirApp = function () {
     /**
      * handles pagination & onair/history mode
      */
-    this.handle_prevnext = function(direction) {
+    this.handle_prevnext = function (direction) {
 
         console.log('OnAirApp - handle_prevnext: ' + direction);
-        if(direction == 'previous') {
+        if (direction == 'previous') {
             self.timeline_offset--;
-        };
-        if(direction == 'next') {
+        }
+        ;
+        if (direction == 'next') {
             self.timeline_offset++;
-        };
+        }
+        ;
 
         self.handle_timeline();
 

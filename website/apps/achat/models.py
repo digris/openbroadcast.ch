@@ -16,15 +16,19 @@ from django.db.models.signals import post_delete, post_save, pre_save
 from django.dispatch.dispatcher import receiver
 from django.conf import settings
 from base.models import TimestampedModel
+from django.core.exceptions import ImproperlyConfigured
 from jsonfield import JSONField
 from django.contrib.auth import get_user_model
-
 
 log = logging.getLogger(__name__)
 User = get_user_model()
 
-RS_HOST = '127.0.0.1'
-RS_CHANNEL = 'levelbridge_'
+REDIS_HOST = getattr(settings, 'PUSHY_REDIS_HOST', None)
+REDIS_SITE_ID = getattr(settings, 'PUSHY_REDIS_SITE_ID', None)
+
+if not (REDIS_HOST and REDIS_SITE_ID):
+    raise ImproperlyConfigured('PUSHY_REDIS_HOST and PUSHY_REDIS_SITE_ID in settings is required!')
+
 
 # Create your models here.
 class Message(models.Model):
@@ -56,10 +60,12 @@ class Message(models.Model):
         bundle = resource.alter_detail_data_to_serialize(req, bundle)
 
         message = resource.serialize(req, bundle, 'application/json')
-        rs = redis.StrictRedis(host=RS_HOST)
+        rs = redis.StrictRedis(host=REDIS_HOST)
 
         try:
-            rs.publish('%s%s' % (RS_CHANNEL, 'achat'), message)
+            print 'routing to: %s%s' % (REDIS_SITE_ID, 'achat')
+            rs.publish('%s%s' % (REDIS_SITE_ID, 'achat'), message)
+            print 'done'
         except redis.ConnectionError, e:
             print e
 

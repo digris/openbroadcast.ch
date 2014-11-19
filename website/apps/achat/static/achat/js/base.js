@@ -6,6 +6,7 @@ AchatApp = function () {
     this.username;
     this.messages_container;
     this.max_messages = 12;
+    this.debug = false;
 
     this.init = function () {
 
@@ -13,7 +14,12 @@ AchatApp = function () {
         self.messages_container = $('.messages-container', self.container);
         self.bindings();
 
+        pushy_client.subscribe('achat', function(message){
+            self.add_message(message);
+        });
+
     };
+
 
     this.bindings = function () {
 
@@ -43,8 +49,6 @@ AchatApp = function () {
 
             e = e || event;
             if (e.keyCode === 13 && !e.shiftKey) {
-
-                console.log(e);
 
 
                 $('form', self.container).submit();
@@ -156,6 +160,7 @@ AchatApp = function () {
 
     };
 
+    // TODO: seems not to be needed anymore
     this.push_message = function (message) {
         self.add_message(message);
     };
@@ -185,7 +190,10 @@ AchatApp = function () {
 
 
     this.add_message = function (message) {
-        debug.debug('AchatApp: add_message', message);
+
+        if(self.debug) {
+            debug.debug('AchatApp: add_message', message);
+        }
 
         // fix some values
         message.created = message.created.substr(11, 8);
