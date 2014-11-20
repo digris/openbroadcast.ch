@@ -88,6 +88,13 @@
       &.current
         z-index: 5
 
+        &.onair
+          div.badge > .onair
+            display: block
+        &.history
+          div.badge > .history
+            display: block
+
       &.next
         &.next-1
           -webkit-transform: rotateY(0deg) translateX(1850px) scale(1.3)
@@ -175,6 +182,22 @@
               span a
                 +single-transition(color, 0.5s)
                 color: #fff
+
+        > div.badge
+          position: absolute
+          transform: translateZ(1px)
+          bottom: 1px
+          right: 1px
+          > div
+            padding: 10px
+            background: rgba(0, 0, 0, 1.0)
+            span, a
+              color: #fff
+            a
+              background: #525252
+              padding: 1px 6px 2px
+              border: 1px solid #8E8E8E
+
 
 
       .back

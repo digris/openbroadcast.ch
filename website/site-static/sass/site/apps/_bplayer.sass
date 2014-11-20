@@ -1,13 +1,17 @@
 #bplayer_container
-  background: white
+
+  z-index: 100
+
   position: fixed
   width: 100%
   bottom: 0
 
-  bottom: -140px
+  // -140: hidden / -92: show controls
+  //bottom: -140px
+  bottom: -92px
 
-  padding-top: 12px
-  padding-bottom: 12px
+  padding-top: 4px
+  padding-bottom: 4px
 
   ul.actions
     margin-bottom: 6px
@@ -17,16 +21,16 @@
       display: none
 
     a
-      color: #999
+      color: #fff
 
 
     .totals
-      color: #999
+      color: #fff
 
 
   .information ul
     margin-bottom: 0
-    color: #999
+    color: #fff
 
   // small version, no waveform
   .progress
@@ -87,7 +91,7 @@
     +single-transition(bottom 0.2s)
   &.playing
 
-    bottom: 0px
+    bottom: -4px
     +single-transition(bottom 0.1s)
 
     // hide actions
@@ -119,34 +123,61 @@
       +transition-property(opacity)
       +transition-duration(0.5s)
 
-    // TODO: something other than a table??
-    table
 
-      border-spacing: 0
-      border-collapse: collapse
-
-      tr
-        border: none
-        cursor: pointer
-        &:hover
-          background: $secondary-color
-
-      td
-        padding: 6px 10px 4px
-        border: none
-        color: #999
-
-        a
-          color: #999
-          font-style: italic
-          &:hover
-            text-decoration: underline
+// history mode switch
 
 
-      .visible-while-playing
-        display: none
-      .playing
-        background: $primary-color
-        .visible-while-playing
-          display: inline
+#bplayer_container
+  .base
+    background: #000
+    padding: 8px 0 2px
+    box-shadow: 0px -1px 3px 1px rgba(51, 51, 51, 0.16)
+  .wave
+    background: #000
+
+  &.show-history
+    box-shadow: -2px -2px 3px 1px rgba(51, 51, 51, 0.16)
+    background: #000
+    .base
+      background: none
+      padding: 0
+      box-shadow: none
+
+
+// history mode switch
+#bplayer_container
+
+  // hide elements not on-air
+  section.playlist.history
+    .header
+      display: none
+      padding: 4px 0
+      margin: 4px 0
+      +opacity(0.7)
+      color: #fff
+    .item
+      display: none
+      color: rgba(255, 255, 255, 0.5)
+      padding: 4px 0
+      &.hover
+        color: #fff
+      &.on-air
+        font-style: italic
+        color: #fff
+
+      a
+        color: #fff
+    .item.on-air
+      display: block
+
+  &.show-history section.playlist.history
+    .header
+      display: block
+    .item
+      display: block
+      padding: 4px 0
+      margin: 4px 0
+      border-top: 1px solid rgba(255, 255, 255, 0.1)
+
+
 

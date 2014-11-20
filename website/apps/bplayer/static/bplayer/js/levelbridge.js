@@ -66,7 +66,7 @@ var LevelBridge = function () {
         var max_element = 410;
         var num_element = $('li', self.container).length;
 
-        var height = Number(level * 0.6);
+        var height = Number(level * 0.4);
 
 
         if(level < 90) {

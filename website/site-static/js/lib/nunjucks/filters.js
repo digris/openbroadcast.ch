@@ -214,10 +214,13 @@ var nunjucks_register_filters = function (nj) {
     });
 
     nj.addFilter('datetime2hhmm', function (datetime) {
+        var value = datetime.substr(11, 5);
+        return value
+    });
 
-        var hhmm = datetime.substr(11, 5);
-
-        return hhmm
+    nj.addFilter('datetime2hhmmss', function (datetime) {
+        var value = datetime.substr(11, 8);
+        return value
     });
 
     nj.addFilter('linebreaksbr', function (str) {

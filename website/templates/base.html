@@ -232,7 +232,7 @@
         /////////////////////////////////////////////
         var bplayer = new BPlayerApp();
         bplayer.mode = 'inline';
-        bplayer.debug = false;
+        bplayer.debug = true;
         bplayer.static_url = '{{ STATIC_URL }}';
 
         var lb = new LevelBridge();
@@ -260,6 +260,7 @@
         // on-air
         /////////////////////////////////////////////
         var onair = new OnAirApp();
+        onair.bplayer = bplayer;
         setTimeout(function () {
             onair.init();
         }, 10);

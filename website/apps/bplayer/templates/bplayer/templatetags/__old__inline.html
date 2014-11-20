@@ -1,0 +1,87 @@
+{% load sekizai_tags i18n %}
+
+{% addtoblock "js-post" %}
+    <script>
+        $(function () {
+
+        });
+    </script>
+{% endaddtoblock %}
+
+<div id="bplayer_container">
+    <div class="row">
+        <div class="small-9 columns">
+            <ul class="actions inline-list">
+                <!--
+                <li><a data-bplayer-controls="prev" href="#"><i class="fa fa-fast-backward"></i></a></li>
+                -->
+                <li style="margin-left: 10px;"><a data-bplayer-controls="pause" href="#"><i class="fa fa-pause"></i> Pause</a></li>
+                <!---->
+                <li style="margin-left: 10px;"><a data-bplayer-controls="resume" href="#"><i class="fa fa-play"></i> Listen</a></li>
+                <!--
+                <li><a data-bplayer-controls="next" href="#"><i class="fa fa-fast-forward"></i></a></li>
+                -->
+
+                <li id="totals_container" class="totals"></li>
+
+                <!--
+                <li><a id="bplayer_ios" href="#"><i class="fa fa-play"></i></a></li>
+                -->
+
+            </ul>
+        </div>
+        <div class="small-3 columns">
+            <ul class="actions inline-list">
+                <li class="right"><a data-bplayer-display="toggle-history" href="#"><i class="fa fa-list"></i> History</a></li>
+                <!--
+                <li class="right"><a data-bplayer-display="search-playlist" href="#"><i class="fa fa-search"></i></a></li>
+                -->
+                <!--
+                <li class="right"><a data-bplayer-display="compact" href="#"><i class="fa fa-angle-double-down"></i></a></li>
+                <li class="right"><a data-bplayer-display="large" href="#"><i class="fa fa-angle-double-up"></i></a></li>
+                -->
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="small-12 columns">
+            <div id="bplayer_playlist_container">
+                <!-- toggled by 'expand' ('toggle-playlist') button in bplayer -->
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="small-1 columns">
+            <!--
+            <div id="__">
+                <img src="http://localhost:8080/media/playlists/7dacf3cf/58d1/41b1/8f35/bf8aa8acfe68.jpg" style="height: 84px; width: 84px;">
+            </div>
+            -->
+            &nbsp;
+        </div>
+        <div class="small-11 columns">
+            <div id="levelbridge">
+            <ul>
+
+            </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="small-12 columns">
+
+            <div id="bplayer_waveform_container"></div>
+
+            <div class="progress" style="display: none;">
+                <span class="meter" style="width: 0%"></span>
+            </div>
+
+            <div id="bplayer_info_container"></div>
+
+        </div>
+    </div>
+</div>

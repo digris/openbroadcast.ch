@@ -43,11 +43,11 @@ var SiteUI = function () {
         });
 
         $(document).ajaxStart(function() {
-            debug.debug('ajax start');
+            //debug.debug('ajax start');
             //$('body').addClass('xhr-load');
         });
         $(document).ajaxStop(function() {
-            debug.debug('ajax stop');
+            //debug.debug('ajax stop');
             //$('body').removeClass('xhr-load');
         });
 

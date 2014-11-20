@@ -4,7 +4,11 @@
 var BPlayerApp = function () {
 
     var self = this;
+    this.debug = true;
     this.state = 'init';
+    // dom containers
+    this.container;
+    this.playlist_container;
     this.static_url;
     this.playlist = [];
     this.current_index = 0;
@@ -17,7 +21,7 @@ var BPlayerApp = function () {
     this.r;
     this.style = 'large'
     this.states = ['init', 'ready', 'playing', 'stopped', 'paused', 'loading', 'error'];
-    this.playlist_expanded = false;
+    this.history_expanded = false;
 
     /*
      * inline: complete html5-player, site needs to run entirely via ajax
@@ -28,12 +32,12 @@ var BPlayerApp = function () {
     this.popup = false;
     this.local = false;
 
-    this.container;
 
     this.init = function () {
         console.log('BPlayerApp - init');
 
         self.container = $('#bplayer_container');
+        self.playlist_container = $('#bplayer_playlist_container', self.container);
 
         // setup player backend
 
@@ -196,15 +200,11 @@ var BPlayerApp = function () {
                     //self.controls({action: 'queue'});
                 }
 
-
             });
         });
 
-
-
         $('body').on('click', '#bplayer_ios', function (e) {
             e.preventDefault();
-
             var sound = {
                 url: self.stream_url
             }
@@ -212,7 +212,6 @@ var BPlayerApp = function () {
             self.current_sound.play();
 
         });
-
 
         $('body').on('click', '[data-action="listen"]', function (e) {
             e.preventDefault();
@@ -236,7 +235,6 @@ var BPlayerApp = function () {
 
         });
 
-
         // player controls
         $('body').on('click', 'a[data-bplayer-controls]', function (e) {
             e.preventDefault();
@@ -259,13 +257,10 @@ var BPlayerApp = function () {
                 self.style_change(action);
             }
 
-            if (action == 'toggle-playlist') {
-                self.playlist_expanded = !self.playlist_expanded;
-                self.show_hide_playlist();
+            if (action == 'toggle-history') {
+                self.history_expanded = !self.history_expanded;
+                self.show_hide_history();
             }
-
-
-            // playlist display
 
         });
 
@@ -309,42 +304,43 @@ var BPlayerApp = function () {
         self.state_change(self.state);
         self.style_change(self.style);
 
-
     };
 
-    this.show_hide_playlist = function () {
-        var container = $('#bplayer_playlist_container', self.container);
-
-        if (self.playlist_expanded) {
-            container.removeClass('hidden');
+    this.show_hide_history = function () {
+        //var container = $('#bplayer_playlist_container', self.container);
+        if (self.history_expanded) {
+            //container.removeClass('hidden');
+            self.container.addClass('show-history');
         } else {
-            container.addClass('hidden');
+            //container.addClass('hidden');
+            self.container.removeClass('show-history');
         }
 
     };
 
 
-    this.set_playlist = function (playlist, append) {
-        if (append == undefined) {
-            self.playlist = playlist;
-        } else {
-            self.playlist = self.playlist.concat(playlist)
-            debug.debug('appending playlist - aka "queue"');
-            console.log('new list:', self.playlist);
+    this.set_playlist = function (playlist) {
+
+        playlist = playlist.slice();
+        playlist.reverse();
+
+        if(self.debug) {
+            console.debug('BPlayerApp - set_playlist', playlist);
         }
+        self.playlist = playlist;
+        //self.update_player();
+
+        // playlist content
+        self.playlist_container.html(nj.render('bplayer/nj/playlist.html', {
+            objects: self.playlist
+        }));
+
+
     };
 
     this.controls = function (control) {
 
         console.log('BPlayerApp - control: ', control);
-
-
-        // get player
-
-
-
-
-
 
         if (control.action == 'play') {
             var media = self.playlist[control.index];

@@ -2,11 +2,11 @@
 AchatApp = function () {
 
     var self = this;
+    this.debug = false;
     this.container;
     this.username;
     this.messages_container;
     this.max_messages = 12;
-    this.debug = false;
 
     this.init = function () {
 

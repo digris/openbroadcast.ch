@@ -1,19 +1,55 @@
-<table style="width: 100%;">
-  <tbody>
-  {% for item in objects %}
-    <tr
-      class="item"
-      data-uuid="{{ item.uuid }}"
-      >
-      <td>
-          <i class="fa fa-play-circle visible-while-playing fa-fw"></i>
-          {{ item.name }}
-      </td>
-      <td class="right">{{ item.duration|ms2time() }}</td>
-      <td><a href="{{ item.artist.absolute_url }}">{{ item.artist.name }}</a></td>
-      <td><a href="{{ item.release.absolute_url }}">{{ item.release.name }}</a></td>
-      <td>{{ item.release.label.name }}</td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
+
+<section class="playlist history">
+
+    <div class="row header">
+        <div class="small-2 columns">
+            Airtime
+        </div>
+        <div class="small-2 columns">
+            Title
+        </div>
+        <div class="small-3 columns">
+            Artist
+        </div>
+        <div class="small-3 columns end">
+            Price
+        </div>
+    </div>
+
+    {% for item in objects %}
+    <div class="row item hoverable{% if item.on_air %} on-air{% endif %}">
+        <div class="small-2 columns">
+            {% if item.on_air %}
+            <span>Now On Air</span>
+            {% else %}
+                {% if item.timestamp %}
+                {{ item.timestamp|datetime2hhmmss }}
+                {% endif %}
+            {% endif %}
+            &nbsp;
+        </div>
+        <div class="small-2 columns">
+            {{ item.item.name }}
+        </div>
+        <div class="small-3 columns">
+            {{ item.item.artist.name }}
+        </div>
+        <div class="small-3 columns">
+            {% if item.on_air %}
+                <span>CHF 0.20</span>
+                <strong class="dim_">+0.10 in</strong>
+                <strong class="" style="color: orangered;">17sec</strong    >
+            {% else %}
+                <span>CHF 0.50</span>
+            {% endif %}
+
+        </div>
+        <div class="small-2 columns text-right">
+            <a href="#">Buy Now!</a>
+        </div>
+
+    </div>
+    {% endfor %}
+
+</section>
+

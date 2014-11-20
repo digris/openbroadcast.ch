@@ -401,12 +401,6 @@ var OnAirApp = function () {
                 }
             }
 
-            if(item.on_air) {
-                item.el.addClass('onair');
-            } else {
-                item.el.addClass('history');
-            }
-
         });
 
         // handle prev/next actions
@@ -446,5 +440,6 @@ var OnAirApp = function () {
         self.handle_timeline();
 
     };
+
 
 };
