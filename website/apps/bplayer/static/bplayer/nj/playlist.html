@@ -2,10 +2,10 @@
 <section class="playlist history">
 
     <div class="row header">
-        <div class="small-2 columns">
+        <div class="small-1 columns">
             Airtime
         </div>
-        <div class="small-2 columns">
+        <div class="small-3 columns">
             Title
         </div>
         <div class="small-3 columns">
@@ -18,9 +18,9 @@
 
     {% for item in objects %}
     <div class="row item hoverable{% if item.on_air %} on-air{% endif %}">
-        <div class="small-2 columns">
+        <div class="small-1 columns">
             {% if item.on_air %}
-            <span>Now On Air</span>
+            <span>On Air</span>
             {% else %}
                 {% if item.timestamp %}
                 {{ item.timestamp|datetime2hhmmss }}
@@ -28,7 +28,7 @@
             {% endif %}
             &nbsp;
         </div>
-        <div class="small-2 columns">
+        <div class="small-3 columns">
             {{ item.item.name }}
         </div>
         <div class="small-3 columns">
