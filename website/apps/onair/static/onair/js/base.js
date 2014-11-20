@@ -6,7 +6,7 @@ var OnAirApp = function () {
     this.channel_id = 1;
     //this.base_url = 'http://openbroadcast.org/';
     // TODO: base_url form API_BASE_URL settings
-    this.base_url = 'https://openbroadcast.org';
+    this.base_url = 'https://www.openbroadcast.org';
     this.container;
     this.bplayer = false;
     this.max_items = 12;
