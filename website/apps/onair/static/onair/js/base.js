@@ -48,12 +48,7 @@ var OnAirApp = function () {
             if (!data.start_next) {
                 setTimeout(self.load, 10000)
             } else {
-                if(data.start_next > 30) {
-                    // force refresh every 30 seconds
-                    setTimeout(self.load, 30000);
-                } else {
-                    setTimeout(self.load, Number(data.start_next * 1000));
-                }
+                setTimeout(self.load, Number(data.start_next * 1000));
             }
 
             if (data.playing != undefined && (data.playing.emission != undefined && data.playing.item != undefined)) {
