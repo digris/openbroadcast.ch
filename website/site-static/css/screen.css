@@ -13693,7 +13693,7 @@ x:-o-prefocus {
 }
 /* line 88, ../sass/site/apps/_bplayer.sass */
 #bplayer_container.paused {
-  bottom: -92px;
+  bottom: -72px;
   -webkit-transition: bottom 0.2s 300ms ease-out;
   -moz-transition: bottom 0.2s 300ms ease-out;
   transition: bottom 0.2s 300ms ease-out;
