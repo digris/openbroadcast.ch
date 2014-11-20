@@ -13566,34 +13566,34 @@ x:-o-prefocus {
   position: fixed;
   width: 100%;
   bottom: 0;
-  bottom: -92px;
+  bottom: -72px;
   padding-top: 4px;
   padding-bottom: 4px;
 }
-/* line 16, ../sass/site/apps/_bplayer.sass */
+/* line 15, ../sass/site/apps/_bplayer.sass */
 #bplayer_container ul.actions {
   margin-bottom: 6px;
   padding-left: 12px;
   padding-right: 12px;
 }
-/* line 20, ../sass/site/apps/_bplayer.sass */
+/* line 19, ../sass/site/apps/_bplayer.sass */
 #bplayer_container ul.actions [data-bplayer-controls="pause"] {
   display: none;
 }
-/* line 23, ../sass/site/apps/_bplayer.sass */
+/* line 22, ../sass/site/apps/_bplayer.sass */
 #bplayer_container ul.actions a {
   color: white;
 }
-/* line 27, ../sass/site/apps/_bplayer.sass */
+/* line 26, ../sass/site/apps/_bplayer.sass */
 #bplayer_container ul.actions .totals {
   color: white;
 }
-/* line 31, ../sass/site/apps/_bplayer.sass */
+/* line 30, ../sass/site/apps/_bplayer.sass */
 #bplayer_container .information ul {
   margin-bottom: 0;
   color: white;
 }
-/* line 36, ../sass/site/apps/_bplayer.sass */
+/* line 35, ../sass/site/apps/_bplayer.sass */
 #bplayer_container .progress {
   background-color: #f6f6f6;
   height: 1.66667rem;
@@ -13604,7 +13604,7 @@ x:-o-prefocus {
   padding: 0;
   margin: 0 12px 0;
 }
-/* line 43, ../sass/site/apps/_bplayer.sass */
+/* line 42, ../sass/site/apps/_bplayer.sass */
 #bplayer_container .playhead .background {
   background-color: #eae200;
   -webkit-transition-property: background-color;
@@ -13616,19 +13616,19 @@ x:-o-prefocus {
   -o-transition-duration: 0.2s;
   transition-duration: 0.2s;
 }
-/* line 48, ../sass/site/apps/_bplayer.sass */
+/* line 47, ../sass/site/apps/_bplayer.sass */
 #bplayer_container .playhead .indicator {
   background: url("/static/bplayer/img/playhead.indicator.png");
   background-repeat: repeat-y;
 }
-/* line 52, ../sass/site/apps/_bplayer.sass */
+/* line 51, ../sass/site/apps/_bplayer.sass */
 #bplayer_container .playhead .loading {
   background: url("/static/bplayer/img/playhead.loading.png");
   background-repeat: no-repeat;
   background-position-y: bottom;
   background-size: 2000px 4px;
 }
-/* line 60, ../sass/site/apps/_bplayer.sass */
+/* line 59, ../sass/site/apps/_bplayer.sass */
 #bplayer_container .playhead .waveform {
   height: 60px;
   -webkit-transition-property: height;
@@ -13640,7 +13640,7 @@ x:-o-prefocus {
   -o-transition-duration: 0.1s;
   transition-duration: 0.1s;
 }
-/* line 64, ../sass/site/apps/_bplayer.sass */
+/* line 63, ../sass/site/apps/_bplayer.sass */
 #bplayer_container .playhead .waveform > img {
   max-height: 60px;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
@@ -13654,7 +13654,7 @@ x:-o-prefocus {
   -o-transition-duration: 0.1s;
   transition-duration: 0.1s;
 }
-/* line 71, ../sass/site/apps/_bplayer.sass */
+/* line 70, ../sass/site/apps/_bplayer.sass */
 #bplayer_container.style-compact .playhead .waveform {
   height: 20px;
   -webkit-transition-property: height;
@@ -13666,7 +13666,7 @@ x:-o-prefocus {
   -o-transition-duration: 0.2s;
   transition-duration: 0.2s;
 }
-/* line 75, ../sass/site/apps/_bplayer.sass */
+/* line 74, ../sass/site/apps/_bplayer.sass */
 #bplayer_container.style-compact .playhead .waveform > img {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
@@ -13679,7 +13679,7 @@ x:-o-prefocus {
   -o-transition-duration: 0.2s;
   transition-duration: 0.2s;
 }
-/* line 83, ../sass/site/apps/_bplayer.sass */
+/* line 82, ../sass/site/apps/_bplayer.sass */
 #bplayer_container.ready .playhead .waveform, #bplayer_container.init .playhead .waveform {
   height: 0px;
   -webkit-transition-property: height;
@@ -13691,29 +13691,29 @@ x:-o-prefocus {
   -o-transition-duration: 0.2s;
   transition-duration: 0.2s;
 }
-/* line 89, ../sass/site/apps/_bplayer.sass */
+/* line 88, ../sass/site/apps/_bplayer.sass */
 #bplayer_container.paused {
   bottom: -92px;
   -webkit-transition: bottom 0.2s 300ms ease-out;
   -moz-transition: bottom 0.2s 300ms ease-out;
   transition: bottom 0.2s 300ms ease-out;
 }
-/* line 92, ../sass/site/apps/_bplayer.sass */
+/* line 91, ../sass/site/apps/_bplayer.sass */
 #bplayer_container.playing {
   bottom: -4px;
   -webkit-transition: bottom 0.1s 300ms ease-out;
   -moz-transition: bottom 0.1s 300ms ease-out;
   transition: bottom 0.1s 300ms ease-out;
 }
-/* line 99, ../sass/site/apps/_bplayer.sass */
+/* line 98, ../sass/site/apps/_bplayer.sass */
 #bplayer_container.playing ul.actions [data-bplayer-controls="resume"] {
   display: none;
 }
-/* line 101, ../sass/site/apps/_bplayer.sass */
+/* line 100, ../sass/site/apps/_bplayer.sass */
 #bplayer_container.playing ul.actions [data-bplayer-controls="pause"] {
   display: block;
 }
-/* line 104, ../sass/site/apps/_bplayer.sass */
+/* line 103, ../sass/site/apps/_bplayer.sass */
 #bplayer_container.playing .playhead .background {
   background-color: white;
   -webkit-transition-property: background-color;
@@ -13725,7 +13725,7 @@ x:-o-prefocus {
   -o-transition-duration: 0.1s;
   transition-duration: 0.1s;
 }
-/* line 111, ../sass/site/apps/_bplayer.sass */
+/* line 110, ../sass/site/apps/_bplayer.sass */
 #bplayer_container #bplayer_playlist_container {
   height: auto;
   max-height: 300px;
@@ -13741,7 +13741,7 @@ x:-o-prefocus {
   -o-transition-duration: 0.5s;
   transition-duration: 0.5s;
 }
-/* line 119, ../sass/site/apps/_bplayer.sass */
+/* line 118, ../sass/site/apps/_bplayer.sass */
 #bplayer_container #bplayer_playlist_container.hidden {
   height: 0;
   overflow-y: hidden;
@@ -13757,29 +13757,29 @@ x:-o-prefocus {
   transition-duration: 0.5s;
 }
 
-/* line 131, ../sass/site/apps/_bplayer.sass */
+/* line 130, ../sass/site/apps/_bplayer.sass */
 #bplayer_container .base {
   background: black;
   padding: 8px 0 2px;
   box-shadow: 0px -1px 3px 1px rgba(51, 51, 51, 0.16);
 }
-/* line 135, ../sass/site/apps/_bplayer.sass */
+/* line 134, ../sass/site/apps/_bplayer.sass */
 #bplayer_container .wave {
   background: black;
 }
-/* line 138, ../sass/site/apps/_bplayer.sass */
+/* line 137, ../sass/site/apps/_bplayer.sass */
 #bplayer_container.show-history {
   box-shadow: -2px -2px 3px 1px rgba(51, 51, 51, 0.16);
   background: black;
 }
-/* line 141, ../sass/site/apps/_bplayer.sass */
+/* line 140, ../sass/site/apps/_bplayer.sass */
 #bplayer_container.show-history .base {
   background: none;
   padding: 0;
   box-shadow: none;
 }
 
-/* line 152, ../sass/site/apps/_bplayer.sass */
+/* line 151, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history .header {
   display: none;
   padding: 4px 0;
@@ -13788,34 +13788,34 @@ x:-o-prefocus {
   opacity: 0.7;
   color: white;
 }
-/* line 158, ../sass/site/apps/_bplayer.sass */
+/* line 157, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history .item {
   display: none;
   color: rgba(255, 255, 255, 0.5);
   padding: 4px 0;
 }
-/* line 162, ../sass/site/apps/_bplayer.sass */
+/* line 161, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history .item.hover {
   color: white;
 }
-/* line 164, ../sass/site/apps/_bplayer.sass */
+/* line 163, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history .item.on-air {
   font-style: italic;
   color: white;
 }
-/* line 168, ../sass/site/apps/_bplayer.sass */
+/* line 167, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history .item a {
   color: white;
 }
-/* line 170, ../sass/site/apps/_bplayer.sass */
+/* line 169, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history .item.on-air {
   display: block;
 }
-/* line 174, ../sass/site/apps/_bplayer.sass */
+/* line 173, ../sass/site/apps/_bplayer.sass */
 #bplayer_container.show-history section.playlist.history .header {
   display: block;
 }
-/* line 176, ../sass/site/apps/_bplayer.sass */
+/* line 175, ../sass/site/apps/_bplayer.sass */
 #bplayer_container.show-history section.playlist.history .item {
   display: block;
   padding: 4px 0;
