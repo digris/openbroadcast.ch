@@ -21,6 +21,4 @@ def wrap_text(instance, placeholder, rendered_content, original_context):
         })
         # Finally, render the content through that template, and return the output
 
-        print t.render(c)
-
         return t.render(c)
