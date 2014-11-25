@@ -71,12 +71,12 @@ OnAirApp = ->
     
     # set ct-based metadata
     self.meta_container.on("mouseover", "a", (e) ->
-      $(".current", self.info_container).addClass "flipped"
+      $(".current", self.info_container).addClass "backside"
       clearTimeout self.info_timeout  if self.info_timeout
       self.show_meta_for $(this).data("ct")
     ).on "mouseout", "a", (e) ->
       self.info_timeout = setTimeout(->
-        $(".current", self.info_container).removeClass "flipped"
+        $(".current", self.info_container).removeClass "backside"
       , 400)
 
     
@@ -85,7 +85,7 @@ OnAirApp = ->
       clearTimeout self.info_timeout  if self.info_timeout
     ).on "mouseout", ".item", (e) ->
       self.info_timeout = setTimeout(->
-        $(".current", self.info_container).removeClass "flipped"
+        $(".current", self.info_container).removeClass "backside"
       , 400)
 
     self.prevnext_container.on "click", "a", (e) ->

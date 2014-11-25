@@ -85,7 +85,7 @@ var OnAirApp = function () {
         // flip-handling
         // direct hover
         self.meta_container.on('mouseover', 'a', function (e) {
-            $('.current', self.info_container).addClass('flipped');
+            $('.current', self.info_container).addClass('backside');
             if (self.info_timeout) {
                 clearTimeout(self.info_timeout);
             }
@@ -94,7 +94,7 @@ var OnAirApp = function () {
 
         }).on('mouseout', 'a', function (e) {
             self.info_timeout = setTimeout(function () {
-                $('.current', self.info_container).removeClass('flipped');
+                $('.current', self.info_container).removeClass('backside');
             }, 400)
         });
         // keep visible on info-hover
@@ -104,7 +104,7 @@ var OnAirApp = function () {
             }
         }).on('mouseout', '.item', function (e) {
             self.info_timeout = setTimeout(function () {
-                $('.current', self.info_container).removeClass('flipped');
+                $('.current', self.info_container).removeClass('backside');
             }, 400)
         });
 

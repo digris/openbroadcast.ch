@@ -12535,14 +12535,15 @@ x:-o-prefocus {
   width: 100%;
   height: 100%;
   position: absolute;
-  -webkit-transition: -webkit-transform 1s, opacity 1s;
+  -webkit-transition: -webkit-transform 1s, opacity 0s;
   -webkit-transform-style: preserve-3d;
 }
 /* line 142, ../sass/site/apps/_onair.sass */
-#onair_container .info-container .item.info.flipped {
+#onair_container .info-container .item.info.backside {
+  -webkit-transition: -webkit-transform 1s, opacity 0s;
   -webkit-transform: rotateY(-179.999deg);
 }
-/* line 147, ../sass/site/apps/_onair.sass */
+/* line 148, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .container {
   display: block;
   height: 100%;
@@ -12552,15 +12553,15 @@ x:-o-prefocus {
   box-shadow: 2px 2px 14px rgba(0, 0, 0, 0.5);
   background-size: 100% !important;
 }
-/* line 159, ../sass/site/apps/_onair.sass */
+/* line 160, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .front {
   position: relative;
 }
-/* line 162, ../sass/site/apps/_onair.sass */
+/* line 163, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .front > div.wrapper {
   padding: 150px 0 0 150px;
 }
-/* line 165, ../sass/site/apps/_onair.sass */
+/* line 166, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .front > div.wrapper .action {
   cursor: pointer;
   width: 120px;
@@ -12571,7 +12572,7 @@ x:-o-prefocus {
   -moz-transition: background 0.4s ease-out;
   transition: background 0.4s ease-out;
 }
-/* line 172, ../sass/site/apps/_onair.sass */
+/* line 173, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .front > div.wrapper .action span {
   -webkit-transition: color 0.4s ease-out;
   -moz-transition: color 0.4s ease-out;
@@ -12581,43 +12582,43 @@ x:-o-prefocus {
   font-weight: 300;
   color: black;
 }
-/* line 179, ../sass/site/apps/_onair.sass */
+/* line 180, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .front > div.wrapper .action.hover {
   background: black;
   -webkit-transition: background 0.2s ease-out;
   -moz-transition: background 0.2s ease-out;
   transition: background 0.2s ease-out;
 }
-/* line 182, ../sass/site/apps/_onair.sass */
+/* line 183, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .front > div.wrapper .action.hover span a {
   -webkit-transition: color 0.5s ease-out;
   -moz-transition: color 0.5s ease-out;
   transition: color 0.5s ease-out;
   color: white;
 }
-/* line 186, ../sass/site/apps/_onair.sass */
+/* line 187, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .front > div.badge {
   position: absolute;
   transform: translateZ(1px);
   bottom: 1px;
   right: 1px;
 }
-/* line 191, ../sass/site/apps/_onair.sass */
+/* line 192, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .front > div.badge > div {
   padding: 10px;
   background: black;
 }
-/* line 194, ../sass/site/apps/_onair.sass */
+/* line 195, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .front > div.badge > div span, #onair_container .info-container .item.info .front > div.badge > div a {
   color: white;
 }
-/* line 196, ../sass/site/apps/_onair.sass */
+/* line 197, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .front > div.badge > div a {
   background: #525252;
   padding: 1px 6px 2px;
   border: 1px solid #8e8e8e;
 }
-/* line 203, ../sass/site/apps/_onair.sass */
+/* line 204, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .back {
   padding: 20px;
   top: 0;
@@ -12625,56 +12626,56 @@ x:-o-prefocus {
   -webkit-transform: rotateY(180deg);
   color: white;
 }
-/* line 216, ../sass/site/apps/_onair.sass */
+/* line 217, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .back .ct-panel {
   height: 100%;
   overflow: hidden;
 }
-/* line 220, ../sass/site/apps/_onair.sass */
+/* line 221, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .back .ct-panel .header h1 {
   font-size: 1.46667rem;
   font-weight: 300;
   color: white;
   margin-bottom: 0;
 }
-/* line 225, ../sass/site/apps/_onair.sass */
+/* line 226, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .back .ct-panel .header ul > li {
   font-size: 0.93333rem;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
   opacity: 0.7;
 }
-/* line 230, ../sass/site/apps/_onair.sass */
+/* line 231, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .back .ct-panel .body {
   margin-top: 20px;
   text-align: left;
 }
-/* line 233, ../sass/site/apps/_onair.sass */
+/* line 234, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .back .ct-panel .body p {
   font-size: 0.93333rem;
   line-height: 150%;
 }
-/* line 237, ../sass/site/apps/_onair.sass */
+/* line 238, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .back .ct-panel .tags {
   bottom: 20px;
   position: absolute;
   width: 100%;
 }
-/* line 245, ../sass/site/apps/_onair.sass */
+/* line 246, ../sass/site/apps/_onair.sass */
 #onair_container .meta-container a:hover {
   background: black;
   padding: 4px 8px;
   color: white;
 }
-/* line 250, ../sass/site/apps/_onair.sass */
+/* line 251, ../sass/site/apps/_onair.sass */
 #onair_container .meta-container dl {
   margin: 0;
 }
-/* line 252, ../sass/site/apps/_onair.sass */
+/* line 253, ../sass/site/apps/_onair.sass */
 #onair_container .meta-container dl dt, #onair_container .meta-container dl dd {
   margin-bottom: 0;
   line-height: 155%;
 }
-/* line 256, ../sass/site/apps/_onair.sass */
+/* line 257, ../sass/site/apps/_onair.sass */
 #onair_container .meta-container dl dt {
   font-weight: 300;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
@@ -12682,32 +12683,32 @@ x:-o-prefocus {
   float: left;
   padding-right: 7px;
 }
-/* line 261, ../sass/site/apps/_onair.sass */
+/* line 262, ../sass/site/apps/_onair.sass */
 #onair_container .meta-container .separator {
   width: 40%;
   border-top: 2px solid black;
   margin: 12px 0px;
 }
 @media only screen and (min-width: 40.063em) {
-  /* line 275, ../sass/site/apps/_onair.sass */
+  /* line 276, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.next,
   #onair_container #media_prev_next div.previous {
     position: absolute;
     top: 45%;
   }
-  /* line 279, ../sass/site/apps/_onair.sass */
+  /* line 280, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.next.disabled,
   #onair_container #media_prev_next div.previous.disabled {
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
     opacity: 0.3;
   }
-  /* line 281, ../sass/site/apps/_onair.sass */
+  /* line 282, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.next.disabled:hover .icon,
   #onair_container #media_prev_next div.previous.disabled:hover .icon {
     cursor: not-allowed;
     background: transparent !important;
   }
-  /* line 285, ../sass/site/apps/_onair.sass */
+  /* line 286, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.next .icon,
   #onair_container #media_prev_next div.previous .icon {
     -webkit-transition: background 0.1s ease-out;
@@ -12719,17 +12720,17 @@ x:-o-prefocus {
     border-radius: 50%;
     line-hrigh: 50px;
   }
-  /* line 293, ../sass/site/apps/_onair.sass */
+  /* line 294, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.next .icon polyline,
   #onair_container #media_prev_next div.previous .icon polyline {
     stroke: black;
   }
-  /* line 297, ../sass/site/apps/_onair.sass */
+  /* line 298, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.next .icon:hover polyline,
   #onair_container #media_prev_next div.previous .icon:hover polyline {
     stroke: white;
   }
-  /* line 301, ../sass/site/apps/_onair.sass */
+  /* line 302, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.next:hover .icon,
   #onair_container #media_prev_next div.previous:hover .icon {
     -webkit-transition: background 0.1s ease-out;
@@ -12737,25 +12738,25 @@ x:-o-prefocus {
     transition: background 0.1s ease-out;
     background: black;
   }
-  /* line 306, ../sass/site/apps/_onair.sass */
+  /* line 307, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.previous {
     left: 30px;
   }
-  /* line 308, ../sass/site/apps/_onair.sass */
+  /* line 309, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.previous .icon {
     padding: 24px 0 0 30px;
   }
-  /* line 311, ../sass/site/apps/_onair.sass */
+  /* line 312, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.next {
     right: 30px;
   }
-  /* line 313, ../sass/site/apps/_onair.sass */
+  /* line 314, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.next .icon {
     padding: 24px 0 0 44px;
   }
 }
 
-/* line 324, ../sass/site/apps/_onair.sass */
+/* line 325, ../sass/site/apps/_onair.sass */
 .rating-container {
   margin: 24px auto 8px;
   height: 51px;
@@ -12772,16 +12773,16 @@ x:-o-prefocus {
 .rating-container:after {
   clear: both;
 }
-/* line 331, ../sass/site/apps/_onair.sass */
+/* line 332, ../sass/site/apps/_onair.sass */
 .rating-container.disabled {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
   opacity: 0.3;
 }
-/* line 333, ../sass/site/apps/_onair.sass */
+/* line 334, ../sass/site/apps/_onair.sass */
 .rating-container.disabled div.vote, .rating-container.disabled div.vote a {
   cursor: not-allowed;
 }
-/* line 336, ../sass/site/apps/_onair.sass */
+/* line 337, ../sass/site/apps/_onair.sass */
 .rating-container div.separator {
   position: absolute;
   left: 50%;
@@ -12789,58 +12790,58 @@ x:-o-prefocus {
   height: 62px;
   background: black;
 }
-/* line 343, ../sass/site/apps/_onair.sass */
+/* line 344, ../sass/site/apps/_onair.sass */
 .rating-container div.vote {
   padding-top: 8px;
 }
-/* line 346, ../sass/site/apps/_onair.sass */
+/* line 347, ../sass/site/apps/_onair.sass */
 .rating-container div.vote a {
   display: block;
   height: 33px;
   position: relative;
   width: 66px;
 }
-/* line 352, ../sass/site/apps/_onair.sass */
+/* line 353, ../sass/site/apps/_onair.sass */
 .rating-container div.vote span {
   font-size: 1.2rem;
   position: absolute;
   padding: 3px;
   top: 11px;
 }
-/* line 358, ../sass/site/apps/_onair.sass */
+/* line 359, ../sass/site/apps/_onair.sass */
 .rating-container div.vote svg {
   position: absolute;
 }
-/* line 362, ../sass/site/apps/_onair.sass */
+/* line 363, ../sass/site/apps/_onair.sass */
 .rating-container div.vote svg polyline, .rating-container div.vote svg rect {
   -webkit-transition: fill 0.5s ease-out;
   -moz-transition: fill 0.5s ease-out;
   transition: fill 0.5s ease-out;
   stroke: black;
 }
-/* line 368, ../sass/site/apps/_onair.sass */
+/* line 369, ../sass/site/apps/_onair.sass */
 .rating-container div.vote.vote-up span {
   right: 41px;
 }
-/* line 370, ../sass/site/apps/_onair.sass */
+/* line 371, ../sass/site/apps/_onair.sass */
 .rating-container div.vote.vote-up svg {
   right: 0;
 }
-/* line 375, ../sass/site/apps/_onair.sass */
+/* line 376, ../sass/site/apps/_onair.sass */
 .rating-container div.vote.vote-down span {
   right: 0;
 }
-/* line 377, ../sass/site/apps/_onair.sass */
+/* line 378, ../sass/site/apps/_onair.sass */
 .rating-container div.vote.vote-down svg {
   transform: rotateZ(180deg);
   top: 13px;
   right: 33px;
 }
-/* line 385, ../sass/site/apps/_onair.sass */
+/* line 386, ../sass/site/apps/_onair.sass */
 .rating-container div.vote:hover a, .rating-container div.vote:active a {
   color: black;
 }
-/* line 387, ../sass/site/apps/_onair.sass */
+/* line 388, ../sass/site/apps/_onair.sass */
 .rating-container div.vote:hover polyline, .rating-container div.vote:hover rect, .rating-container div.vote:active polyline, .rating-container div.vote:active rect {
   fill: white;
   -webkit-transition: fill 0.2s ease-out;
@@ -12849,29 +12850,29 @@ x:-o-prefocus {
 }
 
 @media only screen and (max-width: 40em) {
-  /* line 403, ../sass/site/apps/_onair.sass */
+  /* line 404, ../sass/site/apps/_onair.sass */
   #onair_container .meta-container {
     text-align: center;
   }
-  /* line 405, ../sass/site/apps/_onair.sass */
+  /* line 406, ../sass/site/apps/_onair.sass */
   #onair_container .meta-container dt {
     display: none;
   }
-  /* line 408, ../sass/site/apps/_onair.sass */
+  /* line 409, ../sass/site/apps/_onair.sass */
   #onair_container .meta-container .separator {
     margin: 12px auto;
   }
 }
 @media only screen and (min-width: 40.063em) and (max-width: 64em) {
-  /* line 414, ../sass/site/apps/_onair.sass */
+  /* line 415, ../sass/site/apps/_onair.sass */
   #onair_container .meta-container {
     text-align: center;
   }
-  /* line 416, ../sass/site/apps/_onair.sass */
+  /* line 417, ../sass/site/apps/_onair.sass */
   #onair_container .meta-container dt {
     display: none;
   }
-  /* line 419, ../sass/site/apps/_onair.sass */
+  /* line 420, ../sass/site/apps/_onair.sass */
   #onair_container .meta-container .separator {
     margin: 12px auto;
   }
