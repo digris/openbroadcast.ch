@@ -1,13 +1,10 @@
-<li class="item message new{% if message.user.is_me %} me{% endif %} {% if message.extra_classes %} {{ message.extra_classes }}{% endif %}">
+<li class="item message new{% if message.user.is_me %} me{% endif %} {% if message.extra_classes %} {{ message.extra_classes }}{% endif %}"
+     {% if message.user.is_me %}data-livebg{% endif %}>
 
     <div class="body">
         <p>
         {{ message.text|truncate(240, True, '<a href="#">...</a>') }}
         </p>
-        <div class="question-mark hide">
-            <span>?</span>
-            <!--<i class="fa fa-user"></i>-->
-        </div>
     </div>
 
     <div class="author text-center">
