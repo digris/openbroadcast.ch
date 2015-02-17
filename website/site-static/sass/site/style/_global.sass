@@ -8,6 +8,21 @@ body, html
   height: 100%
   letter-spacing: 1px
 
+
+///////////////////////////////////////////////////////////////////////
+// cms in admin state, hide some parts
+///////////////////////////////////////////////////////////////////////
+html.cms-toolbar-expanded
+  #onair_container,
+  #achat_container
+    width: 1px
+    height: 1px
+    overflow: hidden
+    position: absolute
+    left: -10px
+
+
+
 ///////////////////////////////////////////////////////////////////////
 // global layout
 ///////////////////////////////////////////////////////////////////////
@@ -114,4 +129,10 @@ dl.horizontal
   &.disabled, &[disabled]
     @include button-style($bg:$grey-light, $disabled:true)
     cursor: wait
+
+.button.black
+  @include button($bg:#000)
+  border-color: #999999 !important
+  //min-width: 120px
+
 

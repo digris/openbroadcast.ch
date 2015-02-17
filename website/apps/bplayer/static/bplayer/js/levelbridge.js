@@ -51,13 +51,11 @@ var LevelBridge = function () {
                     self.draw_icon(data.peak);
                 }
 
-
-
             });
 
         } catch (err) {
             //alert('Unable to connect to socket-server');
-            console.log(err.message);
+            console.warn(err.message);
         }
     };
 
@@ -101,8 +99,6 @@ var LevelBridge = function () {
             }
         }
         self.counter++;
-
-
 
         // pop elements
         if(num_element > max_element) {

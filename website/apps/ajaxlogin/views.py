@@ -2,6 +2,7 @@ from django.shortcuts import render_to_response
 from django.shortcuts import RequestContext
 from django.shortcuts import render
 from django.contrib.auth import login
+
 from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
 from registration.forms import *

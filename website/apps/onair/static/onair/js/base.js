@@ -1,12 +1,11 @@
 ;
 var OnAirApp = function () {
     var self = this;
-    this.debug = true;
+    this.debug = false;
     this.api_url = '/api/v1/abcast/channel/';
     this.channel_id = 1;
-    //this.base_url = 'http://openbroadcast.org/';
     // TODO: base_url form API_BASE_URL settings
-    this.base_url = 'https://www.openbroadcast.org';
+    this.base_url = '';
     this.container;
     this.bplayer = false;
     this.max_items = 12;
@@ -43,12 +42,14 @@ var OnAirApp = function () {
 
         $.get(url).done(function (data) {
 
-            console.log('on air:', data);
-
             if (!data.start_next) {
-                setTimeout(self.load, 10000)
+                setTimeout(self.load, 30000)
             } else {
-                setTimeout(self.load, Number(data.start_next * 1000));
+                var timeout = Number(data.start_next * 1000);
+                if(timeout > 30000) {
+                    timeout = 30000;
+                }
+                setTimeout(self.load, timeout);
             }
 
             if (data.playing != undefined && (data.playing.emission != undefined && data.playing.item != undefined)) {
@@ -56,10 +57,11 @@ var OnAirApp = function () {
                 self.load_current(data.playing);
             } else {
                 self.set_mode('fallback');
-                console.log('nothing on air -> load splash-screen');
             }
         }).fail(function (jqXHR, textStatus, errorThrown) {
-            console.error('OnAirApp - load ' + errorThrown);
+            if(self.debug) {
+                console.error('OnAirApp - load ' + errorThrown);
+            }
             self.set_mode('fallback');
             setTimeout(self.load, 10000);
         })
@@ -75,12 +77,14 @@ var OnAirApp = function () {
     };
 
     this.bindings = function () {
-        console.log('OnAirApp - bindings');
+        if(self.debug) {
+            console.log('OnAirApp - bindings');
+        }
 
         // flip-handling
         // direct hover
         self.meta_container.on('mouseover', 'a', function (e) {
-            $('.current', self.info_container).addClass('backside');
+            $('.current', self.info_container).addClass('details-visible');
             if (self.info_timeout) {
                 clearTimeout(self.info_timeout);
             }
@@ -89,7 +93,7 @@ var OnAirApp = function () {
 
         }).on('mouseout', 'a', function (e) {
             self.info_timeout = setTimeout(function () {
-                $('.current', self.info_container).removeClass('backside');
+                $('.current', self.info_container).removeClass('details-visible');
             }, 400)
         });
         // keep visible on info-hover
@@ -99,7 +103,7 @@ var OnAirApp = function () {
             }
         }).on('mouseout', '.item', function (e) {
             self.info_timeout = setTimeout(function () {
-                $('.current', self.info_container).removeClass('backside');
+                $('.current', self.info_container).removeClass('details-visible');
             }, 400)
         });
 
@@ -111,19 +115,35 @@ var OnAirApp = function () {
             }
         });
 
+
+        // TODO: hackish implementation here, should be done more generic
+        self.container.on('click', '#back_on_air a', function(e){
+            e.preventDefault();
+            for (i=0; i < Math.abs(self.timeline_offset); i++) {
+                setTimeout(function(){
+                    self.timeline_offset++;
+                    self.handle_timeline();
+                }, (200 * i));
+            }
+        });
+
+
     };
 
     this.show_meta_for = function (ct) {
 
-        $('div[data-ct]').hide();
-        $('div[data-ct="' + ct + '"]').show();
+        $('div[data-ct]').fadeOut(50);
+        $('div[data-ct="' + ct + '"]').fadeIn(250);
 
     };
 
 
     this.load_current = function (playing) {
 
-        console.log('OnAirApp - load_current');
+        if(self.debug) {
+            console.log('OnAirApp - load_current');
+        }
+
         var obj = {
             emission: [],
             item: [],
@@ -134,11 +154,15 @@ var OnAirApp = function () {
 
         // first load emission data
         $.get(playing.emission, function (data) {
-            console.log('emission:', data);
+            if(self.debug) {
+                console.log('emission:', data);
+            }
             obj.emission = data;
             // then 'item' data
             $.get(playing.item, function (data) {
-                console.log('item:', data);
+                if(self.debug) {
+                    console.log('item:', data);
+                }
                 obj.item = data;
 
                 // reset playing flag
@@ -203,7 +227,9 @@ var OnAirApp = function () {
      */
     this.complete_data = function () {
 
-        console.log('OnAirApp - complete_data');
+        if(self.debug) {
+            console.log('OnAirApp - complete_data');
+        }
 
         $.each(self.local_data, function (i, item) {
 
@@ -222,7 +248,9 @@ var OnAirApp = function () {
         });
 
         setTimeout(function () {
-            console.log(self.local_data);
+            if(self.debug) {
+                console.log(self.local_data);
+            }
             self.update_data();
         }, 500);
 
@@ -231,7 +259,9 @@ var OnAirApp = function () {
 
     this.update_data = function () {
 
-        console.log('OnAirApp - update_data', self.local_data);
+        if(self.debug) {
+            console.log('OnAirApp - update_data', self.local_data);
+        }
 
         // clean 'old' data
         self.local_data.splice(0, self.local_data.length - self.max_items)
@@ -265,9 +295,11 @@ var OnAirApp = function () {
                         base_url: self.base_url
                     }));
                 } catch(e) {
-                    var html = $('<div>ERROR</div>')
-                    console.warn(e);
-                    console.warn(item);
+                    var html = $('<div>ERROR</div>');
+                    if(self.debug) {
+                        console.warn(e);
+                        console.warn(item);
+                    }
                 }
 
 
@@ -376,7 +408,9 @@ var OnAirApp = function () {
                 item.el.addClass('previous');
                 item.el.addClass('previous-' + Math.abs(current_index - i));
 
-                console.log('index / prev:', Math.abs(current_index - i))
+                if(self.debug) {
+                    console.debug('index / prev:', Math.abs(current_index - i));
+                }
 
                 if (Math.abs(current_index - i) > 3) {
                     item.el.addClass('previous-x');
@@ -405,7 +439,9 @@ var OnAirApp = function () {
         });
 
         // handle prev/next actions
-        console.log('current_index', current_index + 1, 'num_items', num_items)
+        if(self.debug) {
+            console.debug('OnAirApp - current_index', current_index + 1, 'num_items', num_items);
+        }
 
         if (current_index + 1 <= num_items
             && num_items > 1
@@ -428,15 +464,16 @@ var OnAirApp = function () {
      */
     this.handle_prevnext = function (direction) {
 
-        console.log('OnAirApp - handle_prevnext: ' + direction);
+        if(self.debug) {
+            console.log('OnAirApp - handle_prevnext: ' + direction);
+        }
+
         if (direction == 'previous') {
             self.timeline_offset--;
         }
-        ;
         if (direction == 'next') {
             self.timeline_offset++;
         }
-        ;
 
         self.handle_timeline();
 

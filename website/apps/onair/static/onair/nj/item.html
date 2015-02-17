@@ -4,47 +4,51 @@
     id="{{ dom_id }}">
 
     <!-- base container - media -->
-    <div class="container front"
+    <div class="container"
          {% if object.item and object.item.release and object.item.release.main_image %}
          style="background: url({{ base_url }}{{ object.item.release.main_image }});">
          {% else %}
          style="background: #000;">
          {% endif %}
 
+        <!-- swapable container - artist/label/etc -->
+        <div class="details">
+            {% include "onair/nj/item_playlist.html" %}
+            {% include "onair/nj/item_media.html" %}
+            {% include "onair/nj/item_artist.html" %}
+            {% include "onair/nj/item_release.html" %}
+        </div>
+
+        <!-- action wrapper - play/pause/listen -->
         <div class="wrapper">
-            <div data-action="listen" class="action hoverable">
-                <span>
+
+            <div data-action="listen" class="action listen hoverable">
+
+                <span class="hide-while-playing">
                     <a href="#" data-action="listen">Listen</a>
                 </span>
+
+                <span class="show-while-playing">
+                    <a href="#" data-action="pause">||</a>
+                </span>
+
             </div>
+
+            <div data-action="play" class="action play hoverable">
+
+                <span class="hide-while-playing">
+                    <a href="#" data-action="play">Play</a>
+                </span>
+
+                <span class="show-while-playing">
+                    <a href="#" data-action="pause">||</a>
+                </span>
+
+            </div>
+
+
+
         </div>
-
-        <div class="badge">
-            <div class="onair hide">
-                <span>Now On-Air</span>
-                <span>></span>
-                <span><a href="#">Tune In</a></span>
-            </div>
-            <div class="history hide">
-                <span>Aired 15:26:12</span>
-                <span>></span>
-                <span><a href="#">Play Again</a></span>
-            </div>
-        </div>
-
-
-    </div>
-
-    <!-- swapable container - artist/label/etc -->
-    <div class="container back">
-
-
-        {% include "onair/nj/item_playlist.html" %}
-
-        {% include "onair/nj/item_media.html" %}
-        {% include "onair/nj/item_artist.html" %}
-        {% include "onair/nj/item_release.html" %}
-
 
 
     </div>

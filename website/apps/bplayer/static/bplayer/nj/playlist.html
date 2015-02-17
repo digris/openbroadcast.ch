@@ -1,5 +1,21 @@
 
-<section class="playlist history">
+<section class="playlist history compact">
+
+    {% for item in objects %}
+
+        {% if item.on_air %}
+        <div class="item">
+            <a href="#">{{ item.item.name }}</a>
+            <span>by</span>
+            <a href="#">{{ item.item.artist.name }}</a>
+        </div>
+        {% endif %}
+
+    {% endfor %}
+
+</section>
+
+<section class="playlist history expanded">
 
     <div class="row header">
         <div class="small-1 columns">

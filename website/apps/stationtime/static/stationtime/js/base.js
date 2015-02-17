@@ -2,6 +2,7 @@
 StationTimeApp = function () {
 
     var self = this;
+    this.debug = false;
     this.container;
     this.api_url;
     this.current_time;
@@ -11,7 +12,9 @@ StationTimeApp = function () {
 
     this.init = function () {
 
-        debug.debug('StationTimeApp: init');
+        if(self.debug) {
+            debug.debug('StationTimeApp: init');
+        }
 
         self.sync_time();
 
@@ -54,11 +57,11 @@ StationTimeApp = function () {
             self.pad(self.current_time.getSeconds())
         ].join(':')
 
-        self.container.html('<span>' + time_string + '</span>');
+        self.container.html('<a href="#">' + time_string + '</a>');
     };
 
     this.pad = function(n) {
-        return (n < 10) ? ("0" + n) : n;
+        return (n < 10) ? ('0' + n) : n;
     }
 
 };

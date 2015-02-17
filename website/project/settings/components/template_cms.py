@@ -120,5 +120,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'cms.context_processors.cms_settings',
     'django_mobile.context_processors.flavour',
     'sekizai.context_processors.sekizai',
+    'django_settings_export.settings_export',
 )
 

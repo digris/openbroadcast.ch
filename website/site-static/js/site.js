@@ -9,6 +9,9 @@ var SiteUI = function () {
         '#75DB87',
         '#609E80'
     ];
+    this.colors = [
+        '#cacaca'
+    ];
     this.current_color = 0;
 
     this.remote_window = false;
@@ -69,19 +72,25 @@ var SiteUI = function () {
 
         });
 
+        $(document).on('ajax-loader', function(e, action) {
+            if(action == 'loaded') {
+                self.set_color();
+            }
+        });
+
+
+
     };
 
 
     this.set_color = function() {
 
         var color = self.colors[self.current_color];
-
         var color = self.colors[Math.floor(Math.random() * self.colors.length)];
-
 
         $('html *[data-livebg]').animate({
             backgroundColor: color
-        }, 500 );
+        }, 1 );
     };
 
 
@@ -97,7 +106,7 @@ var SiteUI = function () {
 
 
 
-    this.init = (function () {
+    this.init = function () {
 
         self.is_retina = isRetinaDisplay();
 
@@ -105,7 +114,7 @@ var SiteUI = function () {
         self.set_color();
         self.bindings();
 
-    })();
+    };
 
 };
 

@@ -10,7 +10,9 @@ AchatApp = function () {
 
     this.init = function () {
 
-        debug.debug('AchatApp: init');
+        if(self.debug) {
+            debug.debug('AchatApp: init');
+        }
         self.messages_container = $('.messages-container', self.container);
         self.bindings();
 

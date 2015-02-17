@@ -10,20 +10,23 @@
             {% if user.is_staff %}
                 <li><a target="_blank" href="/admin/">{% trans 'Administration' %}</a></li>
             {% endif %}
-            <li><a href="{% url "auth_logout" %}?next=/">{% trans 'Logout' %}</a></li>
+            <li>
+                <a href="{% url 'alogin-logout' %}" data-alogin-action="logout">{% trans 'logout'|capfirst %}</a>
+            </li>
         </ul>
     </li>
 
 {% else %}
 
     <li>
+
+        <a href="{% url 'alogin-login' %}" data-alogin-action="login">{% trans 'login'|capfirst %} / {% trans 'register'|capfirst %}</a>
+
         <!--
-        <a href="{% url 'auth_login_ajax' %}?next={{ request.get_full_path }}" data-reveal-id="auth_dialog" data-reveal-ajax="true">Login / Register</a>
+        <a href="{% url 'alogin-register' %}" data-alogin-action="register">{% trans 'register'|capfirst %}</a>
         -->
-        <a href="{% url 'auth_login' %}?next={{ request.get_full_path }}">Login / Register</a>
 
     </li>
-    <div id="auth_dialog" class="reveal-modal tiny" data-reveal></div>
 
 {% endif %}
 

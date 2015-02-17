@@ -1,10 +1,8 @@
-
-
 ;
 var BPlayerApp = function () {
 
     var self = this;
-    this.debug = true;
+    this.debug = false;
     this.state = 'init';
     // dom containers
     this.container;
@@ -34,7 +32,10 @@ var BPlayerApp = function () {
 
 
     this.init = function () {
-        console.log('BPlayerApp - init');
+
+        if(self.debug) {
+            console.log('BPlayerApp - init');
+        }
 
         self.container = $('#bplayer_container');
         self.playlist_container = $('#bplayer_playlist_container', self.container);
@@ -42,8 +43,14 @@ var BPlayerApp = function () {
         // setup player backend
 
         soundManager.defaultOptions = {
-            multiShot: false
+            multiShot: false,
+            debugMode: self.debug,
+            debugFlash: self.debug,
+            useConsole: self.debug
         };
+        soundManager.debugFlash = self.debug;
+        soundManager.debugMode = self.debug;
+        soundManager.useConsole = self.debug;
 
         if(self.mode == 'inline' || self.mode == 'popup') {
             self.sm2 = self.init_sm2();
@@ -55,17 +62,18 @@ var BPlayerApp = function () {
 
     this.init_sm2 = function() {
 
-        console.log('BPlayerApp - init_sm2');
+        if(self.debug) {
+            console.log('BPlayerApp - init_sm2');
+        }
 
          return soundManager.setup({
             url: self.static_url + 'bplayer/swf/lib/soundmanager2_flash9_debug.swf',
             flashVersion: 9,
             preferFlash: false,
-            debugMode: false,
-            debugFlash: false,
+            debugMode: self.debug,
+            debugFlash: self.debug,
+            useConsole: self.debug,
             onready: function () {
-
-                console.log('sm2 ready');
 
                 self.current_sound = soundManager.createSound({
                     autoLoad: true,
@@ -123,36 +131,30 @@ var BPlayerApp = function () {
 
     this.state_change = function (state) {
 
-        console.log('BPlayerApp - state changed to: ' + state);
-        var classes = removeA(self.states.slice(0), state).join(' ');
+        if(self.debug) {
+            console.log('BPlayerApp - state changed to: ' + state);
+        }
 
+        var classes = removeA(self.states.slice(0), state).join(' ');
         self.container.addClass(state).removeClass(classes);
         self.state = state;
 
-
+        // TODO: not so nice, add state as property to body
+        $('body').data('bplayer_state', state);
+        $('body').addClass(state).removeClass(classes);
 
         // TODO: this is a hack!!! implement properly if wished to use!
         if (state == 'paused' || state == 'stopped') {
-
 
             var heights = [50, 90, 50, 40, 20, 30, 70];
             $('#levelbridge_icon span').each(function (i, el) {
                 $(this).animate({
                     height: heights[i] + '%'
                 }, {
-                  duration: 1500,
-                  //easing: "easein"
+                    duration: 1500
                 })
             });
-
-            $('.info-container .action').fadeIn(500);
-
-        };
-        if (state == 'playing') {
-            $('.info-container .action').fadeOut(200);
-        };
-
-
+        }
 
     };
 
@@ -162,8 +164,10 @@ var BPlayerApp = function () {
     };
 
     this.bindings = function () {
-        console.log('BPlayerApp - bindings');
 
+        if(self.debug) {
+            console.log('BPlayerApp - bindings');
+        }
 
         /*****************************************************************************
          * generic actions
@@ -174,8 +178,6 @@ var BPlayerApp = function () {
             var action = $(this).data('bplayer-action');
             var uri = $(this).parents('.item').data('resource_uri');
             var ctype = $(this).parents('.item').data('ct');
-
-
 
             $.get(uri, function (data) {
 
@@ -222,7 +224,6 @@ var BPlayerApp = function () {
             self.current_sound.load(sound);
             self.current_sound.play();
 
-
         });
 
         /*****************************************************************************
@@ -247,7 +248,9 @@ var BPlayerApp = function () {
             e.preventDefault();
             var action = $(this).data('bplayer-display');
 
-            debug.debug('bplayer-display: ' + action);
+            if(self.debug) {
+                debug.debug('bplayer-display: ' + action);
+            }
 
             // player size
             if (action == 'compact') {
@@ -294,9 +297,12 @@ var BPlayerApp = function () {
 
     this.attach = function () {
 
-        console.log('BPlayerApp - attach');
+        if(self.debug) {
+            console.log('BPlayerApp - attach');
+        }
 
         self.container = $('#bplayer_container');
+
         // setup player backend
         self.bindings();
         self.update_player();
@@ -340,7 +346,9 @@ var BPlayerApp = function () {
 
     this.controls = function (control) {
 
-        console.log('BPlayerApp - control: ', control);
+        if(self.debug) {
+            console.log('BPlayerApp - control: ', control);
+        }
 
         if (control.action == 'play') {
             var media = self.playlist[control.index];
@@ -363,7 +371,9 @@ var BPlayerApp = function () {
             if (total > (self.current_index + 1)) {
                 self.controls({action: 'play', index: self.current_index + 1})
             } else {
-                console.log('no more items');
+                if(self.debug) {
+                    console.log('no more items');
+                }
             }
         }
 
@@ -371,7 +381,9 @@ var BPlayerApp = function () {
             if (self.current_index >= 1) {
                 self.controls({action: 'play', index: self.current_index - 1})
             } else {
-                console.log('no previous items');
+                if(self.debug) {
+                    console.log('no previous items');
+                }
             }
         }
 
@@ -383,7 +395,9 @@ var BPlayerApp = function () {
             self.current_sound.resume();
         }
 
-        console.log('current playlist:', self.playlist);
+        if(self.debug) {
+            console.log('current playlist:', self.playlist);
+        }
 
     };
 
@@ -399,10 +413,14 @@ var BPlayerApp = function () {
         try {
             self.current_sound.destruct();
         } catch (e) {
-            debug.debug('unable to destruct sound: ' + e.message);
+            if(self.debug) {
+                debug.debug('unable to destruct sound: ' + e.message);
+            }
         }
 
-        console.log('play_file - current_sound:', self.current_sound);
+        if(self.debug) {
+            console.log('play_file - current_sound:', self.current_sound);
+        }
 
 
         if (self.current_sound == undefined) {
@@ -514,7 +532,9 @@ var BPlayerApp = function () {
 
 
         } else {
-            debug.debug('bplayer - no playlist available');
+            if(self.debug) {
+                debug.debug('bplayer - no playlist available');
+            }
         }
 
 
@@ -534,10 +554,16 @@ var BPlayerApp = function () {
 
 BPlayerApp.prototype.parse_release = function (data) {
     var playlist = [];
-    console.log('release-data:', data);
+
+    if(self.debug) {
+        console.log('release-data:', data);
+    }
+
     playlist = data.media;
 
-    console.log('playlist', playlist);
+    if(self.debug) {
+        console.log('playlist', playlist);
+    }
 
     return playlist;
 
@@ -547,11 +573,14 @@ BPlayerApp.prototype.parse_release = function (data) {
 
 BPlayerApp.prototype.parse_playlist = function (data) {
     var playlist = [];
-    console.log('playlist-data:', data);
+
+    if(self.debug) {
+        console.log('playlist-data:', data);
+    }
+
     media_ids = [];
 
     $.each(data.items, function(i, item) {
-
         media_ids.push(item.item.content_object.id);
     });
 
@@ -564,7 +593,9 @@ BPlayerApp.prototype.parse_playlist = function (data) {
         playlist = data.objects;
     });
 
-    console.log('playlist', playlist);
+    if(self.debug) {
+        console.log('playlist', playlist);
+    }
 
 
     return playlist;

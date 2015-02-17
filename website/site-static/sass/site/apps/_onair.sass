@@ -1,23 +1,51 @@
 ///////////////////////////////////////////////////
 // full-size screen, used in teaser block / home
 ///////////////////////////////////////////////////
-#station_time
+#station_time, #back_on_air
   height: 60px
-  >span
+  > a
     border: 2px solid #000
-    padding: 5px 20px 6px
+    padding: 8px 20px 9px
     font-weight: 300
     font-size: 16px
     line-height: 25px
     letter-spacing: 1px
+    cursor: pointer
+    &:hover
+      background: #000
+      color: #ffffff
+
+
 
 
 ///////////////////////////////////////////////////
 // full width player
 ///////////////////////////////////////////////////
+
+// global state switches
+body.playing
+  .hide-while-playing
+    display: none
+  .show-while-playing
+    display: block
+
+body:not(.playing)
+  .hide-while-playing
+    display: block
+  .show-while-playing
+    display: none
+
+// hackish station-time switch
+#onair_container.history
+  #station_time
+    display: none
+  #back_on_air
+    display: block
+
+
 #onair_container
   background: $primary-color
-  padding: 20px 0
+  padding: 48px 0
   position: relative
 
   // state switches
@@ -46,6 +74,8 @@
   .info-container
     position: relative
 
+    -webkit-transition: all 10s linear
+
     .items
       z-index: 5
       //height: 431px
@@ -53,6 +83,7 @@
 
     // slide history
     .item
+
       .container
         background-color: #000
 
@@ -85,14 +116,16 @@
           img.logo
             width: 80px
 
+      // action visibility
       &.current
         z-index: 5
-
+        div[data-action]
+          display: none
         &.onair
-          div.badge > .onair
+          div.listen
             display: block
         &.history
-          div.badge > .history
+          div.play
             display: block
 
       &.next
@@ -105,15 +138,21 @@
 
 
       &.previous
+
         +opacity(0.5)
+
+        -webkit-filter: grayscale(1)
+        filter: grayscale(100%)
+
+
         cursor: pointer
         z-index: 0
         .back, .action
           display: none
 
         &:hover
-          z-index: 4 !important
-          opacity: 1.0 !important
+          -webkit-filter: grayscale(0)
+          filter: grayscale(0%)
 
         &.previous-1
           -webkit-transform: rotateY(0deg) translateX(-140px) scale(0.9)
@@ -137,108 +176,114 @@
       width: 100%
       height: 100%
       position: absolute
-      -webkit-transition: -webkit-transform 0.0s, opacity 1.0s
+      -webkit-transition: -webkit-transform 1.0s, opacity 1.0s
       -webkit-transform-style: preserve-3d
-      &.backside
-        -webkit-transition: -webkit-transform 0.0s, opacity 1.0s
-        -webkit-transform: rotateY( -179.999deg )
-        //div.action
-        //  display: none
+
+
+      // show details, a.k.a. 'backside'
+      &.details-visible
+        .container > div.details
+          display: block
+          opacity: 1.0
+        .container > div.wrapper
+          display: none
 
       .container
         display: block
         height: 100%
         width: 100%
         position: absolute
-        -webkit-backface-visibility: hidden
         box-shadow: 2px 2px 14px rgba(0, 0, 0, 0.5)
-
         background-size: 100% !important
 
-
-
-      .front
-        position: relative
-
+        // action wrapper - play/pause/listen
         > div.wrapper
-          padding: 150px 0 0 150px
-
+          +xy-center
           .action
+            // action specific background
+            &.listen
+              background-image: url('/static/onair/img/bg.action.listen.png')
+            &.play
+              background-image: url('/static/onair/img/bg.action.play.png')
+
             cursor: pointer
-            width: 120px
-            height: 120px
-            border-radius: 60px
-            background: rgba(255, 255, 255, 0.2)
-            +single-transition(background, 0.4s)
+            margin: auto
+            width: 260px
+            height: 260px
+            background-size: 250px
+            background-position: center
+
+            //border-radius: 60px
+            //background: rgba(255, 255, 255, 0.2)
+            //+single-transition(background, 0.4s)
             span
+              +xy-center
               +single-transition(color, 0.4s)
               font-size: 200%
               line-height: 411%%
               font-weight: 300
-              color: #000
+              > a
+                color: #fff
 
+
+            +single-transition(background, 0.05s)
             &.hover
-              background: rgba(0, 0, 0, 1.0)
-              +single-transition(background, 0.2s)
+              background-size: 260px
+              //background: rgba(0, 0, 0, 1.0)
+              +single-transition(background, 0.05s)
+
+
               span a
                 +single-transition(color, 0.5s)
                 color: #fff
 
-        > div.badge
+
+
+        // swapable container - artist/label/etc
+        > div.details
+          //display: none
+          opacity: 0.0
           position: absolute
-          transform: translateZ(1px)
-          bottom: 1px
-          right: 1px
-          > div
-            padding: 10px
-            background: rgba(0, 0, 0, 1.0)
-            span, a
-              color: #fff
-            a
-              background: #525252
-              padding: 1px 6px 2px
-              border: 1px solid #8E8E8E
-
-
-
-      .back
-        //box-shadow: -1px -1px 4px rgba(0, 0, 0, 0.3)
-        //position: absolute
-        //top: 100%
-        padding: 20px
-        top: 0
-        background: #000
-        -webkit-transform: rotateY( 180deg )
-        color: #fff
-
-        // inner panels: artist, release, track empty-cells
-        // generic styles & needed overrides
-        // templates in: onair/nj/item_<ct>.html
-        .ct-panel
+          top: 0
+          left: 0
+          width: 100%
           height: 100%
-          overflow: hidden
-          .header
-            h1
-              font-size: rem-calc(22)
-              font-weight: 300
-              color: #fff
-              margin-bottom: 0
-            ul > li
-              font-size: rem-calc(14)
-              +opacity(0.7)
-
-
-          .body
-            margin-top: 20px
-            text-align: left
-            p
-              font-size: rem-calc(14)
-              line-height: 150%
-
-          .tags
-            bottom: 20px
+          background: #000
+          color: #fff
+          // inner panels: artist, release, track empty-cells
+          // generic styles & needed overrides
+          // templates in: onair/nj/item_<ct>.html
+          .ct-panel
             position: absolute
+            padding: 20px
+            top: 0
+            left: 0
             width: 100%
+            height: 100%
+            overflow: hidden
+            .header
+              h1
+                font-size: rem-calc(22)
+                font-weight: 300
+                color: #fff
+                margin-bottom: 0
+              ul > li
+                font-size: rem-calc(14)
+                +opacity(0.7)
+
+
+            .body
+              margin-top: 20px
+              text-align: left
+              p
+                font-size: rem-calc(14)
+                line-height: 150%
+
+            .tags
+              bottom: 20px
+              position: absolute
+              width: 100%
+
 
 
   .meta-container
@@ -396,7 +441,6 @@ $vote-icon-size: 33px
 
 
 // state dependant overrides
-
 // responsive overrides
 @media #{$small-only}
   #onair_container

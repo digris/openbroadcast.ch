@@ -1,0 +1,52 @@
+{% load i18n sekizai_tags fd5_form_tags %}
+<div id="dialog_container">
+
+    <div class="row">
+
+        <div class="small-12 columns">
+
+            <h2>Login</h2>
+
+            <p>Melden Sie sich bei open broadcast an, um unser Radioprogramm zu kommentieren oder bei der Community mitzumachen.</p>
+
+            <form method="post" action="{% url 'alogin-login' %}">
+
+                {% csrf_token %}
+
+
+                <!--
+                <label>Benutzername</label>
+                <input type="text" name="user">
+                <label>Password</label>
+                <input type="password" name="user">
+                <input type="submit" name="action" value="login">
+                <input type="hidden" name="action" value="login">
+                -->
+
+                {{ form }}
+
+                {% comment %}
+                {% fd5_form_item form.username "small-12" %}
+                {% fd5_form_item form.password "small-12" %}
+                {% endcomment %}
+
+                <button class="button simple small black expand" type="submit">{% trans "login" %}</button>
+
+            </form>
+
+
+            <div>
+                <p>
+                    <a href="{% url 'alogin-register' %}" data-alogin-action="register">Neues Konto erstellen?</a><br>
+                    <a href="#">Passwort vergessen?</a>
+                </p>
+            </div>
+
+
+            <p>Oder Anmelden mit:</p>
+
+        </div>
+
+    </div>
+
+</div>

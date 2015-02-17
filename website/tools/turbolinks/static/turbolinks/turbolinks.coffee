@@ -47,7 +47,7 @@ fetchReplacement = (url, onLoadFunction = =>) ->
       changePage extractTitleAndBody(doc)...
       reflectRedirectedUrl()
       onLoadFunction()
-      triggerEvent 'page:load'
+      #triggerEvent 'page:load'
     else
       document.location.href = url.absolute
 
@@ -92,14 +92,14 @@ constrainPageCacheTo = (limit) ->
     delete pageCache[key]
 
 changePage = (title, body, csrfToken, runScripts) ->
-  document.title = title
-  document.documentElement.replaceChild body, document.body
+  document.title = title + ' - TL'
+  #document.documentElement.replaceChild body, document.body
   CSRFToken.update csrfToken if csrfToken?
   setAutofocusElement()
   executeScriptTags() if runScripts
   currentState = window.history.state
-  triggerEvent 'page:change'
-  triggerEvent 'page:update'
+  #triggerEvent 'page:change'
+  #triggerEvent 'page:update'
 
 executeScriptTags = ->
   scripts = Array::slice.call document.body.querySelectorAll 'script:not([data-turbolinks-eval="false"])'
@@ -210,7 +210,7 @@ browserCompatibleDocumentParser = ->
 
   createDocumentUsingDOM = (html) ->
     doc = document.implementation.createHTMLDocument ''
-    doc.documentElement.innerHTML = html
+    #doc.documentElement.innerHTML = html
     doc
 
   createDocumentUsingWrite = (html) ->

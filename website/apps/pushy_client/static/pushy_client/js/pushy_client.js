@@ -31,7 +31,7 @@ PushyClientApp = function() {
                 console.debug('PushyClientApp - connected');
             }
 		} catch(err) {
-			console.warning(err.message);
+			console.warn(err.message);
 		}
 	};
 	

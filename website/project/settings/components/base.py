@@ -86,7 +86,8 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     #'authtools',
     'registration',
-    'ajaxlogin',
+    #'ajaxlogin',
+    'alogin',
 
 
     # wip only
@@ -261,6 +262,13 @@ ACCOUNT_ACTIVATION_DAYS = 7
 PROJECT_APPS = (
     # 'my_app',
 )
+
+
+
+SETTINGS_EXPORT = [
+    'API_BASE_URL',
+    'STATIC_BASE_URL',
+]
 
 ADMIN_SHORTCUTS = [
     {
