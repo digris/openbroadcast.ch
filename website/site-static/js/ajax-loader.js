@@ -25,7 +25,7 @@ var AJAXLoader = function () {
             if(uri == '#') {
                 return false;
             } else {
-                var base_uri = uri.replace('en/', '').replace('de/', '')
+                var base_uri = uri.replace('en/', '').replace('de/', '').replace('de-ch/', '')
                 $.address.value(base_uri);
             }
         });
@@ -64,7 +64,7 @@ var AJAXLoader = function () {
             console.log('AJAXLoader - reflect_uri_change', uri);
         }
 
-        if(uri == '/en/' || uri == '/') {
+        if(uri == '/de-ch/' || uri == '/en/' || uri == '/') {
             $('#onair_container').fadeIn(100);
             $('#achat_container').fadeIn(100);
         } else {
