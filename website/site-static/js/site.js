@@ -100,8 +100,17 @@ var SiteUI = function () {
     this.layout = function() {
 
         // hack!
-        var ice = $('.info-container .items');
-        ice.height(ice.width());
+        // TODO: modularize!
+        //var ice = $('.info-container .items');
+        //ice.height(ice.width());
+
+        $('[data-width-to-height]').each(function(){
+            $(this).height($(this).width());
+        });
+
+
+
+
     };
 
 

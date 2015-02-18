@@ -17,30 +17,119 @@
 
 
 
-
-///////////////////////////////////////////////////
-// full width player
-///////////////////////////////////////////////////
-
-// global state switches
-body.playing
-  .hide-while-playing
-    display: none
-  .show-while-playing
-    display: block
-
-body:not(.playing)
-  .hide-while-playing
-    display: block
-  .show-while-playing
-    display: none
-
 // hackish station-time switch
 #onair_container.history
   #station_time
     display: none
   #back_on_air
     display: block
+
+
+///////////////////////////////////////////////////
+// full width player
+///////////////////////////////////////////////////
+
+// global state switches
+//
+  body.playing
+    .hide-while-playing
+      display: none
+    .show-while-playing
+      display: block
+//
+  body:not(.playing)
+    .hide-while-playing
+      display: block
+    .show-while-playing
+      display: none
+
+// alternative approach
+  [class^="show-while-"]
+    background: red
+    display: block
+
+
+// state switches
+// fa bug:
+.fa-circle-o-notch.fa-spin
+  -webkit-transform-origin: 48.2% 48.2%
+  -moz-transform-origin: 48.2% 48.2%
+  -ms-transform-origin: 48.2% 48.2%
+  -o-transform-origin: 48.2% 48.2%
+  transform-origin: 48.2% 48.2%
+
+// states for listen/play/pause etc buttons
+div[data-action="listen"]
+  > span
+    display: none
+
+div[data-action="play"]
+  > span
+    display: none
+
+body
+
+  // listen-related (live stream)
+  &.ready,
+  &.paused
+    div[data-action="listen"] span.listen
+      display: block
+  &.playing
+    div[data-action="listen"] span.pause
+      display: block
+  &.loading
+    div[data-action="listen"] span.loading
+      display: block
+
+  // play-related (on-demand)
+  &.ready,
+  &.paused
+    div[data-action="play"] span.play
+      display: block
+  &.playing
+    div[data-action="play"] span.play
+      display: block
+  &.loading
+    div[data-action="play"] span.loading
+      display: block
+
+
+// switches station-logo & history/on-air container
+#onair_container
+
+  .switch-container
+    // dynamic height via 'data-width-to-height'
+    position: relative
+
+  .switch-panel
+    width: 100%
+    height: 100%
+    top: 0
+    position: absolute
+    > div, > div > div
+      width: 100%
+      height: 100%
+
+
+  &.init,
+  &.fallback
+    .show-while-fallback
+      display: block
+    .hide-while-fallback
+      display: none
+
+  &.onair,
+  &.history
+    .show-while-fallback
+      display: none
+    .hide-while-fallback
+      display: block
+
+
+
+
+
+
 
 
 #onair_container
@@ -50,27 +139,93 @@ body:not(.playing)
 
   // state switches
   &.onair, &.history
-    .fallback-item
-      display: none
+
+    //
+      .fallback-item
+        display: none
+
   &.fallback
-    .info-container
-      .items > .item
-        &:not(.fallback-item)
-          display: none
-          opacity: 0.0
-        &.previous, &.next
-          display: none
-        &.fallback-item
-          opacity: 1.0
-    .meta-container
-      opacity: 0.0
+    //
+      .info-container
+        .items > .item
+          &:not(.fallback-item)
+            display: none
+            opacity: 0.0
+          &.previous, &.next
+            display: none
+          &.fallback-item
+            opacity: 1.0
+      .meta-container
+        opacity: 0.0
 
 
   &.history
     .action
       //display: none !important
 
+  // 'station-logo' - visible on load and when playing 'fallback'
 
+
+  .logo-container
+    background: #000
+    position: relative
+    width: 100%
+    height: 100%
+
+    .inner
+      > div.wrapper
+        +xy-center
+        .action
+          //background-image: url('/static/onair/img/bg.action.listen.white.png')
+          cursor: pointer
+          margin: auto
+          width: 260px
+          height: 260px
+          background-size: 250px
+          background-position: center
+          span
+            +xy-center
+            +single-transition(color, 0.4s)
+            font-size: 200%
+            line-height: 411%%
+            font-weight: 300
+            > a
+              color: #fff
+
+        .action:hover
+          background-image: url('/static/onair/img/bg.action.listen.white.png')
+          span > a
+            color: #000
+
+
+
+
+      // open broadcast radio text
+      .header
+        position: absolute
+        top: 20px
+        left: 20px
+        color: #FFF
+        text-align: left
+        font-size: 40px
+        font-weight: normal
+
+      // dab logo
+      .footer
+        position: absolute
+        bottom: 20px
+        right: 20px
+        color: #FFF
+        text-align: right
+        .text
+          position: relative
+          padding-right: 10px
+          +opacity(0.5)
+        img.logo
+          width: 80px
+
+
+  // actual 'playlist' display
   .info-container
     position: relative
 
@@ -86,35 +241,6 @@ body:not(.playing)
 
       .container
         background-color: #000
-
-      &.fallback-item
-        background: #000
-        .action a
-          color: #fff !important
-
-        // open broadcast radio text
-        .header
-          position: absolute
-          top: 20px
-          left: 20px
-          color: #FFF
-          text-align: left
-          font-size: 40px
-          font-weight: normal
-
-        // dab logo
-        .footer
-          position: absolute
-          bottom: 20px
-          right: 20px
-          color: #FFF
-          text-align: right
-          .text
-            position: relative
-            padding-right: 10px
-            +opacity(0.5)
-          img.logo
-            width: 80px
 
       // action visibility
       &.current
@@ -287,6 +413,8 @@ body:not(.playing)
 
 
   .meta-container
+
+    margin-left: 30px
 
     a:hover
       background: #000

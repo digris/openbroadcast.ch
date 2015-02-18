@@ -63,7 +63,7 @@
 
 {% cms_toolbar %}
 
-<div class="sticky contain-to-grid_" id="navigation_container">
+<div id="navigation_container">
     <nav class="top-bar" data-topbar data-livebg>
 
 
@@ -119,7 +119,10 @@
 
 <div class="container" id="content_base">
 
-    {% block splash %}<!-- passed by: _cms/home.html -->{% endblock %}
+    {% block splash %}<!-- passed by: cms_base.html -->{% endblock %}
+
+    {% include "onair/container.html" %}
+    {% include "achat/container.html" %}
 
     {% block main_content %}{% endblock %}
 
@@ -218,6 +221,9 @@
 
 
 
+    // define globally for debug purposes
+    var onair;
+
     $(function() {
 
         /////////////////////////////////////////////
@@ -251,7 +257,7 @@
         // player
         /////////////////////////////////////////////
         var bplayer = new BPlayerApp();
-        bplayer.debug = false;
+        bplayer.debug = true;
         bplayer.mode = 'inline';
         bplayer.static_url = '{{ STATIC_URL }}';
 
@@ -280,7 +286,7 @@
         /////////////////////////////////////////////
         // on-air
         /////////////////////////////////////////////
-        var onair = new OnAirApp();
+        onair = new OnAirApp();
         onair.debug = true;
         onair.bplayer = bplayer;
         onair.base_url = '{{ settings.STATIC_BASE_URL }}';

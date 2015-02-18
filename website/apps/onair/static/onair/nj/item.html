@@ -24,24 +24,34 @@
 
             <div data-action="listen" class="action listen hoverable">
 
-                <span class="hide-while-playing">
-                    <a href="#" data-action="listen">Listen</a>
+                <span class="listen">
+                    <a data-bplayer-controls="listen" href="#" data-action="listen">Listen</a>
                 </span>
 
-                <span class="show-while-playing">
-                    <a href="#" data-action="pause">||</a>
+                <span class="pause">
+                    <a data-bplayer-controls="pause" href="#" data-action="pause">||</a>
+                </span>
+
+                <span class="loading">
+                    <a href="#">
+                        <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+                    </a>
                 </span>
 
             </div>
 
             <div data-action="play" class="action play hoverable">
 
-                <span class="hide-while-playing">
-                    <a href="#" data-action="play">Play</a>
+                <span class="play">
+                    <a href="#" data-login-required data-action="play">Play</a>
                 </span>
 
-                <span class="show-while-playing">
+                <span class="pause">
                     <a href="#" data-action="pause">||</a>
+                </span>
+
+                <span class="loading">
+                    <a href="#">**</a>
                 </span>
 
             </div>

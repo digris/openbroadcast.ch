@@ -89,7 +89,7 @@
   &.paused
     bottom: -72px
     +single-transition(bottom 0.2s)
-  &.playing
+  &.playing, &.loading
     //bottom: -4px
     bottom: -72px
     +single-transition(bottom 0.2s)
@@ -154,11 +154,18 @@
       padding: 0
       box-shadow: none
 
+    // playlist display
     section.playlist.history
       &.compact
         display: none
       &.expanded
         display: block
+
+    // actions display
+    #bplayer_actions_left
+      display: none
+    #bplayer_actions_right
+      display: none
 
 
 
@@ -193,5 +200,31 @@
         font-style: italic
         color: #fff
 
+  section.playlist.history.expanded
+    width: 83%
+    margin: 0 auto 20px
 
-
+    .col-airtime
+      width: 14%
+    .col-action
+      a
+        color: white
+      width: 4%
+    .col-name
+      width: 22%
+    .col-artist
+      width: 22%
+    .col-price
+      width: 24%
+      .price
+        color: #ffffff
+      .increase-step
+        font-size: rem-calc(12)
+        color: rgba(255, 255, 255, 0.8)
+      .increase-time
+        font-size: rem-calc(12)
+        color: #F00
+    .col-buy
+      a
+        color: white
+      width: 10%

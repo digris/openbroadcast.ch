@@ -55,7 +55,7 @@ var AloginApp = function () {
 
         // auth-required elements
         // present login-dialog on click
-        $('body').on('click', '[data="login_required"]', function(e){
+        $('body').on('click', '[data-login-required]', function(e){
             if(!self.is_authenticated) {
                 e.preventDefault();
                 e.stopPropagation();

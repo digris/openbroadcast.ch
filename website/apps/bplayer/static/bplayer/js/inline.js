@@ -14,11 +14,11 @@ var BPlayerApp = function () {
     this.playing_uuids = [];
     this.sm2;
     this.current_sound;
-    this.stream_url = 'http://stream.openbroadcast.ch:80/openbroadcast';
-    // this.stream_url = 'http://pypo:80/master.mp3';
+    //this.stream_url = 'http://stream.openbroadcast.ch:80/openbroadcast';
+    this.stream_url = 'http://pypo:8000/master.mp3';
     this.r;
     this.style = 'large'
-    this.states = ['init', 'ready', 'playing', 'stopped', 'paused', 'loading', 'error'];
+    this.states = ['init', 'ready', 'playing', 'stopped', 'paused', 'buffering', 'loading', 'error'];
     this.history_expanded = false;
 
     /*
@@ -117,11 +117,15 @@ var BPlayerApp = function () {
             self.controls({action: 'next'});
         },
         whileloading: function () {
-            //self.state_change('loading');
+            if(this.readyState == 1) {
+                self.state_change('loading');
+            }
             self.loading(this);
         },
         whileplaying: function () {
-            // self.state_change('playing');
+            if(this.readyState == 3) {
+                self.state_change('playing');
+            }
             self.progress(this);
         },
         onload: function () {
@@ -132,7 +136,7 @@ var BPlayerApp = function () {
     this.state_change = function (state) {
 
         if(self.debug) {
-            console.log('BPlayerApp - state changed to: ' + state);
+            //console.log('BPlayerApp - state changed to: ' + state);
         }
 
         var classes = removeA(self.states.slice(0), state).join(' ');
@@ -215,7 +219,7 @@ var BPlayerApp = function () {
 
         });
 
-        $('body').on('click', '[data-action="listen"]', function (e) {
+        $('__body__').on('click', '[data-action="listen"]', function (e) {
             e.preventDefault();
 
             var sound = {
@@ -240,7 +244,19 @@ var BPlayerApp = function () {
         $('body').on('click', 'a[data-bplayer-controls]', function (e) {
             e.preventDefault();
             var action = $(this).data('bplayer-controls');
-            self.controls({action: action});
+
+            switch(action) {
+                case 'listen':
+                    var sound = {
+                        url: self.stream_url
+                    }
+                    self.current_sound.load(sound);
+                    self.current_sound.play();
+                    break;
+                default:
+                    self.controls({action: action});
+            }
+
         });
 
         // player display

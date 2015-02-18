@@ -18,50 +18,68 @@
 <section class="playlist history expanded">
 
     <div class="row header">
-        <div class="small-1 columns">
+        <div class="col-airtime columns">
             Airtime
         </div>
-        <div class="small-3 columns">
+        <div class="col-action columns">
+            &nbsp;
+        </div>
+        <div class="col-name columns">
             Title
         </div>
-        <div class="small-3 columns">
+        <div class="col-artist columns">
             Artist
         </div>
-        <div class="small-3 columns end">
+        <div class="col-price columns">
             Price
+        </div>
+        <div class="col-buy columns end">
+            &nbsp;
         </div>
     </div>
 
     {% for item in objects %}
     <div class="row item hoverable{% if item.on_air %} on-air{% endif %}">
-        <div class="small-1 columns">
+
+        <div class="col-airtime columns">
             {% if item.on_air %}
             <span>On Air</span>
             {% else %}
-                {% if item.timestamp %}
-                {{ item.timestamp|datetime2hhmmss }}
+                {% if item.time_start %}
+                {{ item.time_start|datetime2hhmmss }}
                 {% endif %}
             {% endif %}
             &nbsp;
         </div>
-        <div class="small-3 columns">
+
+        <div class="col-action columns">
+            {% if item.on_air %}
+                <a href="#"><i class="fa fa-pause"></i></a>
+            {% else %}
+                <a data-login-required href="#"><i class="fa fa-play"></i></a>
+            {% endif %}
+        </div>
+
+        <div class="col-name columns">
             {{ item.item.name }}
         </div>
-        <div class="small-3 columns">
+
+        <div class="col-artist columns">
             {{ item.item.artist.name }}
         </div>
-        <div class="small-3 columns">
+
+        <div class="col-price columns">
             {% if item.on_air %}
-                <span>CHF 0.20</span>
-                <strong class="dim_">+0.10 in</strong>
-                <strong class="" style="color: orangered;">17sec</strong    >
+                <span class="price">CHF 0.20</span>
+                <span class="increase-step">+0.10 in</span>
+                <span class="increase-time">17sec</span>
             {% else %}
                 <span>CHF 0.50</span>
             {% endif %}
 
         </div>
-        <div class="small-2 columns text-right">
-            <a href="#">Buy Now!</a>
+        <div class="col-buy columns text-right">
+            <a data-login-required href="#">Buy Now!</a>
         </div>
 
     </div>

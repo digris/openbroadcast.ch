@@ -12390,84 +12390,152 @@ x:-o-prefocus {
   color: white;
 }
 
-/* line 27, ../sass/site/apps/_onair.sass */
-body.playing .hide-while-playing {
-  display: none;
-}
-/* line 29, ../sass/site/apps/_onair.sass */
-body.playing .show-while-playing {
-  display: block;
-}
-
-/* line 33, ../sass/site/apps/_onair.sass */
-body:not(.playing) .hide-while-playing {
-  display: block;
-}
-/* line 35, ../sass/site/apps/_onair.sass */
-body:not(.playing) .show-while-playing {
-  display: none;
-}
-
-/* line 40, ../sass/site/apps/_onair.sass */
+/* line 22, ../sass/site/apps/_onair.sass */
 #onair_container.history #station_time {
   display: none;
 }
-/* line 42, ../sass/site/apps/_onair.sass */
+/* line 24, ../sass/site/apps/_onair.sass */
 #onair_container.history #back_on_air {
   display: block;
 }
 
-/* line 46, ../sass/site/apps/_onair.sass */
+/* line 54, ../sass/site/apps/_onair.sass */
+.fa-circle-o-notch.fa-spin {
+  -webkit-transform-origin: 48.2% 48.2%;
+  -moz-transform-origin: 48.2% 48.2%;
+  -ms-transform-origin: 48.2% 48.2%;
+  -o-transform-origin: 48.2% 48.2%;
+  transform-origin: 48.2% 48.2%;
+}
+
+/* line 63, ../sass/site/apps/_onair.sass */
+div[data-action="listen"] > span {
+  display: none;
+}
+
+/* line 67, ../sass/site/apps/_onair.sass */
+div[data-action="play"] > span {
+  display: none;
+}
+
+/* line 75, ../sass/site/apps/_onair.sass */
+body.ready div[data-action="listen"] span.listen, body.paused div[data-action="listen"] span.listen {
+  display: block;
+}
+/* line 78, ../sass/site/apps/_onair.sass */
+body.playing div[data-action="listen"] span.pause {
+  display: block;
+}
+/* line 81, ../sass/site/apps/_onair.sass */
+body.loading div[data-action="listen"] span.loading {
+  display: block;
+}
+/* line 87, ../sass/site/apps/_onair.sass */
+body.ready div[data-action="play"] span.play, body.paused div[data-action="play"] span.play {
+  display: block;
+}
+/* line 90, ../sass/site/apps/_onair.sass */
+body.playing div[data-action="play"] span.play {
+  display: block;
+}
+/* line 93, ../sass/site/apps/_onair.sass */
+body.loading div[data-action="play"] span.loading {
+  display: block;
+}
+
+/* line 100, ../sass/site/apps/_onair.sass */
+#onair_container .switch-container {
+  position: relative;
+}
+/* line 104, ../sass/site/apps/_onair.sass */
+#onair_container .switch-panel {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  position: absolute;
+}
+/* line 109, ../sass/site/apps/_onair.sass */
+#onair_container .switch-panel > div, #onair_container .switch-panel > div > div {
+  width: 100%;
+  height: 100%;
+}
+/* line 116, ../sass/site/apps/_onair.sass */
+#onair_container.init .show-while-fallback, #onair_container.fallback .show-while-fallback {
+  display: block;
+}
+/* line 118, ../sass/site/apps/_onair.sass */
+#onair_container.init .hide-while-fallback, #onair_container.fallback .hide-while-fallback {
+  display: none;
+}
+/* line 123, ../sass/site/apps/_onair.sass */
+#onair_container.onair .show-while-fallback, #onair_container.history .show-while-fallback {
+  display: none;
+}
+/* line 125, ../sass/site/apps/_onair.sass */
+#onair_container.onair .hide-while-fallback, #onair_container.history .hide-while-fallback {
+  display: block;
+}
+
+/* line 135, ../sass/site/apps/_onair.sass */
 #onair_container {
   background: white;
   padding: 48px 0;
   position: relative;
 }
-/* line 53, ../sass/site/apps/_onair.sass */
-#onair_container.onair .fallback-item, #onair_container.history .fallback-item {
-  display: none;
-}
-/* line 58, ../sass/site/apps/_onair.sass */
-#onair_container.fallback .info-container .items > .item:not(.fallback-item) {
-  display: none;
-  opacity: 0;
-}
-/* line 61, ../sass/site/apps/_onair.sass */
-#onair_container.fallback .info-container .items > .item.previous, #onair_container.fallback .info-container .items > .item.next {
-  display: none;
-}
-/* line 63, ../sass/site/apps/_onair.sass */
-#onair_container.fallback .info-container .items > .item.fallback-item {
-  opacity: 1;
-}
-/* line 65, ../sass/site/apps/_onair.sass */
-#onair_container.fallback .meta-container {
-  opacity: 0;
-}
-/* line 74, ../sass/site/apps/_onair.sass */
-#onair_container .info-container {
-  position: relative;
-  -webkit-transition: all 10s linear;
-}
-/* line 79, ../sass/site/apps/_onair.sass */
-#onair_container .info-container .items {
-  z-index: 5;
-  -webkit-perspective: 800px;
-}
-/* line 87, ../sass/site/apps/_onair.sass */
-#onair_container .info-container .item .container {
-  background-color: black;
-}
-/* line 90, ../sass/site/apps/_onair.sass */
-#onair_container .info-container .item.fallback-item {
+/* line 169, ../sass/site/apps/_onair.sass */
+#onair_container .logo-container {
   background: black;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
-/* line 92, ../sass/site/apps/_onair.sass */
-#onair_container .info-container .item.fallback-item .action a {
-  color: white !important;
+/* line 176, ../sass/site/apps/_onair.sass */
+#onair_container .logo-container .inner > div.wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
-/* line 96, ../sass/site/apps/_onair.sass */
-#onair_container .info-container .item.fallback-item .header {
+/* line 178, ../sass/site/apps/_onair.sass */
+#onair_container .logo-container .inner > div.wrapper .action {
+  cursor: pointer;
+  margin: auto;
+  width: 260px;
+  height: 260px;
+  background-size: 250px;
+  background-position: center;
+}
+/* line 186, ../sass/site/apps/_onair.sass */
+#onair_container .logo-container .inner > div.wrapper .action span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  -webkit-transition: color 0.4s ease-out;
+  -moz-transition: color 0.4s ease-out;
+  transition: color 0.4s ease-out;
+  font-size: 200%;
+  line-height: 411%%;
+  font-weight: 300;
+}
+/* line 192, ../sass/site/apps/_onair.sass */
+#onair_container .logo-container .inner > div.wrapper .action span > a {
+  color: white;
+}
+/* line 195, ../sass/site/apps/_onair.sass */
+#onair_container .logo-container .inner > div.wrapper .action:hover {
+  background-image: url("/static/onair/img/bg.action.listen.white.png");
+}
+/* line 197, ../sass/site/apps/_onair.sass */
+#onair_container .logo-container .inner > div.wrapper .action:hover span > a {
+  color: black;
+}
+/* line 204, ../sass/site/apps/_onair.sass */
+#onair_container .logo-container .inner .header {
   position: absolute;
   top: 20px;
   left: 20px;
@@ -12476,54 +12544,68 @@ body:not(.playing) .show-while-playing {
   font-size: 40px;
   font-weight: normal;
 }
-/* line 106, ../sass/site/apps/_onair.sass */
-#onair_container .info-container .item.fallback-item .footer {
+/* line 214, ../sass/site/apps/_onair.sass */
+#onair_container .logo-container .inner .footer {
   position: absolute;
   bottom: 20px;
   right: 20px;
   color: white;
   text-align: right;
 }
-/* line 112, ../sass/site/apps/_onair.sass */
-#onair_container .info-container .item.fallback-item .footer .text {
+/* line 220, ../sass/site/apps/_onair.sass */
+#onair_container .logo-container .inner .footer .text {
   position: relative;
   padding-right: 10px;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5;
 }
-/* line 116, ../sass/site/apps/_onair.sass */
-#onair_container .info-container .item.fallback-item .footer img.logo {
+/* line 224, ../sass/site/apps/_onair.sass */
+#onair_container .logo-container .inner .footer img.logo {
   width: 80px;
 }
-/* line 120, ../sass/site/apps/_onair.sass */
+/* line 229, ../sass/site/apps/_onair.sass */
+#onair_container .info-container {
+  position: relative;
+  -webkit-transition: all 10s linear;
+}
+/* line 234, ../sass/site/apps/_onair.sass */
+#onair_container .info-container .items {
+  z-index: 5;
+  -webkit-perspective: 800px;
+}
+/* line 242, ../sass/site/apps/_onair.sass */
+#onair_container .info-container .item .container {
+  background-color: black;
+}
+/* line 246, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.current {
   z-index: 5;
 }
-/* line 122, ../sass/site/apps/_onair.sass */
+/* line 248, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.current div[data-action] {
   display: none;
 }
-/* line 125, ../sass/site/apps/_onair.sass */
+/* line 251, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.current.onair div.listen {
   display: block;
 }
-/* line 128, ../sass/site/apps/_onair.sass */
+/* line 254, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.current.history div.play {
   display: block;
 }
-/* line 132, ../sass/site/apps/_onair.sass */
+/* line 258, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.next.next-1 {
   -webkit-transform: rotateY(0deg) translateX(1850px) scale(1.3);
 }
-/* line 134, ../sass/site/apps/_onair.sass */
+/* line 260, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.next.next-2 {
   display: none;
 }
-/* line 136, ../sass/site/apps/_onair.sass */
+/* line 262, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.next.next-x {
   display: none;
 }
-/* line 140, ../sass/site/apps/_onair.sass */
+/* line 266, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.previous {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5;
@@ -12532,30 +12614,30 @@ body:not(.playing) .show-while-playing {
   cursor: pointer;
   z-index: 0;
 }
-/* line 150, ../sass/site/apps/_onair.sass */
+/* line 276, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.previous .back, #onair_container .info-container .item.previous .action {
   display: none;
 }
-/* line 153, ../sass/site/apps/_onair.sass */
+/* line 279, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.previous:hover {
   -webkit-filter: grayscale(0);
   filter: grayscale(0%);
 }
-/* line 157, ../sass/site/apps/_onair.sass */
+/* line 283, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.previous.previous-1 {
   -webkit-transform: rotateY(0deg) translateX(-140px) scale(0.9);
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
   opacity: 0.7;
   z-index: 3;
 }
-/* line 161, ../sass/site/apps/_onair.sass */
+/* line 287, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.previous.previous-2 {
   -webkit-transform: rotateY(0deg) translateX(-280px) scale(0.7);
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5;
   z-index: 2;
 }
-/* line 165, ../sass/site/apps/_onair.sass */
+/* line 291, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.previous.previous-3 {
   -webkit-transform: rotateY(0deg) translateX(-400px) scale(0.5);
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=20);
@@ -12563,13 +12645,13 @@ body:not(.playing) .show-while-playing {
   display: block !important;
   z-index: 1;
 }
-/* line 170, ../sass/site/apps/_onair.sass */
+/* line 296, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.previous.previous-x {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
   display: none;
 }
-/* line 174, ../sass/site/apps/_onair.sass */
+/* line 300, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info {
   position: relative;
   width: 100%;
@@ -12578,16 +12660,16 @@ body:not(.playing) .show-while-playing {
   -webkit-transition: -webkit-transform 1s, opacity 1s;
   -webkit-transform-style: preserve-3d;
 }
-/* line 185, ../sass/site/apps/_onair.sass */
+/* line 311, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info.details-visible .container > div.details {
   display: block;
   opacity: 1;
 }
-/* line 188, ../sass/site/apps/_onair.sass */
+/* line 314, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info.details-visible .container > div.wrapper {
   display: none;
 }
-/* line 191, ../sass/site/apps/_onair.sass */
+/* line 317, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .container {
   display: block;
   height: 100%;
@@ -12596,7 +12678,7 @@ body:not(.playing) .show-while-playing {
   box-shadow: 2px 2px 14px rgba(0, 0, 0, 0.5);
   background-size: 100% !important;
 }
-/* line 200, ../sass/site/apps/_onair.sass */
+/* line 326, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .container > div.wrapper {
   position: absolute;
   top: 50%;
@@ -12605,7 +12687,7 @@ body:not(.playing) .show-while-playing {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
-/* line 202, ../sass/site/apps/_onair.sass */
+/* line 328, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .container > div.wrapper .action {
   cursor: pointer;
   margin: auto;
@@ -12617,15 +12699,15 @@ body:not(.playing) .show-while-playing {
   -moz-transition: background 0.05s ease-out;
   transition: background 0.05s ease-out;
 }
-/* line 204, ../sass/site/apps/_onair.sass */
+/* line 330, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .container > div.wrapper .action.listen {
   background-image: url("/static/onair/img/bg.action.listen.png");
 }
-/* line 206, ../sass/site/apps/_onair.sass */
+/* line 332, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .container > div.wrapper .action.play {
   background-image: url("/static/onair/img/bg.action.play.png");
 }
-/* line 219, ../sass/site/apps/_onair.sass */
+/* line 345, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .container > div.wrapper .action span {
   position: absolute;
   top: 50%;
@@ -12640,25 +12722,25 @@ body:not(.playing) .show-while-playing {
   line-height: 411%%;
   font-weight: 300;
 }
-/* line 225, ../sass/site/apps/_onair.sass */
+/* line 351, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .container > div.wrapper .action span > a {
   color: white;
 }
-/* line 230, ../sass/site/apps/_onair.sass */
+/* line 356, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .container > div.wrapper .action.hover {
   background-size: 260px;
   -webkit-transition: background 0.05s ease-out;
   -moz-transition: background 0.05s ease-out;
   transition: background 0.05s ease-out;
 }
-/* line 236, ../sass/site/apps/_onair.sass */
+/* line 362, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .container > div.wrapper .action.hover span a {
   -webkit-transition: color 0.5s ease-out;
   -moz-transition: color 0.5s ease-out;
   transition: color 0.5s ease-out;
   color: white;
 }
-/* line 243, ../sass/site/apps/_onair.sass */
+/* line 369, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .container > div.details {
   opacity: 0;
   position: absolute;
@@ -12669,7 +12751,7 @@ body:not(.playing) .show-while-playing {
   background: black;
   color: white;
 }
-/* line 256, ../sass/site/apps/_onair.sass */
+/* line 382, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .container > div.details .ct-panel {
   position: absolute;
   padding: 20px;
@@ -12679,51 +12761,55 @@ body:not(.playing) .show-while-playing {
   height: 100%;
   overflow: hidden;
 }
-/* line 265, ../sass/site/apps/_onair.sass */
+/* line 391, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .container > div.details .ct-panel .header h1 {
   font-size: 1.46667rem;
   font-weight: 300;
   color: white;
   margin-bottom: 0;
 }
-/* line 270, ../sass/site/apps/_onair.sass */
+/* line 396, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .container > div.details .ct-panel .header ul > li {
   font-size: 0.93333rem;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
   opacity: 0.7;
 }
-/* line 275, ../sass/site/apps/_onair.sass */
+/* line 401, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .container > div.details .ct-panel .body {
   margin-top: 20px;
   text-align: left;
 }
-/* line 278, ../sass/site/apps/_onair.sass */
+/* line 404, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .container > div.details .ct-panel .body p {
   font-size: 0.93333rem;
   line-height: 150%;
 }
-/* line 282, ../sass/site/apps/_onair.sass */
+/* line 408, ../sass/site/apps/_onair.sass */
 #onair_container .info-container .item.info .container > div.details .ct-panel .tags {
   bottom: 20px;
   position: absolute;
   width: 100%;
 }
-/* line 291, ../sass/site/apps/_onair.sass */
+/* line 415, ../sass/site/apps/_onair.sass */
+#onair_container .meta-container {
+  margin-left: 30px;
+}
+/* line 419, ../sass/site/apps/_onair.sass */
 #onair_container .meta-container a:hover {
   background: black;
   padding: 4px 8px;
   color: white;
 }
-/* line 296, ../sass/site/apps/_onair.sass */
+/* line 424, ../sass/site/apps/_onair.sass */
 #onair_container .meta-container dl {
   margin: 0;
 }
-/* line 298, ../sass/site/apps/_onair.sass */
+/* line 426, ../sass/site/apps/_onair.sass */
 #onair_container .meta-container dl dt, #onair_container .meta-container dl dd {
   margin-bottom: 0;
   line-height: 155%;
 }
-/* line 302, ../sass/site/apps/_onair.sass */
+/* line 430, ../sass/site/apps/_onair.sass */
 #onair_container .meta-container dl dt {
   font-weight: 300;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
@@ -12731,32 +12817,32 @@ body:not(.playing) .show-while-playing {
   float: left;
   padding-right: 7px;
 }
-/* line 307, ../sass/site/apps/_onair.sass */
+/* line 435, ../sass/site/apps/_onair.sass */
 #onair_container .meta-container .separator {
   width: 40%;
   border-top: 2px solid black;
   margin: 12px 0px;
 }
 @media only screen and (min-width: 40.063em) {
-  /* line 321, ../sass/site/apps/_onair.sass */
+  /* line 449, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.next,
   #onair_container #media_prev_next div.previous {
     position: absolute;
     top: 45%;
   }
-  /* line 325, ../sass/site/apps/_onair.sass */
+  /* line 453, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.next.disabled,
   #onair_container #media_prev_next div.previous.disabled {
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
     opacity: 0.3;
   }
-  /* line 327, ../sass/site/apps/_onair.sass */
+  /* line 455, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.next.disabled:hover .icon,
   #onair_container #media_prev_next div.previous.disabled:hover .icon {
     cursor: not-allowed;
     background: transparent !important;
   }
-  /* line 331, ../sass/site/apps/_onair.sass */
+  /* line 459, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.next .icon,
   #onair_container #media_prev_next div.previous .icon {
     -webkit-transition: background 0.1s ease-out;
@@ -12768,17 +12854,17 @@ body:not(.playing) .show-while-playing {
     border-radius: 50%;
     line-hrigh: 50px;
   }
-  /* line 339, ../sass/site/apps/_onair.sass */
+  /* line 467, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.next .icon polyline,
   #onair_container #media_prev_next div.previous .icon polyline {
     stroke: black;
   }
-  /* line 343, ../sass/site/apps/_onair.sass */
+  /* line 471, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.next .icon:hover polyline,
   #onair_container #media_prev_next div.previous .icon:hover polyline {
     stroke: white;
   }
-  /* line 347, ../sass/site/apps/_onair.sass */
+  /* line 475, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.next:hover .icon,
   #onair_container #media_prev_next div.previous:hover .icon {
     -webkit-transition: background 0.1s ease-out;
@@ -12786,25 +12872,25 @@ body:not(.playing) .show-while-playing {
     transition: background 0.1s ease-out;
     background: black;
   }
-  /* line 352, ../sass/site/apps/_onair.sass */
+  /* line 480, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.previous {
     left: 30px;
   }
-  /* line 354, ../sass/site/apps/_onair.sass */
+  /* line 482, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.previous .icon {
     padding: 24px 0 0 30px;
   }
-  /* line 357, ../sass/site/apps/_onair.sass */
+  /* line 485, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.next {
     right: 30px;
   }
-  /* line 359, ../sass/site/apps/_onair.sass */
+  /* line 487, ../sass/site/apps/_onair.sass */
   #onair_container #media_prev_next div.next .icon {
     padding: 24px 0 0 44px;
   }
 }
 
-/* line 370, ../sass/site/apps/_onair.sass */
+/* line 498, ../sass/site/apps/_onair.sass */
 .rating-container {
   margin: 24px auto 8px;
   height: 51px;
@@ -12821,16 +12907,16 @@ body:not(.playing) .show-while-playing {
 .rating-container:after {
   clear: both;
 }
-/* line 377, ../sass/site/apps/_onair.sass */
+/* line 505, ../sass/site/apps/_onair.sass */
 .rating-container.disabled {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
   opacity: 0.3;
 }
-/* line 379, ../sass/site/apps/_onair.sass */
+/* line 507, ../sass/site/apps/_onair.sass */
 .rating-container.disabled div.vote, .rating-container.disabled div.vote a {
   cursor: not-allowed;
 }
-/* line 382, ../sass/site/apps/_onair.sass */
+/* line 510, ../sass/site/apps/_onair.sass */
 .rating-container div.separator {
   position: absolute;
   left: 50%;
@@ -12838,58 +12924,58 @@ body:not(.playing) .show-while-playing {
   height: 62px;
   background: black;
 }
-/* line 389, ../sass/site/apps/_onair.sass */
+/* line 517, ../sass/site/apps/_onair.sass */
 .rating-container div.vote {
   padding-top: 8px;
 }
-/* line 392, ../sass/site/apps/_onair.sass */
+/* line 520, ../sass/site/apps/_onair.sass */
 .rating-container div.vote a {
   display: block;
   height: 33px;
   position: relative;
   width: 66px;
 }
-/* line 398, ../sass/site/apps/_onair.sass */
+/* line 526, ../sass/site/apps/_onair.sass */
 .rating-container div.vote span {
   font-size: 1.2rem;
   position: absolute;
   padding: 3px;
   top: 11px;
 }
-/* line 404, ../sass/site/apps/_onair.sass */
+/* line 532, ../sass/site/apps/_onair.sass */
 .rating-container div.vote svg {
   position: absolute;
 }
-/* line 408, ../sass/site/apps/_onair.sass */
+/* line 536, ../sass/site/apps/_onair.sass */
 .rating-container div.vote svg polyline, .rating-container div.vote svg rect {
   -webkit-transition: fill 0.5s ease-out;
   -moz-transition: fill 0.5s ease-out;
   transition: fill 0.5s ease-out;
   stroke: black;
 }
-/* line 414, ../sass/site/apps/_onair.sass */
+/* line 542, ../sass/site/apps/_onair.sass */
 .rating-container div.vote.vote-up span {
   right: 41px;
 }
-/* line 416, ../sass/site/apps/_onair.sass */
+/* line 544, ../sass/site/apps/_onair.sass */
 .rating-container div.vote.vote-up svg {
   right: 0;
 }
-/* line 421, ../sass/site/apps/_onair.sass */
+/* line 549, ../sass/site/apps/_onair.sass */
 .rating-container div.vote.vote-down span {
   right: 0;
 }
-/* line 423, ../sass/site/apps/_onair.sass */
+/* line 551, ../sass/site/apps/_onair.sass */
 .rating-container div.vote.vote-down svg {
   transform: rotateZ(180deg);
   top: 13px;
   right: 33px;
 }
-/* line 431, ../sass/site/apps/_onair.sass */
+/* line 559, ../sass/site/apps/_onair.sass */
 .rating-container div.vote:hover a, .rating-container div.vote:active a {
   color: black;
 }
-/* line 433, ../sass/site/apps/_onair.sass */
+/* line 561, ../sass/site/apps/_onair.sass */
 .rating-container div.vote:hover polyline, .rating-container div.vote:hover rect, .rating-container div.vote:active polyline, .rating-container div.vote:active rect {
   fill: white;
   -webkit-transition: fill 0.2s ease-out;
@@ -12898,29 +12984,29 @@ body:not(.playing) .show-while-playing {
 }
 
 @media only screen and (max-width: 40em) {
-  /* line 448, ../sass/site/apps/_onair.sass */
+  /* line 576, ../sass/site/apps/_onair.sass */
   #onair_container .meta-container {
     text-align: center;
   }
-  /* line 450, ../sass/site/apps/_onair.sass */
+  /* line 578, ../sass/site/apps/_onair.sass */
   #onair_container .meta-container dt {
     display: none;
   }
-  /* line 453, ../sass/site/apps/_onair.sass */
+  /* line 581, ../sass/site/apps/_onair.sass */
   #onair_container .meta-container .separator {
     margin: 12px auto;
   }
 }
 @media only screen and (min-width: 40.063em) and (max-width: 64em) {
-  /* line 459, ../sass/site/apps/_onair.sass */
+  /* line 587, ../sass/site/apps/_onair.sass */
   #onair_container .meta-container {
     text-align: center;
   }
-  /* line 461, ../sass/site/apps/_onair.sass */
+  /* line 589, ../sass/site/apps/_onair.sass */
   #onair_container .meta-container dt {
     display: none;
   }
-  /* line 464, ../sass/site/apps/_onair.sass */
+  /* line 592, ../sass/site/apps/_onair.sass */
   #onair_container .meta-container .separator {
     margin: 12px auto;
   }
@@ -13068,22 +13154,22 @@ body:not(.playing) .show-while-playing {
   transition: bottom 0.2s 300ms ease-out;
 }
 /* line 92, ../sass/site/apps/_bplayer.sass */
-#bplayer_container.playing {
+#bplayer_container.playing, #bplayer_container.loading {
   bottom: -72px;
   -webkit-transition: bottom 0.2s 300ms ease-out;
   -moz-transition: bottom 0.2s 300ms ease-out;
   transition: bottom 0.2s 300ms ease-out;
 }
 /* line 99, ../sass/site/apps/_bplayer.sass */
-#bplayer_container.playing ul.actions [data-bplayer-controls="resume"] {
+#bplayer_container.playing ul.actions [data-bplayer-controls="resume"], #bplayer_container.loading ul.actions [data-bplayer-controls="resume"] {
   display: none;
 }
 /* line 101, ../sass/site/apps/_bplayer.sass */
-#bplayer_container.playing ul.actions [data-bplayer-controls="pause"] {
+#bplayer_container.playing ul.actions [data-bplayer-controls="pause"], #bplayer_container.loading ul.actions [data-bplayer-controls="pause"] {
   display: block;
 }
 /* line 104, ../sass/site/apps/_bplayer.sass */
-#bplayer_container.playing .playhead .background {
+#bplayer_container.playing .playhead .background, #bplayer_container.loading .playhead .background {
   background-color: white;
   -webkit-transition-property: background-color;
   -moz-transition-property: background-color;
@@ -13151,28 +13237,36 @@ body:not(.playing) .show-while-playing {
   padding: 0;
   box-shadow: none;
 }
-/* line 158, ../sass/site/apps/_bplayer.sass */
+/* line 159, ../sass/site/apps/_bplayer.sass */
 #bplayer_container.show-history section.playlist.history.compact {
   display: none;
 }
-/* line 160, ../sass/site/apps/_bplayer.sass */
+/* line 161, ../sass/site/apps/_bplayer.sass */
 #bplayer_container.show-history section.playlist.history.expanded {
   display: block;
 }
-/* line 170, ../sass/site/apps/_bplayer.sass */
+/* line 165, ../sass/site/apps/_bplayer.sass */
+#bplayer_container.show-history #bplayer_actions_left {
+  display: none;
+}
+/* line 167, ../sass/site/apps/_bplayer.sass */
+#bplayer_container.show-history #bplayer_actions_right {
+  display: none;
+}
+/* line 177, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.compact .item {
   padding: 5px 0 0 10px;
 }
-/* line 172, ../sass/site/apps/_bplayer.sass */
+/* line 179, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.compact .item a, #bplayer_container section.playlist.history.compact .item span {
   color: white;
 }
-/* line 174, ../sass/site/apps/_bplayer.sass */
+/* line 181, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.compact .item span {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5;
 }
-/* line 178, ../sass/site/apps/_bplayer.sass */
+/* line 185, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .header {
   padding: 4px 0;
   margin: 4px 0;
@@ -13180,7 +13274,7 @@ body:not(.playing) .show-while-playing {
   opacity: 0.7;
   color: white;
 }
-/* line 183, ../sass/site/apps/_bplayer.sass */
+/* line 190, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .item {
   color: rgba(255, 255, 255, 0.5);
   display: block;
@@ -13189,13 +13283,64 @@ body:not(.playing) .show-while-playing {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 4px 0;
 }
-/* line 190, ../sass/site/apps/_bplayer.sass */
+/* line 197, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .item.hover {
   color: white;
 }
-/* line 192, ../sass/site/apps/_bplayer.sass */
+/* line 199, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .item.on-air {
   font-style: italic;
+  color: white;
+}
+/* line 203, ../sass/site/apps/_bplayer.sass */
+#bplayer_container section.playlist.history.expanded {
+  width: 83%;
+  margin: 0 auto 20px;
+}
+/* line 207, ../sass/site/apps/_bplayer.sass */
+#bplayer_container section.playlist.history.expanded .col-airtime {
+  width: 14%;
+}
+/* line 209, ../sass/site/apps/_bplayer.sass */
+#bplayer_container section.playlist.history.expanded .col-action {
+  width: 4%;
+}
+/* line 210, ../sass/site/apps/_bplayer.sass */
+#bplayer_container section.playlist.history.expanded .col-action a {
+  color: white;
+}
+/* line 213, ../sass/site/apps/_bplayer.sass */
+#bplayer_container section.playlist.history.expanded .col-name {
+  width: 22%;
+}
+/* line 215, ../sass/site/apps/_bplayer.sass */
+#bplayer_container section.playlist.history.expanded .col-artist {
+  width: 22%;
+}
+/* line 217, ../sass/site/apps/_bplayer.sass */
+#bplayer_container section.playlist.history.expanded .col-price {
+  width: 24%;
+}
+/* line 219, ../sass/site/apps/_bplayer.sass */
+#bplayer_container section.playlist.history.expanded .col-price .price {
+  color: white;
+}
+/* line 221, ../sass/site/apps/_bplayer.sass */
+#bplayer_container section.playlist.history.expanded .col-price .increase-step {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+/* line 224, ../sass/site/apps/_bplayer.sass */
+#bplayer_container section.playlist.history.expanded .col-price .increase-time {
+  font-size: 0.8rem;
+  color: red;
+}
+/* line 227, ../sass/site/apps/_bplayer.sass */
+#bplayer_container section.playlist.history.expanded .col-buy {
+  width: 10%;
+}
+/* line 228, ../sass/site/apps/_bplayer.sass */
+#bplayer_container section.playlist.history.expanded .col-buy a {
   color: white;
 }
 

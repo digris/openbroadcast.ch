@@ -1,0 +1,210 @@
+<section data-livebg id="onair_container" class="init">
+
+    <div class="row">
+        <div class="small-12 columns text-center">
+
+            <div id="station_time">
+                <a href="#">00:00:00</a>
+            </div>
+
+            <div id="back_on_air" class="hide">
+                <a href="#">Back to what's on air now...</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="small-12 large-4 large-push-4 columns text-center">
+
+
+            <div class="switch-container" data-width-to-height>
+
+                <div class="switch-panel hide-while-fallback">
+                    <!-- station playlist-container -->
+                    <div class="info-container">
+                        <div class="items">
+                            {# include "_ptype/fallback_item.html" #}
+                        </div>
+                    </div>
+                    <!-- station playlist-container -->
+                </div>
+
+
+                <div class="switch-panel show-while-fallback">
+                    <!-- station logo-container -->
+                    <div class="logo-container">
+                        <div class="inner">
+
+                            <!---->
+                            <div class="wrapper">
+
+                                <div data-action="listen" class="action hoverable">
+
+                                    <span class="listen">
+                                        <a data-bplayer-controls="listen" href="#" data-action="listen">Listen</a>
+                                    </span>
+
+                                    <span class="pause">
+                                        <a data-bplayer-controls="pause" href="#" data-action="pause">||</a>
+                                    </span>
+
+                                    <span class="loading">
+                                        <a href="#">
+                                            <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+                                        </a>
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="header">
+                                <span>open<br>broadcast<br>radio</span>
+                            </div>
+
+                            <div class="footer">
+                                    <span class="text">
+                                        <em>live on</em>
+                                    </span>
+                                    <img class="logo" alt="DAB+ Logo" src="{{ STATIC_URL }}img/base/logo.dab.white.png" >
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- end: station logo-container -->
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+
+            <div class="rating-container disabled"
+                    id="rating_container"
+                    data-votes_up="17"
+                    data-votes_down="17">
+
+                    <div class="vote vote-up left">
+                        <a href="#">
+
+                            <span>-</span>
+
+                            <svg version="1.1"
+                                 id="Layer_1"
+                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 x="0px" y="0px"
+                                 width="33px" height="31px"
+                                 viewBox="0 0 33 31" xml:space="preserve">
+                                <g>
+                                    <polyline
+                                            fill-opacity="0.2"
+                                            stroke="#000000"
+                                            stroke-miterlimit="10"
+                                            points="8.5,14.5 14.5,14.5 20.5,0.5 23.5,0.5 23.5,13.5,32.5,13.5 32.5,25.5 29.5,30.5 19.5,30.5 16.5,28.5 8.5,28.5"/>
+                                    <rect
+                                            x="0.5" y="12.5"
+                                            fill-opacity="0.2"
+                                            stroke="#000000"
+                                            stroke-miterlimit="10"
+                                            width="8" height="18"/>
+                                </g>
+                            </svg>
+
+                        </a>
+                    </div>
+
+                    <div class="separator"></div>
+
+                    <div class="vote vote-down right">
+                        <a href="#">
+
+                            <svg version="1.1"
+                                 id="Layer_1"
+                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 x="0px" y="0px"
+                                 width="33px" height="31px"
+                                 viewBox="0 0 33 31" xml:space="preserve">
+                                <g>
+                                    <polyline
+                                            fill-opacity="0.2"
+                                            stroke="#000000"
+                                            stroke-miterlimit="10"
+                                            points="8.5,14.5 14.5,14.5 20.5,0.5 23.5,0.5 23.5,13.5,32.5,13.5 32.5,25.5 29.5,30.5 19.5,30.5 16.5,28.5 8.5,28.5"/>
+                                    <rect
+                                            x="0.5" y="12.5"
+                                            fill-opacity="0.2"
+                                            stroke="#000000"
+                                            stroke-miterlimit="10"
+                                            width="8" height="18"/>
+                                </g>
+                            </svg>
+
+                            <span>-</span>
+
+                        </a>
+                    </div>
+
+            </div>
+
+        </div>
+        <div class="small-12 large-4 columns">
+            <div class="meta-container">
+
+                <!-- loaded dynamically
+                     template: onair/nj/meta.html
+                -->
+
+            </div>
+        </div>
+    </div>
+
+
+    <div id="media_prev_next" class="show-for-large-up">
+
+        <div class="previous disabled">
+            <a href="#"
+               data-direction="previous"
+               title="Previous Track">
+                <div class="icon">
+                    <svg version="1.1"
+                         xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink"
+                         x="0px" y="0px"
+	                    width="40px" height="72px"
+                        viewBox="0 0 40 72"
+                        enable-background="new 0 0 40 72" xml:space="preserve">
+                        <polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="37.854,71 2.927,36.073 38,1 "/>
+                    </svg>
+                </div>
+            </a>
+        </div>
+
+        <div class="next disabled">
+            <a href="#"
+               data-direction="next"
+               title="Next Track">
+                <div class="icon">
+                    <svg version="1.1"
+                         xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink"
+                         x="0px" y="0px"
+	                    width="40px" height="72px"
+                        viewBox="0 0 40 72"
+                        enable-background="new 0 0 40 72" xml:space="preserve">
+                        <polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="3.073,71 38,36.073 2.927,1 "/>
+                    </svg>
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+
+</section>

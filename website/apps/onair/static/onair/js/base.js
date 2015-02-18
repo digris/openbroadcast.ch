@@ -15,7 +15,7 @@ var OnAirApp = function () {
     this.prevnext_container;
     this.info_timeout = false;
     this.local_data = [];
-    this.mode = 'onair'; // 'on air', 'history' or 'fallback'
+    this.mode = 'init'; // 'on air', 'history' or 'fallback'
     this.timeline_offset = 0;
 
     this.init = function () {
@@ -26,13 +26,16 @@ var OnAirApp = function () {
         self.meta_container = $('.meta-container', self.container);
         self.prevnext_container = $('#media_prev_next', self.container);
 
-        self.load();
         self.bindings();
 
-        // dummy call
         setTimeout(function () {
-            self.load_history({limit: 3});
+            self.load();
         }, 2000);
+
+        setTimeout(function () {
+            // TODO: just disabled for debugging
+            //self.load_history(4);
+        }, 5000);
 
     };
 
@@ -46,14 +49,21 @@ var OnAirApp = function () {
                 setTimeout(self.load, 30000)
             } else {
                 var timeout = Number(data.start_next * 1000);
-                if(timeout > 30000) {
-                    timeout = 30000;
+                if(timeout > 7200000) {
+                    timeout = 7200000;
                 }
                 setTimeout(self.load, timeout);
             }
 
             if (data.playing != undefined && (data.playing.emission != undefined && data.playing.item != undefined)) {
-                self.set_mode('onair');
+
+                // TODO: just temporary, should be solved in a nicer way
+                $('.logo-container', self.container).fadeOut(500);
+                setTimeout(function(){
+                    self.set_mode('onair');
+                }, 1500)
+
+
                 self.load_current(data.playing);
             } else {
                 self.set_mode('fallback');
@@ -73,7 +83,7 @@ var OnAirApp = function () {
             console.debug('OnAirApp - set_mode: ' + mode);
         }
         self.mode = mode;
-        self.container.removeClass('onair history fallback').addClass(mode);
+        self.container.removeClass('onair history fallback init').addClass(mode);
     };
 
     this.bindings = function () {
@@ -108,6 +118,8 @@ var OnAirApp = function () {
         });
 
 
+
+
         self.prevnext_container.on('click', 'a', function (e) {
             e.preventDefault();
             if (!$(this).parent().hasClass('disabled')) {
@@ -125,6 +137,19 @@ var OnAirApp = function () {
                     self.handle_timeline();
                 }, (200 * i));
             }
+        });
+
+        // TODO: hakish implementation - show logo on station-time hover
+        $('#station_time')
+        .on('mouseover', 'a', function(){
+            $('.show-while-fallback', self.container).css('display', 'block');
+            $('.logo-container', self.container).fadeIn(500);
+        })
+        .on('mouseout', 'a', function(){
+            $('.logo-container', self.container).fadeOut(500);
+                setTimeout(function(){
+                    $('.show-while-fallback', self.container).css('display', 'none');
+                }, 500);
         });
 
 
@@ -148,6 +173,7 @@ var OnAirApp = function () {
             emission: [],
             item: [],
             timestamp: playing.time_start,
+            time_start: playing.time_start,
             on_air: true,
             el: false
         };
@@ -179,11 +205,15 @@ var OnAirApp = function () {
 
     };
 
-    this.load_history = function (options) {
+    this.load_history = function (limit) {
 
-
+        var limit = typeof limit !== 'undefined' ? limit : 3;
         var url = self.api_url + self.channel_id + '/' + 'history/';
+
         $.get(url, function (history) {
+
+            history.objects.splice(limit);
+
             $.each(history.objects, function (i, item) {
                 if (item.el == undefined) {
                     item.el = false;
@@ -196,27 +226,6 @@ var OnAirApp = function () {
 
             self.complete_data();
         });
-
-        // a dummy implementation here, just to test
-        // history then will be loaded from API
-        var history = {
-            meta: {},
-            objects: [
-                {
-                    emission: '/api/v1/abcast/emission/452/',
-                    item: '/api/v1/library/track/13489/'
-                },
-                {
-                    emission: '/api/v1/abcast/emission/452/',
-                    item: '/api/v1/library/track/13397/'
-                },
-                {
-                    emission: '/api/v1/abcast/emission/452/',
-                    item: '/api/v1/library/track/13440/'
-                }
-            ]
-        }
-
 
     };
 
@@ -236,23 +245,26 @@ var OnAirApp = function () {
             if (typeof item.emission == 'string') {
                 $.get(item.emission, function (data) {
                     self.local_data[i].emission = data;
+                    //self.update_data();
                 });
             }
 
             if (typeof item.item == 'string') {
                 $.get(item.item, function (data) {
                     self.local_data[i].item = data;
+                    //self.update_data();
                 });
             }
 
         });
 
+        // TODO: implement some sort of queing here
         setTimeout(function () {
             if(self.debug) {
                 console.log(self.local_data);
             }
             self.update_data();
-        }, 500);
+        }, 2000);
 
     };
 
