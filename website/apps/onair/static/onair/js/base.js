@@ -34,7 +34,7 @@ var OnAirApp = function () {
 
         setTimeout(function () {
             // TODO: just disabled for debugging
-            //self.load_history(4);
+            // self.load_history(3);
         }, 5000);
 
     };
@@ -58,7 +58,6 @@ var OnAirApp = function () {
             if (data.playing != undefined && (data.playing.emission != undefined && data.playing.item != undefined)) {
 
                 // TODO: just temporary, should be solved in a nicer way
-                $('.logo-container', self.container).fadeOut(500);
                 setTimeout(function(){
                     self.set_mode('onair');
                 }, 1500)
@@ -66,6 +65,10 @@ var OnAirApp = function () {
 
                 self.load_current(data.playing);
             } else {
+
+                // display dummy item
+                // TODO: not sure if this is the best way?
+
                 self.set_mode('fallback');
             }
         }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -84,6 +87,14 @@ var OnAirApp = function () {
         }
         self.mode = mode;
         self.container.removeClass('onair history fallback init').addClass(mode);
+
+        // show/hide station-badge
+        if(mode == 'fallback' || mode == 'init') {
+            $('.logo-container', self.container).fadeIn(500);
+        }
+        if(mode == 'onair' || mode == 'history') {
+            $('.logo-container', self.container).fadeOut(500);
+        }
     };
 
     this.bindings = function () {
@@ -106,6 +117,7 @@ var OnAirApp = function () {
                 $('.current', self.info_container).removeClass('details-visible');
             }, 400)
         });
+
         // keep visible on info-hover
         self.info_container.on('mouseover', '.item', function (e) {
             if (self.info_timeout) {
@@ -185,7 +197,7 @@ var OnAirApp = function () {
             }
             obj.emission = data;
             // then 'item' data
-            $.get(playing.item, function (data) {
+            $.get(playing.item + '?includes=label', function (data) {
                 if(self.debug) {
                     console.log('item:', data);
                 }
@@ -196,13 +208,9 @@ var OnAirApp = function () {
                     item.on_air = false
                 });
                 self.local_data.push(obj);
-
                 self.update_data();
-
             });
-
         });
-
     };
 
     this.load_history = function (limit) {
@@ -250,7 +258,7 @@ var OnAirApp = function () {
             }
 
             if (typeof item.item == 'string') {
-                $.get(item.item, function (data) {
+                $.get(item.item + '?includes=label', function (data) {
                     self.local_data[i].item = data;
                     //self.update_data();
                 });
@@ -276,7 +284,7 @@ var OnAirApp = function () {
         }
 
         // clean 'old' data
-        self.local_data.splice(0, self.local_data.length - self.max_items)
+        self.local_data.splice(0, self.local_data.length - self.max_items);
 
         $.each(self.local_data, function (i, item) {
 
@@ -292,7 +300,6 @@ var OnAirApp = function () {
                 //classes += ' previous';
                 //classes += ' previous-' + (i + 1);
             }
-
 
             // check if present in dom
             // create in case that not
@@ -407,8 +414,10 @@ var OnAirApp = function () {
         }
         current_index = onair_index + self.timeline_offset;
 
-        if (!onair) {
+        if (!onair && self.timeline_offset == 0) {
             self.set_mode('fallback');
+        } else if(!onair && self.timeline_offset != 0) {
+            self.set_mode('history');
         }
 
 

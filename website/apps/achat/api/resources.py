@@ -28,14 +28,10 @@ class MessageResource(ModelResource):
         excludes = ['id',]
 
     def obj_create(self, bundle, **kwargs):
-
+        #bundle.data['text'] = parse_text(bundle.data['text'])
         return super(MessageResource, self).obj_create(bundle, user=bundle.request.user)
 
     def hydrate(self, bundle):
-        return bundle
-
-    def hydrate(self, bundle):
-
         # strip & parse text
         bundle.data['text'] = parse_text(bundle.data['text'])
         return bundle
@@ -47,6 +43,10 @@ class MessageResource(ModelResource):
             'name': bundle.obj.user.get_full_name(),
             'id': bundle.obj.user.pk,
         }
+
+        # temporary, should be done on creation!
+        bundle.data['text'] = parse_text(bundle.data['text'])
+
         return bundle
 
     def get_object_list(self, request):

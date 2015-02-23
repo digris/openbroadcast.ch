@@ -1,7 +1,7 @@
-{% set item = object.emission.content_object %}
+{% set item = object.item.label %}
 
 {% if item %}
-    <div data-ct="playlist" class="ct-panel">
+    <div data-ct="label" class="ct-panel">
 
         <div class="row header">
             <div class="small-6 columns">
@@ -15,16 +15,19 @@
                 <div class="text-left">
                     <h1>{{ item.name|truncate(24) }}</h1>
                     <ul class="no-bullet">
-
+                        {% if item.releasetype or item.country %}
                         <li>
-                            {{ object.emission.time_start|datetime2hhmm }}
-                            -
-                            {{ object.emission.time_end|datetime2hhmm }}
+                            {% if item.country %}
+                                ({{ item.country }})
+                            {% endif %}
+                            {% if item.releasetype %}
+                                {{ item.releasetype|capitalize }}
+                            {% endif %}
                         </li>
-
-                        {% if item.duration %}
+                        {% endif %}
+                        {% if item.releasedate_approx %}
                         <li>
-                            {{ item.duration|ms2time }}
+                            {{ item.releasedate_approx }}
                         </li>
                         {% endif %}
                     </ul>

@@ -9,9 +9,9 @@ def parse_text(text):
     #for rel in rels:
     #    print rel
 
-    return text
+    return soup.getText()
 
-    return cleanse_html(text)
+    #return cleanse_html(text)
 
 
 

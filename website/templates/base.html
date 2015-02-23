@@ -145,12 +145,6 @@
 
 <div id="fb-root"></div>
 
-<script>
-    var settings = {
-        'username': '{{ request.user.username }}'
-    };
-</script>
-
 
 {% compress js %}
 <script src="{{ STATIC_URL }}js/lib/jquery-ui-1.10.4.custom.js"></script>
@@ -158,13 +152,16 @@
 <script src="{{ STATIC_URL }}js/lib/fd5/foundation.min.js"></script>
 
 <!-- other libraries -->
-<script src="{{ STATIC_URL }}js/lib/nunjucks/nunjucks-dev.js"></script>
-<script src="{{ STATIC_URL }}js/lib/nunjucks/filters.js"></script>
+<script src="{{ STATIC_URL }}js/lib/nunjucks-1.1.0/nunjucks.js"></script>
+<script src="{{ STATIC_URL }}js/lib/nunjucks-1.1.0/filters.js"></script>
+
+
 <script src="{{ STATIC_URL }}js/lib/featherlight.js"></script>
 <script src="{{ STATIC_URL }}js/lib/jquery.imageloader.js"></script>
 <script src="{{ STATIC_URL }}js/lib/jquery.hoverIntent-1.8.0.js"></script>
 <script src="{{ STATIC_URL }}js/lib/jquery.color-2.1.2.js"></script>
 <script src="{{ STATIC_URL }}js/lib/jquery.address.js"></script>
+<script src="{{ STATIC_URL }}js/lib/jquery.timeago-1.4.1.js"></script>
 
 <!-- global scripts -->
 <script src="{{ STATIC_URL }}js/lib/ba-debug.js"></script>
@@ -177,7 +174,7 @@
 <!-- app scripts -->
 <script src="{{ STATIC_URL }}achat/js/base.js"></script>
 <script src="{{ STATIC_URL }}alogin/js/base.js"></script>
-<script src="{{ STATIC_URL }}bplayer/js/inline.js"></script>
+<script src="{{ STATIC_URL }}bplayer/js/base.js"></script>
 <script src="{{ STATIC_URL }}bplayer/js/levelbridge.js"></script>
 <script src="{{ STATIC_URL }}onair/js/base.js"></script>
 <script src="{{ STATIC_URL }}stationtime/js/base.js"></script>
@@ -210,19 +207,22 @@
     });
 
 
-    $(function () {
-        // templateing
-        if (!nunjucks.env) {
-            nunjucks.env = new nunjucks.Environment(new nunjucks.HttpLoader('{{ STATIC_URL }}'));
-        }
-        nj = nunjucks.env;
-        nj = nunjucks_register_filters(nj);
-    });
 
+    var nj = new nunjucks.Environment(new nunjucks.WebLoader('{{ STATIC_URL }}'));
+    nj = nunjucks_register_filters(nj);
 
 
     // define globally for debug purposes
     var onair;
+
+    {% if user.is_authenticated %}
+        var current_user = {
+            id: {{ user.id }},
+            username: '{{ user.username }}'
+        }
+    {% else %}
+        var current_user = false;
+    {% endif %}
 
     $(function() {
 
@@ -231,7 +231,6 @@
         /////////////////////////////////////////////
         var site_ui = new SiteUI();
         site_ui.debug = false;
-        site_ui.is_authenticated = {% if user.is_authenticated %}true{% else %}false{% endif %}
         site_ui.init();
 
 
@@ -239,9 +238,9 @@
         // AJAX Login App
         /////////////////////////////////////////////
         var login_app = new AloginApp();
-        login_app.debug = false;
+        login_app.debug = true;
         login_app.login_url = "{% url 'alogin-login' %}";
-        login_app.is_authenticated = {% if user.is_authenticated %}true{% else %}false{% endif %}
+        login_app.user = current_user;
         login_app.init();
 
 
@@ -259,6 +258,7 @@
         var bplayer = new BPlayerApp();
         bplayer.debug = true;
         bplayer.mode = 'inline';
+        bplayer.stream_url = '{{ settings.STREAM_URL }}';
         bplayer.static_url = '{{ STATIC_URL }}';
 
         var lb = new LevelBridge();
@@ -275,7 +275,7 @@
         var achat = new AchatApp();
         achat.debug = false;
         achat.container = $('#achat_container');
-        achat.username = settings.username;
+        achat.user = current_user;
 
         setTimeout(function () {
             achat.init();

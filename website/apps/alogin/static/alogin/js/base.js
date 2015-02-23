@@ -4,7 +4,7 @@ var AloginApp = function () {
     var self = this;
     this.debug = true;
     this.login_url;
-    this.is_authenticated = false;
+    this.user = false;
     this.reveal_container = $('#reveal_container');
 
     this.init = function () {
@@ -56,7 +56,7 @@ var AloginApp = function () {
         // auth-required elements
         // present login-dialog on click
         $('body').on('click', '[data-login-required]', function(e){
-            if(!self.is_authenticated) {
+            if(!self.user || self.user == undefined) {
                 e.preventDefault();
                 e.stopPropagation();
                 self.dialog_response(self.login_url);
@@ -66,21 +66,22 @@ var AloginApp = function () {
     };
 
 
-    this.set_authentication_state = function (state) {
+    this.set_authentication_state = function (user) {
 
+        console.log('set_authentication_state', user);
+
+        var user = typeof data != undefined ? user : false;
+        self.user = user;
         if(self.debug) {
-            console.debug('AloginApp - set_authentication_state', state)
+            console.debug('AloginApp - set_authentication_state', self.user)
         }
-        if(state != undefined) {
-            self.is_authenticated = state;
-            if(state) {
-                $('html').addClass('is-authenticated')
-            } else {
-                 $('html').removeClass('is-authenticated')
-            }
+        if(!self.user) {
+            $('html').removeClass('is-authenticated')
+        } else {
+            $('html').addClass('is-authenticated')
         }
 
-        $(document).trigger('alogin', ['auth-state-change']);
+        $(document).trigger('alogin', ['auth-state-change', self.user]);
     };
 
 
@@ -105,7 +106,7 @@ var AloginApp = function () {
                 // else html, to re-display the form with eventual errors.
                 if (data instanceof Object == true) {
                     if(data.success) {
-                        self.set_authentication_state(data.is_authenticated);
+                        self.set_authentication_state(data.user);
                         setTimeout(function(){
                             self.reveal_container.foundation('reveal', 'close');
                         }, 1)
@@ -136,7 +137,7 @@ var AloginApp = function () {
             data: data,
             success: function(data) {
                 if(data.success) {
-                    self.set_authentication_state(data.is_authenticated);
+                    self.set_authentication_state(data.user);
                     //$.address.value(next_url);
                 }
             },

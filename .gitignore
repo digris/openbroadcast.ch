@@ -23,3 +23,5 @@ website/dev
 website/static/CACHE
 
 doc/_build
+
+node_modules

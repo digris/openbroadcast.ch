@@ -15,10 +15,21 @@ def alogin_login(request):
     if request.method == 'POST':
         form = AuthenticationForm(None, request.POST)
         if form.is_valid():
-            login(request, form.get_user())
+            user = form.get_user()
+            login(request, user)
+
+            print '//////////////////////////////////'
+            print user
+            print user.id
+            print user.username
+
+
             return HttpResponse(json.dumps({
                 'success': True,
-                'is_authenticated': True,
+                'user': {
+                    'id': user.id,
+                    'username': user.username,
+                }
             })
             , mimetype='application/json')
     return render(request, 'alogin/login.html', {'form': form})
@@ -38,7 +49,7 @@ def alogin_logout(request):
     logout(request)
     response = {
         'success': True,
-        'is_authenticated': False,
+        'user': False,
     }
     return HttpResponse(json.dumps(response), mimetype='application/json')
 

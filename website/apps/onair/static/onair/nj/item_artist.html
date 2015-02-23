@@ -58,9 +58,11 @@
         </div>
 
         {% if item.d_tags %}
-        <div class="row tags">
+        <div class="row tags text-left">
             <div class="small-12 columns">
-                {{ item.d_tags }}
+                {% for tag in item.d_tags.split(', ') %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
             </div>
         </div>
         {% endif %}

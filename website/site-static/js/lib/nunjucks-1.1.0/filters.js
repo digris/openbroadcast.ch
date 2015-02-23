@@ -245,6 +245,15 @@ var nunjucks_register_filters = function (nj) {
     });
     */
 
+    nj.addFilter('urlize', function (str, target) {
+
+        if(str == undefined) {
+            return '';
+        }
+
+        return str.autolink()
+    });
+
 
     return nj;
 };
@@ -258,3 +267,31 @@ String.prototype.format = function () {
     }
     return formatted;
 };
+
+String.prototype.autolink = function() {
+    var k, linkAttributes, option, options, pattern, v;
+    options = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+
+    pattern = /(^|[\s\n]|<br\/?>)((?:https?|ftp):\/\/[\-A-Z0-9+\u0026\u2019@#\/%?=()~_|!:,.;]*[\-A-Z0-9+\u0026@#\/%=~()_|])/gi;
+    if (!(options.length > 0)) {
+      return this.replace(pattern, "$1<a href='$2'>$2</a>");
+    }
+    option = options[0];
+    linkAttributes = ((function() {
+      var _results;
+      _results = [];
+      for (k in option) {
+        v = option[k];
+        if (k !== 'callback') {
+          _results.push(" " + k + "='" + v + "'");
+        }
+      }
+      return _results;
+    })()).join('');
+    return this.replace(pattern, function(match, space, url) {
+      var link;
+      link = (typeof option.callback === "function" ? option.callback(url) : void 0) || ("<a href='" + url + "'" + linkAttributes + ">" + url + "</a>");
+      return "" + space + link;
+    });
+  };
+

@@ -14,8 +14,9 @@ var BPlayerApp = function () {
     this.playing_uuids = [];
     this.sm2;
     this.current_sound;
+    this.stream_url;
     //this.stream_url = 'http://stream.openbroadcast.ch:80/openbroadcast';
-    this.stream_url = 'http://pypo:8000/master.mp3';
+    //this.stream_url = 'http://pypo:8000/master.mp3';
     this.r;
     this.style = 'large'
     this.states = ['init', 'ready', 'playing', 'stopped', 'paused', 'buffering', 'loading', 'error'];
@@ -404,6 +405,9 @@ var BPlayerApp = function () {
         }
 
 
+        if (control.action == 'stop') {
+            self.current_sound.stop();
+        }
         if (control.action == 'pause') {
             self.current_sound.pause();
         }

@@ -4,9 +4,9 @@ AchatApp = function () {
     var self = this;
     this.debug = false;
     this.container;
-    this.username;
+    this.user;
     this.messages_container;
-    this.max_messages = 12;
+    this.max_messages = 24;
 
     this.init = function () {
 
@@ -47,21 +47,23 @@ AchatApp = function () {
         });
 
 
-        self.container.on('keyup', '.chat-message > p', function (e) {
-
+        self.container.on('keydown', '.chat-message > p', function (e) {
             e = e || event;
             if (e.keyCode === 13 && !e.shiftKey) {
-
-
                 $('form', self.container).submit();
-
                 e.preventDefault();
-                //self.create_message($(this).val())
                 return false;
             }
             return true;
 
+        });
 
+        // show all text in case that truncated
+        self.messages_container.on('click', 'a.show-full-text', function(e){
+            e.preventDefault();
+            var message_body = $(this).parents('.body');
+            $('.truncated', message_body).toggle();
+            $('.full', message_body).toggle();
         });
 
         self.container.on('focus', '.chat-message > p', function (e) {
@@ -70,6 +72,22 @@ AchatApp = function () {
         self.container.on('blur', '.chat-message > p', function (e) {
             $(this).parents('form').removeClass('focus');
         });
+
+        // user login/logout handling
+        $(document).on('alogin', function(e, type, user){
+            if(type == 'auth-state-change') {
+                if(user != undefined) {
+                    self.user = user;
+                    // reload chat messages
+                    self.messages_container.html('')
+                    self.load();
+                }
+            }
+        });
+
+
+        $('span.timestamp', self.messages_container).timeago();
+
 
 
         var strategies = [
@@ -115,7 +133,7 @@ AchatApp = function () {
                     return '$1@' + value + ' ';
                 },
                 cache: true
-            },
+            }
         ]
         var option = {
             appendTo: $('body')
@@ -167,30 +185,6 @@ AchatApp = function () {
         self.add_message(message);
     };
 
-    this.dummy = function () {
-
-        var num_words = (Math.floor(Math.random() * (20 - 2 + 1)) + 2) * (Math.floor(Math.random() * (4 - 1 + 1)) + 1)
-        var lorem = new Lorem;
-        lorem.type = Lorem.TEXT;
-        lorem.query = num_words + 'w';
-
-        var message = {
-            text: lorem.createLorem(),
-            user: {
-                username: 'Peter',
-                'is_me': false
-            }
-        }
-
-        self.add_message(message);
-
-        var rand = Math.round(Math.random() * (60000 - 10000) + 10000);
-        setTimeout(function () {
-            self.dummy()
-        }, rand);
-    };
-
-
     this.add_message = function (message) {
 
         if(self.debug) {
@@ -198,10 +192,11 @@ AchatApp = function () {
         }
 
         // fix some values
-        message.created = message.created.substr(11, 8);
-        if (message.user.username == self.username) {
+        //message.created = message.created.substr(11, 8);
+        if (self.user && message.user.id == self.user.id) {
             message.user.is_me = true;
         }
+
         if (message.options && message.options.extra ) {
             message.extra_classes = message.options.extra
         }
@@ -213,6 +208,11 @@ AchatApp = function () {
 
         self.messages_container.prepend(html);
         self.messages_container.find('.item.message:gt(' + self.max_messages + ')').remove()
+
+
+        // 'dynamic' timestamps
+        $('span.timestamp', self.messages_container).timeago('updateFromDOM');
+
 
     };
 

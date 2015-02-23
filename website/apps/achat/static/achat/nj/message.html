@@ -1,10 +1,23 @@
 <li class="item message new{% if message.user.is_me %} me{% endif %} {% if message.extra_classes %} {{ message.extra_classes }}{% endif %}"
      {% if message.user.is_me %}data-livebg_{% endif %}>
 
+
+
     <div class="body">
-        <p>
-        {{ message.text|truncate(240, True, '<a href="#">...</a>') }}
-        </p>
+        {% if message.text|length() > 240%}
+            <p class="truncated">
+            {{ message.text|linebreaksbr|truncate(240, True, '<a class="show-full-text" href="#">&nbsp;&gt;&gt;&gt;</a>')|urlize() }}
+            </p>
+            <p class="full hide">
+                {{ message.text|linebreaksbr|urlize() }}
+                <a class="show-full-text" href="#">&nbsp;&lt;&lt;&lt;</a>
+            </p>
+        {% else %}
+            <p>
+                {{ message.text|linebreaksbr|urlize() }}
+            </p>
+        {% endif %}
+
     </div>
 
     <div class="author text-center">
@@ -20,7 +33,7 @@
             {% endif %}
         </span>
         <span class="separator">|</span>
-        <span class="timestamp">{{ message.created }}</span>
+        <span class="timestamp" title="{{ message.created }}"></span>
     </div>
 
 </li>
