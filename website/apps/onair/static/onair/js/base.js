@@ -34,7 +34,7 @@ var OnAirApp = function () {
 
         setTimeout(function () {
             // TODO: just disabled for debugging
-            // self.load_history(3);
+            self.load_history(4);
         }, 5000);
 
     };
