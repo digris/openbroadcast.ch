@@ -30,12 +30,14 @@
         <div class="col-artist columns">
             Artist
         </div>
+        <!-- price & buy are not available yet - just here for the future™
         <div class="col-price columns">
             Price
         </div>
         <div class="col-buy columns end">
             &nbsp;
         </div>
+        -->
     </div>
 
     {% for item in objects %}
@@ -68,6 +70,7 @@
             {{ item.item.artist.name }}
         </div>
 
+        <!-- price & buy are not available yet - just here for the future™
         <div class="col-price columns">
             {% if item.on_air %}
                 <span class="price">CHF 0.20</span>
@@ -81,6 +84,7 @@
         <div class="col-buy columns text-right">
             <a data-login-required href="#">Buy Now!</a>
         </div>
+        -->
 
     </div>
     {% endfor %}

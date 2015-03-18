@@ -167,6 +167,15 @@
     #bplayer_actions_right
       display: none
 
+    .actions-expanded
+      position: absolute
+      right: 0
+      top: 0
+      display: block
+      padding: 6px 6px 0 0
+      a
+        color: white
+
 
 
 
@@ -212,8 +221,15 @@
       width: 4%
     .col-name
       width: 22%
+      // added 17% as long as buying is not available - see below
+      width: 39%
     .col-artist
       width: 22%
+      // added 17% as long as buying is not available - see below
+      width: 39%
+
+    // price & buy are not available yet - just here for the future™
+    // using 34% together
     .col-price
       width: 24%
       .price

@@ -13265,20 +13265,32 @@ body.loading div[data-action="play"] span.loading {
 #bplayer_container.show-history #bplayer_actions_right {
   display: none;
 }
-/* line 177, ../sass/site/apps/_bplayer.sass */
+/* line 170, ../sass/site/apps/_bplayer.sass */
+#bplayer_container.show-history .actions-expanded {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: block;
+  padding: 6px 6px 0 0;
+}
+/* line 176, ../sass/site/apps/_bplayer.sass */
+#bplayer_container.show-history .actions-expanded a {
+  color: white;
+}
+/* line 186, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.compact .item {
   padding: 5px 0 0 10px;
 }
-/* line 179, ../sass/site/apps/_bplayer.sass */
+/* line 188, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.compact .item a, #bplayer_container section.playlist.history.compact .item span {
   color: white;
 }
-/* line 181, ../sass/site/apps/_bplayer.sass */
+/* line 190, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.compact .item span {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5;
 }
-/* line 185, ../sass/site/apps/_bplayer.sass */
+/* line 194, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .header {
   padding: 4px 0;
   margin: 4px 0;
@@ -13286,7 +13298,7 @@ body.loading div[data-action="play"] span.loading {
   opacity: 0.7;
   color: white;
 }
-/* line 190, ../sass/site/apps/_bplayer.sass */
+/* line 199, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .item {
   color: rgba(255, 255, 255, 0.5);
   display: block;
@@ -13295,63 +13307,65 @@ body.loading div[data-action="play"] span.loading {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 4px 0;
 }
-/* line 197, ../sass/site/apps/_bplayer.sass */
+/* line 206, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .item.hover {
   color: white;
 }
-/* line 199, ../sass/site/apps/_bplayer.sass */
+/* line 208, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .item.on-air {
   font-style: italic;
   color: white;
 }
-/* line 203, ../sass/site/apps/_bplayer.sass */
+/* line 212, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded {
   width: 83%;
   margin: 0 auto 20px;
 }
-/* line 207, ../sass/site/apps/_bplayer.sass */
+/* line 216, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .col-airtime {
   width: 14%;
 }
-/* line 209, ../sass/site/apps/_bplayer.sass */
+/* line 218, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .col-action {
   width: 4%;
 }
-/* line 210, ../sass/site/apps/_bplayer.sass */
+/* line 219, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .col-action a {
   color: white;
 }
-/* line 213, ../sass/site/apps/_bplayer.sass */
+/* line 222, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .col-name {
   width: 22%;
+  width: 39%;
 }
-/* line 215, ../sass/site/apps/_bplayer.sass */
+/* line 226, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .col-artist {
   width: 22%;
+  width: 39%;
 }
-/* line 217, ../sass/site/apps/_bplayer.sass */
+/* line 233, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .col-price {
   width: 24%;
 }
-/* line 219, ../sass/site/apps/_bplayer.sass */
+/* line 235, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .col-price .price {
   color: white;
 }
-/* line 221, ../sass/site/apps/_bplayer.sass */
+/* line 237, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .col-price .increase-step {
   font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.8);
 }
-/* line 224, ../sass/site/apps/_bplayer.sass */
+/* line 240, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .col-price .increase-time {
   font-size: 0.8rem;
   color: red;
 }
-/* line 227, ../sass/site/apps/_bplayer.sass */
+/* line 243, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .col-buy {
   width: 10%;
 }
-/* line 228, ../sass/site/apps/_bplayer.sass */
+/* line 244, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .col-buy a {
   color: white;
 }

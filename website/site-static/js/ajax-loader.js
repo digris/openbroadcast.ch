@@ -72,6 +72,34 @@ var AJAXLoader = function () {
             $('#achat_container').fadeOut(100);
         }
 
+
+
+        $.support.cors = true;
+        $.ajax({
+            type: 'GET',
+            dataType: "text",
+            crossDomain: true,
+            url: uri,
+            success: function (data) {
+                if(self.debug) {
+                    console.log($(data).find('#navigation_container'));
+                }
+
+                // TODO: make more modular.
+                // replaces main-content & global navigation
+                $("#navigation_container").replaceWith($(data).filter("#navigation_container"));
+                $("#page_content_container").replaceWith($(data).find("#page_content_container"));
+
+                $('body').css('opacity', 1.0);
+
+                $(document).trigger('ajax-loader', ['loaded']);
+            },
+            error: function (responseData, textStatus, errorThrown) {
+                alert('request failed.');
+            }
+        });
+
+        /*
         $.get(uri, function(data){
 
             if(self.debug) {
@@ -90,6 +118,7 @@ var AJAXLoader = function () {
 
 
         });
+        */
 
 
     }
