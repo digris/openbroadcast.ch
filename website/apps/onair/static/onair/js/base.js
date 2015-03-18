@@ -25,6 +25,7 @@ var OnAirApp = function () {
         self.info_container = $('.info-container', self.container);
         self.meta_container = $('.meta-container', self.container);
         self.prevnext_container = $('#media_prev_next', self.container);
+        self.rating_container = $('#rating_container', self.container);
 
         self.bindings();
 
@@ -129,9 +130,6 @@ var OnAirApp = function () {
             }, 400)
         });
 
-
-
-
         self.prevnext_container.on('click', 'a', function (e) {
             e.preventDefault();
             if (!$(this).parent().hasClass('disabled')) {
@@ -139,6 +137,14 @@ var OnAirApp = function () {
             }
         });
 
+        // handle votes
+        self.rating_container.on('click', 'a', function (e) {
+            // TODO: make sure to not continue in case of unauthorized user
+            e.preventDefault();
+            if (!$(this).parent().hasClass('disabled')) {
+                self.handle_vote(Number($(this).data('vote')));
+            }
+        });
 
         // TODO: hackish implementation here, should be done more generic
         self.container.on('click', '#back_on_air a', function(e){
@@ -377,11 +383,10 @@ var OnAirApp = function () {
     };
     this.update_rating_display = function (item) {
 
-        var rating_container = $('.rating-container', self.container);
-        rating_container.removeClass('disabled');
+        self.rating_container.removeClass('disabled');
         // set current values
-        $('.vote-up a > span', rating_container).html(item.item.votes.up);
-        $('.vote-down  a > span', rating_container).html(item.item.votes.down);
+        $('.vote-up a > span', self.rating_container).html(item.item.votes.up);
+        $('.vote-down  a > span', self.rating_container).html(item.item.votes.down);
 
 
     };
@@ -497,6 +502,30 @@ var OnAirApp = function () {
         }
 
         self.handle_timeline();
+
+    };
+
+    /**
+     * handles votes
+     */
+    this.handle_vote = function (vote) {
+
+        var data = JSON.stringify({
+            "vote": vote,
+            "ct": 'media',
+            "id": 123
+        });
+
+        $.ajax({
+            url: '/api/v1/onair/vote/',
+            type: 'POST',
+            contentType: 'application/json',
+            data: data,
+            dataType: 'json',
+            processData: false
+        })
+
+
 
     };
 
