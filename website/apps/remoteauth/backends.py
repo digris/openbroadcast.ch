@@ -1,10 +1,13 @@
+# -*- coding: utf-8 -*-
 import logging
+import requests
 from django.conf import settings
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.core.exceptions import ImproperlyConfigured
-import requests
+
+
 
 User = get_user_model()
 log = logging.getLogger(__name__)

@@ -29,7 +29,7 @@ class VoteObject(object):
         # TODO: implement async flow
         log.debug('Processing vote: %s - %s - %s' % (self.vote, self.ct, self.id))
 
-        print API_BASE_URL
+        log.info(API_BASE_URL)
 
 
 

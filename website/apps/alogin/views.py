@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+import logging
 from django.shortcuts import render_to_response
 from django.shortcuts import RequestContext
 from django.shortcuts import render
@@ -5,10 +7,13 @@ from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
-from registration.forms import *
+from remoteauth.forms import RegistrationForm
 from registration.views import RegistrationView
 import json, pdb
 
+from remoteauth.models import register_user
+
+log = logging.getLogger(__name__)
 
 def alogin_login(request):
     form = AuthenticationForm()
@@ -18,11 +23,7 @@ def alogin_login(request):
             user = form.get_user()
             login(request, user)
 
-            print '//////////////////////////////////'
-            print user
-            print user.id
-            print user.username
-
+            log.debug('user "%s" logged in.' % user.username)
 
             return HttpResponse(json.dumps({
                 'success': True,
@@ -33,19 +34,32 @@ def alogin_login(request):
             })
             , mimetype='application/json')
     return render(request, 'alogin/login.html', {'form': form})
-    #return render(request, 'ajaxlogin/ajax_login.html', {'form': form})
+
 
 
 def alogin_register(request):
     form = RegistrationForm()
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
+
         if form.is_valid():
-            return HttpResponse(json.dumps({'success': True, 'mail_activation': True})
-                , mimetype='application/json')
+
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+
+            register_user(username=username, email=email, password=password)
+
+            return alogin_login(request)
+
+
+            #return HttpResponse(json.dumps({'success': True, 'mail_activation': True})
+            #    , mimetype='application/json')
+
     return render(request, 'alogin/register.html', {'form': form})
 
 def alogin_logout(request):
+    log.debug('user "%s" logged out.' % request.user.username)
     logout(request)
     response = {
         'success': True,

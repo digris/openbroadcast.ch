@@ -370,13 +370,13 @@ var OnAirApp = function () {
         if (fast) {
             setTimeout(function () {
                 self.meta_container.html(html);
-                self.meta_container.fadeIn(200);
-            }, 150);
+                self.meta_container.fadeIn(1);
+            }, 1);
         } else {
             setTimeout(function () {
                 self.meta_container.html(html);
-                self.meta_container.fadeIn(500);
-            }, 1000);
+                self.meta_container.fadeIn(1);
+            }, 1);
         }
 
 

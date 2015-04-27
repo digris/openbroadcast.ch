@@ -4,13 +4,10 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-#from remoteauth.models import User
-
-
-
-# Define a new User admin
 class UserAdmin(UserAdmin):
-    pass
+
+    list_display = UserAdmin.list_display + ('remote_id', )
+
     #inlines = (EmployeeInline, )
 
 # Re-register UserAdmin
