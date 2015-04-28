@@ -29,32 +29,46 @@ BASE_SITE_ID = 1
 LOCALE_PATHS = ('%s/locale/' % BASE_DIR,)
 
 # Internationalization
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'de-ch'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
 LANGUAGES = [
+    ('de-ch', _('German')),
     ('en', _('English')),
-    ('de', _('German')),
-    ('en-us', _('English USA')),
 ]
 
-PARLER_DEFAULT_LANGUAGE_CODE = 'en'
+CMS_LANGUAGES = {
+    1: [
+        {
+            'code': 'de-ch',
+            'name': _('German'),
+            'public': True,
+            'redirect_on_fallback': False,
+        },
+        {
+            'code': 'en',
+            'name': _('English'),
+            'fallbacks': ['de-ch',],
+            'public': True,
+        },
+    ],
+    'default': {
+        'fallbacks': ['en', 'de-ch',],
+        'redirect_on_fallback': False,
+        'public': False,
+        'hide_untranslated': False,
+    }
+}
+
+PARLER_DEFAULT_LANGUAGE_CODE = 'de-ch'
 PARLER_LANGUAGES = {
     # Global site
     1: (
+        {'code': 'de-ch',},
         {'code': 'en',},
-        {'code': 'de',},
-        #{'code': 'en-us',},
-    ),
-    2: (
-        {'code': 'en',},
-        {'code': 'de',},
-    ),
-    3: (
-        {'code': 'en-us',},
     ),
     'default': {
         'hide_untranslated': False,

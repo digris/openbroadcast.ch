@@ -21,30 +21,7 @@ CMS_TEMPLATES = (
     #('_templates/cms_construction.html', 'Under construction'),
 )
 
-CMS_LANGUAGES = {
-    1: [
-        {
-            'code': 'en',
-            'name': 'English',
-            'fallbacks': ['de', 'fr'],
-            'public': True,
-            'hide_untranslated': True,
-            'redirect_on_fallback': False,
-        },
-        {
-            'code': 'de',
-            'name': 'Deutsch',
-            'fallbacks': ['en', 'fr'],
-            'public': True,
-        },
-    ],
-    'default': {
-        'fallbacks': ['en', 'de',],
-        'redirect_on_fallback': False,
-        'public': False,
-        'hide_untranslated': False,
-    }
-}
+
 
 
 
