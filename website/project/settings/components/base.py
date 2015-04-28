@@ -61,6 +61,8 @@ PARLER_LANGUAGES = {
     }
 }
 
+SOLID_I18N_USE_REDIRECTS = False
+
 ROOT_URLCONF = 'project.urls'
 WSGI_APPLICATION = 'project.wsgi.application'
 
@@ -85,8 +87,9 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.humanize',
     #'authtools',
-    'registration',
     #'ajaxlogin',
+    'solid_i18n',
+    'registration',
     'alogin',
 
 
@@ -199,7 +202,8 @@ MIDDLEWARE_CLASSES = (
     # browser
     #'badbrowser.middleware.BrowserSupportDetection',
     # cms
-    'django.middleware.locale.LocaleMiddleware',
+    #'django.middleware.locale.LocaleMiddleware',
+    'solid_i18n.middleware.SolidLocaleMiddleware',
     'django.middleware.doc.XViewMiddleware',
     'django.middleware.common.CommonMiddleware',
     'cms.middleware.page.CurrentPageMiddleware',

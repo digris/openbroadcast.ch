@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.conf.urls.i18n import i18n_patterns
+from solid_i18n.urls import solid_i18n_patterns
 from django.conf import settings
 from django.contrib import admin
 from django.views.static import serve
@@ -10,7 +11,8 @@ admin.autodiscover()
 
 #from bshop.views import shop
 
-urlpatterns = i18n_patterns('',
+#urlpatterns = i18n_patterns('',
+urlpatterns = solid_i18n_patterns('',
     # Examples:
     # url(r'^$', 'project.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
@@ -56,7 +58,8 @@ urlpatterns += patterns('',
     url(r'^api/', include('project.urls_api')),
 )
 
-urlpatterns += i18n_patterns('',
+#urlpatterns += i18n_patterns('',
+urlpatterns += solid_i18n_patterns('',
     url(r'^', include('cms.urls')),
 )
 
