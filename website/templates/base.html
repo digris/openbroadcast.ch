@@ -211,10 +211,6 @@
     var nj = new nunjucks.Environment(new nunjucks.WebLoader('{{ STATIC_URL }}'));
     nj = nunjucks_register_filters(nj);
 
-
-    // define globally for debug purposes
-    var onair;
-
     {% if user.is_authenticated %}
         var current_user = {
             id: {{ user.id }},
@@ -223,6 +219,11 @@
     {% else %}
         var current_user = false;
     {% endif %}
+
+
+    // define globally for debug purposes
+    var onair;
+    var stationtime;
 
     $(function() {
 
@@ -298,7 +299,7 @@
         /////////////////////////////////////////////
         // station time
         /////////////////////////////////////////////
-        var stationtime = new StationTimeApp();
+        stationtime = new StationTimeApp();
         stationtime.debug = false;
         stationtime.api_url = "{% url 'stationtime-current-time' %}";
         stationtime.container = $('#station_time');

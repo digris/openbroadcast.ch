@@ -8,7 +8,7 @@ StationTimeApp = function () {
     this.current_time;
     this.interval = false;
     this.interval_duration = 1000;
-    this.resync_interval_duration = 60000;
+    this.resync_interval_duration = 5000;
 
     this.init = function () {
 
@@ -34,9 +34,9 @@ StationTimeApp = function () {
     this.run_clock = function(time) {
 
         if(time != undefined) {
-            self.current_time = new Date(time); // '2014-01-01 10:11:55'
+            self.current_time = new Date(); // '2014-01-01 10:11:55'
             self.display_clock();
-        };
+        }
 
         if(!self.interval) {
             self.interval = setInterval(function() {
@@ -45,7 +45,7 @@ StationTimeApp = function () {
                 self.display_clock();
 
             }, self.interval_duration);
-        };
+        }
 
     };
 
@@ -55,7 +55,7 @@ StationTimeApp = function () {
             self.pad(self.current_time.getHours()),
             self.pad(self.current_time.getMinutes()),
             self.pad(self.current_time.getSeconds())
-        ].join(':')
+        ].join(':');
 
         self.container.html('<a href="#">' + time_string + '</a>');
     };

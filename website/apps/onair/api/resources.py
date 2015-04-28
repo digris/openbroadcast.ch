@@ -24,12 +24,21 @@ class VoteObject(object):
         self.ct = ct
         self.id = id
 
-    def process(self):
+    def process(self, request=None):
         #send vote to ratings API endpoint
         # TODO: implement async flow
-        log.debug('Processing vote: %s - %s - %s' % (self.vote, self.ct, self.id))
+        log.info('Processing vote by %s: %s - %s - %s' % (request.user, self.vote, self.ct, self.id))
 
-        log.info(API_BASE_URL)
+        log.info('API base url %s' % API_BASE_URL)
+
+        print request.user
+
+        self.remote_vote(user=request.user, ct=self.ct, obj_id=self.id, value=self.vote)
+
+
+    def remote_vote(self, user, ct, obj_id, value):
+
+        pass
 
 
 
@@ -47,11 +56,6 @@ class VoteResource(Resource):
         authentication = MultiAuthentication(SessionAuthentication(), Authentication())
         authorization = Authorization()
 
-    #def obj_get_list(self, bundle, **kwargs):
-    #    raise NotImplementedError('GET list not implemented.')
-
-    #def obj_get(self, bundle, **kwargs):
-    #    raise NotImplementedError('GET object not implemented.')
     def detail_uri_kwargs(self, bundle_or_obj):
         kwargs = {}
 
@@ -68,32 +72,16 @@ class VoteResource(Resource):
         ct = bundle.data.get('ct', None)
         id = bundle.data.get('id', None)
 
-        if not (vote and ct and id):
+        if not (bundle.request.user and vote and ct and id):
             raise ImmediateHttpResponse(
                 response=HttpBadRequest('vote, ct & id required')
             )
 
-        #if not (-1 <= vote <= 1):
-        #    raise ImmediateHttpResponse(
-        #        response=HttpBadRequest('vote "%s" not in allowed range' % vote)
-        #    )
-
-        #print 'vote: %s' % vote
-        #print 'ct:   %s' % ct
-        #print 'id:   %s' % id
-
         vote_object = VoteObject(vote=vote, ct=ct, id=id)
-
-        vote_object.process()
-
+        vote_object.process(request=bundle.request)
         bundle.obj = vote_object
-
-
         bundle = self.full_hydrate(bundle)
 
-        #print bundle
-
-        #bundle.data['text'] = parse_text(bundle.data['text'])
         return bundle
 
 
