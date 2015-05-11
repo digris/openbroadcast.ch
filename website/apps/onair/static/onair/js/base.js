@@ -6,6 +6,7 @@ var OnAirApp = function () {
     this.channel_id = 1;
     // TODO: base_url form API_BASE_URL settings
     this.base_url = '';
+    this.use_history = false;
     this.container;
     this.bplayer = false;
     this.max_items = 12;
@@ -15,6 +16,7 @@ var OnAirApp = function () {
     this.prevnext_container;
     this.info_timeout = false;
     this.local_data = [];
+    this.current_item = false;
     this.mode = 'init'; // 'on air', 'history' or 'fallback'
     this.timeline_offset = 0;
 
@@ -33,10 +35,15 @@ var OnAirApp = function () {
             self.load();
         }, 2000);
 
-        setTimeout(function () {
-            // TODO: just disabled for debugging
-            self.load_history(4);
-        }, 5000);
+        if(self.use_history) {
+            setTimeout(function () {
+                self.load_history(4);
+            }, 5000);
+        }
+
+        pushy_client.subscribe('arating_vote', function(vote){
+            self.update_vote(vote);
+        });
 
     };
 
@@ -381,7 +388,10 @@ var OnAirApp = function () {
 
 
     };
+
     this.update_rating_display = function (item) {
+
+        console.log('update_rating_display', item)
 
         self.rating_container.removeClass('disabled');
         // set current values
@@ -444,6 +454,7 @@ var OnAirApp = function () {
             }
             if (i == current_index) {
                 item.el.addClass('current');
+                self.current_item = item;
                 self.update_meta_display(item, false);
                 self.update_rating_display(item);
             }
@@ -491,7 +502,7 @@ var OnAirApp = function () {
     this.handle_prevnext = function (direction) {
 
         if(self.debug) {
-            console.log('OnAirApp - handle_prevnext: ' + direction);
+            console.debug('OnAirApp - handle_prevnext: ' + direction);
         }
 
         if (direction == 'previous') {
@@ -507,13 +518,19 @@ var OnAirApp = function () {
 
     /**
      * handles votes
+     * (from up/down clicks)
      */
     this.handle_vote = function (vote) {
 
+        if(!self.current_item) {
+            console.warn('no current item!');
+            return;
+        }
+
         var data = JSON.stringify({
-            "vote": vote,
-            "ct": 'media',
-            "id": 123
+            'vote': vote,
+            'ct': 'alibrary.media',
+            'id': self.current_item.item.id
         });
 
         $.ajax({
@@ -525,8 +542,38 @@ var OnAirApp = function () {
             processData: false
         })
 
+    };
 
+    /**
+     * handles vote updates
+     * callback from pushy subscription
+     */
+    this.update_vote = function (vote) {
+
+        if(self.debug) {
+            console.debug('OnAirApp - update_vote: ', vote);
+        }
+
+        $.each(self.local_data, function (i, el) {
+            console.log(i)
+
+            if (vote.uuid == self.local_data[i].item.uuid) {
+                if(self.debug) {
+                    console.debug('OnAirApp - uuid match for: ' + vote.uuid);
+                }
+                // apply vote data
+                self.local_data[i].item.votes = vote;
+            }
+
+            self.update_rating_display(self.current_item);
+
+        });
 
     };
+
+
+
+
+
 
 };

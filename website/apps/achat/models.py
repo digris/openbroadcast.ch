@@ -63,11 +63,10 @@ class Message(models.Model):
         rs = redis.StrictRedis(host=REDIS_HOST)
 
         try:
-            print 'routing to: %s%s' % (REDIS_SITE_ID, 'achat')
+            log.debug('routing to: %s%s' % (REDIS_SITE_ID, 'achat'))
             rs.publish('%s%s' % (REDIS_SITE_ID, 'achat'), message)
-            print 'done'
         except redis.ConnectionError, e:
-            print e
+            log.warning('unable to route message %s' % e)
 
 
     def save(self, *args, **kwargs):

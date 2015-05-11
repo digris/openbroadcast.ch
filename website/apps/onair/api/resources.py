@@ -1,9 +1,12 @@
 import os
 import requests
 import logging
+import redis
+import json
 from django.http import HttpResponse
 from django.core.servers.basehttp import FileWrapper
 from django.conf.urls import url
+from  django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
 from tastypie.resources import ModelResource, Resource, Bundle
 from tastypie.fields import IntegerField
@@ -14,8 +17,20 @@ from tastypie.authorization import Authorization
 
 
 API_BASE_URL = getattr(settings, 'API_BASE_URL', None)
+API_BASE_AUTH = getattr(settings, 'API_BASE_AUTH', None)
+REDIS_HOST = getattr(settings, 'PUSHY_REDIS_HOST', None)
+REDIS_SITE_ID = getattr(settings, 'PUSHY_REDIS_SITE_ID', None)
 
 log = logging.getLogger(__name__)
+
+if not API_BASE_URL:
+    raise ImproperlyConfigured('settings.API_BASE_URL is required')
+
+if not API_BASE_AUTH:
+    raise ImproperlyConfigured('settings.API_BASE_AUTH is required')
+
+if not (REDIS_HOST and REDIS_SITE_ID):
+    raise ImproperlyConfigured('PUSHY_REDIS_HOST and PUSHY_REDIS_SITE_ID in settings is required!')
 
 class VoteObject(object):
 
@@ -24,23 +39,40 @@ class VoteObject(object):
         self.ct = ct
         self.id = id
 
-    def process(self, request=None):
-        #send vote to ratings API endpoint
-        # TODO: implement async flow
+    def create_vote(self, request=None):
+
+        log.debug('API base url %s' % API_BASE_URL)
         log.info('Processing vote by %s: %s - %s - %s' % (request.user, self.vote, self.ct, self.id))
 
-        log.info('API base url %s' % API_BASE_URL)
 
-        print request.user
+        vote = self.remote_vote(user=request.user, ct=self.ct, obj_id=self.id, value=self.vote)
 
-        self.remote_vote(user=request.user, ct=self.ct, obj_id=self.id, value=self.vote)
+        if vote:
+            rs = redis.StrictRedis(host=REDIS_HOST)
+            try:
+                log.debug('routing to: %s%s' % (REDIS_SITE_ID, 'arating.vote'))
+                rs.publish('%s%s' % (REDIS_SITE_ID, 'arating_vote'), json.dumps(vote))
+            except redis.ConnectionError, e:
+                log.warning('unable to route message %s' % e)
 
 
     def remote_vote(self, user, ct, obj_id, value):
 
-        pass
+        # TODO: schould eventually be factured out
 
+        """
+        url pattern: /api/v1/rating/vote/<content_type>/<object_id>/<vote>/<remote_user_id>/
+        example:     /api/v1/rating/vote/alibrary.media/13535/0/1243/
+        """
 
+        url = API_BASE_URL + 'v1/rating/vote/%s/%s/%s/%s/' % (ct, obj_id, value, user.remote_id)
+        headers = {'Authorization': 'ApiKey %s:%s' % (API_BASE_AUTH['username'], API_BASE_AUTH['api_key'])}
+
+        log.info('calling API with %s' % url)
+
+        r = requests.get(url, headers=headers)
+
+        return r.json()
 
 
 class VoteResource(Resource):
@@ -78,10 +110,10 @@ class VoteResource(Resource):
             )
 
         vote_object = VoteObject(vote=vote, ct=ct, id=id)
-        vote_object.process(request=bundle.request)
+        vote_object.create_vote(request=bundle.request)
         bundle.obj = vote_object
-        bundle = self.full_hydrate(bundle)
 
+        bundle = self.full_hydrate(bundle)
         return bundle
 
 
