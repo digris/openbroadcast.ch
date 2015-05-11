@@ -34,11 +34,7 @@ StationTimeApp = function () {
     this.run_clock = function(time) {
 
         if(time != undefined) {
-            try {
-                self.current_time = new Date(); // '2014-01-01 10:11:55'
-            } catch (e) {
-                self.current_time = new Date(time); // '2014-01-01 10:11:55'
-            }
+            self.current_time = new Date(time); // '2014-01-01 10:11:55'
             self.display_clock();
         }
 
