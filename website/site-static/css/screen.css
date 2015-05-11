@@ -13003,7 +13003,7 @@ body.loading div[data-action="play"] span.loading {
   }
   /* line 584, ../sass/site/apps/_onair.sass */
   #onair_container .logo-container .inner .header {
-    font-size: 24px;
+    font-size: 18px;
   }
   /* line 588, ../sass/site/apps/_onair.sass */
   #onair_container .info-container .item {
@@ -13462,7 +13462,7 @@ body.loading div[data-action="play"] span.loading {
   }
   /* line 267, ../sass/site/apps/_bplayer.sass */
   #bplayer_container section.playlist {
-    font-size: 13px;
+    font-size: 13px !important;
   }
   /* line 269, ../sass/site/apps/_bplayer.sass */
   #bplayer_container section.playlist.history.compact {
