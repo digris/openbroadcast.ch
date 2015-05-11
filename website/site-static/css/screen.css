@@ -13617,23 +13617,31 @@ body {
 }
 
 @media only screen and (max-width: 40em) {
-  /* line 128, ../sass/site/apps/_achat.sass */
+  /* line 127, ../sass/site/apps/_achat.sass */
+  select:focus,
+  textarea:focus,
+  input:focus {
+    font-size: 16px !important;
+    background: magenta;
+  }
+
+  /* line 135, ../sass/site/apps/_achat.sass */
   #achat_container .messages {
     padding: 5px 0;
   }
-  /* line 131, ../sass/site/apps/_achat.sass */
+  /* line 138, ../sass/site/apps/_achat.sass */
   #achat_container .messages .item.message {
     margin-bottom: 10px;
   }
-  /* line 133, ../sass/site/apps/_achat.sass */
+  /* line 140, ../sass/site/apps/_achat.sass */
   #achat_container .messages .item.message .body {
     padding: 2px 8px;
   }
-  /* line 135, ../sass/site/apps/_achat.sass */
+  /* line 142, ../sass/site/apps/_achat.sass */
   #achat_container .messages .item.message .body:after {
     display: none;
   }
-  /* line 138, ../sass/site/apps/_achat.sass */
+  /* line 145, ../sass/site/apps/_achat.sass */
   #achat_container .messages .item.message .author {
     margin-top: 2px;
     font-size: 76%;
