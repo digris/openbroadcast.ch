@@ -70,7 +70,7 @@ class VoteObject(object):
 
         log.info('calling API with %s' % url)
 
-        r = requests.get(url, headers=headers)
+        r = requests.get(url, headers=headers, verify=False)
 
         return r.json()
 

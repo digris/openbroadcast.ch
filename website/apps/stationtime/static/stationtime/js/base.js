@@ -8,7 +8,7 @@ StationTimeApp = function () {
     this.current_time;
     this.interval = false;
     this.interval_duration = 1000;
-    this.resync_interval_duration = 5000;
+    this.resync_interval_duration = 120000;
 
     this.init = function () {
 
@@ -34,7 +34,11 @@ StationTimeApp = function () {
     this.run_clock = function(time) {
 
         if(time != undefined) {
-            self.current_time = new Date(); // '2014-01-01 10:11:55'
+            try {
+                self.current_time = new Date(); // '2014-01-01 10:11:55'
+            } catch (e) {
+                self.current_time = new Date(time); // '2014-01-01 10:11:55'
+            }
             self.display_clock();
         }
 
