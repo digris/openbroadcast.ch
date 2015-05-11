@@ -1,63 +1,91 @@
+<!-- TODO: implement better responsive/mobile handling -->
 
 
-<!-- playlist related -->
-<dl>
-    <dt>Playlist</dt>
-    <dd>
-        <a target="_blank" data-ct="playlist"
-           href="{{ base_url }}{{ object.emission.content_object.absolute_url }}">
-            {{ object.emission.content_object.name }}&nbsp;
-        </a>
-    </dd>
 
-    <dt>by</dt>
-    <dd>
-        <a target="_blank" data-ct="author"
-           href="{{ base_url }}{{ object.emission.user_co.absolute_url }}">
-            {% if object.emission.user_co.full_name %}
-                {{ object.emission.user_co.full_name }} ({{ object.emission.user_co.username }})
-            {% else %}
-                {{ object.emission.user_co.username }}
-            {% endif %}&nbsp;
-        </a>
-    </dd>
-</dl>
-
-<div class="separator"></div>
-
-<!-- track related -->
-<dl>
-    <dt>Song</dt>
-    <dd>
-        <a target="_blank" data-ct="media"
-           href="{{ base_url }}{{ object.item.absolute_url }}">
-            {{ object.item.name }}&nbsp;
-        </a>
-    </dd>
-
-    <dt>by</dt>
-    <dd>
+<div class="show-for-small-only">
+    <!-- track related -->
+    <p>
         <a target="_blank" data-ct="artist"
            href="{{ base_url }}{{ object.item.artist.absolute_url }}">
-            {{ object.item.artist.name }}&nbsp;
+            {{ object.item.artist.name }}
         </a>
-    </dd>
 
-    <dt>Release</dt>
-    <dd>
-        <a target="_blank" data-ct="release"
-           href="{{ base_url }}{{ object.item.release.absolute_url }}">
-            {{ object.item.release.name }}&nbsp;
+        <span>-</span>
+
+        <a target="_blank" data-ct="media"
+           href="{{ base_url }}{{ object.item.absolute_url }}">
+            {{ object.item.name }}
         </a>
-    </dd>
 
-    <dt>Label</dt>
-    <dd>
-        <a target="_blank" data-ct="label"
-           href="{{ base_url }}{{ object.item.label.absolute_url }}">
-            {{ object.item.label.name }}&nbsp;
-        </a>
-    </dd>
-</dl>
+    </p>
 
-<div class="separator"></div>
+</div>
+
+
+
+<div class="show-for-medium-up">
+    <!-- playlist related -->
+    <dl>
+        <dt>Playlist</dt>
+        <dd>
+            <a target="_blank" data-ct="playlist"
+               href="{{ base_url }}{{ object.emission.content_object.absolute_url }}">
+                {{ object.emission.content_object.name }}&nbsp;
+            </a>
+        </dd>
+
+        <dt>by</dt>
+        <dd>
+            <a target="_blank" data-ct="author"
+               href="{{ base_url }}{{ object.emission.user_co.absolute_url }}">
+                {% if object.emission.user_co.full_name %}
+                    {{ object.emission.user_co.full_name }} ({{ object.emission.user_co.username }})
+                {% else %}
+                    {{ object.emission.user_co.username }}
+                {% endif %}&nbsp;
+            </a>
+        </dd>
+    </dl>
+
+    <div class="separator"></div>
+
+    <!-- track related -->
+    <dl>
+        <dt>Song</dt>
+        <dd>
+            <a target="_blank" data-ct="media"
+               href="{{ base_url }}{{ object.item.absolute_url }}">
+                {{ object.item.name }}&nbsp;
+            </a>
+        </dd>
+
+        <dt>by</dt>
+        <dd>
+            <a target="_blank" data-ct="artist"
+               href="{{ base_url }}{{ object.item.artist.absolute_url }}">
+                {{ object.item.artist.name }}&nbsp;
+            </a>
+        </dd>
+
+        <dt>Release</dt>
+        <dd>
+            <a target="_blank" data-ct="release"
+               href="{{ base_url }}{{ object.item.release.absolute_url }}">
+                {{ object.item.release.name }}&nbsp;
+            </a>
+        </dd>
+
+        <dt>Label</dt>
+        <dd>
+            <a target="_blank" data-ct="label"
+               href="{{ base_url }}{{ object.item.label.absolute_url }}">
+                {{ object.item.label.name }}&nbsp;
+            </a>
+        </dd>
+    </dl>
+
+    <div class="separator"></div>
+</div>
+
+
+

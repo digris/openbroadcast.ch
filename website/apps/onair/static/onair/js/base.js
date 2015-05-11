@@ -33,7 +33,7 @@ var OnAirApp = function () {
 
         setTimeout(function () {
             self.load();
-        }, 2000);
+        }, 200);
 
         if(self.use_history) {
             setTimeout(function () {

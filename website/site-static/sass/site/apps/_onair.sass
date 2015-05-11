@@ -579,19 +579,36 @@ $vote-icon-size: 33px
 @media #{$small-only}
   #onair_container
     padding: 24px 0
+
+
+    .logo-container .inner .header
+      font-size: 24px
+
     .info-container
       .item
         width: 20px
     .meta-container
       text-align: center
+      margin-left: 0
       dt
         display: none
       .separator
         margin: 12px auto
 
+
+
+      a:hover
+        background: transparent
+        color: #000
+        text-decoration: underline
+        padding: 0
+
+
     // disable history display
-    .item.history
+    .item
       display: none
+      &.current
+        display: block
 
 
     // meta display

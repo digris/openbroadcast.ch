@@ -13001,34 +13001,50 @@ body.loading div[data-action="play"] span.loading {
   #onair_container {
     padding: 24px 0;
   }
-  /* line 583, ../sass/site/apps/_onair.sass */
+  /* line 584, ../sass/site/apps/_onair.sass */
+  #onair_container .logo-container .inner .header {
+    font-size: 24px;
+  }
+  /* line 588, ../sass/site/apps/_onair.sass */
   #onair_container .info-container .item {
     width: 20px;
   }
-  /* line 585, ../sass/site/apps/_onair.sass */
+  /* line 590, ../sass/site/apps/_onair.sass */
   #onair_container .meta-container {
     text-align: center;
+    margin-left: 0;
   }
-  /* line 587, ../sass/site/apps/_onair.sass */
+  /* line 593, ../sass/site/apps/_onair.sass */
   #onair_container .meta-container dt {
     display: none;
   }
-  /* line 589, ../sass/site/apps/_onair.sass */
+  /* line 595, ../sass/site/apps/_onair.sass */
   #onair_container .meta-container .separator {
     margin: 12px auto;
   }
-  /* line 593, ../sass/site/apps/_onair.sass */
-  #onair_container .item.history {
+  /* line 600, ../sass/site/apps/_onair.sass */
+  #onair_container .meta-container a:hover {
+    background: transparent;
+    color: black;
+    text-decoration: underline;
+    padding: 0;
+  }
+  /* line 608, ../sass/site/apps/_onair.sass */
+  #onair_container .item {
     display: none;
   }
+  /* line 610, ../sass/site/apps/_onair.sass */
+  #onair_container .item.current {
+    display: block;
+  }
 
-  /* line 604, ../sass/site/apps/_onair.sass */
+  /* line 621, ../sass/site/apps/_onair.sass */
   .rating-container {
     margin: 12px auto 12px;
     height: 51px;
     width: 130px;
   }
-  /* line 609, ../sass/site/apps/_onair.sass */
+  /* line 626, ../sass/site/apps/_onair.sass */
   .rating-container div.separator {
     display: none;
     position: absolute;
@@ -13037,48 +13053,48 @@ body.loading div[data-action="play"] span.loading {
     height: 62px;
     background: black;
   }
-  /* line 617, ../sass/site/apps/_onair.sass */
+  /* line 634, ../sass/site/apps/_onair.sass */
   .rating-container div.vote {
     padding-top: 8px;
   }
-  /* line 619, ../sass/site/apps/_onair.sass */
+  /* line 636, ../sass/site/apps/_onair.sass */
   .rating-container div.vote a {
     height: 16px;
     width: 32px;
   }
-  /* line 623, ../sass/site/apps/_onair.sass */
+  /* line 640, ../sass/site/apps/_onair.sass */
   .rating-container div.vote span {
     font-size: 0.93333rem;
     position: absolute;
     padding: 3px;
     top: 7px;
   }
-  /* line 629, ../sass/site/apps/_onair.sass */
+  /* line 646, ../sass/site/apps/_onair.sass */
   .rating-container div.vote svg {
     position: absolute;
     width: 24px;
     height: 24px;
   }
-  /* line 635, ../sass/site/apps/_onair.sass */
+  /* line 652, ../sass/site/apps/_onair.sass */
   .rating-container div.vote.vote-up span {
     right: 24px;
   }
-  /* line 637, ../sass/site/apps/_onair.sass */
+  /* line 654, ../sass/site/apps/_onair.sass */
   .rating-container div.vote.vote-up svg {
     right: 0;
   }
-  /* line 641, ../sass/site/apps/_onair.sass */
+  /* line 658, ../sass/site/apps/_onair.sass */
   .rating-container div.vote.vote-down span {
     right: 0;
   }
-  /* line 643, ../sass/site/apps/_onair.sass */
+  /* line 660, ../sass/site/apps/_onair.sass */
   .rating-container div.vote.vote-down svg {
     top: 10px;
     right: 16px;
   }
 }
 @media only screen and (min-width: 40.063em) and (max-width: 64em) {
-  /* line 656, ../sass/site/apps/_onair.sass */
+  /* line 673, ../sass/site/apps/_onair.sass */
   #onair_container .meta-container .separator {
     margin: 12px auto;
   }
@@ -13600,6 +13616,32 @@ body {
   font-weight: bold;
 }
 
+@media only screen and (max-width: 40em) {
+  /* line 128, ../sass/site/apps/_achat.sass */
+  #achat_container .messages {
+    padding: 5px 0;
+  }
+  /* line 131, ../sass/site/apps/_achat.sass */
+  #achat_container .messages .item.message {
+    margin-bottom: 10px;
+  }
+  /* line 133, ../sass/site/apps/_achat.sass */
+  #achat_container .messages .item.message .body {
+    padding: 2px 8px;
+  }
+  /* line 135, ../sass/site/apps/_achat.sass */
+  #achat_container .messages .item.message .body:after {
+    display: none;
+  }
+  /* line 138, ../sass/site/apps/_achat.sass */
+  #achat_container .messages .item.message .author {
+    margin-top: 2px;
+    font-size: 76%;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+    opacity: 0.3;
+    text-align: right !important;
+  }
+}
 /* line 1, ../sass/site/apps/_backfeed.sass */
 div.backfeed {
   position: fixed;
