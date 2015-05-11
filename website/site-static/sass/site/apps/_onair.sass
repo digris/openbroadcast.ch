@@ -504,9 +504,7 @@ body
 ///////////////////////////////////////////////////
 // rating
 ///////////////////////////////////////////////////
-
 $vote-icon-size: 33px
-
 .rating-container
   margin: 24px auto 8px
   height: 51px
@@ -556,16 +554,14 @@ $vote-icon-size: 33px
       svg
         right: 0
 
-
     &.vote-down
       span
         right: 0
       svg
         transform: rotateZ(180deg)
+        -webkit-transform: rotateZ(180deg)
         top: 13px
         right: $vote-icon-size
-
-
 
     &:hover, &:active
       a
@@ -577,29 +573,85 @@ $vote-icon-size: 33px
 
 
 
-
-
-
-// state dependant overrides
+//////////////////////////////////////////////////////
 // responsive overrides
+//////////////////////////////////////////////////////
 @media #{$small-only}
   #onair_container
-
+    padding: 24px 0
+    .info-container
+      .item
+        width: 20px
     .meta-container
       text-align: center
       dt
         display: none
-
       .separator
         margin: 12px auto
+
+    // disable history display
+    .item.history
+      display: none
+
+
+    // meta display
+    .meta-container
+      .separator
+        //display: none
+
+  // small screen rating overrides
+  $small-vote-icon-size: 16px
+  .rating-container
+    margin: 12px auto 12px
+    height: 51px
+    width: 130px
+
+    div.separator
+      display: none
+      position: absolute
+      left: 50%
+      width: 2px
+      height: 62px
+      background: #000
+
+    div.vote
+      padding-top: 8px
+      a
+        height: $small-vote-icon-size
+        width: $small-vote-icon-size * 2
+
+      span
+        font-size: rem-calc(14)
+        position: absolute
+        padding: 3px
+        top: 7px
+
+      svg
+        position: absolute
+        width: 24px
+        height: 24px
+
+      &.vote-up
+        span
+          right: $small-vote-icon-size + 8px
+        svg
+          right: 0
+
+      &.vote-down
+        span
+          right: 0
+        svg
+          top: 10px
+          right: $small-vote-icon-size
+
 
 @media #{$medium-only}
   #onair_container
 
     .meta-container
-      text-align: center
+      //text-align: center
       dt
-        display: none
+        //display: none
 
       .separator
         margin: 12px auto

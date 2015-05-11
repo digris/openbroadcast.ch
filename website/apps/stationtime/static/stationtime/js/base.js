@@ -2,16 +2,19 @@
 StationTimeApp = function () {
 
     var self = this;
+    this.debug = false;
     this.container;
     this.api_url;
     this.current_time;
     this.interval = false;
     this.interval_duration = 1000;
-    this.resync_interval_duration = 60000;
+    this.resync_interval_duration = 120000;
 
     this.init = function () {
 
-        debug.debug('StationTimeApp: init');
+        if(self.debug) {
+            debug.debug('StationTimeApp: init');
+        }
 
         self.sync_time();
 
@@ -33,7 +36,7 @@ StationTimeApp = function () {
         if(time != undefined) {
             self.current_time = new Date(time); // '2014-01-01 10:11:55'
             self.display_clock();
-        };
+        }
 
         if(!self.interval) {
             self.interval = setInterval(function() {
@@ -42,7 +45,7 @@ StationTimeApp = function () {
                 self.display_clock();
 
             }, self.interval_duration);
-        };
+        }
 
     };
 
@@ -52,13 +55,13 @@ StationTimeApp = function () {
             self.pad(self.current_time.getHours()),
             self.pad(self.current_time.getMinutes()),
             self.pad(self.current_time.getSeconds())
-        ].join(':')
+        ].join(':');
 
         self.container.html('<a href="#">' + time_string + '</a>');
     };
 
     this.pad = function(n) {
-        return (n < 10) ? ("0" + n) : n;
+        return (n < 10) ? ('0' + n) : n;
     }
 
 };

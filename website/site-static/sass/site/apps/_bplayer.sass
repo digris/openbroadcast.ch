@@ -244,3 +244,26 @@
       a
         color: white
       width: 10%
+
+
+
+
+
+//////////////////////////////////////////////////////
+// responsive overrides
+//////////////////////////////////////////////////////
+@media #{$small-only}
+  #bplayer_container
+    &.playing,
+    &.playing
+      bottom: -72px
+
+    #bplayer_actions_left
+      width: 60px
+      padding-left: 14px
+      a
+        font-size: 24px
+
+    .section.playlist.history.compact
+      top: 7px
+      position: relative
