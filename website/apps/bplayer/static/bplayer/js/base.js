@@ -47,11 +47,12 @@ var BPlayerApp = function () {
             multiShot: false,
             debugMode: self.debug,
             debugFlash: self.debug,
-            useConsole: self.debug
+            //useConsole: self.debug
+            useConsole: false
         };
-        soundManager.debugFlash = self.debug;
-        soundManager.debugMode = self.debug;
-        soundManager.useConsole = self.debug;
+        //soundManager.debugFlash = self.debug;
+        //soundManager.debugMode = self.debug;
+        //soundManager.useConsole = self.debug;
 
         if(self.mode == 'inline' || self.mode == 'popup') {
             self.sm2 = self.init_sm2();
@@ -73,7 +74,8 @@ var BPlayerApp = function () {
             preferFlash: false,
             debugMode: self.debug,
             debugFlash: self.debug,
-            useConsole: self.debug,
+            //useConsole: self.debug,
+            useConsole: false,
             onready: function () {
 
                 self.current_sound = soundManager.createSound({

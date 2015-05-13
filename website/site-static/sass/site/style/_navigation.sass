@@ -1,3 +1,43 @@
-header
+// topbar
+@media #{$medium-up}
+  nav.top-bar
+    text-align: center
 
+  section.top-bar-section
+    display: inline-block
+
+
+@media #{$small-only}
+  .top-bar
+    .toggle-topbar a
+      font-weight: 300
+      text-transform: none
+      color: #000
+      line-height: 53px
+
+    .top-bar-section
+      text-align: center
+
+      ul.account
+        //text-align: right
+        padding: 10px 0
+
+        li > a
+          //background: #ffffff
+          //padding: 3px 10px
+
+      ul.main
+        //text-align: left
+
+
+
+
+    &.expanded
+      background-color: #ffffff !important
+      box-shadow: 2px 2px 3px 1px rgba(51, 51, 51, 0.16)
+      height: auto
+      position: fixed
+      top: 0
+      width: 100%
+      z-index: 99
 

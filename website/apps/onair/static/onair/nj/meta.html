@@ -4,19 +4,16 @@
 
 <div class="show-for-small-only">
     <!-- track related -->
-    <p>
+    <p class="text-center">
         <a target="_blank" data-ct="artist"
            href="{{ base_url }}{{ object.item.artist.absolute_url }}">
-            {{ object.item.artist.name }}
+            {{ object.item.artist.name|shorten(30) }}
         </a>
-
         <br>
-
         <a target="_blank" data-ct="media"
            href="{{ base_url }}{{ object.item.absolute_url }}">
-            {{ object.item.name }}
+            {{ object.item.name|shorten(30) }}
         </a>
-
     </p>
 
 </div>

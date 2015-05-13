@@ -2,7 +2,7 @@
 <html class="no-js{% if user.is_authenticated %} is-authenticated{% endif %}" lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0"/>
 
     <title>{% block title %}{% page_attribute 'page_title' %}{% endblock %}{% block title-page %}{% endblock %}</title>
 
@@ -40,13 +40,16 @@
 
     <script src="{{ STATIC_URL }}js/lib/modernizr.js"></script>
     <script src="{{ STATIC_URL }}js/lib/jquery-2.1.0.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/fd5/foundation.min.js"></script>
 
     <!--<script src="{{ STATIC_URL }}turbolinks/turbolinks.js"></script>-->
     <script src="{{ STATIC_URL }}js/lib/textcomplete-0.3.3/jquery.textcomplete.js"></script>
 
-
+    {% if settings.DEBUG %}
     <script src="{{ STATIC_URL }}bplayer/js/lib/sm2/soundmanager2.js"></script>
-
+    {% else %}
+    <script src="{{ STATIC_URL }}bplayer/js/lib/sm2/soundmanager2-nodebug-jsmin.js"></script>
+    {% endif %}
 
     {% block link %}{% endblock link %}
 
@@ -64,13 +67,11 @@
 {% cms_toolbar %}
 
 <div id="navigation_container">
+
     <nav class="top-bar" data-topbar data-livebg>
 
-
         <ul class="title-area">
-            <!-- Title Area -->
             <li class="name">
-                    <!--<img src="{{ STATIC_URL }}img/base/logo.black.svg">-->
                 <a href="/">
                     <div id="levelbridge_icon" class="logo-icon">
                         <ul>
@@ -88,28 +89,35 @@
                     </div>
                 </a>
             </li>
-            <!--<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>-->
-            <li class="toggle-topbar menu-icon"><a data-no-turbolink href="#"></a></li>
+            <li class="toggle-topbar"><a data-no-turbolink href="#">Menu <i class="fa fa-bars"></i></a></li>
         </ul>
 
+        <!-- start: mobile version -->
+        <section class="top-bar-section center show-for-small-only">
+            <ul class="account">
+                {% include "_layout/_accountbar.html" %}
+            </ul>
+            <ul class="main">
+                {% show_menu 0 100 100 100 "_layout/_navigation.html" %}
+            </ul>
+        </section>
+        <!-- end: mobile version -->
 
-        <section class="top-bar-section center">
+
+        <!-- start: desktop version -->
+        <section class="top-bar-section center show-for-medium-up">
             <ul>
                 {% show_menu 0 100 100 100 "_layout/_navigation.html" %}
             </ul>
         </section>
 
-        <section class="top-bar-section right">
-            <!--
-            <ul>
-                {% include "_layout/_socialbar.html" %}
-            </ul>
-            -->
+        <section class="top-bar-section right show-for-medium-up">
             <ul>
                 {% include "_layout/_accountbar.html" %}
             </ul>
-
         </section>
+        <!-- end: desktop version -->
+
     </nav>
 </div>
 <header>
@@ -138,7 +146,7 @@
 </div>
 
 <!-- dialog container -->
-<div id="reveal_container" class="reveal-modal tiny-fw" data-reveal></div>
+<div id="reveal_container" class="reveal-modal" data-reveal></div>
 
 <!-- ? -->
 <div id="at_content"></div>
@@ -148,8 +156,6 @@
 
 {% compress js %}
 <script src="{{ STATIC_URL }}js/lib/jquery-ui-1.10.4.custom.js"></script>
-<script src="{{ STATIC_URL }}js/lib/fastclick.js"></script>
-<script src="{{ STATIC_URL }}js/lib/fd5/foundation.min.js"></script>
 
 <!-- other libraries -->
 <script src="{{ STATIC_URL }}js/lib/nunjucks-1.1.0/nunjucks.js"></script>
@@ -187,29 +193,14 @@
 <script>
 
 
-    $(document).foundation({
-        reveal: {
-            animation: 'fade',
-            animation_speed: 50
-        },
-        tooltip: {
-            disable_for_touch: true
-        },
-        topbar: {
-            custom_back_text: false,
-            is_hover: false,
-            mobile_show_parent_link: true
-        },
-        reveal : {
-            animation: 'none',
-            animation_speed: 0
-        }
-    });
+
 
 
 
     var nj = new nunjucks.Environment(new nunjucks.WebLoader('{{ STATIC_URL }}'));
     nj = nunjucks_register_filters(nj);
+
+
 
     {% if user.is_authenticated %}
         var current_user = {
@@ -249,7 +240,7 @@
         // AJAX Loader
         /////////////////////////////////////////////
         var ajax_loader = new AJAXLoader();
-        ajax_loader.debug = true;
+        ajax_loader.debug = false;
         ajax_loader.init();
 
 

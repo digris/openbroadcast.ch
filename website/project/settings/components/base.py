@@ -284,6 +284,7 @@ PROJECT_APPS = (
 
 
 SETTINGS_EXPORT = [
+    'DEBUG',
     'API_BASE_URL',
     'STREAM_URL',
     'STATIC_BASE_URL',

@@ -1,8 +1,7 @@
 // positioning
-$bplayer-hight-compact: 44px
-$bplayer-bottom-hidden: -$bplayer-hight-compact
-$bplayer-bottom-compact: 0px
-$bplayer-bottom-expanded: 0px
+$bplayer-bottom-hidden: 10px
+$bplayer-bottom-compact: 10px
+$bplayer-bottom-expanded: 10px
 
 
 
@@ -13,20 +12,14 @@ $bplayer-bottom-expanded: 0px
 
   position: fixed
   width: 100%
-
-  // hidden on load
-  bottom: $bplayer-bottom-hidden
-
-  // visible on load
-  // bottom: $bplayer-bottom-compact
+  bottom: 0
 
   //bottom: -140px
   //bottom: -72px
   //bottom: -122px
 
-
   padding-top: 4px
-  padding-bottom: 0px
+  padding-bottom: 4px
 
   ul.actions
     margin-bottom: 6px
@@ -93,7 +86,7 @@ $bplayer-bottom-expanded: 0px
 
   // hm... ?
   &.ready, &.init
-    bottom: $bplayer-bottom-hidden
+    bottom: -122px
     //display: none
     .playhead .waveform
       height: 0px
@@ -102,11 +95,11 @@ $bplayer-bottom-expanded: 0px
 
   // state dependant styles
   &.paused
-    bottom: $bplayer-bottom-compact
+    bottom: -72px
     +single-transition(bottom 0.2s)
-
   &.playing, &.loading
-    bottom: $bplayer-bottom-compact
+    //bottom: -4px
+    bottom: -72px
     +single-transition(bottom 0.2s)
 
     // hide actions
@@ -269,93 +262,26 @@ $bplayer-bottom-expanded: 0px
 //////////////////////////////////////////////////////
 @media #{$small-only}
   #bplayer_container
-    +clearfix()
-    background: #000
-    height: 60px
-    bottom: 0px !important // always visible on small display
     &.playing,
     &.playing
-      bottom: 0px
-
-    .base
-      width: 100%
-
+      bottom: -72px
 
     .controls-left
-      position: absolute
-      float: none
-      left: 0
-      width: 50px
+      width: 60px
       padding-left: 14px
       a
-        font-size: rem-calc(24)
+        font-size: 24px
 
     .controls-right
-      position: absolute
-      right: 0
-      float: none
-      width: 50px
-      padding-left: 0
+      width: 60px
+      padding-left: 14px
       a
-        font-size: rem-calc(34)
-        line-height: 100%
+        font-size: 24px
 
-    // mid column, holds content from nj/***
     #bplayer_playlist_container
-      position: absolute
-      float: none
-      left: 50px
       .playlist
         .item
-          font-size: rem-calc(13)
-          line-height: 140%
-          padding: 1px 0 0 10px
+          font-size: 8px
           &.history.compact
             top: 7px
             position: relative
-
-
-// visible playlist
-@media #{$small-only}
-  #bplayer_container.show-history
-    // full height on mobile devives
-    height: 100vh
-    #bplayer_playlist_container
-      width: 100%
-      max-height: 100vh
-      left: 0
-      .playlist
-        padding-top: 84px
-        width: 100%
-        .col-action
-          width: 10%
-          a
-            font-size: rem-calc(20)
-        .col-airtime
-          width: 18%
-        .col-name
-          width: 70%
-
-
-        .item
-          font-size: rem-calc(13)
-          line-height: 140%
-          padding: 1px 0 0 10px
-          &.history.compact
-            top: 7px
-            position: relative
-
-
-    // TODO: this is a hack! improve structure & handling
-    .actions-expanded
-      right: 43px
-      bottom: 0px
-
-      ul
-        position: fixed
-        bottom: 10px
-        margin: 0
-
-      a
-        font-size: rem-calc(34)
-        line-height: 100%

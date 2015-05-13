@@ -2,7 +2,7 @@
 {% for child in children %}
 <li class="not-click {% if child.children %} has-dropdown{% endif %}{% if child.selected %} active{% endif %}{% if child.ancestor %} ancestor{% endif %}">
 	<a
-        data-ajax-load
+        {% if not child.children %}data-ajax-load{% endif %}
         href="{{ child.attr.redirect_url|default:child.get_absolute_url }}">{{ child.get_menu_title }}</a>
 	{% if child.children %}
     <ul class="dropdown">

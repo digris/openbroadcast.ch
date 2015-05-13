@@ -97,6 +97,8 @@ body
 // switches station-logo & history/on-air container
 #onair_container
 
+  box-shadow: 2px 2px 3px 1px rgba(51, 51, 51, 0.16)
+
   .switch-container
     // dynamic height via 'data-width-to-height'
     position: relative
@@ -339,9 +341,6 @@ body
             background-size: 250px
             background-position: center
 
-            //border-radius: 60px
-            //background: rgba(255, 255, 255, 0.2)
-            //+single-transition(background, 0.4s)
             span
               +xy-center
               +single-transition(color, 0.4s)
@@ -362,6 +361,18 @@ body
               span a
                 +single-transition(color, 0.5s)
                 color: #fff
+
+
+
+            @media #{$small-only}
+              width: 160px
+              height: 160px
+              background-size: 150px
+              &.hover
+                background-size: 260px
+              span
+                font-size: 120%
+                line-height: 211%%
 
 
 
@@ -576,10 +587,16 @@ $vote-icon-size: 33px
 //////////////////////////////////////////////////////
 // responsive overrides
 //////////////////////////////////////////////////////
+@media #{$medium-only}
+  #onair_container
+    .meta-container
+      .separator
+        margin: 12px auto
+
+
 @media #{$small-only}
   #onair_container
     padding: 24px 0
-
 
     .logo-container .inner .header
       font-size: 18px
@@ -588,6 +605,8 @@ $vote-icon-size: 33px
       .item
         width: 20px
     .meta-container
+      //background: red
+      min-height: 48px
       text-align: center
       margin-left: 0
       dt
@@ -660,15 +679,3 @@ $vote-icon-size: 33px
         svg
           top: 10px
           right: $small-vote-icon-size
-
-
-@media #{$medium-only}
-  #onair_container
-
-    .meta-container
-      //text-align: center
-      dt
-        //display: none
-
-      .separator
-        margin: 12px auto

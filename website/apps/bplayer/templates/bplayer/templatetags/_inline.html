@@ -14,7 +14,7 @@
     <div class="row base">
         <div class="small-12 columns">
 
-            <div id="bplayer_actions_left">
+            <div class="controls-left">
                 <ul class="actions inline-list">
                     <li style="margin-left: 10px;"><a data-bplayer-controls="pause" href="#"><!--<i class="fa fa-pause"></i>-->||</a></li>
                     <li style="margin-left: 10px;"><a data-bplayer-controls="resume" href="#"><i class="fa fa-play"></i></a></li>
@@ -23,9 +23,9 @@
 
             <div id="bplayer_playlist_container"><!-- dynamic content --></div>
 
-            <div id="bplayer_actions_right">
+            <div class="controls-right">
                 <ul class="actions inline-list">
-                    <li class="right_"><a data-bplayer-display="toggle-history" href="#"><i class="fa fa-list"></i></a></li>
+                    <li class="right_"><a data-bplayer-display="toggle-history" href="#"><i class="fa fa-angle-double-up"></i></a></li>
                 </ul>
             </div>
 
@@ -33,33 +33,17 @@
     </div>
 
 
+    <!-- close icon, show in expanded mode only -->
     <div class="actions-expanded hide">
         <ul class="no-bullet">
-            <li><a data-bplayer-display="toggle-history" href="#"><i class="fa fa-fw fa-times"></i></a></li>
+            <li><a data-bplayer-display="toggle-history" href="#">
+                <i class="fa fa-fw fa-angle-double-down"></i></a>
+            </li>
         </ul>
     </div>
 
 
-    <!--
-    <div class="row base">
-        <div class="small-1 columns">
-            <ul class="actions inline-list">
-                <li style="margin-left: 10px;"><a data-bplayer-controls="pause" href="#"><i class="fa fa-pause"></i></a></li>
-                <li style="margin-left: 10px;"><a data-bplayer-controls="resume" href="#"><i class="fa fa-play"></i></a></li>
-            </ul>
-        </div>
-        <div class="small-10 columns">
-            <div id="bplayer_playlist_container"></div>
-        </div>
-        <div class="small-1 columns">
-            <ul class="actions inline-list">
-                <li class="right"><a data-bplayer-display="toggle-history" href="#"><i class="fa fa-list"></i></a></li>
-            </ul>
-        </div>
-    </div>
-    -->
-
-    {% comment %}{% endcomment %}
+    {% comment %}
     <div class="row wave">
         <div class="small-12 columns">
             <div id="levelbridge">
@@ -82,5 +66,6 @@
 
         </div>
     </div>
+    {% endcomment %}
 
 </div>

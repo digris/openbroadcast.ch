@@ -15,7 +15,7 @@ output_style = :expanded
 # relative_assets = true
 
 # To disable debugging comments that display the original location of your selectors. Uncomment:
-line_comments = true
+line_comments = false
 
 #sass_options = {:sourcemap => true, :debug_info => true} 
 

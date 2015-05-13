@@ -12,6 +12,9 @@ var SiteUI = function () {
     this.colors = [
         '#cacaca'
     ];
+    this.colors = [
+        '#dddddd'
+    ];
     this.current_color = 0;
 
     this.remote_window = false;
@@ -74,6 +77,7 @@ var SiteUI = function () {
 
         $(document).on('ajax-loader', function(e, action) {
             if(action == 'loaded') {
+                self.init_fd5();
                 self.set_color();
             }
         });
@@ -123,19 +127,44 @@ var SiteUI = function () {
         self.set_color();
         self.bindings();
 
+        self.init_fd5();
+
     };
+
+
+
+    this.init_fd5 = function() {
+        var fd5_settings = {
+            reveal: {
+                animation: 'none',
+                animation_speed: 0
+            },
+            tooltip: {
+                disable_for_touch: true
+            },
+            topbar: {
+                custom_back_text: false,
+                is_hover: true,
+                mobile_show_parent_link: true,
+                scrolltop : false
+            }
+        };
+        $(document).foundation(fd5_settings);
+    }
 
 };
 
 
 
-
+/*
 var fd5_settings = {
     topbar: {
-        is_hover: true
+        custom_back_text: false,
+        is_hover: false,
+        mobile_show_parent_link: true
     },
     dropdown: {
-        is_hover: true
+        is_hover: false
     },
     tooltips: {
         tooltip_class: '.tooltip',
@@ -143,6 +172,10 @@ var fd5_settings = {
         disable_for_touch: false
     }
 };
+
+$(document).foundation(fd5_settings);
+*/
+
 
 var nj;
 
