@@ -10308,6 +10308,21 @@ x:-o-prefocus {
   margin: 0;
 }
 
+@media only screen and (max-width: 40em) {
+  .textplugin_holder {
+    border-top: none !important;
+    padding: 0 20px;
+    margin: 16px auto;
+    font-weight: 300;
+  }
+  .textplugin_holder h1, .textplugin_holder h2, .textplugin_holder h3 {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  .textplugin_holder p {
+    text-indent: 0px;
+  }
+}
 .listing .item {
   margin: 0 0 10px 0;
 }
@@ -10452,10 +10467,10 @@ body.loading div[data-action="play"] span.loading {
 #onair_container .logo-container .inner > div.wrapper .action span > a {
   color: white;
 }
-#onair_container .logo-container .inner > div.wrapper .action:hover {
+#onair_container .logo-container .inner > div.wrapper:hover {
   background-image: url("/static/onair/img/bg.action.listen.white.png");
 }
-#onair_container .logo-container .inner > div.wrapper .action:hover span > a {
+#onair_container .logo-container .inner > div.wrapper:hover span > a {
   color: black;
 }
 #onair_container .logo-container .inner .header {
@@ -10633,12 +10648,12 @@ body.loading div[data-action="play"] span.loading {
 }
 @media only screen and (max-width: 40em) {
   #onair_container .info-container .item.info .container > div.wrapper .action {
-    width: 160px;
-    height: 160px;
-    background-size: 150px;
+    width: 170px;
+    height: 170px;
+    background-size: 160px;
   }
   #onair_container .info-container .item.info .container > div.wrapper .action.hover {
-    background-size: 260px;
+    background-size: 170px;
   }
   #onair_container .info-container .item.info .container > div.wrapper .action span {
     font-size: 120%;
@@ -10869,7 +10884,25 @@ body.loading div[data-action="play"] span.loading {
     padding: 24px 0;
   }
   #onair_container .logo-container .inner .header {
-    font-size: 18px;
+    font-size: 0.93333rem;
+  }
+  #onair_container .logo-container .inner .footer {
+    font-size: 0.93333rem;
+  }
+  #onair_container .logo-container .inner .footer .text {
+    padding-right: 2px;
+    font-size: 0.73333rem;
+  }
+  #onair_container .logo-container .inner .footer img.logo {
+    width: 40px;
+  }
+  #onair_container .logo-container .inner .action {
+    font-size: 0.73333rem;
+  }
+  #onair_container .logo-container .inner .wrapper:hover {
+    background-size: 170px;
+    width: 170px;
+    height: 170px;
   }
   #onair_container .info-container .item {
     width: 20px;
@@ -11251,6 +11284,7 @@ body.loading div[data-action="play"] span.loading {
     bottom: 0px;
   }
   #bplayer_container .base {
+    background: transparent;
     width: 100%;
   }
   #bplayer_container .controls-left {
@@ -12350,6 +12384,9 @@ dl.horizontal dd:after {
   }
 }
 @media only screen and (max-width: 40em) {
+  .top-bar .logo-text {
+    padding-left: 40px;
+  }
   .top-bar .toggle-topbar a {
     font-weight: 300;
     text-transform: none;

@@ -15,6 +15,7 @@ var BPlayerApp = function () {
     this.sm2;
     this.current_sound;
     this.stream_url;
+    this.base_url;
     //this.stream_url = 'http://stream.openbroadcast.ch:80/openbroadcast';
     //this.stream_url = 'http://pypo:8000/master.mp3';
     this.r;
@@ -179,6 +180,8 @@ var BPlayerApp = function () {
         /*****************************************************************************
          * generic actions
          *****************************************************************************/
+
+        /* not in use
         $('body').on('click', 'a[data-bplayer-action]', function (e) {
             e.preventDefault();
 
@@ -211,7 +214,9 @@ var BPlayerApp = function () {
 
             });
         });
+        */
 
+        /* not in use
         $('body').on('click', '#bplayer_ios', function (e) {
             e.preventDefault();
             var sound = {
@@ -221,17 +226,8 @@ var BPlayerApp = function () {
             self.current_sound.play();
 
         });
+        */
 
-        $('__body__').on('click', '[data-action="listen"]', function (e) {
-            e.preventDefault();
-
-            var sound = {
-                url: self.stream_url
-            }
-            self.current_sound.load(sound);
-            self.current_sound.play();
-
-        });
 
         /*****************************************************************************
          * playlist actions
@@ -240,14 +236,14 @@ var BPlayerApp = function () {
             e.preventDefault();
             var index = $(this).index();
             self.controls({action: 'play', index: index});
-
         });
 
-        // player controls
+        /*****************************************************************************
+         * player controls. triggered by various apps.
+         *****************************************************************************/
         $('body').on('click', 'a[data-bplayer-controls]', function (e) {
             e.preventDefault();
             var action = $(this).data('bplayer-controls');
-
             switch(action) {
                 case 'listen':
                     var sound = {
@@ -259,7 +255,6 @@ var BPlayerApp = function () {
                 default:
                     self.controls({action: action});
             }
-
         });
 
         // player display
@@ -384,7 +379,6 @@ var BPlayerApp = function () {
             }
         }
 
-
         if (control.action == 'next') {
             var total = self.playlist.length;
             if (total > (self.current_index + 1)) {
@@ -406,7 +400,6 @@ var BPlayerApp = function () {
             }
         }
 
-
         if (control.action == 'stop') {
             self.current_sound.stop();
         }
@@ -425,8 +418,20 @@ var BPlayerApp = function () {
 
     this.play_file = function (data) {
 
-        //var url = data.stream.uri;
-        var url = data.file;
+
+        console.log('play_file', data)
+
+        var url;
+        if(data.on_air) {
+            var url = self.stream_url;
+        } else {
+            var url = data.item.stream.uri;
+        }
+
+
+        url = self.base_url + url;
+
+
 
         // debug
         //url = 'http://media.zhdk.sonicsquirrel.net/Soisloscerdos/Soisloscerdos/SLC08/Angel_Garcia-Happy_Jambo.mp3';

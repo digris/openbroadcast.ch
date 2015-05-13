@@ -273,11 +273,21 @@ $bplayer-bottom-expanded: 0px
     background: #000
     height: 60px
     bottom: 0px !important // always visible on small display
+
+    &.init,
+    &.ready
+      .controls-left,
+      .controls-right
+
+        a
+          //color: #000
+
     &.playing,
     &.playing
       bottom: 0px
 
     .base
+      background: transparent
       width: 100%
 
 

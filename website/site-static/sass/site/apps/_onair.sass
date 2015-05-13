@@ -178,7 +178,6 @@ body
       > div.wrapper
         +xy-center
         .action
-          //background-image: url('/static/onair/img/bg.action.listen.white.png')
           cursor: pointer
           margin: auto
           width: 260px
@@ -194,11 +193,10 @@ body
             > a
               color: #fff
 
-        .action:hover
+        &:hover
           background-image: url('/static/onair/img/bg.action.listen.white.png')
           span > a
             color: #000
-
 
 
 
@@ -363,13 +361,13 @@ body
                 color: #fff
 
 
-
+            // sorry, this is used twice
             @media #{$small-only}
-              width: 160px
-              height: 160px
-              background-size: 150px
+              width: 170px
+              height: 170px
+              background-size: 160px
               &.hover
-                background-size: 260px
+                background-size: 170px
               span
                 font-size: 120%
                 line-height: 211%%
@@ -599,7 +597,24 @@ $vote-icon-size: 33px
     padding: 24px 0
 
     .logo-container .inner .header
-      font-size: 18px
+      font-size: rem-calc(14)
+
+    .logo-container .inner .footer
+      font-size: rem-calc(14)
+      .text
+        padding-right: 2px
+        font-size: rem-calc(11)
+      img.logo
+        width: 40px
+
+    .logo-container .inner .action
+      font-size: rem-calc(11)
+
+    .logo-container .inner .wrapper:hover
+      background-size: 170px
+      width: 170px
+      height: 170px
+
 
     .info-container
       .item
