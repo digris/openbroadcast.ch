@@ -235,6 +235,10 @@ var BPlayerApp = function () {
         $('body').on('click', '#bplayer_playlist_container .item', function (e) {
             e.preventDefault();
             var index = $(this).index() -1;
+
+            // TODO: ugly hack!!
+            onair.handle_pagination(index);
+
             self.controls({action: 'play', index: index});
         });
 
@@ -308,9 +312,8 @@ var BPlayerApp = function () {
                 uuid: uuid
             }
 
-            self.controls(control);
+            //self.controls(control);
 
-            // self.player.base.controls(args);
         });
 
 
@@ -335,9 +338,9 @@ var BPlayerApp = function () {
                 action: 'seek',
                 position: position,
                 uuid: uuid
-            }
+            };
 
-            self.controls(control);
+            //self.controls(control);
 
         });
 

@@ -28,7 +28,7 @@ $bplayer-bottom-expanded: 0px
   padding-top: 4px
   padding-bottom: 0px
 
-  ul.actions
+  .actions
     margin-bottom: 6px
     padding-left: 12px
     padding-right: 12px
@@ -40,6 +40,7 @@ $bplayer-bottom-expanded: 0px
 
     .totals
       color: #fff
+
 
 
   .information ul
@@ -110,7 +111,7 @@ $bplayer-bottom-expanded: 0px
     +single-transition(bottom 0.2s)
 
     // hide actions
-    ul.actions
+    ul.actions,
       [data-bplayer-controls="resume"]
         display: none
       [data-bplayer-controls="pause"]
@@ -135,6 +136,23 @@ $bplayer-bottom-expanded: 0px
   .controls-right
     width: 35px
     float: right
+
+
+////////////////////////////////////////////////////////////////
+// controls for playlist items
+////////////////////////////////////////////////////////////////
+#bplayer_container
+  .playlist
+    .item
+      .controls .pause
+        display: none
+    .item.playing
+      .controls .play
+        display: none
+      .controls .pause
+        display: inline
+
+
 
 // history mode switch
 #bplayer_container

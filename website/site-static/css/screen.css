@@ -11110,18 +11110,18 @@ body.loading #onair_container .item.playing .container .controls span.loading {
   padding-top: 4px;
   padding-bottom: 0px;
 }
-#bplayer_container ul.actions {
+#bplayer_container .actions {
   margin-bottom: 6px;
   padding-left: 12px;
   padding-right: 12px;
 }
-#bplayer_container ul.actions [data-bplayer-controls="pause"] {
+#bplayer_container .actions [data-bplayer-controls="pause"] {
   display: none;
 }
-#bplayer_container ul.actions a {
+#bplayer_container .actions a {
   color: white;
 }
-#bplayer_container ul.actions .totals {
+#bplayer_container .actions .totals {
   color: white;
 }
 #bplayer_container .information ul {
@@ -11262,6 +11262,16 @@ body.loading #onair_container .item.playing .container .controls span.loading {
 #bplayer_container .controls-right {
   width: 35px;
   float: right;
+}
+
+#bplayer_container .playlist .item .controls .pause {
+  display: none;
+}
+#bplayer_container .playlist .item.playing .controls .play {
+  display: none;
+}
+#bplayer_container .playlist .item.playing .controls .pause {
+  display: inline;
 }
 
 #bplayer_container .base {
