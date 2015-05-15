@@ -15,6 +15,8 @@
       background: #000
       color: #ffffff
 
+
+
 // hackish station-time switch
 #onair_container.history
   #station_time
@@ -57,49 +59,45 @@
   transform-origin: 48.2% 48.2%
 
 // states for listen/play/pause etc buttons
+div[data-action="listen"]
+  > span
+    display: none
 
-.__disabled__
-  div[data-action="listen"]
-    > span
-      display: none
+div[data-action="play"]
+  > span
+    display: none
 
-  div[data-action="play"]
-    > span
-      display: none
+body
 
-  body
+  // listen-related (live stream)
+  &.ready,
+  &.paused
+    div[data-action="listen"] span.listen
+      display: block
+  &.playing
+    div[data-action="listen"] span.pause
+      display: block
+  &.loading
+    div[data-action="listen"] span.loading
+      display: block
 
-    &.ready,
-    &.paused
-      div[data-action="listen"] span.listen
-        display: block
-    &.playing
-      div[data-action="listen"] span.pause
-        display: block
-    &.loading
-      div[data-action="listen"] span.loading
-        display: block
-
-    // play-related (on-demand)
-    &.ready,
-    &.paused
-      div[data-action="play"] span.play
-        display: block
-    &.playing
-      div[data-action="play"] span.play
-        display: block
-    &.loading
-      div[data-action="play"] span.loading
-        display: block
+  // play-related (on-demand)
+  &.ready,
+  &.paused
+    div[data-action="play"] span.play
+      display: block
+  &.playing
+    div[data-action="play"] span.play
+      display: block
+  &.loading
+    div[data-action="play"] span.loading
+      display: block
 
 
-///////////////////////////////////////////////////
-// globally switches station-logo
-// and history/on-air container
-///////////////////////////////////////////////////
+// switches station-logo & history/on-air container
 #onair_container
 
-  box-shadow: 0px 2px 2px 1px rgba(51, 51, 51, 0.16)
+  box-shadow: 2px 2px 3px 1px rgba(51, 51, 51, 0.16)
 
   .switch-container
     // dynamic height via 'data-width-to-height'
@@ -114,7 +112,7 @@
       width: 100%
       height: 100%
 
-  // show/hide element depending on state
+
   &.init,
   &.fallback
     .show-while-fallback
@@ -141,7 +139,35 @@
   padding: 48px 0
   position: relative
 
+  // state switches
+  &.onair, &.history
+
+    //
+      .fallback-item
+        display: none
+
+  &.fallback
+    //
+      .info-container
+        .items > .item
+          &:not(.fallback-item)
+            display: none
+            opacity: 0.0
+          &.previous, &.next
+            display: none
+          &.fallback-item
+            opacity: 1.0
+      .meta-container
+        opacity: 0.0
+
+
+  &.history
+    .action
+      //display: none !important
+
   // 'station-logo' - visible on load and when playing 'fallback'
+
+
   .logo-container
     background: #000
     position: relative
@@ -149,6 +175,31 @@
     height: 100%
 
     .inner
+      > div.wrapper
+        +xy-center
+        .action
+          cursor: pointer
+          margin: auto
+          width: 260px
+          height: 260px
+          background-size: 250px
+          background-position: center
+          span
+            +xy-center
+            +single-transition(color, 0.4s)
+            font-size: 200%
+            line-height: 411%%
+            font-weight: 300
+            > a
+              color: #fff
+
+        &:hover
+          background-image: url('/static/onair/img/bg.action.listen.white.png')
+          span > a
+            color: #000
+
+
+
       // open broadcast radio text
       .header
         position: absolute
@@ -207,16 +258,12 @@
             display: block
 
       &.next
-        z-index: 5
         &.next-1
           -webkit-transform: rotateY(0deg) translateX(1850px) scale(1.3)
-          -moz-transform: rotateY(0deg) translateX(1850px) scale(1.3)
         &.next-2
-          -webkit-transform: rotateY(0deg) translateX(1850px) scale(1.3)
-          //display: none
+          display: none
         &.next-x
-          -webkit-transform: rotateY(0deg) translateX(1850px) scale(1.3)
-          //display: none
+          display: none
 
       &.previous
 
@@ -236,23 +283,26 @@
 
         &.previous-1
           -webkit-transform: rotateY(0deg) translateX(-140px) scale(0.9)
-          -moz-transform: rotateY(0deg) translateX(-140px) scale(0.9)
           +opacity(0.7)
           z-index: 3
         &.previous-2
           -webkit-transform: rotateY(0deg) translateX(-280px) scale(0.7)
-          -moz-transform: rotateY(0deg) translateX(-280px) scale(0.7)
           +opacity(0.5)
           z-index: 2
         &.previous-3
           -webkit-transform: rotateY(0deg) translateX(-400px) scale(0.5)
-          -moz-transform: rotateY(0deg) translateX(-400px) scale(0.5)
           +opacity(0.2)
           display: block !important
           z-index: 1
         &.previous-x
           +opacity(0.0)
           display: none
+
+
+      // TODO: just temporary
+      &.playing
+        border: 4px solid orange
+
 
 
     .item.info
@@ -281,7 +331,56 @@
         background-size: 100% !important
 
         // action wrapper - play/pause/listen
-        // moved to general section
+        > div.wrapper
+          +xy-center
+          .action
+            // action specific background
+            &.listen
+              background-image: url('/static/onair/img/bg.action.listen.png')
+            &.play
+              background-image: url('/static/onair/img/bg.action.play.png')
+
+            cursor: pointer
+            margin: auto
+            width: 260px
+            height: 260px
+            background-size: 250px
+            background-position: center
+
+            span
+              +xy-center
+              +single-transition(color, 0.4s)
+              font-size: 200%
+              line-height: 411%%
+              font-weight: 300
+              > a
+                color: #fff
+
+
+            +single-transition(background, 0.05s)
+            &.hover
+              background-size: 260px
+              //background: rgba(0, 0, 0, 1.0)
+              +single-transition(background, 0.05s)
+
+
+              span a
+                +single-transition(color, 0.5s)
+                color: #fff
+
+
+            // sorry, this is used twice
+            @media #{$small-only}
+              width: 170px
+              height: 170px
+              background-size: 160px
+              &.hover
+                background-size: 170px
+              span
+                font-size: 120%
+                line-height: 211%%
+
+
 
         // swapable container - artist/label/etc
         > div.details
@@ -340,234 +439,7 @@
 
 
 
-///////////////////////////////////////////////////
-// "controls" - play/pause/etc.
-///////////////////////////////////////////////////
-#onair_container
 
-  // global structure
-  .logo-container,
-  .container
-
-    background-color: orangered
-
-    .wrapper
-      +xy-center
-
-      .controls
-        cursor: pointer
-        margin: auto
-        width: 260px
-        height: 260px
-        background-size: 250px
-        background-position: center
-        +single-transition(background, 0.05s)
-
-        span
-          +xy-center
-          +single-transition(color, 0.4s)
-          background-position: 50% 50%
-          height: 200px
-          width: 200px
-
-          > a
-            color: #fff
-            font-size: 30px
-            line-height: 195px
-            font-weight: 300
-            display: block
-            width: 100%
-            height: 100%
-
-          &.listen
-            background-image: url('/static/onair/img/bg.action.listen.png')
-          &.play
-            background-image: url('/static/onair/img/bg.action.play.png')
-
-        &.hover
-          background-size: 260px
-          +single-transition(background, 0.05s)
-          span a
-            +single-transition(color, 0.5s)
-            color: #fff
-
-
-      .controls
-        @media #{$small-only}
-          width: 170px
-          height: 170px
-          background-size: 160px
-          &.hover
-            background-size: 170px
-          span
-            font-size: 120%
-            line-height: 211%
-
-  // 'button' backgrounds
-  .logo-container
-    .controls span
-      &.listen,
-      &.loading
-        background-image: url('/static/onair/img/bg.action.listen.png')
-    .controls.hover span
-      &.listen,
-      &.loading
-        background-image: url('/static/onair/img/bg.action.listen.white.png')
-      a
-        color: #000 !important
-
-  .item.onair
-    .controls span
-      &.listen,
-      &.loading
-        background-image: url('/static/onair/img/bg.action.listen.png')
-    .controls.hover span
-      &.listen,
-      &.loading,
-      &.pause
-        background-image: url('/static/onair/img/bg.action.listen.white.png')
-      a
-        color: #000 !important
-
-  .item.history
-    .controls span
-      &.play,
-      &.loading
-        background-image: url('/static/onair/img/bg.action.play.png')
-    .controls.hover span
-      &.play,
-      &.loading,
-      &.pause
-        background-image: url('/static/onair/img/bg.action.play.white.png')
-      a
-        color: #000 !important
-
-
-// controls in fallback panel
-#onair_container
-  .logo-container .controls
-    span.pause
-      display: none
-    span.loading
-      display: none
-
-body.playing #onair_container
-  .logo-container .controls
-    span.listen
-      display: none
-    span.pause
-      display: block
-
-body.loading #onair_container
-  .logo-container .controls
-    span.listen
-      display: none
-    span.pause
-      display: none
-    span.loading
-      display: block
-
-#onair_container
-  // only show controls if item has "focus"
-  .item .container .controls
-    +opacity(0.0)
-    +single-transition(opacity, 0.5s)
-    span
-      display: none
-    span.play
-      display: block
-
-  .item
-    &.current .container .controls
-      +opacity(1.0)
-
-    // on-air - has 'listen' instead of 'play'
-    &.onair .container .controls
-      span.play
-        display: none !important
-      span.listen
-        display: block
-
-    // is playing - so can only be 'paused'
-    // problem: playing flag stays even if the actual player is paused...
-    &.playing .container .controls
-      span.play
-        display: none
-      span.listen
-        display: none
-      span.pause
-        display: block
-
-// kind of ugly overrides for 'paused' state
-body.paused #onair_container
-  .item
-    &.onair .container .controls
-      span.listen
-        display: block
-      span.pause
-        display: none
-
-    &.playing .container .controls
-      span.play
-        display: block
-      span.pause
-        display: none
-
-// kind of ugly overrides for 'loading' state
-body.loading #onair_container
-  .item
-    &.playing .container .controls
-      span.listen
-        display: none !important
-      span.play
-        display: none !important
-      span.pause
-        display: none !important
-      span.loading
-        display: block !important
-
-
-
-
-
-
-///////////////////////////////////////////////////
-// media controls - progress/seek etc
-///////////////////////////////////////////////////
-#onair_container
-  .item
-    overflow: hidden
-    .progress-container
-      bottom: -20px
-      position: absolute
-      width: 100%
-      //height: 50px
-      padding: 0 10px
-      +single-transition(bottom, 0.1s)
-
-      .progress
-        cursor: pointer
-        height: 16px
-        padding: 0
-        margin: 0
-        //border: 1px solid rgba(0, 0, 0, 0.40)
-        border: none
-        background-color: rgba(255, 255, 255, 0.41)
-      .meter
-        background-color: #ffffff
-
-    &.history.current.playing
-      .progress-container
-        bottom: 10px
-
-
-
-
-
-///////////////////////////////////////////////////
-// meta display [right column]
-///////////////////////////////////////////////////
-#onair_container
 
   .meta-container
 

@@ -36,7 +36,9 @@ urlpatterns = solid_i18n_patterns('',
     url(r'^alogin/', include('alogin.urls')),
     url(r'^sa/', include('social_auth.urls')),
     url(r'^feedback/', include('backfeed.urls')),
+    url(r'^feedback/', include('backfeed.urls')),
     url(r'^stationtime/', include('stationtime.urls')),
+    url(r'^remotelink/', include('remotelink.urls')),
 
 
     # api

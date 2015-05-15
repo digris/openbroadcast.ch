@@ -37,8 +37,8 @@ var OnAirApp = function () {
 
         if(self.use_history) {
             setTimeout(function () {
-                self.load_history(4);
-            }, 5000);
+                //self.load_history(3);
+            }, 2000);
         }
 
         pushy_client.subscribe('arating_vote', function(vote){
@@ -137,12 +137,21 @@ var OnAirApp = function () {
             }, 400)
         });
 
+        // pagination arrows
         self.prevnext_container.on('click', 'a', function (e) {
             e.preventDefault();
             if (!$(this).parent().hasClass('disabled')) {
                 self.handle_prevnext($(this).data('direction'));
             }
         });
+
+        // explicit pagination/index jump
+        self.container.on('click', '.item.history:not(".current")', function(e){
+            e.preventDefault();
+            var index = $(this).data('index');
+            self.handle_pagination(index);
+        });
+
 
         // handle votes
         self.rating_container.on('click', 'a', function (e) {
@@ -156,12 +165,7 @@ var OnAirApp = function () {
         // TODO: hackish implementation here, should be done more generic
         self.container.on('click', '#back_on_air a', function(e){
             e.preventDefault();
-            for (i=0; i < Math.abs(self.timeline_offset); i++) {
-                setTimeout(function(){
-                    self.timeline_offset++;
-                    self.handle_timeline();
-                }, (200 * i));
-            }
+            self.handle_pagination(0)
         });
 
         // TODO: hakish implementation - show logo on station-time hover
@@ -176,6 +180,48 @@ var OnAirApp = function () {
                     $('.show-while-fallback', self.container).css('display', 'none');
                 }, 500);
         });
+
+
+        /****************************************************************************
+         * playback controls, forwarded to bplayer
+         ****************************************************************************/
+        $('body').on('click', 'a[data-onair-controls]', function (e) {
+
+
+            e.preventDefault();
+            var action = $(this).data('onair-controls');
+
+            console.debug(action + ' action through data-onair-controls')
+
+            /*
+             * actions are forwarded to the player app including the respective index.
+             * the player 'decides' itself if we have a stream or on-demand situation.
+             */
+            switch(action) {
+                case 'play':
+
+                    // TODO: implement a way to get items index - hard-coded to 0 for the moment
+                    var index = 0;
+
+                    // prototype implementation. will fail if no 'real' item in place
+                    var index = $(this).parents('.item').data('index');
+
+                    self.bplayer.controls({action: action, index: index});
+
+                    //var sound = {
+                    //    url: self.stream_url
+                    //}
+                    //self.current_sound.load(sound);
+                    //self.current_sound.play();
+                    break;
+                default:
+                    self.bplayer.controls({action: action});
+            }
+
+        });
+
+
+
 
 
     };
@@ -206,13 +252,13 @@ var OnAirApp = function () {
         // first load emission data
         $.get(playing.emission, function (data) {
             if(self.debug) {
-                console.log('emission:', data);
+                //console.log('emission:', data);
             }
             obj.emission = data;
             // then 'item' data
             $.get(playing.item + '?includes=label', function (data) {
                 if(self.debug) {
-                    console.log('item:', data);
+                    //console.log('item:', data);
                 }
                 obj.item = data;
 
@@ -252,7 +298,7 @@ var OnAirApp = function () {
 
     /**
      * completes dataset via API.
-     * if resource data in json is a string (url) it fetches these data and
+     * if resource data in json is a string (url) it fetches the data and
      * replaces it with the returned object
      */
     this.complete_data = function () {
@@ -266,20 +312,19 @@ var OnAirApp = function () {
             if (typeof item.emission == 'string') {
                 $.get(item.emission, function (data) {
                     self.local_data[i].emission = data;
-                    //self.update_data();
                 });
             }
 
             if (typeof item.item == 'string') {
                 $.get(item.item + '?includes=label', function (data) {
                     self.local_data[i].item = data;
-                    //self.update_data();
                 });
             }
 
         });
 
         // TODO: implement some sort of queing here
+        // for the moment we just assume that everything is ready after 2 seconds...
         setTimeout(function () {
             if(self.debug) {
                 console.log(self.local_data);
@@ -303,6 +348,10 @@ var OnAirApp = function () {
 
             var dom_id = item.emission.uuid + '-' + item.item.uuid;
 
+
+            // index is reversed
+            var index = (self.local_data.length - 1) - i;
+
             // compose classes
             var classes = '';
             if (item.on_air) {
@@ -321,6 +370,7 @@ var OnAirApp = function () {
                 try {
                     var html = $(nj.render('onair/nj/item.html', {
                         dom_id: dom_id,
+                        index: index,
                         debug: self.debug,
                         object: item,
                         extra_classes: classes,
@@ -340,6 +390,9 @@ var OnAirApp = function () {
                 item.el = $('#' + dom_id);
 
             } else {
+
+                item.el.data('index', index);
+
                 //item.el.fadeOut(5000)
             }
         });
@@ -347,9 +400,9 @@ var OnAirApp = function () {
         // handle own timeline
         setTimeout(function () {
             self.handle_timeline();
-        }, 5)
+        }, 5);
 
-        // handle pplayer history display
+        // map on-air history to player app
         self.bplayer.set_playlist(self.local_data);
 
 
@@ -494,6 +547,11 @@ var OnAirApp = function () {
             $('.next', self.prevnext_container).addClass('disabled');
         }
 
+
+
+        // TODO: hack!!
+        self.bplayer.mark_by_uuid();
+
     };
 
     /**
@@ -515,6 +573,35 @@ var OnAirApp = function () {
         self.handle_timeline();
 
     };
+
+    /**
+     * handles pagination to given position
+     */
+    this.handle_pagination = function (offset) {
+
+        if(self.debug) {
+            console.debug('OnAirApp - handle_pagination: ' + offset);
+        }
+
+
+        /*
+        for (i=0; i < Math.abs(self.timeline_offset); i++) {
+            setTimeout(function(){
+                self.timeline_offset++;
+                self.handle_timeline();
+            }, (200 * i));
+        }
+        */
+
+
+        // offset is negative in 'history' case
+        self.timeline_offset = offset * -1;
+
+        self.handle_timeline();
+
+    };
+
+
 
     /**
      * handles votes

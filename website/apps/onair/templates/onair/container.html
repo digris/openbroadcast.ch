@@ -16,7 +16,7 @@
 
     <div class="row">
 
-        <div class="small-8 small-centered medium-4 medium-uncentered medium-push-4 large-4 large-push-4 columns text-center">
+        <div class="small-8 small-centered medium-4 medium-uncentered medium-push-4 large-4 large-push-4 columns text-center" style="z-index: 2;">
 
 
             <div class="switch-container" data-width-to-height>
@@ -25,7 +25,7 @@
                     <!-- station playlist-container -->
                     <div class="info-container">
                         <div class="items">
-                            {# include "_ptype/fallback_item.html" #}
+                            <!-- dynamic content -->
                         </div>
                     </div>
                     <!-- station playlist-container -->
@@ -37,17 +37,17 @@
                     <div class="logo-container">
                         <div class="inner">
 
-                            <!---->
+                            <!-- action wrapper - play/pause/listen -->
                             <div class="wrapper">
 
-                                <div data-action="listen" class="action hoverable">
+                                <div class="controls hoverable">
 
                                     <span class="listen">
-                                        <a data-bplayer-controls="listen" href="#" data-action="listen">Listen</a>
+                                        <a data-onair-controls="play" href="#">Listen</a>
                                     </span>
 
                                     <span class="pause">
-                                        <a data-bplayer-controls="pause" href="#" data-action="pause">||</a>
+                                        <a data-onair-controls="pause" href="#">||</a>
                                     </span>
 
                                     <span class="loading">
@@ -58,6 +58,7 @@
 
                                 </div>
 
+
                             </div>
 
 
@@ -66,10 +67,10 @@
                             </div>
 
                             <div class="footer">
-                                    <span class="text">
-                                        <em>live on</em>
-                                    </span>
-                                    <img class="logo" alt="DAB+ Logo" src="{{ STATIC_URL }}img/base/logo.dab.white.png" >
+                                <span class="text">
+                                    <em>live on</em>
+                                </span>
+                                <img class="logo" alt="DAB+ Logo" src="{{ STATIC_URL }}img/base/logo.dab.white.png" >
                             </div>
 
                         </div>
@@ -78,10 +79,6 @@
                 </div>
 
             </div>
-
-
-
-
 
 
             <!-- start #rating_container -->
@@ -159,7 +156,7 @@
 
 
         </div>
-        <div class="small-12 medium-4 large-4 columns">
+        <div class="small-12 medium-4 large-4 columns"  style="z-index: 1;">
             <div class="meta-container">
 
                 <!-- loaded dynamically

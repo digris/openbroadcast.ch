@@ -1,7 +1,14 @@
+<!-- loaded dynamically to: #onair_container > .items -->
+
+
 <!-- item in this context: "track" - active or history -->
 <div
     class="item info {{ extra_classes }}"
-    id="{{ dom_id }}">
+    id="{{ dom_id }}"
+    data-time_start="{{ object.time_start }}"
+    data-uuid="{{ object.item.uuid }}"
+    data-on_air="{{ object.on_air }}"
+    data-index="{{ index }}">
 
     <!-- base container - media -->
     <div class="container"
@@ -24,14 +31,18 @@
         <!-- action wrapper - play/pause/listen -->
         <div class="wrapper">
 
-            <div data-action="listen" class="action listen hoverable">
+            <div class="controls hoverable">
+
+                <span class="play">
+                    <a href="#" data-login-required data-onair-controls="play">Play</a>
+                </span>
 
                 <span class="listen">
-                    <a data-bplayer-controls="listen" href="#" data-action="listen">Listen</a>
+                    <a data-onair-controls="play" href="#">Listen</a>
                 </span>
 
                 <span class="pause">
-                    <a data-bplayer-controls="pause" href="#" data-action="pause">||</a>
+                    <a data-onair-controls="pause" href="#">||</a>
                 </span>
 
                 <span class="loading">
@@ -42,24 +53,13 @@
 
             </div>
 
-            <div data-action="play" class="action play hoverable">
 
-                <span class="play">
-                    <a href="#" data-login-required data-action="play">Play</a>
-                </span>
+        </div>
 
-                <span class="pause">
-                    <a href="#" data-action="pause">||</a>
-                </span>
-
-                <span class="loading">
-                    <a href="#">**</a>
-                </span>
-
+        <div class="progress-container">
+            <div class="progress">
+              <span class="meter" style="width: 0%"></span>
             </div>
-
-
-
         </div>
 
 

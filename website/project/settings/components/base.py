@@ -182,6 +182,7 @@ INSTALLED_APPS = (
     'onair',
     'backfeed',
     'stationtime',
+    'remotelink',
     #'stories',
     'teaser',
     'profiles',

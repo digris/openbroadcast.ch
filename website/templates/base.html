@@ -168,6 +168,7 @@
 <script src="{{ STATIC_URL }}js/lib/jquery.color-2.1.2.js"></script>
 <script src="{{ STATIC_URL }}js/lib/jquery.address.js"></script>
 <script src="{{ STATIC_URL }}js/lib/jquery.timeago-1.4.1.js"></script>
+<script src="{{ STATIC_URL }}js/lib/js.cookie.js"></script>
 
 <!-- global scripts -->
 <script src="{{ STATIC_URL }}js/lib/ba-debug.js"></script>
@@ -184,6 +185,7 @@
 <script src="{{ STATIC_URL }}bplayer/js/levelbridge.js"></script>
 <script src="{{ STATIC_URL }}onair/js/base.js"></script>
 <script src="{{ STATIC_URL }}stationtime/js/base.js"></script>
+<script src="{{ STATIC_URL }}remotelink/js/base.js"></script>
 
 {% endcompress %}
 
@@ -214,7 +216,10 @@
 
     // define globally for debug purposes
     var onair;
+    var bplayer;
+    var achat;
     var stationtime;
+    var remotelink;
 
     $(function() {
 
@@ -247,7 +252,7 @@
         /////////////////////////////////////////////
         // player
         /////////////////////////////////////////////
-        var bplayer = new BPlayerApp();
+        bplayer = new BPlayerApp();
         bplayer.debug = true;
         bplayer.mode = 'inline';
         bplayer.stream_url = '{{ settings.STREAM_URL }}';
@@ -265,7 +270,7 @@
         /////////////////////////////////////////////
         // chat
         /////////////////////////////////////////////
-        var achat = new AchatApp();
+        achat = new AchatApp();
         achat.debug = false;
         achat.container = $('#achat_container');
         achat.user = current_user;
@@ -299,6 +304,17 @@
         setTimeout(function () {
             stationtime.init();
         }, 1000);
+
+
+        /////////////////////////////////////////////
+        // remote links
+        /////////////////////////////////////////////
+        remotelink = new RemotelinkApp();
+        remotelink.debug = true;
+        remotelink.dialog_url = "{% url 'remotelink-dialog' %}";
+        remotelink.user = current_user;
+        remotelink.init();
+
 
 
     });
