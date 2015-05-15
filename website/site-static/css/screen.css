@@ -10617,10 +10617,6 @@ x:-o-prefocus {
   line-height: 1.6rem;
 }
 
-#onair_container .logo-container,
-#onair_container .container {
-  background-color: orangered;
-}
 #onair_container .logo-container .wrapper,
 #onair_container .container .wrapper {
   position: absolute;
