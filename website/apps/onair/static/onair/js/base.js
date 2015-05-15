@@ -37,7 +37,7 @@ var OnAirApp = function () {
 
         if(self.use_history) {
             setTimeout(function () {
-                self.load_history(4);
+                self.load_history(10);
             }, 2000);
         }
 
