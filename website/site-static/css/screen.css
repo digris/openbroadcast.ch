@@ -10867,6 +10867,17 @@ body.loading #onair_container .item.playing .container .controls span.loading {
   border-top: 2px solid black;
   margin: 12px 0px;
 }
+#onair_container .meta-container > div {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=10);
+  opacity: 0.1;
+}
+#onair_container .meta-container > div.fade-in {
+  -webkit-transition: opacity 1.5s ease-out;
+  -moz-transition: opacity 1.5s ease-out;
+  transition: opacity 1.5s ease-out;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
 @media only screen and (min-width: 40.063em) {
   #onair_container #media_prev_next div.next,
   #onair_container #media_prev_next div.previous {

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import requests
 import logging
@@ -15,6 +16,7 @@ from tastypie.http import HttpForbidden, HttpBadRequest
 from tastypie.authentication import SessionAuthentication, Authentication, MultiAuthentication
 from tastypie.authorization import Authorization
 
+from onair.models import ScheduledItem
 
 API_BASE_URL = getattr(settings, 'API_BASE_URL', None)
 API_BASE_AUTH = getattr(settings, 'API_BASE_AUTH', None)
@@ -76,6 +78,9 @@ class VoteObject(object):
 
 
 class VoteResource(Resource):
+    """
+    resource mapped directly to remote endpoint
+    """
 
     id = IntegerField(attribute='id', null=True, blank=True)
 
@@ -129,3 +134,42 @@ curl api calls:
 
 
 """
+
+
+"""
+model resources
+"""
+
+
+
+class ScheduledItemResource(ModelResource):
+
+    class Meta:
+        queryset = ScheduledItem.objects.history()
+        resource_name = 'onair/schedule'
+        detail_allowed_methods = ['get',]
+        list_allowed_methods = ['get',]
+        include_resource_uri = True
+        authentication = MultiAuthentication(SessionAuthentication(), Authentication())
+        authorization = Authorization()
+        excludes = ['id',]
+
+    def dehydrate(self, bundle):
+        obj = bundle.obj
+        bundle = {
+            'time_end': obj.time_end,
+            'time_start': obj.time_start,
+            'verbose_name': obj.name,
+            'onair': obj.is_onair,
+            'starts_in': obj.starts_in,
+            'ends_in': obj.ends_in,
+            # content data
+            'emission': obj.emission_url,
+            'item': obj.item_url,
+        }
+
+        return bundle
+
+    def __todo__get_object_list(self, request):
+        return super(ScheduledItemResource, self).get_object_list(request).order_by('-created').all()
+

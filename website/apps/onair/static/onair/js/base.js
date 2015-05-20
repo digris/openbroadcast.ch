@@ -37,7 +37,7 @@ var OnAirApp = function () {
 
         if(self.use_history) {
             setTimeout(function () {
-                self.load_history(10);
+                self.load_history(4);
             }, 2000);
         }
 
@@ -416,6 +416,15 @@ var OnAirApp = function () {
     this.update_meta_display = function (item, fast) {
 
 
+        // animation-less version
+        var html = $(nj.render('onair/nj/meta.html', {
+            object: item,
+            base_url: self.base_url
+        }));
+        self.meta_container.html(html);
+        html.addClass('fade-in');
+
+        /*
         if (fast == undefined) {
             var fast = false;
         }
@@ -438,7 +447,7 @@ var OnAirApp = function () {
                 self.meta_container.fadeIn(1);
             }, 1);
         }
-
+        */
 
     };
 

@@ -1,1 +1,1 @@
-from onair.api.resources import VoteResource
+from onair.api.resources import VoteResource, ScheduledItemResource

@@ -594,6 +594,13 @@ body.loading #onair_container
       border-top: 2px solid #000
       margin: 12px 0px
 
+    > div
+      +opacity(0.1)
+      &.fade-in
+        +single-transition(opacity, 1.5s)
+        +opacity(1.0)
+
+
 
 
 
