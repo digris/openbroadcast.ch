@@ -2,16 +2,15 @@
 <section class="playlist history compact">
 
     {% for item in objects %}
+        <div class="item{% if item.onair %} onair{% endif %}"
+            data-uuid="{{ item.item.uuid }}">
 
-        {% if item.on_air %}
-        <div class="item">
             <a href="#">{{ item.item.name }}</a>
             <br class="show-for-small-only">
             <span>by</span>
             <a href="#">{{ item.item.artist.name }}</a>
-        </div>
-        {% endif %}
 
+        </div>
     {% endfor %}
 
 </section>
@@ -25,10 +24,10 @@
     <div class="show-for-small-only">
 
         {% for item in objects %}
-        <div class="row item hoverable{% if item.on_air %} on-air{% endif %}">
+        <div class="row item hoverable{% if item.onair %} onair{% endif %}">
 
             <div class="small-2 col-action columns">
-                {% if item.on_air %}
+                {% if item.onair %}
                     <a href="#"><!--<i class="fa fa-pause"></i>-->||</a>
                 {% else %}
                     <a data-login-required href="#"><i class="fa fa-play"></i></a>
@@ -36,7 +35,7 @@
             </div>
 
             <div class="small-2 col-airtime columns">
-                {% if item.on_air %}
+                {% if item.onair %}
                 <span>On Air</span>
                 {% else %}
                     {% if item.time_start %}
@@ -91,11 +90,11 @@
         </div>
 
         {% for item in objects %}
-        <div class="row item hoverable{% if item.on_air %} on-air{% endif %}"
+        <div class="row item hoverable{% if item.onair %} onair{% endif %}"
             data-uuid="{{ item.item.uuid }}">
 
             <div class="col-airtime columns">
-                {% if item.on_air %}
+                {% if item.onair %}
                 <span>On Air</span>
                 {% else %}
                     {% if item.time_start %}
@@ -109,7 +108,7 @@
 
 
                 <!--
-                {% if item.on_air %}
+                {% if item.onair %}
                     <a href="#">||</a>
                 {% else %}
                     <a data-login-required href="#"><i class="fa fa-play"></i></a>
@@ -148,7 +147,7 @@
 
             <!-- price & buy are not available yet - just here for the future™
             <div class="col-price columns">
-                {% if item.on_air %}
+                {% if item.onair %}
                     <span class="price">CHF 0.20</span>
                     <span class="increase-step">+0.10 in</span>
                     <span class="increase-time">17sec</span>

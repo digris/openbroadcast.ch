@@ -63,7 +63,7 @@ def fetch_from_api(range_start=0, range_end=0, channel=None):
 
     # map
     for remote_item in remote_schedule['objects']:
-        print remote_item
+        #print remote_item
         item, created = ScheduledItem.objects.get_or_create(
             time_start=remote_item['time_start'],
             time_end=remote_item['time_end'],
@@ -71,13 +71,7 @@ def fetch_from_api(range_start=0, range_end=0, channel=None):
             emission_url=remote_item['emission'],
             item_url=remote_item['item'],
         )
-        if created:
-            print 'created -> populate!'
+
+    return remote_schedule['objects']
 
 
-
-
-    # map
-    qs._result_cache = None
-    #for locale_item in qs:
-    #    print locale_item

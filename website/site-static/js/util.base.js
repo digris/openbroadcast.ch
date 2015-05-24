@@ -6,81 +6,79 @@
 var util = util || {};
 
 
-util.uri_param_insert = function(sourceUrl, parameterName, parameterValue, replaceDuplicates) {
+util.uri_param_insert = function (sourceUrl, parameterName, parameterValue, replaceDuplicates) {
 
-	if((sourceUrl == null) || (sourceUrl.length == 0))
-		sourceUrl = document.location.href;
-	var urlParts = sourceUrl.split("?");
-	var newQueryString = "";
-	if(urlParts.length > 1) {
-		var parameters = urlParts[1].split("&");
-		for(var i = 0; (i < parameters.length); i++) {
-			var parameterParts = parameters[i].split("=");
-			if(!(replaceDuplicates && parameterParts[0] == parameterName)) {
-				if(newQueryString == "")
-					newQueryString = "?";
-				else
-					newQueryString += "&";
-				newQueryString += parameterParts[0] + "=" + parameterParts[1];
-			}
-		}
-	}
-	if(newQueryString == "")
-		newQueryString = "?";
-	else
-		newQueryString += "&";
-	newQueryString += parameterName + "=" + parameterValue;
-
-	return urlParts[0] + newQueryString;
-};
-
-util.string_random = function(length) {
-
-	var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'.split('');
-
-	if(!length) {
-		length = Math.floor(Math.random() * chars.length);
-	}
-
-	var str = '';
-	for(var i = 0; i < length; i++) {
-		str += chars[Math.floor(Math.random() * chars.length)];
-	}
-	return str;
-};
-
-
-
-util.format_time = function(secs)
-{
-    var t = new Date(1970,0,1);
-    t.setSeconds(secs);
-    if(secs < 3600) {
-    	var s = t.toTimeString().substr(3,5);
-    } else {
-    	var s = t.toTimeString().substr(0,8);
+    if ((sourceUrl == null) || (sourceUrl.length == 0))
+        sourceUrl = document.location.href;
+    var urlParts = sourceUrl.split("?");
+    var newQueryString = "";
+    if (urlParts.length > 1) {
+        var parameters = urlParts[1].split("&");
+        for (var i = 0; (i < parameters.length); i++) {
+            var parameterParts = parameters[i].split("=");
+            if (!(replaceDuplicates && parameterParts[0] == parameterName)) {
+                if (newQueryString == "")
+                    newQueryString = "?";
+                else
+                    newQueryString += "&";
+                newQueryString += parameterParts[0] + "=" + parameterParts[1];
+            }
+        }
     }
-    
-    
-    if(secs > 86399)
+    if (newQueryString == "")
+        newQueryString = "?";
+    else
+        newQueryString += "&";
+    newQueryString += parameterName + "=" + parameterValue;
+
+    return urlParts[0] + newQueryString;
+};
+
+util.string_random = function (length) {
+
+    var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'.split('');
+
+    if (!length) {
+        length = Math.floor(Math.random() * chars.length);
+    }
+
+    var str = '';
+    for (var i = 0; i < length; i++) {
+        str += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return str;
+};
+
+
+util.format_time = function (secs) {
+    var t = new Date(1970, 0, 1);
+    t.setSeconds(secs);
+    if (secs < 3600) {
+        var s = t.toTimeString().substr(3, 5);
+    } else {
+        var s = t.toTimeString().substr(0, 8);
+    }
+
+
+    if (secs > 86399)
         s = Math.floor((t - Date.parse("1/1/70")) / 3600000) + s.substr(2);
     return s;
 }
 
-$.fn.serializeObject = function() {
-	var o = {};
-	var a = this.serializeArray();
-	$.each(a, function() {
-		if(o[this.name]) {
-			if(!o[this.name].push) {
-				o[this.name] = [o[this.name]];
-			}
-			o[this.name].push(this.value || '');
-		} else {
-			o[this.name] = this.value || '';
-		}
-	});
-	return o;
+$.fn.serializeObject = function () {
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function () {
+        if (o[this.name]) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
 };
 
 
@@ -88,70 +86,69 @@ $.fn.serializeObject = function() {
  * AJAX CSRF handling
  */
 
-$(document).ajaxSend(function(event, xhr, settings) {
-	function getCookie(name) {
-		var cookieValue = null;
-		if(document.cookie && document.cookie != '') {
-			var cookies = document.cookie.split(';');
-			for(var i = 0; i < cookies.length; i++) {
-				var cookie = jQuery.trim(cookies[i]);
-				// Does this cookie string begin with the name we want?
-				if(cookie.substring(0, name.length + 1) == (name + '=')) {
-					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-					break;
-				}
-			}
-		}
-		return cookieValue;
-	}
+$(document).ajaxSend(function (event, xhr, settings) {
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 
-	function sameOrigin(url) {
-		// url could be relative or scheme relative or absolute
-		var host = document.location.host;
-		// host + port
-		var protocol = document.location.protocol;
-		var sr_origin = '//' + host;
-		var origin = protocol + sr_origin;
-		// Allow absolute or scheme relative URLs to same origin
-		return (url == origin || url.slice(0, origin.length + 1) == origin + '/') || (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
-		// or any other URL that isn't scheme relative or absolute i.e relative.
-		!(/^(\/\/|http:|https:).*/.test(url));
-	}
+    function sameOrigin(url) {
+        // url could be relative or scheme relative or absolute
+        var host = document.location.host;
+        // host + port
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        // Allow absolute or scheme relative URLs to same origin
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') || (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+                // or any other URL that isn't scheme relative or absolute i.e relative.
+            !(/^(\/\/|http:|https:).*/.test(url));
+    }
 
-	function safeMethod(method) {
-		return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-	}
+    function safeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
 
-	if(!safeMethod(settings.type) && sameOrigin(settings.url)) {
-		xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-	}
+    if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
+        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+    }
 });
 
 
+util.get_position = function (e) {
 
-util.get_position = function(e) {
+    //this section is from http://www.quirksmode.org/js/events_properties.html
+    var targ;
+    if (!e)
+        e = window.event;
+    if (e.target)
+        targ = e.target;
+    else if (e.srcElement)
+        targ = e.srcElement;
+    if (targ.nodeType == 3)// defeat Safari bug
+        targ = targ.parentNode;
 
-	//this section is from http://www.quirksmode.org/js/events_properties.html
-	var targ;
-	if(!e)
-		e = window.event;
-	if(e.target)
-		targ = e.target;
-	else if(e.srcElement)
-		targ = e.srcElement;
-	if(targ.nodeType == 3)// defeat Safari bug
-		targ = targ.parentNode;
+    // jQuery normalizes the pageX and pageY
+    // pageX,Y are the mouse positions relative to the document
+    // offset() returns the position of the element relative to the document
+    var x = e.pageX - $(targ).offset().left;
+    var y = e.pageY - $(targ).offset().top;
 
-	// jQuery normalizes the pageX and pageY
-	// pageX,Y are the mouse positions relative to the document
-	// offset() returns the position of the element relative to the document
-	var x = e.pageX - $(targ).offset().left;
-	var y = e.pageY - $(targ).offset().top;
-
-	return {
-		"x" : x,
-		"y" : y
-	};
+    return {
+        "x": x,
+        "y": y
+    };
 };
 
 
@@ -160,20 +157,18 @@ util.get_position = function(e) {
  * @param url
  * @returns {boolean}
  */
-util.is_external = function(url) {
+util.is_external = function (url) {
     // chek if relative
-    if(url.substring(0,1) == '/') {
+    if (url.substring(0, 1) == '/') {
         return false;
-    };
+    }
+    ;
     // compare to current domain
-    var domain = function(url) {
-        return url.replace('http://','').replace('https://','').split('/')[0];
+    var domain = function (url) {
+        return url.replace('http://', '').replace('https://', '').split('/')[0];
     };
     return domain(location.href) !== domain(url);
 };
-
-
-
 
 
 /*
@@ -184,7 +179,7 @@ function removeA(arr) {
     var what, a = arguments, L = a.length, ax;
     while (L > 1 && arr.length) {
         what = a[--L];
-        while ((ax= arr.indexOf(what)) !== -1) {
+        while ((ax = arr.indexOf(what)) !== -1) {
             arr.splice(ax, 1);
         }
     }
@@ -237,27 +232,27 @@ function removeA(arr) {
 })(jQuery);
 
 
-
 /*
-Array.prototype.remove = function(from, to) {
-  var rest = this.slice((to || from) + 1 || this.length);
-  this.length = from < 0 ? this.length + from : from;
-  return this.push.apply(this, rest);
-};
-*/
+ Array.prototype.remove = function(from, to) {
+ var rest = this.slice((to || from) + 1 || this.length);
+ this.length = from < 0 ? this.length + from : from;
+ return this.push.apply(this, rest);
+ };
+ */
 
 if (typeof String.prototype.endsWith !== 'function') {
-    String.prototype.endsWith = function(suffix) {
+    String.prototype.endsWith = function (suffix) {
         return this.indexOf(suffix, this.length - suffix.length) !== -1;
     };
 }
 
 
 function arrRemove(arr, from, to) {
-  var rest = arr.slice((to || from) + 1 || arr.length);
-  this.length = from < 0 ? arr.length + from : from;
-  return arr.push.apply(arr, rest);
+    var rest = arr.slice((to || from) + 1 || arr.length);
+    this.length = from < 0 ? arr.length + from : from;
+    return arr.push.apply(arr, rest);
 }
 function isInt(value) {
-    return !isNaN(parseInt(value,10)) && (parseFloat(value,10) == parseInt(value,10));
+    return !isNaN(parseInt(value, 10)) && (parseFloat(value, 10) == parseInt(value, 10));
 }
+

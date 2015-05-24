@@ -154,6 +154,17 @@ $bplayer-bottom-expanded: 0px
 
 
 
+// kind of ugly overrides for 'paused' state
+body.paused #bplayer_container
+  .playlist
+    .item.playing
+      .controls .play
+        display: inline
+      .controls .pause
+        display: none
+
+
+
 // history mode switch
 #bplayer_container
 
@@ -217,11 +228,14 @@ $bplayer-bottom-expanded: 0px
   // history styles
   section.playlist.history.compact
     .item
+      display: none
       padding: 5px 0 0 10px
       a, span
         color: white
       span
         +opacity(0.5)
+    .item.playing
+      display: block
 
   section.playlist.history.expanded
     .header
@@ -236,11 +250,17 @@ $bplayer-bottom-expanded: 0px
       margin: 4px 0
       border-top: 1px solid rgba(255, 255, 255, 0.1)
       padding: 4px 0
+
       &.hover
         color: #fff
-      &.on-air
+      &.playing
         font-style: italic
         color: #fff
+
+      &.hover,
+      &.playing
+        .col-action a
+          color: #fff
 
   section.playlist.history.expanded
     width: 83%
@@ -250,7 +270,7 @@ $bplayer-bottom-expanded: 0px
       width: 14%
     .col-action
       a
-        color: white
+        color: rgba(255, 255, 255, 0.5)
       width: 4%
     .col-name
       width: 22%

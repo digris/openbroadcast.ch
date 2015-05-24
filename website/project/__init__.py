@@ -1,7 +1,9 @@
 from __future__ import absolute_import
 from south.signals import post_migrate
 
-from .celery import app
+from .celery import app as celery_app
+
+__all__ = ['celery_app']
 
 def update_permissions_after_migration(app,**kwargs):
     """

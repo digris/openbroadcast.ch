@@ -3,14 +3,14 @@
 <div data-ct="media" class="ct-panel">
 
     <div class="row header">
+
+        {% if item.release and item.release.main_image %}
         <div class="small-6 columns">
-            {% if item.release and item.release.main_image %}
             <img src="{{ base_url }}{{ item.release.main_image }}">
-            {% else %}
-            <span>*</span>
-            {% endif %}
         </div>
-        <div class="small-6 columns">
+        {% endif %}
+
+        <div class="{% if item.release and item.release.main_image %}small-6{% else %}small-12{% endif %} columns">
             <div class="text-left">
                 <h1>{% if item.name %}{{ item.name|truncate(24) }}{% endif %}</h1>
                 <ul class="no-bullet">
@@ -44,14 +44,14 @@
         </div>
     </div>
 
-        {% if item.d_tags %}
-        <div class="row tags text-left">
-            <div class="small-12 columns">
-                {% for tag in item.d_tags.split(', ') %}
-                <span class="tag">{{ tag }}</span>
-                {% endfor %}
-            </div>
+    {% if item.d_tags %}
+    <div class="row tags text-left">
+        <div class="small-12 columns">
+            {% for tag in item.d_tags.split(',') %}
+            {% if not loop.last %}<span class="tag">{{ tag }}</span>{% endif %}
+            {% endfor %}
         </div>
-        {% endif %}
+    </div>
+    {% endif %}
 
 </div>

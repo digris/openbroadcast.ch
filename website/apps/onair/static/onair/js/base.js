@@ -4,12 +4,12 @@ var OnAirApp = function () {
     this.debug = false;
     this.api_url = '/api/v1/abcast/channel/';
     this.channel_id = 1;
-    // TODO: base_url form API_BASE_URL settings
     this.base_url = '';
     this.use_history = false;
     this.container;
     this.bplayer = false;
     this.max_items = 12;
+    this.initial_items = 6;
     this.info_container;
     this.meta_container;
     this.meta_rating;
@@ -17,7 +17,14 @@ var OnAirApp = function () {
     this.info_timeout = false;
     this.local_data = [];
     this.current_item = false;
-    this.mode = 'init'; // 'on air', 'history' or 'fallback'
+    this.timestamps = [];
+    this.load_schedule_timeout = false;
+    this.default_timeout = 60000;
+
+    // holding on-air status and playback modes
+    this.is_onair = false;
+    this.mode = 'init'; // 'live' or 'history'
+
     this.timeline_offset = 0;
 
     this.init = function () {
@@ -31,6 +38,7 @@ var OnAirApp = function () {
 
         self.bindings();
 
+        /*
         setTimeout(function () {
             self.load();
         }, 200);
@@ -40,69 +48,14 @@ var OnAirApp = function () {
                 self.load_history(4);
             }, 2000);
         }
+        */
+
+        self.load_schedule();
 
         pushy_client.subscribe('arating_vote', function(vote){
             self.update_vote(vote);
         });
 
-    };
-
-    this.load = function () {
-
-        var url = self.api_url + self.channel_id + '/' + 'on-air/';
-
-        $.get(url).done(function (data) {
-
-            if (!data.start_next) {
-                setTimeout(self.load, 30000)
-            } else {
-                var timeout = Number(data.start_next * 1000);
-                if(timeout > 7200000) {
-                    timeout = 7200000;
-                }
-                setTimeout(self.load, timeout);
-            }
-
-            if (data.playing != undefined && (data.playing.emission != undefined && data.playing.item != undefined)) {
-
-                // TODO: just temporary, should be solved in a nicer way
-                setTimeout(function(){
-                    self.set_mode('onair');
-                }, 1500)
-
-
-                self.load_current(data.playing);
-            } else {
-
-                // display dummy item
-                // TODO: not sure if this is the best way?
-
-                self.set_mode('fallback');
-            }
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-            if(self.debug) {
-                console.error('OnAirApp - load ' + errorThrown);
-            }
-            self.set_mode('fallback');
-            setTimeout(self.load, 10000);
-        })
-
-    };
-
-    this.set_mode = function (mode) {
-        if(self.debug) {
-            console.debug('OnAirApp - set_mode: ' + mode);
-        }
-        self.mode = mode;
-        self.container.removeClass('onair history fallback init').addClass(mode);
-
-        // show/hide station-badge
-        if(mode == 'fallback' || mode == 'init') {
-            $('.logo-container', self.container).fadeIn(500);
-        }
-        if(mode == 'onair' || mode == 'history') {
-            $('.logo-container', self.container).fadeOut(500);
-        }
     };
 
     this.bindings = function () {
@@ -163,7 +116,7 @@ var OnAirApp = function () {
         });
 
         // TODO: hackish implementation here, should be done more generic
-        self.container.on('click', '#back_on_air a', function(e){
+        self.container.on('click', '#back_onair a', function(e){
             e.preventDefault();
             self.handle_pagination(0)
         });
@@ -187,7 +140,6 @@ var OnAirApp = function () {
          ****************************************************************************/
         $('body').on('click', 'a[data-onair-controls]', function (e) {
 
-
             e.preventDefault();
             var action = $(this).data('onair-controls');
 
@@ -199,20 +151,8 @@ var OnAirApp = function () {
              */
             switch(action) {
                 case 'play':
-
-                    // TODO: implement a way to get items index - hard-coded to 0 for the moment
-                    var index = 0;
-
-                    // prototype implementation. will fail if no 'real' item in place
                     var index = $(this).parents('.item').data('index');
-
                     self.bplayer.controls({action: action, index: index});
-
-                    //var sound = {
-                    //    url: self.stream_url
-                    //}
-                    //self.current_sound.load(sound);
-                    //self.current_sound.play();
                     break;
                 default:
                     self.bplayer.controls({action: action});
@@ -220,122 +160,159 @@ var OnAirApp = function () {
 
         });
 
-
-
-
-
-    };
-
-    this.show_meta_for = function (ct) {
-
-        $('div[data-ct]').fadeOut(50);
-        $('div[data-ct="' + ct + '"]').fadeIn(250);
-
     };
 
 
-    this.load_current = function (playing) {
-
+    this.set_onair = function(onair_status) {
         if(self.debug) {
-            console.log('OnAirApp - load_current');
+            console.debug('OnAirApp - set_onair:', onair_status);
+        }
+        self.is_onair = onair_status;
+        if(onair_status) {
+            self.container.removeClass('offline').addClass('onair');
+        } else {
+            self.container.removeClass('onair').addClass('offline');
         }
 
-        var obj = {
-            emission: [],
-            item: [],
-            timestamp: playing.time_start,
-            time_start: playing.time_start,
-            on_air: true,
-            el: false
-        };
+        $(document).trigger('onair', ['onair-state-change', onair_status]);
 
-        // first load emission data
-        $.get(playing.emission, function (data) {
-            if(self.debug) {
-                //console.log('emission:', data);
-            }
-            obj.emission = data;
-            // then 'item' data
-            $.get(playing.item + '?includes=label', function (data) {
-                if(self.debug) {
-                    //console.log('item:', data);
-                }
-                obj.item = data;
-
-                // reset playing flag
-                $.each(self.local_data, function (i, item) {
-                    item.on_air = false
-                });
-                self.local_data.push(obj);
-                self.update_data();
-            });
-        });
     };
 
-    this.load_history = function (limit) {
+    this.set_mode = function (mode) {
+        if(self.debug) {
+            console.debug('OnAirApp - set_mode:', mode);
+        }
+        self.mode = mode;
+        self.container.removeClass('live history').addClass(mode);
 
-        var limit = typeof limit !== 'undefined' ? limit : 3;
-        var url = self.api_url + self.channel_id + '/' + 'history/';
+        $(document).trigger('onair', ['onair-mode-change', mode]);
 
-        $.get(url, function (history) {
+        /*
+        self.container.removeClass('onair history fallback init').addClass(mode);
+        // show/hide station-badge
+        if(mode == 'fallback' || mode == 'init') {
+            $('.logo-container', self.container).fadeIn(0);
+        }
+        if(mode == 'onair' || mode == 'history') {
+            $('.logo-container', self.container).fadeOut(0);
+        }
+        */
+    };
 
-            history.objects.splice(limit);
 
-            $.each(history.objects, function (i, item) {
+
+
+
+
+
+    this.load_schedule = function (limit) {
+
+        var limit = typeof limit !== 'undefined' ? limit : self.initial_items;
+        var url = '/api/v1/onair/schedule/?expand=item+emission&limit=' + limit;
+
+        $.get(url, function (schedule) {
+
+            // processing schedule meta
+            var meta = schedule.meta;
+            if(meta.next_starts_in) {
+                if(self.load_schedule_timeout) {
+                    clearTimeout(self.load_schedule_timeout);
+                }
+                self.load_schedule_timeout = setTimeout(function(){
+                    // we have to load the previos item as well to update our data
+                    // TODO: this could be handled better!
+                    self.load_schedule(2)
+                }, Number((meta.next_starts_in + 1) * 1000));
+            } else {
+                if(self.load_schedule_timeout) {
+                    clearTimeout(self.load_schedule_timeout);
+                }
+                self.load_schedule_timeout = setTimeout(function(){
+                    self.load_schedule()
+                }, self.default_timeout);
+            }
+
+            self.set_onair(meta.onair)
+
+
+            // processing schedule items
+            // we need reversed order for local schedule
+            var objects = schedule.objects.reverse();
+            //var objects = schedule.objects;
+
+
+
+            $.each(objects, function (i, item) {
+
+                console.debug('loaded item:', item);
+
+
+                var exists = -1;
+                $.each(self.local_data, function (j, local_item) {
+                    if(self.local_data[j].time_start == item.time_start) {
+                        exists = j;
+                    }
+                });
+
+                if(exists >= 0) {
+                    console.debug('item present. replacing in local_items', exists)
+                    self.local_data[exists] = item;
+
+                } else {
+                    console.debug('item not present. adding to local_items', exists)
+                    self.local_data.push(item);
+                    self.load_rating(item);
+                }
+
+
+
+
+
+                /*
+                console.log('exists?', exists);
+
+                if(exists >= 0) {
+                    var local_item = self.local_data[exists];
+                    self.local_data[exists] = item;
+                    self.local_data[exists].el = local_item.el;
+                } else {
+                    if (item.el == undefined) {
+                        item.el = false;
+                    }
+                    self.local_data.push(item);
+                }
+                */
+
+                /*
+                // TODO: find a nicer way to handle this
                 if (item.el == undefined) {
                     item.el = false;
                 }
-                if (item.on_air == undefined) {
-                    item.on_air = false;
+
+                // TODO: update item in case it exists!!!
+                if($.inArray(item.time_start, self.timestamps) < 0) {
+                    self.timestamps.push(item.time_start);
+                    self.local_data.push(item);
+                } else {
+                    console.debug('item exists with timestamp', item.time_start);
                 }
-                self.local_data.unshift(item);
+                */
+
+
+
             });
 
-            self.complete_data();
+            self.process_data();
+
         });
 
     };
 
-    /**
-     * completes dataset via API.
-     * if resource data in json is a string (url) it fetches the data and
-     * replaces it with the returned object
-     */
-    this.complete_data = function () {
-
-        if(self.debug) {
-            console.log('OnAirApp - complete_data');
-        }
-
-        $.each(self.local_data, function (i, item) {
-
-            if (typeof item.emission == 'string') {
-                $.get(item.emission, function (data) {
-                    self.local_data[i].emission = data;
-                });
-            }
-
-            if (typeof item.item == 'string') {
-                $.get(item.item + '?includes=label', function (data) {
-                    self.local_data[i].item = data;
-                });
-            }
-
-        });
-
-        // TODO: implement some sort of queing here
-        // for the moment we just assume that everything is ready after 2 seconds...
-        setTimeout(function () {
-            if(self.debug) {
-                console.log(self.local_data);
-            }
-            self.update_data();
-        }, 2000);
-
-    };
 
 
-    this.update_data = function () {
+
+
+    this.process_data = function () {
 
         if(self.debug) {
             console.log('OnAirApp - update_data', self.local_data);
@@ -346,64 +323,59 @@ var OnAirApp = function () {
 
         $.each(self.local_data, function (i, item) {
 
-            var dom_id = item.emission.uuid + '-' + item.item.uuid;
+            // this leads to non-unique ids in case of multiple appearances in same emission
+            // var dom_id = item.emission.uuid + '-' + item.item.uuid;
+            var dom_id = CryptoJS.MD5(item.time_start).toString() + '-' + item.item.uuid;
 
-
-            // index is reversed
+            // index is in reversed reversed
+            // index is assigned/shifted to items in history in case of 'pagination'
             var index = (self.local_data.length - 1) - i;
+
+            var dom_el = $('#' + dom_id);
 
             // compose classes
             var classes = '';
-            if (item.on_air) {
+            if (item.onair) {
                 // TODO: adjust behavior if in 'history' or 'fallback' mode
                 self.update_meta_display(item);
                 classes += 'next next-1';
-            } else {
-                //classes += ' previous';
-                //classes += ' previous-' + (i + 1);
             }
 
-            // check if present in dom
-            // create in case that not
-            if (!item.el) {
+            var html = $(nj.render('onair/nj/item.html', {
+                dom_id: dom_id,
+                index: index,
+                debug: self.debug,
+                object: item,
+                extra_classes: classes,
+                base_url: self.base_url
+            }));
 
-                try {
-                    var html = $(nj.render('onair/nj/item.html', {
-                        dom_id: dom_id,
-                        index: index,
-                        debug: self.debug,
-                        object: item,
-                        extra_classes: classes,
-                        base_url: self.base_url
-                    }));
-                } catch(e) {
-                    var html = $('<div>ERROR</div>');
-                    if(self.debug) {
-                        console.warn(e);
-                        console.warn(item);
-                    }
-                }
-
-
+            if(dom_el.length) {
+                console.debug('got element in dom > replace it')
+                //dom_el.replaceWith(html);
+                dom_el.removeClass('onair');
+            } else {
+                console.debug('element not in dom > append it')
                 $('.info-container .items').append(html)
-
-                item.el = $('#' + dom_id);
-
-            } else {
-
-                item.el.data('index', index);
-
-                //item.el.fadeOut(5000)
             }
+
+            item.el = $('#' + dom_id);
+            item.el.data('index', index);
+
+            self.local_data[i]  = item;
+
+
         });
 
         // handle own timeline
         setTimeout(function () {
             self.handle_timeline();
-        }, 5);
+        }, 100);
 
         // map on-air history to player app
-        self.bplayer.set_playlist(self.local_data);
+        setTimeout(function () {
+            self.bplayer.set_playlist(self.local_data);
+        }, 200);
 
 
     };
@@ -415,8 +387,7 @@ var OnAirApp = function () {
      */
     this.update_meta_display = function (item, fast) {
 
-
-        // animation-less version
+        // non-animated version
         var html = $(nj.render('onair/nj/meta.html', {
             object: item,
             base_url: self.base_url
@@ -424,82 +395,55 @@ var OnAirApp = function () {
         self.meta_container.html(html);
         html.addClass('fade-in');
 
-        /*
-        if (fast == undefined) {
-            var fast = false;
-        }
-
-        self.meta_container.fadeOut(100);
-        var html = $(nj.render('onair/nj/meta.html', {
-            object: item,
-            base_url: self.base_url
-        }));
-
-
-        if (fast) {
-            setTimeout(function () {
-                self.meta_container.html(html);
-                self.meta_container.fadeIn(1);
-            }, 1);
-        } else {
-            setTimeout(function () {
-                self.meta_container.html(html);
-                self.meta_container.fadeIn(1);
-            }, 1);
-        }
-        */
-
     };
 
-    this.update_rating_display = function (item) {
 
-        console.log('update_rating_display', item)
-
-        self.rating_container.removeClass('disabled');
-        // set current values
-        $('.vote-up a > span', self.rating_container).html(item.item.votes.up);
-        $('.vote-down  a > span', self.rating_container).html(item.item.votes.down);
-
-
+    /**
+     * Toggles meta panel
+     * @param ct
+     */
+    this.show_meta_for = function (ct) {
+        $('div[data-ct]').fadeOut(50);
+        $('div[data-ct="' + ct + '"]').fadeIn(250);
     };
+
+
+
+
 
     /**
      * handles timeline display: prev/next etc.
      */
     this.handle_timeline = function () {
 
-        // cases: on_air mode -> item with on_air flag is set to current
+        // cases: onair mode -> item with onair flag is set to current
         // cases: history mode -> item with <to-be-defined> flag is set to current
-
-        // get current item
-        var current_index = false;
-        var num_items = self.local_data.length;
-        var onair_index = 0;
-        var onair = false;
-        $.each(self.local_data, function (i, item) {
-            if (item.on_air) {
-                onair_index = i;
-                onair = true;
-            }
-        });
-
-        // TODO: think about a more elegant solution
         if (self.timeline_offset == 0) {
-            self.set_mode('onair');
+            self.set_mode('live');
         } else {
             self.set_mode('history');
         }
-        current_index = onair_index + self.timeline_offset;
 
-        if (!onair && self.timeline_offset == 0) {
-            self.set_mode('fallback');
-        } else if(!onair && self.timeline_offset != 0) {
-            self.set_mode('history');
-        }
+        var onair_index = 0;
+        var is_onair = false;
+        $.each(self.local_data, function (i, item) {
+            if (item.onair) {
+                is_onair = true;
+                onair_index = i;
+            }
+        });
+
+        // not sure if this introduces other problems... but in case that nothing is "on air" we just add a dummy item
+        var schedule = self.local_data;
+
+        onair_index = schedule.length -1;
+        var current_index = onair_index + self.timeline_offset;
 
 
         // apply classes based on offset
-        $.each(self.local_data, function (i, item) {
+        $.each(schedule, function (i, item) {
+
+            //console.info('current_index', current_index)
 
             item.el.removeClass().addClass('item info');
             if (i < current_index) {
@@ -507,7 +451,7 @@ var OnAirApp = function () {
                 item.el.addClass('previous-' + Math.abs(current_index - i));
 
                 if(self.debug) {
-                    console.debug('index / prev:', Math.abs(current_index - i));
+                    //console.debug('index / prev:', Math.abs(current_index - i));
                 }
 
                 if (Math.abs(current_index - i) > 3) {
@@ -518,7 +462,7 @@ var OnAirApp = function () {
                 item.el.addClass('current');
                 self.current_item = item;
                 self.update_meta_display(item, false);
-                self.update_rating_display(item);
+                self.update_rating_display();
             }
             if (i > current_index) {
                 item.el.addClass('next');
@@ -529,7 +473,7 @@ var OnAirApp = function () {
                 }
             }
 
-            if(item.on_air) {
+            if(item.onair) {
                 item.el.addClass('onair');
             } else {
                 item.el.addClass('history');
@@ -537,10 +481,9 @@ var OnAirApp = function () {
 
         });
 
-        // handle prev/next actions
-        if(self.debug) {
-            console.debug('OnAirApp - current_index', current_index + 1, 'num_items', num_items);
-        }
+
+        var num_items = schedule.length;
+
 
         if (current_index + 1 <= num_items
             && num_items > 1
@@ -556,12 +499,13 @@ var OnAirApp = function () {
             $('.next', self.prevnext_container).addClass('disabled');
         }
 
-
-
         // TODO: hack!!
-        self.bplayer.mark_by_uuid();
+        //self.bplayer.mark_by_uuid();
+        self.bplayer.update_player();
 
     };
+
+
 
     /**
      * handles pagination & onair/history mode
@@ -592,22 +536,54 @@ var OnAirApp = function () {
             console.debug('OnAirApp - handle_pagination: ' + offset);
         }
 
-
-        /*
-        for (i=0; i < Math.abs(self.timeline_offset); i++) {
-            setTimeout(function(){
-                self.timeline_offset++;
-                self.handle_timeline();
-            }, (200 * i));
-        }
-        */
-
-
         // offset is negative in 'history' case
+        // TODO: check if valid index
         self.timeline_offset = offset * -1;
 
         self.handle_timeline();
 
+    };
+
+
+
+
+
+
+
+    /**
+     * loads current rating values for item
+     */
+    this.load_rating = function (item) {
+        var url = '/api/v1/onair/vote/alibrary.media/' + item.item.id + '/'
+        $.get(url, function(data){
+            $.each(self.local_data, function (i, local_item) {
+                if (item.id == local_item.id) {
+                    self.local_data[i].item.votes = data;
+                }
+            });
+            setTimeout(function(){
+                self.update_rating_display();
+            }, 1)
+        });
+
+    };
+
+
+    this.update_rating_display = function () {
+        // set current values
+
+        if(!self.current_item) {
+            console.warn('no current item!');
+            return;
+        }
+
+        try {
+            $('.vote-up a > span', self.rating_container).html(self.current_item.item.votes.up);
+            $('.vote-down  a > span', self.rating_container).html(self.current_item.item.votes.down);
+            self.rating_container.removeClass('disabled');
+        } catch(e) {
+            self.rating_container.addClass('disabled');
+        }
     };
 
 
@@ -661,15 +637,19 @@ var OnAirApp = function () {
                 self.local_data[i].item.votes = vote;
             }
 
-            self.update_rating_display(self.current_item);
+            self.update_rating_display();
 
         });
 
     };
 
 
-
-
-
-
 };
+
+
+
+
+// moving to prototype based implementation
+
+
+

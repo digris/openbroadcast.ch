@@ -21,6 +21,7 @@ django-admin-shortcuts==1.2.5
 django-appconf==0.6
 django-authtools==1.0.0
 django-badbrowser==1.0.7
+django_braces==1.8.0
 django-celery==3.1.15
 django-classy-tags==0.5.1
 django-cms==3.0.5
@@ -43,6 +44,7 @@ django-polymorphic==0.5.6
 django-registration==1.0
 django-reversion==1.8.4
 django-sekizai==0.7
+django-sendfile==0.3.7
 django-settings-export==1.0.3
 django-split-settings==0.1.1
 django-social-auth>=0.7.23

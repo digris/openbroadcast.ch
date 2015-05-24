@@ -87,10 +87,17 @@ var nunjucks_register_filters = function (nj) {
         }
 
         if (part == 'time') {
-
             ret = '{0}:{1}'.format(
                 time.substr(11, 2),
                 time.substr(14, 2)
+            );
+        }
+
+        if (part == 'time_s') {
+            ret = '{0}:{1}:{2}'.format(
+                time.substr(11, 2),
+                time.substr(14, 2),
+                time.substr(17, 2)
             );
         }
 

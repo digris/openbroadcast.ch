@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////
 // full-size screen, used in teaser block / home
 ///////////////////////////////////////////////////
-#station_time, #back_on_air
+#station_time, #back_onair
   height: 60px
   > a
     border: 2px solid #000
@@ -19,35 +19,9 @@
 #onair_container.history
   #station_time
     display: none
-  #back_on_air
+  #back_onair
     display: block
 
-
-///////////////////////////////////////////////////
-// full width player
-///////////////////////////////////////////////////
-
-// global state switches
-//
-  body.playing
-    .hide-while-playing
-      display: none
-    .show-while-playing
-      display: block
-//
-  body:not(.playing)
-    .hide-while-playing
-      display: block
-    .show-while-playing
-      display: none
-
-// alternative approach
-  [class^="show-while-"]
-    background: red
-    display: block
-
-
-// state switches
 // fa bug:
 .fa-circle-o-notch.fa-spin
   -webkit-transform-origin: 48.2% 48.2%
@@ -55,42 +29,6 @@
   -ms-transform-origin: 48.2% 48.2%
   -o-transform-origin: 48.2% 48.2%
   transform-origin: 48.2% 48.2%
-
-// states for listen/play/pause etc buttons
-
-.__disabled__
-  div[data-action="listen"]
-    > span
-      display: none
-
-  div[data-action="play"]
-    > span
-      display: none
-
-  body
-
-    &.ready,
-    &.paused
-      div[data-action="listen"] span.listen
-        display: block
-    &.playing
-      div[data-action="listen"] span.pause
-        display: block
-    &.loading
-      div[data-action="listen"] span.loading
-        display: block
-
-    // play-related (on-demand)
-    &.ready,
-    &.paused
-      div[data-action="play"] span.play
-        display: block
-    &.playing
-      div[data-action="play"] span.play
-        display: block
-    &.loading
-      div[data-action="play"] span.loading
-        display: block
 
 
 ///////////////////////////////////////////////////
@@ -114,20 +52,51 @@
       width: 100%
       height: 100%
 
-  // show/hide element depending on state
-  &.init,
-  &.fallback
-    .show-while-fallback
+// show/hide element depending on state
+#onair_container
+
+  .switch-panel
+    -webkit-transition: all 0.7s ease
+    -moz-transition: all 0.7s ease
+    transition: all 0.7s ease
+
+
+  &.onair
+    .switch-panel.offline
+      display: none
+    .switch-panel.onair
       display: block
-    .hide-while-fallback
+
+  &.history
+    .switch-panel.offline
       display: none
 
-  &.onair,
-  &.history
-    .show-while-fallback
+  &.offline:not(.history)
+    .switch-panel.onair
+      -webkit-transform: rotateY(0deg) translateX(-140px) scale(0.9)
+      -webkit-filter: grayscale(1)
+      filter: grayscale(100%)
+
+    .meta-container
       display: none
-    .hide-while-fallback
-      display: block
+
+
+
+
+  .__disabled__
+    &.init,
+    &.fallback
+      .show-while-fallback
+        display: block
+      .hide-while-fallback
+        display: none
+
+    &.onair,
+    &.history
+      .show-while-fallback
+        display: none
+      .hide-while-fallback
+        display: block
 
 
 
@@ -137,11 +106,12 @@
 
 
 #onair_container
+
   background: $primary-color
   padding: 48px 0
   position: relative
 
-  // 'station-logo' - visible on load and when playing 'fallback'
+  // 'station-logo' - visible on load and when playing 'offline'
   .logo-container
     background: #000
     position: relative
@@ -190,7 +160,6 @@
 
     // slide history
     .item
-
       .container
         background-color: #000
 
@@ -348,9 +317,6 @@
   // global structure
   .logo-container,
   .container
-
-    //background-color: orangered
-
     .wrapper
       +xy-center
 
@@ -470,8 +436,12 @@ body.loading #onair_container
 #onair_container
   // only show controls if item has "focus"
   .item .container .controls
-    +opacity(0.0)
-    +single-transition(opacity, 0.5s)
+
+    // using display a.t.m.
+    //+opacity(0.0)
+    //+single-transition(opacity, 0.5s)
+    display: none
+
     span
       display: none
     span.play
@@ -479,7 +449,9 @@ body.loading #onair_container
 
   .item
     &.current .container .controls
-      +opacity(1.0)
+      // using display a.t.m.
+      //+opacity(1.0)
+      display: block
 
     // on-air - has 'listen' instead of 'play'
     &.onair .container .controls
@@ -537,7 +509,9 @@ body.loading #onair_container
 #onair_container
   .item
     overflow: hidden
+
     .progress-container
+      padding-top: 30px
       bottom: -20px
       position: absolute
       width: 100%
@@ -547,14 +521,28 @@ body.loading #onair_container
 
       .progress
         cursor: pointer
-        height: 16px
+        height: 6px
         padding: 0
-        margin: 0
+        margin: 40px 0 0 0
+        +single-transition(height, 0.5s)
         //border: 1px solid rgba(0, 0, 0, 0.40)
         border: none
-        background-color: rgba(255, 255, 255, 0.41)
+        background-color: rgba(255, 255, 255, 0.4)
       .meter
         background-color: #ffffff
+
+    .progress-container.hover
+      bottom: 20px
+      .progress
+        height: 24px
+        background-color: rgba(0, 0, 0, 0.8)
+        +single-transition(height, 0.1s)
+      .meter
+        background-color: rgba(255, 255, 255, 0.6)
+        border-right: 2px solid #fff
+
+
+
 
     &.history.current.playing
       .progress-container

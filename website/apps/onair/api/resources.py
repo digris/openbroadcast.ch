@@ -4,13 +4,14 @@ import requests
 import logging
 import redis
 import json
+import datetime
 from django.http import HttpResponse
 from django.core.servers.basehttp import FileWrapper
 from django.conf.urls import url
 from  django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
 from tastypie.resources import ModelResource, Resource, Bundle
-from tastypie.fields import IntegerField
+from tastypie.fields import IntegerField, CharField
 from tastypie.exceptions import ImmediateHttpResponse
 from tastypie.http import HttpForbidden, HttpBadRequest
 from tastypie.authentication import SessionAuthentication, Authentication, MultiAuthentication
@@ -46,8 +47,7 @@ class VoteObject(object):
         log.debug('API base url %s' % API_BASE_URL)
         log.info('Processing vote by %s: %s - %s - %s' % (request.user, self.vote, self.ct, self.id))
 
-
-        vote = self.remote_vote(user=request.user, ct=self.ct, obj_id=self.id, value=self.vote)
+        vote = self.create_remote_vote(user=request.user, ct=self.ct, obj_id=self.id, value=self.vote)
 
         if vote:
             rs = redis.StrictRedis(host=REDIS_HOST)
@@ -58,7 +58,7 @@ class VoteObject(object):
                 log.warning('unable to route message %s' % e)
 
 
-    def remote_vote(self, user, ct, obj_id, value):
+    def create_remote_vote(self, user, ct, obj_id, value):
 
         # TODO: schould eventually be factured out
 
@@ -83,11 +83,13 @@ class VoteResource(Resource):
     """
 
     id = IntegerField(attribute='id', null=True, blank=True)
+    #vote = CharField(attribute='vote', null=True, blank=True)
+
 
     class Meta:
         resource_name = 'onair/vote'
-        detail_allowed_methods = []
-        list_allowed_methods = ['post', 'put',]
+        detail_allowed_methods = ['get']
+        list_allowed_methods = ['post', 'put', 'get']
         include_resource_uri = False
         always_return_data = True
         authentication = MultiAuthentication(SessionAuthentication(), Authentication())
@@ -95,12 +97,10 @@ class VoteResource(Resource):
 
     def detail_uri_kwargs(self, bundle_or_obj):
         kwargs = {}
-
         if isinstance(bundle_or_obj, Bundle):
             kwargs['pk'] = bundle_or_obj.obj.id
         else:
             kwargs['pk'] = bundle_or_obj.id
-
         return kwargs
 
     def obj_create(self, bundle, **kwargs):
@@ -122,6 +122,46 @@ class VoteResource(Resource):
         return bundle
 
 
+    def obj_get(self, bundle, **kwargs):
+
+        req = kwargs.get('pk', None)
+
+        print req
+
+        pk = req.split('/')[1]
+        bundle.data['pk'] = int(pk)
+
+        return bundle
+
+
+    def dehydrate(self, bundle, **kwargs):
+        """
+        TODO: crappy implementation here...
+        """
+
+        try:
+            obj_id = bundle.obj.data['pk']
+            ct = 'alibrary.media'
+
+
+            url = API_BASE_URL + 'v1/rating/vote/%s/%s/' % (ct, obj_id)
+            headers = {'Authorization': 'ApiKey %s:%s' % (API_BASE_AUTH['username'], API_BASE_AUTH['api_key'])}
+
+            log.info('calling API with %s' % url)
+
+            r = requests.get(url, headers=headers, verify=False)
+
+            bundle.data = r.json()
+
+        except:
+            pass
+
+        return bundle
+
+
+
+
+
 """
 curl api calls:
 
@@ -136,27 +176,58 @@ curl api calls:
 """
 
 
+
 """
-model resources
+'classic' model resources
 """
-
-
-
 class ScheduledItemResource(ModelResource):
 
     class Meta:
-        queryset = ScheduledItem.objects.history()
+        #queryset = ScheduledItem.objects.history().order_by('-time_start')
+        queryset = ScheduledItem.objects.all().order_by('-time_start')
+        #queryset = ScheduledItem.objects.filter(time_start__lte=datetime.datetime.now()).order_by('-time_start')
         resource_name = 'onair/schedule'
         detail_allowed_methods = ['get',]
         list_allowed_methods = ['get',]
         include_resource_uri = True
         authentication = MultiAuthentication(SessionAuthentication(), Authentication())
         authorization = Authorization()
-        excludes = ['id',]
+        #excludes = ['id',]
+        excludes = []
+
+
+    def alter_list_data_to_serialize(self, request, data):
+        try:
+            next_item = ScheduledItem.objects.filter(time_start__gte=datetime.datetime.now()).order_by('time_start')[0]
+            next_starts_in = next_item.starts_in
+        except:
+            next_starts_in = None
+
+        onair = ScheduledItem.objects.filter(time_start__lte=datetime.datetime.now(), time_end__gte=datetime.datetime.now())
+
+        data['meta']['next_starts_in'] = next_starts_in
+        data['meta']['onair'] = onair.exists()
+        return data
+
 
     def dehydrate(self, bundle):
         obj = bundle.obj
+
+        expand = bundle.request.GET.get('expand', None)
+        expand = expand.split() if expand else []
+
+        if 'emission' in expand:
+            emission = obj.emission_data
+        else:
+            emission = obj.emission_url
+
+        if 'item' in expand:
+            item = obj.item_data
+        else:
+            item = obj.item_url
+
         bundle = {
+            'id': obj.id,
             'time_end': obj.time_end,
             'time_start': obj.time_start,
             'verbose_name': obj.name,
@@ -164,12 +235,19 @@ class ScheduledItemResource(ModelResource):
             'starts_in': obj.starts_in,
             'ends_in': obj.ends_in,
             # content data
-            'emission': obj.emission_url,
-            'item': obj.item_url,
+            'emission': emission,
+            'item': item,
         }
 
         return bundle
 
-    def __todo__get_object_list(self, request):
-        return super(ScheduledItemResource, self).get_object_list(request).order_by('-created').all()
+    def get_object_list(self, request):
+
+        qs = super(ScheduledItemResource, self).get_object_list(request)
+
+        range = request.GET.get('range', 'history')
+        if range == 'history':
+            qs = qs.filter(time_start__lte=datetime.datetime.now())
+
+        return qs
 

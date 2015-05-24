@@ -4,14 +4,16 @@
     <div data-ct="author" class="ct-panel">
 
         <div class="row header">
+
+
+            {% if item.image %}
             <div class="small-6 columns">
-                {% if item.image %}
                 <img src="{{ base_url }}{{ item.image }}">
-                {% else %}
-                <span>*</span>
-                {% endif %}
             </div>
-            <div class="small-6 columns">
+            {% endif %}
+
+
+            <div class="{% if item.image %}small-6{% else %}small-12{% endif %} columns">
                 <div class="text-left">
                     <h1>{{ item.display_name|truncate(24) }}</h1>
                     <ul class="no-bullet">

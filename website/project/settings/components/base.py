@@ -124,7 +124,8 @@ INSTALLED_APPS = (
     #'django_jenkins',
     'tastypie',
     'django_mobile',
-    'djcelery',
+    #'djcelery',
+    'kombu.transport.django',
     #'guardian',
     'relatedadminlink',
     #'djangosecure',
@@ -183,6 +184,7 @@ INSTALLED_APPS = (
     'backfeed',
     'stationtime',
     'remotelink',
+    'contentproxy',
     #'stories',
     'teaser',
     'profiles',
@@ -244,8 +246,7 @@ DATABASES = {
     }
 }
 
-BROKER_URL = 'django://'
-CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
+
 
 # auth
 AUTHENTICATION_BACKENDS = (

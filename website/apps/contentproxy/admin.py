@@ -1,3 +1,9 @@
+#-*- coding: utf-8 -*-
 from django.contrib import admin
+from models import CachedMedia
 
-# Register your models here.
+class CachedMediaAdmin(admin.ModelAdmin):
+
+    list_display = ('uuid', 'status')
+
+admin.site.register(CachedMedia, CachedMediaAdmin)

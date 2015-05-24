@@ -23,6 +23,8 @@ var BPlayerApp = function () {
     this.states = ['init', 'ready', 'playing', 'stopped', 'paused', 'buffering', 'loading', 'error'];
     this.history_expanded = false;
 
+    this.source; // 'live' or 'ondemand'
+
     /*
      * inline: complete html5-player, site needs to run entirely via ajax
      * popup:  popup-mode, inidactes the 'remote' component of the player
@@ -232,14 +234,21 @@ var BPlayerApp = function () {
         /*****************************************************************************
          * playlist actions
          *****************************************************************************/
-        $('body').on('click', '#bplayer_playlist_container .item', function (e) {
+        $('__body__').on('click', '#bplayer_playlist_container .item', function (e) {
             e.preventDefault();
             var index = $(this).index() -1;
 
             // TODO: ugly hack!!
             onair.handle_pagination(index);
 
-            self.controls({action: 'play', index: index});
+            // hack - select play vs pause
+            if($(this).hasClass('playing')){
+                //self.controls({action: 'pause'});
+            } else {
+                //self.controls({action: 'play', index: index});
+            }
+
+
         });
 
         /*****************************************************************************
@@ -248,7 +257,20 @@ var BPlayerApp = function () {
          *****************************************************************************/
         $('body').on('click', 'a[data-bplayer-controls]', function (e) {
 
-            console.warn('click action through data-bplayer-controls - this should not occur! bindings moved out!')
+            e.preventDefault();
+
+            var action = $(this).data('bplayer-controls');
+            var index = $(this).parents('.item').index() -1;
+
+            if(action == 'play') {
+                self.controls({action: 'play', index: index});
+            }
+
+            if(action == 'pause') {
+                self.controls({action: 'pause'});
+            }
+
+            onair.handle_pagination(index);
 
             /*
             e.preventDefault();
@@ -340,7 +362,7 @@ var BPlayerApp = function () {
                 uuid: uuid
             };
 
-            //self.controls(control);
+            self.controls(control);
 
         });
 
@@ -403,12 +425,10 @@ var BPlayerApp = function () {
         }
 
         if (control.action == 'play') {
-
             // TODO: handle situation with not existing index [fallback mode]
-
             if(control.index == undefined) {
-                // fallback situation
-                console.debug('no item ,assume fallback')
+                // offline situation
+                console.debug('no item, assuming offline mode')
                 url = self.stream_url;
             } else {
 
@@ -420,54 +440,53 @@ var BPlayerApp = function () {
 
                 var url;
 
-                if(item.on_air) {
+                if(item.onair) {
                     console.debug('item on-air')
                     url = self.stream_url;
                 } else {
                     console.debug('item on-demand');
                     url = media.stream.uri;
-                    url = self.base_url + url;
+                    //url = self.base_url + url;
                 }
             }
-
-
-
-
             self.play_file(url);
         }
 
 
         if (control.action == 'seek') {
-            self.current_sound.setPosition(self.current_sound.duration * control.position)
+
+
+            self.current_sound.setPosition(self.current_sound.duration * control.position);
+
+            /*
             if (self.current_sound.paused) {
                 self.current_sound.resume();
             } else if (self.current_sound.playState == 0) {
                 self.current_sound.play();
             }
+            */
         }
 
-        /* not used at the moment
+
+        /*
+         * attention! 'next' is actually the previous one in our case
+         */
         if (control.action == 'next') {
-            var total = self.playlist.length;
-            if (total > (self.current_index + 1)) {
-                self.controls({action: 'play', index: self.current_index + 1})
-            } else {
-                if(self.debug) {
-                    console.log('no more items');
-                }
-            }
-        }
-
-        if (control.action == 'prev') {
             if (self.current_index >= 1) {
-                self.controls({action: 'play', index: self.current_index - 1})
+
+                var index = self.current_index - 1;
+                self.controls({action: 'play', index: index})
+
+                // TODO: kind of hakish - hooking to pagination
+                onair.handle_pagination(index);
+
             } else {
                 if(self.debug) {
                     console.log('no previous items');
                 }
             }
         }
-        */
+
 
         if (control.action == 'stop') {
             self.current_sound.stop();
@@ -493,9 +512,6 @@ var BPlayerApp = function () {
 
         console.debug('BPlayerApp - play_file: ', url);
 
-
-
-
         try {
             self.current_sound.destruct();
         } catch (e) {
@@ -503,6 +519,8 @@ var BPlayerApp = function () {
                 console.debug('unable to destruct sound: ' + e.message);
             }
         }
+
+        //url = 'http://media.zhdk.sonicsquirrel.net/Soisloscerdos/Soisloscerdos/SLC08/Angel_Garcia-Happy_Jambo.mp3';
 
         if (self.current_sound == undefined) {
 
@@ -551,7 +569,7 @@ var BPlayerApp = function () {
         console.debug(data);
 
         var url;
-        if(data.on_air) {
+        if(data.onair) {
             var url = self.stream_url;
         } else {
             var url = data.item.stream.uri;
@@ -570,6 +588,7 @@ var BPlayerApp = function () {
                 console.debug('unable to destruct sound: ' + e.message);
             }
         }
+
 
         if (self.current_sound == undefined) {
 
@@ -658,7 +677,6 @@ var BPlayerApp = function () {
                 objects: self.playlist
             }));
 
-
             // update summary
             var totals = {
                 index: self.current_index + 1,
@@ -681,7 +699,18 @@ var BPlayerApp = function () {
             }
 
             self.playing_uuids = uuids;
-            self.mark_by_uuid();
+
+            setTimeout(function(){
+                self.mark_by_uuid();
+            }, 1)
+
+
+            // hack - mark 'onair' as playing
+            if(media.onair) {
+                setTimeout(function(){
+                    $('.item.onair').addClass('playing');
+                }, 200)
+            }
 
 
         } else {
@@ -689,7 +718,6 @@ var BPlayerApp = function () {
                 debug.debug('bplayer - no playlist available');
             }
         }
-
 
     };
 

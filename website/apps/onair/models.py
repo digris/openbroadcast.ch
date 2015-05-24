@@ -27,7 +27,12 @@ if not API_BASE_AUTH:
 
 class ScheduledItemManager(models.Manager):
     def history(self):
-        return self.get_query_set().filter(time_start__lte=timezone.now())
+        #return self.get_query_set().filter(time_start__lte=timezone.now())
+
+        print "history"
+        print 'now: %s' % datetime.datetime.now()
+
+        return self.get_query_set().filter(time_start__lte=datetime.datetime.now())
 
 
 class ScheduledItem(models.Model):
@@ -56,7 +61,7 @@ class ScheduledItem(models.Model):
         app_label = 'onair'
         verbose_name = _('Scheduled Item')
         verbose_name_plural = _('Scheduled Items')
-        ordering = ('time_start',)
+        ordering = ('-time_start',)
     
     
     def __unicode__(self):
@@ -112,6 +117,7 @@ class ScheduledItem(models.Model):
             self.emission_data = r.json()
 
         url = API_BASE_URL + self.item_url.replace('/api/', '') # sorry!
+        url += '?includes=label'
         log.info('calling API with %s' % url)
         r = requests.get(url, headers=headers, verify=False)
         if r.status_code == 200:
@@ -131,3 +137,4 @@ def scheduled_item_post_save(sender, **kwargs):
         log.debug('instance created: %s' % obj)
         obj.populate_from_api()
         obj.save()
+

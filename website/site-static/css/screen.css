@@ -10335,10 +10335,10 @@ x:-o-prefocus {
   margin: 0 0 10px 0;
 }
 
-#station_time, #back_on_air {
+#station_time, #back_onair {
   height: 60px;
 }
-#station_time > a, #back_on_air > a {
+#station_time > a, #back_onair > a {
   border: 2px solid black;
   padding: 8px 20px 9px;
   font-weight: 300;
@@ -10347,7 +10347,7 @@ x:-o-prefocus {
   letter-spacing: 1px;
   cursor: pointer;
 }
-#station_time > a:hover, #back_on_air > a:hover {
+#station_time > a:hover, #back_onair > a:hover {
   background: black;
   color: white;
 }
@@ -10355,7 +10355,7 @@ x:-o-prefocus {
 #onair_container.history #station_time {
   display: none;
 }
-#onair_container.history #back_on_air {
+#onair_container.history #back_onair {
   display: block;
 }
 
@@ -10365,31 +10365,6 @@ x:-o-prefocus {
   -ms-transform-origin: 48.2% 48.2%;
   -o-transform-origin: 48.2% 48.2%;
   transform-origin: 48.2% 48.2%;
-}
-
-.__disabled__ div[data-action="listen"] > span {
-  display: none;
-}
-.__disabled__ div[data-action="play"] > span {
-  display: none;
-}
-.__disabled__ body.ready div[data-action="listen"] span.listen, .__disabled__ body.paused div[data-action="listen"] span.listen {
-  display: block;
-}
-.__disabled__ body.playing div[data-action="listen"] span.pause {
-  display: block;
-}
-.__disabled__ body.loading div[data-action="listen"] span.loading {
-  display: block;
-}
-.__disabled__ body.ready div[data-action="play"] span.play, .__disabled__ body.paused div[data-action="play"] span.play {
-  display: block;
-}
-.__disabled__ body.playing div[data-action="play"] span.play {
-  display: block;
-}
-.__disabled__ body.loading div[data-action="play"] span.loading {
-  display: block;
 }
 
 #onair_container {
@@ -10408,16 +10383,39 @@ x:-o-prefocus {
   width: 100%;
   height: 100%;
 }
-#onair_container.init .show-while-fallback, #onair_container.fallback .show-while-fallback {
+
+#onair_container .switch-panel {
+  -webkit-transition: all 0.7s ease;
+  -moz-transition: all 0.7s ease;
+  transition: all 0.7s ease;
+}
+#onair_container.onair .switch-panel.offline {
+  display: none;
+}
+#onair_container.onair .switch-panel.onair {
   display: block;
 }
-#onair_container.init .hide-while-fallback, #onair_container.fallback .hide-while-fallback {
+#onair_container.history .switch-panel.offline {
   display: none;
 }
-#onair_container.onair .show-while-fallback, #onair_container.history .show-while-fallback {
+#onair_container.offline:not(.history) .switch-panel.onair {
+  -webkit-transform: rotateY(0deg) translateX(-140px) scale(0.9);
+  -webkit-filter: grayscale(1);
+  filter: grayscale(100%);
+}
+#onair_container.offline:not(.history) .meta-container {
   display: none;
 }
-#onair_container.onair .hide-while-fallback, #onair_container.history .hide-while-fallback {
+#onair_container .__disabled__.init .show-while-fallback, #onair_container .__disabled__.fallback .show-while-fallback {
+  display: block;
+}
+#onair_container .__disabled__.init .hide-while-fallback, #onair_container .__disabled__.fallback .hide-while-fallback {
+  display: none;
+}
+#onair_container .__disabled__.onair .show-while-fallback, #onair_container .__disabled__.history .show-while-fallback {
+  display: none;
+}
+#onair_container .__disabled__.onair .hide-while-fallback, #onair_container .__disabled__.history .hide-while-fallback {
   display: block;
 }
 
@@ -10755,11 +10753,7 @@ body.loading #onair_container .logo-container .controls span.loading {
 }
 
 #onair_container .item .container .controls {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
-  opacity: 0;
-  -webkit-transition: opacity 0.5s ease-out;
-  -moz-transition: opacity 0.5s ease-out;
-  transition: opacity 0.5s ease-out;
+  display: none;
 }
 #onair_container .item .container .controls span {
   display: none;
@@ -10768,8 +10762,7 @@ body.loading #onair_container .logo-container .controls span.loading {
   display: block;
 }
 #onair_container .item.current .container .controls {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
-  opacity: 1;
+  display: block;
 }
 #onair_container .item.onair .container .controls span.play {
   display: none !important;
@@ -10817,6 +10810,7 @@ body.loading #onair_container .item.playing .container .controls span.loading {
   overflow: hidden;
 }
 #onair_container .item .progress-container {
+  padding-top: 30px;
   bottom: -20px;
   position: absolute;
   width: 100%;
@@ -10827,14 +10821,31 @@ body.loading #onair_container .item.playing .container .controls span.loading {
 }
 #onair_container .item .progress-container .progress {
   cursor: pointer;
-  height: 16px;
+  height: 6px;
   padding: 0;
-  margin: 0;
+  margin: 40px 0 0 0;
+  -webkit-transition: height 0.5s ease-out;
+  -moz-transition: height 0.5s ease-out;
+  transition: height 0.5s ease-out;
   border: none;
-  background-color: rgba(255, 255, 255, 0.41);
+  background-color: rgba(255, 255, 255, 0.4);
 }
 #onair_container .item .progress-container .meter {
   background-color: white;
+}
+#onair_container .item .progress-container.hover {
+  bottom: 20px;
+}
+#onair_container .item .progress-container.hover .progress {
+  height: 24px;
+  background-color: rgba(0, 0, 0, 0.8);
+  -webkit-transition: height 0.1s ease-out;
+  -moz-transition: height 0.1s ease-out;
+  transition: height 0.1s ease-out;
+}
+#onair_container .item .progress-container.hover .meter {
+  background-color: rgba(255, 255, 255, 0.6);
+  border-right: 2px solid white;
 }
 #onair_container .item.history.current.playing .progress-container {
   bottom: 10px;
@@ -11285,6 +11296,13 @@ body.loading #onair_container .item.playing .container .controls span.loading {
   display: inline;
 }
 
+body.paused #bplayer_container .playlist .item.playing .controls .play {
+  display: inline;
+}
+body.paused #bplayer_container .playlist .item.playing .controls .pause {
+  display: none;
+}
+
 #bplayer_container .base {
   background: black;
   padding: 8px 0 2px;
@@ -11340,6 +11358,7 @@ body.loading #onair_container .item.playing .container .controls span.loading {
   color: white;
 }
 #bplayer_container section.playlist.history.compact .item {
+  display: none;
   padding: 5px 0 0 10px;
 }
 #bplayer_container section.playlist.history.compact .item a, #bplayer_container section.playlist.history.compact .item span {
@@ -11348,6 +11367,9 @@ body.loading #onair_container .item.playing .container .controls span.loading {
 #bplayer_container section.playlist.history.compact .item span {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5;
+}
+#bplayer_container section.playlist.history.compact .item.playing {
+  display: block;
 }
 #bplayer_container section.playlist.history.expanded .header {
   padding: 4px 0;
@@ -11367,8 +11389,11 @@ body.loading #onair_container .item.playing .container .controls span.loading {
 #bplayer_container section.playlist.history.expanded .item.hover {
   color: white;
 }
-#bplayer_container section.playlist.history.expanded .item.on-air {
+#bplayer_container section.playlist.history.expanded .item.playing {
   font-style: italic;
+  color: white;
+}
+#bplayer_container section.playlist.history.expanded .item.hover .col-action a, #bplayer_container section.playlist.history.expanded .item.playing .col-action a {
   color: white;
 }
 #bplayer_container section.playlist.history.expanded {
@@ -11382,7 +11407,7 @@ body.loading #onair_container .item.playing .container .controls span.loading {
   width: 4%;
 }
 #bplayer_container section.playlist.history.expanded .col-action a {
-  color: white;
+  color: rgba(255, 255, 255, 0.5);
 }
 #bplayer_container section.playlist.history.expanded .col-name {
   width: 22%;
