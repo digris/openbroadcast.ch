@@ -8,8 +8,8 @@ var OnAirApp = function () {
     this.use_history = false;
     this.container;
     this.bplayer = false;
-    this.max_items = 120;
-    this.initial_items = 60;
+    this.max_items = 600;
+    this.initial_items = 240;
     this.info_container;
     this.meta_container;
     this.meta_rating;
