@@ -1,4 +1,4 @@
-{% load cms_tags compress sekizai_tags i18n menu_tags bplayer_tags backfeed_tags pushy_client_tags %}<!doctype html>
+{% load cms_tags compress sekizai_tags i18n menu_tags bplayer_tags backfeed_tags pushy_client_tags nunjucks_tags %}<!doctype html>
 <html class="no-js{% if user.is_authenticated %} is-authenticated{% endif %}" lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="utf-8"/>
@@ -158,8 +158,8 @@
 <script src="{{ STATIC_URL }}js/lib/jquery-ui-1.10.4.custom.js"></script>
 
 <!-- other libraries -->
-<script src="{{ STATIC_URL }}js/lib/nunjucks-1.1.0/nunjucks.js"></script>
-<script src="{{ STATIC_URL }}js/lib/nunjucks-1.1.0/filters.js"></script>
+<!--<script src="{{ STATIC_URL }}js/lib/nunjucks-1.1.0/nunjucks.js"></script>-->
+<!--<script src="{{ STATIC_URL }}js/lib/nunjucks-1.1.0/filters.js"></script>-->
 
 
 <script src="{{ STATIC_URL }}js/lib/featherlight.js"></script>
@@ -191,17 +191,24 @@
 {% endcompress %}
 
 <!-- scripts exposed by apps/templatetags -->
+{% nunjucks_scripts %}
 {% pushy_client_scripts %}
 
 <script>
 
 
+    {% if not settings.DEBUG %}
+    window.console = {
+        log: function() {},
+        info: function() {},
+        warn: function() {},
+        debug: function() {}
+    };
+    {% endif %}
 
 
-
-
-    var nj = new nunjucks.Environment(new nunjucks.WebLoader('{{ STATIC_URL }}'));
-    nj = nunjucks_register_filters(nj);
+    //var nj = new nunjucks.Environment(new nunjucks.WebLoader('{{ STATIC_URL }}'));
+    //nj = nunjucks_register_filters(nj);
 
 
 

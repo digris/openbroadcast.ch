@@ -56,9 +56,12 @@ var AloginApp = function () {
         // auth-required elements
         // present login-dialog on click
         $('body').on('click', '[data-login-required]', function(e){
+
             if(!self.user || self.user == undefined) {
                 e.preventDefault();
                 e.stopPropagation();
+                e.stopImmediatePropagation();
+
                 self.dialog_response(self.login_url);
             }
         });

@@ -138,12 +138,13 @@ var OnAirApp = function () {
         /****************************************************************************
          * playback controls, forwarded to bplayer
          ****************************************************************************/
-        $('body').on('click', 'a[data-onair-controls]', function (e) {
+        $('body').on('click', '[data-onair-controls]', function (e) {
 
             e.preventDefault();
+
             var action = $(this).data('onair-controls');
 
-            console.debug(action + ' action through data-onair-controls')
+            console.debug(action + ' action through data-onair-controls');
 
             /*
              * actions are forwarded to the player app including the respective index.

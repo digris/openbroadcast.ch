@@ -154,6 +154,7 @@ INSTALLED_APPS = (
     'cmsplugin_filer_video',
 
     'turbolinks',
+    'nunjucks',
 
     # new-school-plugins
     'djangocms_text_ckeditor',
