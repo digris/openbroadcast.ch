@@ -95,6 +95,8 @@ class RemoteUserBackend(ModelBackend):
         user.first_name = data['first_name']
         user.last_name = data['last_name']
         user.email = data['email']
+        user.remote_uri = data['resource_uri']
+        user.profile_uri = data['profile']['resource_uri']
 
         # dumb group assignment
         for group_name in data['groups'].split(','):

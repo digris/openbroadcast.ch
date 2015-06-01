@@ -7,11 +7,13 @@ AchatApp = function () {
     this.user;
     this.messages_container;
     this.max_messages = 24;
+    this.static_url;
+    this.base_url;
 
     this.init = function () {
 
         if(self.debug) {
-            debug.debug('AchatApp: init');
+            console.debug('AchatApp: init');
         }
         self.messages_container = $('.messages-container', self.container);
         self.bindings();
@@ -22,10 +24,7 @@ AchatApp = function () {
 
     };
 
-
     this.bindings = function () {
-
-
 
         self.container.on('click', 'a[data-action="submit"]', function (e) {
             e.preventDefault();
@@ -45,7 +44,6 @@ AchatApp = function () {
             self.create_message($('.chat-message', self.container).html())
 
         });
-
 
         self.container.on('keydown', '.chat-message > p', function (e) {
             e = e || event;
@@ -73,7 +71,8 @@ AchatApp = function () {
             $(this).parents('form').removeClass('focus');
         });
 
-        // user login/logout handling
+        // user login/logout handling ?
+        // update user data on auth changes
         $(document).on('alogin', function(e, type, user){
             if(type == 'auth-state-change') {
                 if(user != undefined) {
@@ -86,18 +85,24 @@ AchatApp = function () {
         });
 
 
+        // TODO: check if good implementation...
         $('span.timestamp', self.messages_container).timeago();
 
 
-
+        // message input lookup strategies
         var strategies = [
-            { // mention strategy
-                match: /(^|\s)@(\w*)$/,
+            // user 'mention' strategy
+            // matches @ + min. 2 chars
+            {
+                match: /(^|\s)@(\w{1,})$/,
                 search: function (term, callback) {
                     //callback(cache[term], true);
-                    $.getJSON('/api/v1/auth/user/', { username__icontains: term })
+                    var data = {
+                        q: term
+                    }
+                    $.getJSON('/api/v1/auth/user/', data)
                         .done(function (resp) {
-                            //console.log(resp.objects)
+                            console.log(resp.objects)
                             callback(resp.objects);
                         })
                         .fail(function () {
@@ -105,8 +110,7 @@ AchatApp = function () {
                         });
                 },
                 template: function (value) {
-
-                    return value.username + ' | ' + value.email;
+                    return value.username + ' | ' + value.first_name + ' ' + value.last_name ;
                 },
                 replace: function (value) {
                     console.log(value)
@@ -115,35 +119,143 @@ AchatApp = function () {
                     //return '$1@:' + value.username + ': ';
                 },
                 cache: true
-            },
-            { // mention strategy
-                match: /(^|\s)#(\w*)$/,
-                search: function (term, callback) {
-                    //callback(cache[term], true);
-                    $.getJSON('/lsearch', { q: term })
-                        .done(function (resp) {
-                            console.log(resp)
-                            callback(resp.objects);
-                        })
-                        .fail(function () {
-                            callback([]);
-                        });
-                },
-                replace: function (value) {
-                    return '$1@' + value + ' ';
-                },
-                cache: true
             }
         ]
+
+
+        // textcomplete options
+        // https://github.com/yuku-t/jquery-textcomplete
         var option = {
             appendTo: $('body')
         };
 
-
+        // bind auto-complete / object linking
         $('#chat_input', self.container).textcomplete(strategies, option);
 
 
+        // handling user relations in chat messages
+        //self.messages_container.on('mouseover', 'a[data-ct="user"]', function(e){
+        //    e.preventDefault();
+        //    var profile_uri = $(this).data('profile_uri');
+        //    alert(profile_uri)
+        //});
+
+
+
     };
+
+    this.load = function () {
+        var url = '/api/v1/chat/message/' + '?limit=' + self.max_messages;
+        $.get(url, function (data) {
+            $.each(data.objects.reverse(), function (i, message) {
+                self.add_message(message);
+            });
+        });
+
+    };
+
+    // add messages to the container
+    // called from load & push callbacks
+    this.add_message = function (message) {
+
+        if(self.debug) {
+            console.debug('AchatApp: add_message', message);
+        }
+
+
+        // fix some values
+        //message.created = message.created.substr(11, 8);
+        if (self.user && message.user.username == self.user.username) {
+            message.user.is_me = true;
+        }
+
+        if (message.options && message.options.extra ) {
+            message.extra_classes = message.options.extra
+        }
+
+        var html = $(nj.render('achat/nj/message.html', {message: message}));
+        setTimeout(function () {
+            html.removeClass('new');
+        }, 100)
+
+        self.messages_container.prepend(html);
+        self.messages_container.find('.item.message:gt(' + self.max_messages + ')').remove()
+
+
+        // 'dynamic' timestamps
+        $('span.timestamp', self.messages_container).timeago('updateFromDOM');
+
+
+        var dom_el = $(html);
+
+
+
+
+
+        // check if user mentioned in message
+        console.log('current user', self.user)
+        console.log('mentioned users', message.mentions)
+
+        if(self.user) {
+            var is_mentioned = false;
+            var username = self.user.username;
+            $.each(message.mentions, function(i, item){
+                if(item.username == username) {
+                    is_mentioned = true;
+                }
+            });
+            if(is_mentioned) {
+                dom_el.addClass('mentioned')
+            }
+        }
+
+
+
+
+        self.message_bindings(dom_el);
+
+
+    };
+
+
+
+
+
+
+
+
+    this.message_bindings = function(el) {
+
+        $('a', el).each( function(i, item){
+
+            var uri = $(item).data('profile_uri');
+
+            $(item).tipso({
+                delay: 50,
+                speed: 100,
+                width: 350,
+                position: 'bottom',
+                background: '#000',
+                color: '#ffffff',
+                useTitle: false,
+                //tooltipHover: true,
+                content : function(inner) {
+                    var inner = $(this);
+                    $.get(uri, function(profile){
+                        inner.html(nj.render('achat/nj/profile.html', {
+                            object: profile,
+                            base_url: self.base_url
+                        }))
+                    })
+                }
+            });
+        })
+
+    };
+
+
+
+
 
 
     this.create_message = function (text, options) {
@@ -170,51 +282,23 @@ AchatApp = function () {
 
     };
 
-    this.load = function () {
-        var url = '/api/v1/chat/message/' + '?limit=' + self.max_messages;
-        $.get(url, function (data) {
-            $.each(data.objects.reverse(), function (i, message) {
-                self.add_message(message);
-            });
+    this.create_dummy_message = function(){
+
+        var data = JSON.stringify({
+            "text":"hallo <span data-ct=\"user\">@peter001</span>&nbsp;und 123<span></span><span></span><span></span>",
+            "options":{"extra":false}
         });
 
-    };
+        $.ajax({
+            url: '/api/v1/chat/message/',
+            type: 'POST',
+            contentType: 'application/json',
+            data: data,
+            dataType: 'json',
+            processData: false
+        })
 
-    // TODO: seems not to be needed anymore
-    this.push_message = function (message) {
-        self.add_message(message);
-    };
-
-    this.add_message = function (message) {
-
-        if(self.debug) {
-            debug.debug('AchatApp: add_message', message);
-        }
-
-        // fix some values
-        //message.created = message.created.substr(11, 8);
-        if (self.user && message.user.id == self.user.id) {
-            message.user.is_me = true;
-        }
-
-        if (message.options && message.options.extra ) {
-            message.extra_classes = message.options.extra
-        }
-
-        var html = $(nj.render('achat/nj/message.html', {message: message}));
-        setTimeout(function () {
-            html.removeClass('new');
-        }, 100)
-
-        self.messages_container.prepend(html);
-        self.messages_container.find('.item.message:gt(' + self.max_messages + ')').remove()
-
-
-        // 'dynamic' timestamps
-        $('span.timestamp', self.messages_container).timeago('updateFromDOM');
-
-
-    };
+    }
 
 };
 

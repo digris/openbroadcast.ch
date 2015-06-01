@@ -23,8 +23,8 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
     remote_id = models.IntegerField(null=True, blank=True)
-
-
+    remote_uri = models.CharField(max_length=256, null=True, blank=True)
+    profile_uri = models.CharField(max_length=256, null=True, blank=True)
 
 
 def validate_registration(key, value):
@@ -39,7 +39,6 @@ def validate_registration(key, value):
 
     r = requests.post(url, payload)
 
-    #print payload
     log.debug('%s %s' % (url, r.status_code))
 
     if not r.status_code == 200:
@@ -68,8 +67,4 @@ def register_user(username, email, password):
 
     r = requests.post(url, payload)
 
-
-    print r.text
-
-    #print payload
     log.debug('%s %s' % (url, r.status_code))

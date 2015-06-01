@@ -1,8 +1,6 @@
 <li class="item message new{% if message.user.is_me %} me{% endif %} {% if message.extra_classes %} {{ message.extra_classes }}{% endif %}"
      {% if message.user.is_me %}data-livebg_{% endif %}>
 
-
-
     <div class="body">
         {% if message.text|length() > 240%}
             <p class="truncated">
@@ -26,9 +24,9 @@
             << me >>
             {% else %}
                 {% if message.user.name %}
-                    <a href="#">{{ message.user.name }} ({{ message.user.username }})</a>
+                    <a  data-profile_uri="{{ message.user.profile_uri }}" href="#">{{ message.user.name }}<!--({{ message.user.username }})--></a>
                 {% else %}
-                    <a href="#">{{ message.user.username }}</a>
+                    <a  data-profile_uri="{{ message.user.profile_uri }}" href="#">{{ message.user.username }}</a>
                 {% endif %}
             {% endif %}
         </span>

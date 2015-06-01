@@ -47,8 +47,10 @@
         <dt>Airtime</dt>
         <dd>
             <span>{{ object.time_start|format_datetime('time_s') }}</span>
+            {% if not object.onair or 1 == 1 %}
             -
             <span>{{ object.time_end|format_datetime('time_s') }}</span>
+            {% endif %}
         </dd>
     </dl>
 
@@ -81,10 +83,8 @@
                title="{{ object.item.release.name }}">
                 {{ object.item.release.name|truncate(22) }}
 
-                {% if object.item.release.country_code or object.item.release.releasedate %}({% endif %}
                 {% if object.item.release.country_code %}{{ object.item.release.country_code }}{% endif %}
                 {% if object.item.release.releasedate %}{{ object.item.release.releasedate|truncate(4, false, '') }}{% endif %}
-                {% if object.item.release.country_code or object.item.release.releasedate %}){% endif %}
 
                 &nbsp;
             </a>

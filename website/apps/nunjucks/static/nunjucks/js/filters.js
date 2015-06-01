@@ -1,6 +1,6 @@
 var nunjucks_register_filters = function (nj) {
 
-    var nj = new nj.Environment();
+    //var nj = new nj.Environment();
 
     nj.addFilter('shorten', function (str, count) {
 

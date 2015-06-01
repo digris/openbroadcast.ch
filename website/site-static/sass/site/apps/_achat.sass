@@ -90,6 +90,10 @@ body
           border-left: solid 9px transparent
           border-right: solid 9px transparent
 
+
+        a[data-ct="user"]
+          cursor: pointer
+
       .author
         margin-top: 12px
         font-size: 80%
@@ -100,26 +104,21 @@ body
       &.me
         .body
           background: #CCC
-          //color: #fff
           color: #000
-
           &:after
             border-top: solid 9px #CCC
 
-      &.question
+      &.mentioned
         .body
-          position: relative
-          //min-height: 54px
-          p
-            //padding-right: 36px
-          .question-mark
-            position: absolute
-            display: block
-            right: 10px
-            top: 2px
-            span
-              font-size: rem-calc(28)
-              font-weight: bold
+          background: #000
+          color: #fff
+          a
+            color: #fff
+          &:after
+            border-top: solid 9px #000
+
+
+
 
 
 

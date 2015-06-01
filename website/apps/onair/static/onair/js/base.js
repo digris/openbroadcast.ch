@@ -8,8 +8,8 @@ var OnAirApp = function () {
     this.use_history = false;
     this.container;
     this.bplayer = false;
-    this.max_items = 600;
-    this.initial_items = 240;
+    this.max_items = 24;
+    this.initial_items = 12;
     this.info_container;
     this.meta_container;
     this.meta_rating;
@@ -37,19 +37,6 @@ var OnAirApp = function () {
         self.rating_container = $('#rating_container', self.container);
 
         self.bindings();
-
-        /*
-        setTimeout(function () {
-            self.load();
-        }, 200);
-
-        if(self.use_history) {
-            setTimeout(function () {
-                self.load_history(4);
-            }, 2000);
-        }
-        */
-
         self.load_schedule();
 
         pushy_client.subscribe('arating_vote', function(vote){
@@ -188,16 +175,6 @@ var OnAirApp = function () {
 
         $(document).trigger('onair', ['onair-mode-change', mode]);
 
-        /*
-        self.container.removeClass('onair history fallback init').addClass(mode);
-        // show/hide station-badge
-        if(mode == 'fallback' || mode == 'init') {
-            $('.logo-container', self.container).fadeIn(0);
-        }
-        if(mode == 'onair' || mode == 'history') {
-            $('.logo-container', self.container).fadeOut(0);
-        }
-        */
     };
 
 
@@ -247,7 +224,6 @@ var OnAirApp = function () {
 
                 console.debug('loaded item:', item);
 
-
                 var exists = -1;
                 $.each(self.local_data, function (j, local_item) {
                     if(self.local_data[j].time_start == item.time_start) {
@@ -264,42 +240,6 @@ var OnAirApp = function () {
                     self.local_data.push(item);
                     self.load_rating(item);
                 }
-
-
-
-
-
-                /*
-                console.log('exists?', exists);
-
-                if(exists >= 0) {
-                    var local_item = self.local_data[exists];
-                    self.local_data[exists] = item;
-                    self.local_data[exists].el = local_item.el;
-                } else {
-                    if (item.el == undefined) {
-                        item.el = false;
-                    }
-                    self.local_data.push(item);
-                }
-                */
-
-                /*
-                // TODO: find a nicer way to handle this
-                if (item.el == undefined) {
-                    item.el = false;
-                }
-
-                // TODO: update item in case it exists!!!
-                if($.inArray(item.time_start, self.timestamps) < 0) {
-                    self.timestamps.push(item.time_start);
-                    self.local_data.push(item);
-                } else {
-                    console.debug('item exists with timestamp', item.time_start);
-                }
-                */
-
-
 
             });
 
@@ -647,10 +587,4 @@ var OnAirApp = function () {
 
 };
 
-
-
-
 // moving to prototype based implementation
-
-
-

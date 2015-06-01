@@ -11641,6 +11641,9 @@ body {
   border-left: solid 9px transparent;
   border-right: solid 9px transparent;
 }
+#achat_container .messages .item.message .body a[data-ct="user"] {
+  cursor: pointer;
+}
 #achat_container .messages .item.message .author {
   margin-top: 12px;
   font-size: 80%;
@@ -11654,18 +11657,15 @@ body {
 #achat_container .messages .item.message.me .body:after {
   border-top: solid 9px #cccccc;
 }
-#achat_container .messages .item.message.question .body {
-  position: relative;
+#achat_container .messages .item.message.mentioned .body {
+  background: black;
+  color: white;
 }
-#achat_container .messages .item.message.question .body .question-mark {
-  position: absolute;
-  display: block;
-  right: 10px;
-  top: 2px;
+#achat_container .messages .item.message.mentioned .body a {
+  color: white;
 }
-#achat_container .messages .item.message.question .body .question-mark span {
-  font-size: 1.86667rem;
-  font-weight: bold;
+#achat_container .messages .item.message.mentioned .body:after {
+  border-top: solid 9px black;
 }
 
 @media only screen and (max-width: 40em) {
@@ -12358,6 +12358,72 @@ body.fs-video .footer-wrapper {
 .reveal-modal.tiny-fw {
   width: 380px;
   margin-left: -190px;
+}
+
+/* Tipso Bubble Styles */
+.tipso_bubble {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  border-radius: 0px;
+  z-index: 9999;
+  padding: 10px;
+}
+.tipso_bubble > .tipso_arrow {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.tipso_style {
+  cursor: help;
+  border-bottom: 1px dotted;
+}
+
+/* Tipso Bubble Div */
+.tipso_bubble > .tipso_arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 8px solid;
+  pointer-events: none;
+}
+.tipso_bubble.top > .tipso_arrow {
+  border-top-color: black;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  top: 100%;
+  left: 50%;
+  margin-left: -8px;
+}
+.tipso_bubble.bottom > .tipso_arrow {
+  border-bottom-color: black;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  border-top-color: transparent;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -8px;
+}
+.tipso_bubble.left > .tipso_arrow {
+  border-left-color: black;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+  top: 50%;
+  left: 100%;
+  margin-top: -8px;
+}
+.tipso_bubble.right > .tipso_arrow {
+  border-right-color: black;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  top: 50%;
+  right: 100%;
+  margin-top: -8px;
 }
 
 body, html {

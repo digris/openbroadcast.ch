@@ -18,7 +18,7 @@
                         {% if item.releasetype or item.country %}
                         <li>
                             {% if item.country %}
-                                ({{ item.country }})
+                                {{ item.country }}
                             {% endif %}
                             {% if item.releasetype %}
                                 {{ item.releasetype|capitalize }}
