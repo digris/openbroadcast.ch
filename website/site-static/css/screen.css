@@ -10821,7 +10821,7 @@ body.loading #onair_container .item.playing .container .controls span.loading {
 }
 #onair_container .item .progress-container .progress {
   cursor: pointer;
-  height: 6px;
+  height: 8px;
   padding: 0;
   margin: 40px 0 0 0;
   -webkit-transition: height 0.5s ease-out;
@@ -10832,6 +10832,13 @@ body.loading #onair_container .item.playing .container .controls span.loading {
 }
 #onair_container .item .progress-container .meter {
   background-color: white;
+}
+#onair_container .item .progress-container .buffer {
+  display: block;
+  height: 1px;
+  position: absolute;
+  bottom: 0;
+  background-color: #e8e8e8;
 }
 #onair_container .item .progress-container.hover {
   bottom: 20px;
@@ -11368,7 +11375,7 @@ body.paused #bplayer_container .playlist .item.playing .controls .pause {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5;
 }
-#bplayer_container section.playlist.history.compact .item.playing {
+#bplayer_container section.playlist.history.compact .item.playing:first-child {
   display: block;
 }
 #bplayer_container section.playlist.history.expanded .header {
@@ -11731,39 +11738,38 @@ div.backfeed .content-holder {
   background: white;
 }
 
-.dropdown-menu {
+ul.dropdown-menu {
   background-color: white;
   box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.4);
   list-style: none;
   padding: 0;
   margin: 0;
 }
-.dropdown-menu li {
+ul.dropdown-menu li {
   padding: 6px 12px;
   color: black;
 }
-.dropdown-menu li:first-child {
+ul.dropdown-menu li:first-child {
   border-top: none;
 }
-.dropdown-menu li:hover {
-  background: rgba(0, 0, 0, 0.07);
-  color: black;
-  border-right: 4px solid black;
+ul.dropdown-menu li:hover {
+  background: black;
+  color: white;
 }
-.dropdown-menu li:hover a {
-  color: black;
+ul.dropdown-menu li:hover a {
+  color: white;
 }
-.dropdown-menu .active {
-  background-color: white;
-  border-right: 4px solid black;
+ul.dropdown-menu li.active {
+  background: black;
+  color: white;
 }
-.dropdown-menu .active a {
-  color: black;
+ul.dropdown-menu li.active a {
+  color: white;
 }
-.dropdown-menu a {
+ul.dropdown-menu a {
   color: #a5a5a5;
 }
-.dropdown-menu a:hover {
+ul.dropdown-menu a:hover {
   cursor: pointer;
 }
 
@@ -11956,8 +11962,6 @@ body.fs-video .footer-wrapper {
 }
 
 #site_messages {
-  background: black;
-  box-shadow: 0px -1px 3px 1px rgba(51, 51, 51, 0.16);
   z-index: 999;
   position: fixed;
   bottom: 0;
@@ -11971,24 +11975,22 @@ body.fs-video .footer-wrapper {
 #site_messages ul.messages > li {
   position: relative;
   color: white;
-  background: rgba(255, 255, 255, 0.2);
+  background: black;
   padding: 2px 2px 2px 8px;
   margin: 2px 0;
-  border-left: 2px solid white;
-  border-right: 6px solid white;
 }
-#site_messages ul.messages > li.info {
+#site_messages ul.messages > li .__disabled__.info {
   border-color: #a0d3e8;
 }
-#site_messages ul.messages > li.success {
+#site_messages ul.messages > li .__disabled__.success {
   border-color: #64ae00;
 }
-#site_messages ul.messages > li.warning {
+#site_messages ul.messages > li .__disabled__.warning {
   border-color: #f08a24;
   font-style: italic;
   text-transform: uppercase;
 }
-#site_messages ul.messages > li.alert, #site_messages ul.messages > li.error {
+#site_messages ul.messages > li .__disabled__.alert, #site_messages ul.messages > li .__disabled__.error {
   border-color: #cd222d;
   font-weight: bold;
   text-transform: uppercase;
@@ -12738,16 +12740,20 @@ body footer .social-button:hover {
   box-shadow: 2px 2px 3px 1px rgba(51, 51, 51, 0.16);
 }
 
-#levelbridge {
+.level-container {
   height: 60px;
+  bottom: 0px;
+  position: absolute;
+  width: 100%;
+  overflow: hidden;
 }
-#levelbridge ul {
+.level-container ul {
   list-style-type: none;
   height: 60px;
   margin-top: 5px;
 }
-#levelbridge ul > li {
-  background: #999999;
+.level-container ul > li {
+  background: white;
   width: 2px;
   margin-right: 1px;
   display: block;
@@ -12755,9 +12761,6 @@ body footer .social-button:hover {
   top: 50%;
   position: relative;
   transform: translateY(-50%);
-}
-#levelbridge ul > li:hover {
-  background: white;
 }
 
 #levelbridge_icon {

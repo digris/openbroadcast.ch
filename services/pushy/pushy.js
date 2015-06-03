@@ -49,8 +49,8 @@ io.on('connection', function (socket) {
     redis.on('pmessage', function (pattern, channel, data) {
         data = JSON.parse(data);
 
-        console.log(channel);
-        console.log(data);
+        //console.log(channel);
+        //console.log(data);
         //debug('channel', channel);
         //debug('data', data);
         //logger.info('channel', channel);

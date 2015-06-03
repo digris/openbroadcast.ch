@@ -1,10 +1,11 @@
-
-
-
-#levelbridge
-
-
+.level-container
   height: 60px
+  bottom: 0px
+  position: absolute
+  width: 100%
+  overflow: hidden
+  //padding: 0 10px
+
 
   ul
     list-style-type: none
@@ -12,7 +13,7 @@
     margin-top: 5px
 
   ul > li
-    background: #999
+    background: #fff
     width: 2px
     margin-right: 1px
     display: block
@@ -21,8 +22,6 @@
     position: relative
     transform: translateY(-50%)
 
-    &:hover
-      background: $primary-color
 
 
 // in 'ul.title-area'

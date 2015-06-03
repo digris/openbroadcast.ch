@@ -47,12 +47,30 @@ AchatApp = function () {
 
         self.container.on('keydown', '.chat-message > p', function (e) {
             e = e || event;
+
+
             if (e.keyCode === 13 && !e.shiftKey) {
-                $('form', self.container).submit();
+
+                // check if autocomplete dropdown is active
+                var ac_visible = $('ul.dropdown-menu').is(":visible")
+
+                if(!ac_visible) {
+                    $('form', self.container).submit();
+                }
+
                 e.preventDefault();
                 return false;
+
             }
             return true;
+        });
+
+        // clean pasted in content-editable
+        self.container.on('paste', '.chat-message > p', function (e) {
+            var el = $(this)
+            setTimeout(function(){
+                el.html(el.text())
+            }, 1)
 
         });
 
@@ -84,17 +102,15 @@ AchatApp = function () {
             }
         });
 
-
         // TODO: check if good implementation...
         $('span.timestamp', self.messages_container).timeago();
-
 
         // message input lookup strategies
         var strategies = [
             // user 'mention' strategy
             // matches @ + min. 2 chars
             {
-                match: /(^|\s)@(\w{1,})$/,
+                match: /(^|\s)@(\w{2,})$/,
                 search: function (term, callback) {
                     //callback(cache[term], true);
                     var data = {
@@ -102,7 +118,6 @@ AchatApp = function () {
                     }
                     $.getJSON('/api/v1/auth/user/', data)
                         .done(function (resp) {
-                            console.log(resp.objects)
                             callback(resp.objects);
                         })
                         .fail(function () {
@@ -110,18 +125,27 @@ AchatApp = function () {
                         });
                 },
                 template: function (value) {
-                    return value.username + ' | ' + value.first_name + ' ' + value.last_name ;
+
+                    var html = '<span>' + value.username + '</span>';
+                    if(value.first_name || value.last_name) {
+                        html += ' - <em>"';
+                        if(value.first_name) {
+                            html += value.first_name + ' ';
+                        }
+                        if(value.last_name) {
+                            html += value.last_name;
+                        }
+                        html += '"</em>';
+                    }
+                    return html;
+
                 },
                 replace: function (value) {
-                    console.log(value)
-                    //return '$1<a href="#">' + value.username + '</a>   ';
-                    return '$1<span data-ct="user">' + '@' + value.username + '</span>   ';
-                    //return '$1@:' + value.username + ': ';
+                    return '$1<span data-ct="user">' + '@' + value.username + '</span> ';
                 },
                 cache: true
             }
-        ]
-
+        ];
 
         // textcomplete options
         // https://github.com/yuku-t/jquery-textcomplete
@@ -131,16 +155,6 @@ AchatApp = function () {
 
         // bind auto-complete / object linking
         $('#chat_input', self.container).textcomplete(strategies, option);
-
-
-        // handling user relations in chat messages
-        //self.messages_container.on('mouseover', 'a[data-ct="user"]', function(e){
-        //    e.preventDefault();
-        //    var profile_uri = $(this).data('profile_uri');
-        //    alert(profile_uri)
-        //});
-
-
 
     };
 
@@ -188,13 +202,9 @@ AchatApp = function () {
 
         var dom_el = $(html);
 
-
-
-
-
         // check if user mentioned in message
-        console.log('current user', self.user)
-        console.log('mentioned users', message.mentions)
+        // console.log('current user', self.user)
+        // console.log('mentioned users', message.mentions)
 
         if(self.user) {
             var is_mentioned = false;
@@ -209,53 +219,39 @@ AchatApp = function () {
             }
         }
 
-
-
-
         self.message_bindings(dom_el);
 
-
     };
-
-
-
-
-
-
 
 
     this.message_bindings = function(el) {
 
         $('a', el).each( function(i, item){
-
             var uri = $(item).data('profile_uri');
-
-            $(item).tipso({
-                delay: 50,
-                speed: 100,
-                width: 350,
-                position: 'bottom',
-                background: '#000',
-                color: '#ffffff',
-                useTitle: false,
-                //tooltipHover: true,
-                content : function(inner) {
-                    var inner = $(this);
-                    $.get(uri, function(profile){
-                        inner.html(nj.render('achat/nj/profile.html', {
-                            object: profile,
-                            base_url: self.base_url
-                        }))
-                    })
-                }
-            });
+            if(uri) {
+                $(item).tipso({
+                    delay: 50,
+                    speed: 100,
+                    width: 350,
+                    position: 'bottom',
+                    background: '#000',
+                    color: '#ffffff',
+                    useTitle: false,
+                    //tooltipHover: true,
+                    content : function(inner) {
+                        var inner = $(this);
+                        $.get(uri, function(profile){
+                            inner.html(nj.render('achat/nj/profile.html', {
+                                object: profile,
+                                base_url: self.base_url
+                            }))
+                        })
+                    }
+                });
+            }
         })
 
     };
-
-
-
-
 
 
     this.create_message = function (text, options) {
@@ -274,7 +270,14 @@ AchatApp = function () {
                 data: data,
                 dataType: 'json',
                 processData: false
-            })
+            }).always(function(response){
+                if(response.status >= 300) {
+                    var text = response.responseText;
+                    var status = response.status;
+
+                    alert(status + ' - ' + text)
+                }
+            });
 
         }
         $('.chat-message > p', self.container).html('')

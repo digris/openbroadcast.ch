@@ -4734,8 +4734,9 @@
                     }
                 };
 
-                url += (url.indexOf('?') === -1 ? '?' : '&') + 's=' +
-                (new Date().getTime());
+
+                //url += (url.indexOf('?') === -1 ? '?' : '&') + 's=' +
+                //(new Date().getTime());
 
                 // Synchronous because this API shouldn't be used in
                 // production (pre-load compiled templates instead)

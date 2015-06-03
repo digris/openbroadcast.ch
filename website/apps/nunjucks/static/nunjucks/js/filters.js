@@ -255,11 +255,10 @@ var nunjucks_register_filters = function (nj) {
     */
 
     nj.addFilter('urlize', function (str, target) {
-
         if(str == undefined) {
             return '';
         }
-
+        //return str
         return str.autolink()
     });
 
@@ -283,7 +282,10 @@ String.prototype.autolink = function() {
 
     pattern = /(^|[\s\n]|<br\/?>)((?:https?|ftp):\/\/[\-A-Z0-9+\u0026\u2019@#\/%?=()~_|!:,.;]*[\-A-Z0-9+\u0026@#\/%=~()_|])/gi;
     if (!(options.length > 0)) {
-      return this.replace(pattern, "$1<a href='$2'>$2</a>");
+
+        return this.replace(pattern, "$1<a href='$2' title='$2' target='_blank'> (link) </a>");
+
+      //return this.replace(pattern, "$1<a href='$2'>$2</a>");
     }
     option = options[0];
     linkAttributes = ((function() {
@@ -299,7 +301,8 @@ String.prototype.autolink = function() {
     })()).join('');
     return this.replace(pattern, function(match, space, url) {
       var link;
-      link = (typeof option.callback === "function" ? option.callback(url) : void 0) || ("<a href='" + url + "'" + linkAttributes + ">" + url + "</a>");
+      //link = (typeof option.callback === "function" ? option.callback(url) : void 0) || ("<a href='" + url + "'" + linkAttributes + ">" + url + "</a>");
+      link = (typeof option.callback === "function" ? option.callback(url) : void 0) || ("<a href='" + url + "'" + linkAttributes + ">" + url.slice(0, 5) + "</a>");
       return "" + space + link;
     });
   };

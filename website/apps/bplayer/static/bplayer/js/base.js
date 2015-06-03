@@ -455,8 +455,18 @@ var BPlayerApp = function () {
 
         if (control.action == 'seek') {
 
+            // check if already in buffer
 
-            self.current_sound.setPosition(self.current_sound.duration * control.position);
+            var loaded = self.current_sound.duration * self.current_sound.bytesLoaded;
+            var position = self.current_sound.duration * control.position;
+
+            console.log('loaded', loaded, 'position', position)
+
+            if(position < loaded) {
+                self.current_sound.setPosition(self.current_sound.duration * control.position);
+            }
+
+
 
             /*
             if (self.current_sound.paused) {
@@ -632,14 +642,10 @@ var BPlayerApp = function () {
 
     this.progress = function (data) {
 
-        //console.log(data);
-
-        //console.log('pos: ' + data.position + ' : duration: ' + data.duration);
         var pos = data.position / data.duration;
         var width = $('.playhead', self.container).width();
 
         $('.playhead .indicator', self.container).css('background-position-x', (pos * width) + 'px');
-
 
         // TODO: make efficient selector
         $('.playing .progress > .meter').css('width', (pos * 100) + '%');
@@ -647,9 +653,15 @@ var BPlayerApp = function () {
     };
 
     this.loading = function (data) {
+
+        //console.debug('loading', data.bytesLoaded, data.bytesTotal)
+
         var pos = data.bytesLoaded / data.bytesTotal;
         var width = $('.playhead', self.container).width();
-        $('.playhead .loading', self.container).css('background-position-x', pos * width + 'px');
+
+        $('.playing .progress > .buffer').css('width', (pos * 100) + '%');
+
+        //$('.playhead .loading', self.container).css('background-position-x', pos * width + 'px');
     };
 
     this.update_player = function () {

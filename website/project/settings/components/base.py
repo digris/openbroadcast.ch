@@ -3,6 +3,7 @@ import os
 import sys
 import posixpath
 
+
 gettext = lambda s: s
 _ = gettext
 

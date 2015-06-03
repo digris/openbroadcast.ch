@@ -56,6 +56,7 @@ class Message(models.Model):
     def html(self):
 
         if self.rendered_text:
+            #pass
             return self.rendered_text
 
         bits = []
@@ -70,7 +71,7 @@ class Message(models.Model):
                         username=user.username,
                         name=user.get_full_name(),
                         id=user.id,
-                        profile_uri=user.profile_uri,
+                        profile_uri=user.profile_uri or 'false',
                     )
                 except:
                     pass

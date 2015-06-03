@@ -3,9 +3,11 @@ import logging
 from django.shortcuts import render_to_response
 from django.shortcuts import RequestContext
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import login
 from django.contrib.auth import logout
-from django.http import HttpResponse
+from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from remoteauth.forms import RegistrationForm
 from registration.views import RegistrationView
@@ -24,6 +26,12 @@ def alogin_login(request):
             login(request, user)
 
             log.debug('user "%s" logged in.' % user.username)
+
+
+            messages.add_message(
+                request, messages.INFO,
+                _(u'Welcome {username}. You have successfully logged in.').format(username=user.username)
+            )
 
             return HttpResponse(json.dumps({
                 'success': True,
@@ -61,6 +69,7 @@ def alogin_register(request):
 def alogin_logout(request):
     log.debug('user "%s" logged out.' % request.user.username)
     logout(request)
+    messages.add_message(request, messages.INFO, _(u'You have successfully logged out.'))
     response = {
         'success': True,
         'user': False,

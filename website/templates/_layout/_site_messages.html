@@ -3,14 +3,10 @@
 {% addtoblock 'js-post' %}
 <script>
     $(function(){
-        var messages_container = $('#site_messages');
-        messages_container.on('click', 'a.mark-seen', function(e){
+        $('body').on('click', '#site_messages a.mark-seen', function(e) {
             e.preventDefault();
             $(this).parents('li').fadeOut(500, function(){
                 $(this).remove();
-                if(! $('li', messages_container).length) {
-                    messages_container.fadeOut(500);
-                }
             });
         });
     });
@@ -18,10 +14,11 @@
 {% endaddtoblock %}
 
 <!-- message container -->
+<div id="messages_container">
 {% if messages %}
 <div id="site_messages">
     <div class="row">
-        <div class="small-12 columns">
+        <div class="small-10 small-centered columns">
             <ul class="messages no-bullet">
                 {% for message in messages %}
                 <li class="{% if message.tags %}{{ message.tags }}{% endif %}">
@@ -34,4 +31,5 @@
     </div>
 </div>
 {% endif %}
+</div>
 <!-- end message container -->

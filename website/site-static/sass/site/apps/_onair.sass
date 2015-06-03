@@ -521,7 +521,7 @@ body.loading #onair_container
 
       .progress
         cursor: pointer
-        height: 6px
+        height: 8px
         padding: 0
         margin: 40px 0 0 0
         +single-transition(height, 0.5s)
@@ -530,6 +530,12 @@ body.loading #onair_container
         background-color: rgba(255, 255, 255, 0.4)
       .meter
         background-color: #ffffff
+      .buffer
+        display: block
+        height: 1px
+        position: absolute
+        bottom: 0
+        background-color: #e8e8e8
 
     .progress-container.hover
       bottom: 20px

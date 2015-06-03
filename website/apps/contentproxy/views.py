@@ -28,6 +28,8 @@ class MediaResourceView(LoginRequiredMixin, View):
 
         log.debug(u'media request for %s by %s' % (self.request.user, uuid))
 
+        requested_range = self.request.META.get('HTTP_RANGE', None)
+
         cached_media, created = CachedMedia.objects.get_or_create(uuid=uuid)
 
         resource_url = API_BASE_URL + 'v1/library/track/%s/' % uuid
@@ -36,5 +38,21 @@ class MediaResourceView(LoginRequiredMixin, View):
 
         #sf_response['X-Accel-Limit-Rate'] = 1024 * 1000
         sf_response['X-Accel-Buffering'] = 'no'
+
+
+        if requested_range:
+            requested_range = requested_range.split('=')[1].split('-')
+
+            log.debug(u'requested range %s' % (requested_range))
+            if requested_range and requested_range[0] == '0':
+                print 'INITIAL PLAY'
+            else:
+                print 'SEEMS TO BE SEEK'
+
+        print sf_response
+        print
+        print '///////////////////////////////////////////////'
+        print
+
 
         return sf_response

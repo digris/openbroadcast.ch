@@ -50,12 +50,7 @@ var AJAXLoader = function () {
             if(t == 'auth-state-change') {
                 self.reflect_uri_change($.address.path())
             }
-
         });
-
-
-
-
 
     };
 
@@ -100,6 +95,11 @@ var AJAXLoader = function () {
                 // replaces main-content & global navigation
                 $("#navigation_container").replaceWith($(data).filter("#navigation_container"));
                 $("#page_content_container").replaceWith($(data).find("#page_content_container"));
+
+                $("#messages_container").replaceWith($(data).find("#messages_container"));
+
+
+
 
                 $('body').css('opacity', 1.0);
 

@@ -235,7 +235,8 @@ body.paused #bplayer_container
       span
         +opacity(0.5)
     .item.playing
-      display: block
+      &:first-child
+        display: block
 
   section.playlist.history.expanded
     .header

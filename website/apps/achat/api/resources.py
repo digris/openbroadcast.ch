@@ -2,8 +2,10 @@ from django.contrib.auth import get_user_model
 from tastypie.resources import ModelResource
 from tastypie.authentication import SessionAuthentication, Authentication, MultiAuthentication
 from tastypie.authorization import Authorization
+from tastypie.exceptions import ImmediateHttpResponse
+from tastypie.http import HttpForbidden
 from achat.models import Message, MentionedUser
-from achat.util import parse_text, extract_mentioned_users, message_to_html
+from achat.util import parse_text, extract_mentioned_users, message_to_html, is_spam
 
 User = get_user_model()
 
@@ -26,9 +28,16 @@ class MessageResource(ModelResource):
         parsed_text = parse_text(html_text)
         bundle.data['text'] = parsed_text
 
+
+
+        spam, reason = is_spam(parsed_text, bundle.request)
+        if spam:
+            raise ImmediateHttpResponse(
+                HttpForbidden(reason)
+            )
+
         # creation needed here to get pk for assignment
         bundle = super(MessageResource, self).obj_create(bundle, user=bundle.request.user)
-
 
         mentioned_users = extract_mentioned_users(html_text)
         for user in mentioned_users:
