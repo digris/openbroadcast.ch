@@ -232,6 +232,8 @@ MIDDLEWARE_CLASSES = (
     # /cms
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #'django.middleware.cache.FetchFromCacheMiddleware',
+
+    'django_downloadview.SmartDownloadMiddleware',
 )
 
 """

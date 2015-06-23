@@ -11,7 +11,9 @@ from django.http import HttpResponse
 from django.views.generic import View
 from braces.views import LoginRequiredMixin
 
-from models import CachedMedia
+from django_downloadview import PathDownloadView
+
+from models import CachedMedia, CachedEvent
 
 API_BASE_URL = getattr(settings, 'API_BASE_URL', None)
 
@@ -20,39 +22,87 @@ if not API_BASE_URL:
 
 log = logging.getLogger(__name__)
 
+
+
+
+
 class MediaResourceView(LoginRequiredMixin, View):
 
     def get(self, *args, **kwargs):
 
         uuid = kwargs.get('uuid', None)
-
         log.debug(u'media request for %s by %s' % (self.request.user, uuid))
 
+
+
         requested_range = self.request.META.get('HTTP_RANGE', None)
+        referer = self.request.META.get('HTTP_REFERER', None)
+        print 'REF: %s' % referer
+
+
 
         cached_media, created = CachedMedia.objects.get_or_create(uuid=uuid)
 
         resource_url = API_BASE_URL + 'v1/library/track/%s/' % uuid
 
         sf_response = sendfile(self.request, cached_media.path)
-
-        #sf_response['X-Accel-Limit-Rate'] = 1024 * 1000
         sf_response['X-Accel-Buffering'] = 'no'
-
 
         if requested_range:
             requested_range = requested_range.split('=')[1].split('-')
 
             log.debug(u'requested range %s' % (requested_range))
             if requested_range and requested_range[0] == '0':
-                print 'INITIAL PLAY'
-            else:
-                print 'SEEMS TO BE SEEK'
+                log.info(u'initial play')
 
-        print sf_response
-        print
-        print '///////////////////////////////////////////////'
-        print
+
+                event = CachedEvent(
+                    ct = 'media',
+                    ct_uuid = uuid,
+                    user = self.request.user,
+                    action = 'stream'
+                )
+                event.save()
+
+
+            else:
+                log.debug(u'seek play')
+
+        #import time
+        #time.sleep(3)
+        print sf_response.streaming
+        print sf_response.status_code
+
 
 
         return sf_response
+
+
+
+
+
+
+
+
+class DVMediaResourceView(PathDownloadView):
+
+    def get(self, *args, **kwargs):
+        self.uuid = kwargs.get('uuid', None)
+        return super(DVMediaResourceView, self).get(*args, **kwargs)
+
+
+    def get_path(self):
+        """Return path inside fixtures directory."""
+        # Get path from URL resolvers or as_view kwarg.
+        relative_path = super(DVMediaResourceView, self).get_path()
+
+        print 'uuid: %s' % self.uuid
+
+        log.debug(u'media request for %s by %s' % (self.request.user, self.uuid))
+        requested_range = self.request.META.get('HTTP_RANGE', None)
+        cached_media, created = CachedMedia.objects.get_or_create(uuid=self.uuid)
+
+
+        # Make it absolute.
+        absolute_path = cached_media.path
+        return absolute_path

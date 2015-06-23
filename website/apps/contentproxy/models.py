@@ -9,11 +9,14 @@ from django.dispatch import receiver
 from django.utils.translation import ugettext as _
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
+from django.contrib.auth import get_user_model
+
 MEDIA_ROOT = getattr(settings, 'MEDIA_ROOT', None)
 MEDIA_URL = getattr(settings, 'MEDIA_URL', None)
 API_BASE_URL = getattr(settings, 'API_BASE_URL', None)
 API_BASE_AUTH = getattr(settings, 'API_BASE_AUTH', None)
 
+User = get_user_model()
 log = logging.getLogger(__name__)
 
 if not API_BASE_URL:
@@ -84,4 +87,31 @@ def cached_media_post_save(sender, **kwargs):
         log.debug('instance created: %s' % obj)
         obj.get_remote_file()
         obj.save()
+
+
+
+
+class CachedEvent(models.Model):
+
+    created = models.DateTimeField(auto_now_add=True, editable=False)
+    ct = models.CharField(max_length=36)
+    ct_uuid = models.CharField(max_length=36)
+    user = models.ForeignKey(User)
+    action = models.CharField(max_length=36)
+    processed = models.BooleanField(default=False)
+
+    class Meta:
+        app_label = 'contentproxy'
+        verbose_name = _('Cached Event')
+
+    def __unicode__(self):
+        return u'%s - %s - %s' % (self.ct, self.user, self.action)
+
+
+
+
+@receiver(post_save, sender=CachedEvent)
+def cached_event_post_save(sender, **kwargs):
+    obj = kwargs['instance']
+    log.debug('event created: %s - %s' % (obj, obj.created))
 
