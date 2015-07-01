@@ -37,7 +37,13 @@ var OnAirApp = function () {
         self.rating_container = $('#rating_container', self.container);
 
         self.bindings();
-        self.load_schedule();
+
+
+
+        setTimeout(function(){
+            self.load_schedule();
+        }, 2000)
+
 
         pushy_client.subscribe('arating_vote', function(vote){
             self.update_vote(vote);

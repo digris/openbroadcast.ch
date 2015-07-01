@@ -1,3 +1,4 @@
+{% load i18n %}
 <section data-livebg id="onair_container" class="init">
 
     <div class="row show-for-medium-up">
@@ -57,6 +58,22 @@
                                     </span>
 
                                 </div>
+
+
+
+
+                                <div class="loading">
+
+                                    <p class="loading-message">
+                                        <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+                                        <br>
+                                        <span>
+                                            {% trans 'Loading the player for the first time can take some seconds.' %}
+                                        </span>
+                                    </p>
+
+                                </div>
+
 
 
                             </div>

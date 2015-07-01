@@ -10728,6 +10728,24 @@ x:-o-prefocus {
   color: black !important;
 }
 
+#onair_container.init:not(.offline) .logo-container .wrapper {
+  width: 80%;
+}
+#onair_container.init:not(.offline) .logo-container .controls {
+  display: none;
+}
+#onair_container.init:not(.offline) .logo-container .loading {
+  padding-top: 20px;
+  display: block;
+}
+#onair_container.init:not(.offline) .logo-container .loading p.loading-message span {
+  font-weight: 300;
+  font-size: 0.86667rem;
+}
+#onair_container.init:not(.offline) .logo-container .loading p.loading-message i, #onair_container.init:not(.offline) .logo-container .loading p.loading-message span {
+  color: white;
+}
+
 #onair_container .logo-container .controls span.pause {
   display: none;
 }

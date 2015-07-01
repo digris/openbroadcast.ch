@@ -409,6 +409,26 @@
         color: #000 !important
 
 
+
+// loading display during init
+#onair_container.init:not(.offline)
+  .logo-container
+    .wrapper
+      width: 80%
+    .controls
+      display: none
+    .loading
+      padding-top: 20px
+      display: block
+      p.loading-message
+        span
+          font-weight: 300
+          font-size: rem-calc(13)
+        i, span
+          color: white
+
+
+
 // controls in fallback panel
 #onair_container
   .logo-container .controls

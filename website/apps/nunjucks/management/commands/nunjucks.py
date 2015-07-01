@@ -52,9 +52,16 @@ class Command(NoArgsCommand):
             for path, storage in finder.list([]):
 
                 # TOTO: find a correct way to get nj-paths
+
+
+
                 if '/nj/' in path:
 
+                    print path
+                    print storage.path(path)
                     compiled_template = self.compiler.compile(storage.path(path))
+
+                    print compiled_template
 
                     compiled_template = re.sub('/Users/ohrstrom/Documents/Code/openbroadcast.ch/website/apps/(\w*)/static/', '', compiled_template)
 
@@ -66,6 +73,7 @@ class Command(NoArgsCommand):
                         'inner': compiled_template
                         }
                     )
+
 
 
         tpl = render_to_string('nunjucks/compile/templates.js', {'templates': templates})

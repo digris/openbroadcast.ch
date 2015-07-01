@@ -17,6 +17,8 @@ class NunjucksCompiler(object):
         template = ''
         command = '%s %s' % (nunjucks_settings.NUNJUCKS_BIN, path)
 
+        print command
+
         log.debug(u'%s' % command)
 
         p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
