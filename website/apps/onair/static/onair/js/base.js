@@ -163,9 +163,9 @@ var OnAirApp = function () {
         }
         self.is_onair = onair_status;
         if(onair_status) {
-            self.container.removeClass('offline').addClass('onair');
+            self.container.removeClass('init offline').addClass('onair');
         } else {
-            self.container.removeClass('onair').addClass('offline');
+            self.container.removeClass('init onair').addClass('offline');
         }
 
         $(document).trigger('onair', ['onair-state-change', onair_status]);
@@ -177,7 +177,7 @@ var OnAirApp = function () {
             console.debug('OnAirApp - set_mode:', mode);
         }
         self.mode = mode;
-        self.container.removeClass('live history').addClass(mode);
+        self.container.removeClass('init live history').addClass(mode);
 
         $(document).trigger('onair', ['onair-mode-change', mode]);
 

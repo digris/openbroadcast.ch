@@ -71,33 +71,39 @@
     .switch-panel.offline
       display: none
 
+
+  //
+    &.offline:not(.history)
+      .switch-panel.onair
+        -webkit-transform: rotateY(0deg) translateX(-140px) scale(0.9)
+        -webkit-filter: grayscale(1)
+        filter: grayscale(100%)
+      .meta-container
+        display: none
+
+  // alternative handling, see #905
   &.offline:not(.history)
     .switch-panel.onair
-      -webkit-transform: rotateY(0deg) translateX(-140px) scale(0.9)
-      -webkit-filter: grayscale(1)
-      filter: grayscale(100%)
+      display: none
 
     .meta-container
       display: none
 
+    .meta-container-offline
+      display: block
+      p
+        margin-bottom: 4px
+      ul > li
+        a
+          padding: 0
+          text-decoration: underline
+          &:hover
+            background: transparent
+        span
+          +opacity(0.5)
 
-
-
-  .__disabled__
-    &.init,
-    &.fallback
-      .show-while-fallback
-        display: block
-      .hide-while-fallback
-        display: none
-
-    &.onair,
-    &.history
-      .show-while-fallback
-        display: none
-      .hide-while-fallback
-        display: block
-
+    #media_prev_next
+      display: none !important
 
 
 
@@ -585,13 +591,6 @@ body.loading #onair_container
 
   .meta-container
 
-    margin-left: 30px
-
-    a:hover
-      background: #000
-      padding: 4px 8px
-      color: white
-
     dl
       margin: 0
       dt, dd
@@ -603,16 +602,24 @@ body.loading #onair_container
         +opacity(0.5)
         float: left
         padding-right: 7px
-    .separator
-      width: 40%
-      border-top: 2px solid #000
-      margin: 12px 0px
 
     > div
       +opacity(0.1)
       &.fade-in
         +single-transition(opacity, 1.5s)
         +opacity(1.0)
+
+  .meta-container,
+  .meta-container-offline
+    margin-left: 30px
+    a:hover
+      background: #000
+      padding: 4px 8px
+      color: white
+    .separator
+      width: 40%
+      border-top: 2px solid #000
+      margin: 12px 0px
 
 
 
