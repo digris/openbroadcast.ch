@@ -19,7 +19,7 @@ var OnAirApp = function () {
     this.current_item = false;
     this.timestamps = [];
     this.load_schedule_timeout = false;
-    this.default_timeout = 60000;
+    this.default_timeout = 30000;
 
     // holding on-air status and playback modes
     this.is_onair = false;
@@ -208,10 +208,16 @@ var OnAirApp = function () {
                     self.load_schedule(2)
                 }, Number((meta.next_starts_in + 1) * 1000));
             } else {
+
+                console.debug('EMPTY SCHEDULE > OFFLINE')
+
                 if(self.load_schedule_timeout) {
                     clearTimeout(self.load_schedule_timeout);
                 }
+
+                console.debug('setting refresh timeout to', self.default_timeout)
                 self.load_schedule_timeout = setTimeout(function(){
+                    console.debug('call from timeout')
                     self.load_schedule()
                 }, self.default_timeout);
             }
