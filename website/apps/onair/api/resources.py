@@ -71,7 +71,7 @@ class VoteObject(object):
 
         url = API_BASE_URL + 'v1/rating/vote/%s/%s/%s/%s/' % (ct, obj_id, value, user.remote_id)
 
-        log.info('calling API with %s' % url)
+        log.debug('calling API with %s' % url)
 
         r = requests.get(url, headers=headers, verify=False)
 
@@ -148,7 +148,7 @@ class VoteResource(Resource):
             url = API_BASE_URL + 'v1/rating/vote/%s/%s/' % (ct, obj_id)
             headers = {'Authorization': 'ApiKey %s:%s' % (API_BASE_AUTH['username'], API_BASE_AUTH['api_key'])}
 
-            log.info('calling API with %s' % url)
+            log.debug('calling API with %s' % url)
 
             r = requests.get(url, headers=headers, verify=False)
 

@@ -48,7 +48,7 @@ class MediaResourceView(LoginRequiredMixin, View):
                     ct = 'alibrary.media',
                     ct_uuid = uuid,
                     user = self.request.user,
-                    action = 'stream'
+                    action = 'radio-stream'
                 )
 
             else:

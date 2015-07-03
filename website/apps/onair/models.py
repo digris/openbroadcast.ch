@@ -111,14 +111,14 @@ class ScheduledItem(models.Model):
         headers = {'Authorization': 'ApiKey %s:%s' % (API_BASE_AUTH['username'], API_BASE_AUTH['api_key'])}
 
         url = API_BASE_URL + self.emission_url.replace('/api/', '') # sorry!
-        log.info('calling API with %s' % url)
+        log.debug('calling API with %s' % url)
         r = requests.get(url, headers=headers, verify=False)
         if r.status_code == 200:
             self.emission_data = r.json()
 
         url = API_BASE_URL + self.item_url.replace('/api/', '') # sorry!
         url += '?includes=label'
-        log.info('calling API with %s' % url)
+        log.debug('calling API with %s' % url)
         r = requests.get(url, headers=headers, verify=False)
         if r.status_code == 200:
             self.item_data = r.json()

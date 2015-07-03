@@ -59,7 +59,7 @@ class CachedMedia(models.Model):
         headers = {'Authorization': 'ApiKey %s:%s' % (API_BASE_AUTH['username'], API_BASE_AUTH['api_key'])}
 
         url = API_BASE_URL + 'v1/library/track/{0}/stream.mp3'.format(self.uuid)
-        log.info('calling API with %s' % url)
+        log.debug('calling API with %s' % url)
         r = requests.get(url, headers=headers, stream=True, verify=False)
 
         directory = os.path.join(MEDIA_ROOT, 'private', 'media', self.uuid)
@@ -114,7 +114,7 @@ class CachedEvent(models.Model):
 
         url = API_BASE_URL + 'v1/atracker/event/%s/%s/%s/%s/' % (self.ct, self.ct_uuid, self.action, self.user.remote_id)
 
-        log.info('calling API with %s' % url)
+        log.debug('calling API with %s' % url)
 
         r = requests.get(url, headers=headers, verify=False)
 

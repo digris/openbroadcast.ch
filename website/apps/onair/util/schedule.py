@@ -27,7 +27,7 @@ def fetch_from_api(range_start=0, range_end=0, channel=None):
     # get schedule from API
     url = API_BASE_URL + 'v1/abcast/channel/%s/schedule/?range_start=%s&range_end=%s' % (CHANNEL_ID, range_start, range_end)
     headers = {'Authorization': 'ApiKey %s:%s' % (API_BASE_AUTH['username'], API_BASE_AUTH['api_key'])}
-    log.info('calling API with %s' % url)
+    log.debug('calling API with %s' % url)
 
     r = requests.get(url, headers=headers, verify=False)
     if not r.status_code == 200:
