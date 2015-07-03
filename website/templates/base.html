@@ -1,4 +1,4 @@
-{% load cms_tags compress sekizai_tags i18n menu_tags bplayer_tags backfeed_tags pushy_client_tags nunjucks_tags raven %}<!doctype html>
+{% load cms_tags compress sekizai_tags i18n menu_tags bplayer_tags backfeed_tags pushy_client_tags nunjucks_tags analytics raven %}<!doctype html>
 <html class="no-js{% if user.is_authenticated %} is-authenticated{% endif %}" lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="utf-8"/>
@@ -58,6 +58,9 @@
     {% endcomment %}
 
     {% render_block "css" %}
+
+    {% analytics %}
+
     <!--
     <script type="text/javascript" src="http://fast.fonts.net/jsapi/1ca04628-74f1-4059-8dd2-c91d0a2a63bc.js"></script>
     -->
