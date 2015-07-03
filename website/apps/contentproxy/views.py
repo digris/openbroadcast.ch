@@ -14,6 +14,7 @@ from braces.views import LoginRequiredMixin
 from django_downloadview import PathDownloadView
 
 from models import CachedMedia, CachedEvent
+from tasks import create_cached_event
 
 API_BASE_URL = getattr(settings, 'API_BASE_URL', None)
 
@@ -22,28 +23,16 @@ if not API_BASE_URL:
 
 log = logging.getLogger(__name__)
 
-
-
-
-
 class MediaResourceView(LoginRequiredMixin, View):
+
 
     def get(self, *args, **kwargs):
 
         uuid = kwargs.get('uuid', None)
         log.debug(u'media request for %s by %s' % (self.request.user, uuid))
 
-
-
         requested_range = self.request.META.get('HTTP_RANGE', None)
-        referer = self.request.META.get('HTTP_REFERER', None)
-        print 'REF: %s' % referer
-
-
-
         cached_media, created = CachedMedia.objects.get_or_create(uuid=uuid)
-
-        resource_url = API_BASE_URL + 'v1/library/track/%s/' % uuid
 
         sf_response = sendfile(self.request, cached_media.path)
         sf_response['X-Accel-Buffering'] = 'no'
@@ -55,25 +44,15 @@ class MediaResourceView(LoginRequiredMixin, View):
             if requested_range and requested_range[0] == '0':
                 log.info(u'initial play')
 
-
-                event = CachedEvent(
-                    ct = 'media',
+                create_cached_event.delay(
+                    ct = 'alibrary.media',
                     ct_uuid = uuid,
                     user = self.request.user,
                     action = 'stream'
                 )
-                event.save()
-
 
             else:
                 log.debug(u'seek play')
-
-        #import time
-        #time.sleep(3)
-        print sf_response.streaming
-        print sf_response.status_code
-
-
 
         return sf_response
 

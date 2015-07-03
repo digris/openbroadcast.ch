@@ -283,7 +283,7 @@
         // chat
         /////////////////////////////////////////////
         achat = new AchatApp();
-        achat.debug = true;
+        achat.debug = false;
         achat.container = $('#achat_container');
         achat.static_url = '{{ STATIC_URL }}';
         achat.base_url = '{{ settings.STATIC_BASE_URL }}';
@@ -299,7 +299,7 @@
         // on-air
         /////////////////////////////////////////////
         onair = new OnAirApp();
-        onair.debug = false;
+        onair.debug = true;
         onair.bplayer = bplayer;
         onair.base_url = '{{ settings.STATIC_BASE_URL }}';
         onair.use_history = {% if settings.ONAIR_LOAD_HISTORY %}true{% else %}false{% endif %};

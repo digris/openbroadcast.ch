@@ -580,6 +580,14 @@ body.loading #onair_container
       .progress-container
         bottom: 10px
 
+  .item:not(.playing),
+  .item.details-visible
+    .progress-container
+      display: none
+
+  .item.onair
+    .progress-container
+      display: none
 
 
 

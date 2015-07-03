@@ -58,7 +58,7 @@ var OnAirApp = function () {
 
         // flip-handling
         // direct hover
-        self.meta_container.on('mouseover', 'a', function (e) {
+        self.meta_container.on('mouseover', 'a[data-ct]', function (e) {
             $('.current', self.info_container).addClass('details-visible');
             if (self.info_timeout) {
                 clearTimeout(self.info_timeout);
@@ -234,7 +234,7 @@ var OnAirApp = function () {
 
             $.each(objects, function (i, item) {
 
-                console.debug('loaded item:', item);
+                //console.debug('loaded item:', item);
 
                 var exists = -1;
                 $.each(self.local_data, function (j, local_item) {
@@ -244,11 +244,11 @@ var OnAirApp = function () {
                 });
 
                 if(exists >= 0) {
-                    console.debug('item present. replacing in local_items', exists)
+                    //console.debug('item present. replacing in local_items', exists)
                     self.local_data[exists] = item;
 
                 } else {
-                    console.debug('item not present. adding to local_items', exists)
+                    //console.debug('item not present. adding to local_items', exists)
                     self.local_data.push(item);
                     self.load_rating(item);
                 }
@@ -524,18 +524,23 @@ var OnAirApp = function () {
 
     this.update_rating_display = function () {
         // set current values
-
         if(!self.current_item) {
             console.warn('no current item!');
             return;
         }
 
-        try {
-            $('.vote-up a > span', self.rating_container).html(self.current_item.item.votes.up);
-            $('.vote-down  a > span', self.rating_container).html(self.current_item.item.votes.down);
-            self.rating_container.removeClass('disabled');
-        } catch(e) {
+        if(!self.is_onair) {
+            $('.vote-up a > span', self.rating_container).html('-');
+            $('.vote-down  a > span', self.rating_container).html('-');
             self.rating_container.addClass('disabled');
+        } else {
+            try {
+                $('.vote-up a > span', self.rating_container).html(self.current_item.item.votes.up);
+                $('.vote-down  a > span', self.rating_container).html(self.current_item.item.votes.down);
+                self.rating_container.removeClass('disabled');
+            } catch(e) {
+                self.rating_container.addClass('disabled');
+            }
         }
     };
 

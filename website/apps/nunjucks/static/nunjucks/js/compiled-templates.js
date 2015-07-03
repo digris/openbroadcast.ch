@@ -1276,9 +1276,23 @@ output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "ba
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"item", env.opts.autoescape)),"label", env.opts.autoescape)),"absolute_url", env.opts.autoescape), env.opts.autoescape);
 output += "\">\n                ";
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"item", env.opts.autoescape)),"label", env.opts.autoescape)),"name", env.opts.autoescape), env.opts.autoescape);
-output += "&nbsp;\n            </a>\n        </dd>\n\n    </dl>\n\n\n    <div class=\"separator\"></div>\n</div>\n\n\n\n";
+output += "&nbsp;\n            </a>\n        </dd>\n\n    </dl>\n\n\n    <div class=\"separator\"></div>\n\n    ";
+var t_1;
+t_1 = runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"item", env.opts.autoescape)),"relations", env.opts.autoescape);
+frame.set("relations", t_1, true);
+if(!frame.parent) {
+context.setVariable("relations", t_1);
+context.addExport("relations");
+}
+output += "\n    ";
+env.getTemplate("onair/nj/relations.html", false, "onair/nj/meta.html", function(t_4,t_2) {
+if(t_4) { cb(t_4); return; }
+t_2.render(context.getVariables(), frame.push(), function(t_5,t_3) {
+if(t_5) { cb(t_5); return; }
+output += t_3
+output += "\n\n\n</div>\n\n\n\n";
 cb(null, output);
-;
+})});
 } catch (e) {
   cb(runtime.handleError(e, lineno, colno));
 }
@@ -1297,6 +1311,54 @@ var colno = null;
 var output = "";
 try {
 output += "<h1>---</h1>";
+cb(null, output);
+;
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+return {
+root: root
+};
+})();
+})();
+
+
+
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["onair/nj/relations.html"] = (function() {function root(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+output += "<div class=\"relations\">\n    ";
+if(runtime.contextOrFrameLookup(context, frame, "relations")) {
+output += "\n    <ul class=\"no-bullet\">\n        ";
+frame = frame.push();
+var t_3 = runtime.contextOrFrameLookup(context, frame, "relations");
+if(t_3) {var t_2 = t_3.length;
+for(var t_1=0; t_1 < t_3.length; t_1++) {
+var t_4 = t_3[t_1];
+frame.set("relation", t_4);
+frame.set("loop.index", t_1 + 1);
+frame.set("loop.index0", t_1);
+frame.set("loop.revindex", t_2 - t_1);
+frame.set("loop.revindex0", t_2 - t_1 - 1);
+frame.set("loop.first", t_1 === 0);
+frame.set("loop.last", t_1 === t_2 - 1);
+frame.set("loop.length", t_2);
+output += "\n        <li>\n            <a target=\"_blank\" href=\"";
+output += runtime.suppressValue(runtime.memberLookup((t_4),"url", env.opts.autoescape), env.opts.autoescape);
+output += "\">\n                ";
+output += runtime.suppressValue(runtime.memberLookup((t_4),"name", env.opts.autoescape), env.opts.autoescape);
+output += "\n            </a>\n        ";
+;
+}
+}
+frame = frame.pop();
+output += "\n    </ul>\n    ";
+;
+}
+output += "\n</div>\n\n";
 cb(null, output);
 ;
 } catch (e) {

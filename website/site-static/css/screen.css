@@ -10881,6 +10881,13 @@ body.loading #onair_container .item.playing .container .controls span.loading {
 #onair_container .item.history.current.playing .progress-container {
   bottom: 10px;
 }
+#onair_container .item:not(.playing) .progress-container,
+#onair_container .item.details-visible .progress-container {
+  display: none;
+}
+#onair_container .item.onair .progress-container {
+  display: none;
+}
 
 #onair_container .meta-container dl {
   margin: 0;
@@ -11592,6 +11599,7 @@ body {
   border: 1px solid #999999;
   padding: 2px 4px;
   margin: 0;
+  height: 30px;
 }
 #achat_container form div.chat-message p:focus {
   border: 1px solid black;

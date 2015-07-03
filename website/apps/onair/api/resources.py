@@ -67,8 +67,9 @@ class VoteObject(object):
         example:     /api/v1/rating/vote/alibrary.media/13535/0/1243/
         """
 
-        url = API_BASE_URL + 'v1/rating/vote/%s/%s/%s/%s/' % (ct, obj_id, value, user.remote_id)
         headers = {'Authorization': 'ApiKey %s:%s' % (API_BASE_AUTH['username'], API_BASE_AUTH['api_key'])}
+
+        url = API_BASE_URL + 'v1/rating/vote/%s/%s/%s/%s/' % (ct, obj_id, value, user.remote_id)
 
         log.info('calling API with %s' % url)
 

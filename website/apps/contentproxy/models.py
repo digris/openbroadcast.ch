@@ -108,10 +108,27 @@ class CachedEvent(models.Model):
         return u'%s - %s - %s' % (self.ct, self.user, self.action)
 
 
+    def create_remote_event(self):
+
+        headers = {'Authorization': 'ApiKey %s:%s' % (API_BASE_AUTH['username'], API_BASE_AUTH['api_key'])}
+
+        url = API_BASE_URL + 'v1/atracker/event/%s/%s/%s/%s/' % (self.ct, self.ct_uuid, self.action, self.user.remote_id)
+
+        log.info('calling API with %s' % url)
+
+        r = requests.get(url, headers=headers, verify=False)
+
+        #return r.json()
 
 
 @receiver(post_save, sender=CachedEvent)
 def cached_event_post_save(sender, **kwargs):
     obj = kwargs['instance']
-    log.debug('event created: %s - %s' % (obj, obj.created))
+    if not obj.processed:
+        log.info('event post save: %s - %s' % (obj, obj.created))
+
+        obj.create_remote_event()
+
+
+
 
