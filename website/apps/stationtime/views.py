@@ -8,7 +8,7 @@ TIME_ZONE = getattr(settings, 'TIME_ZONE', None)
 def current_time(request):
     now = datetime.datetime.now()
     data = {
-        'time': now.strftime("%Y-%m-%d %H:%M:%S"),
+        'time': now.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
         'timezone': u'%s' % TIME_ZONE
     }
     return HttpResponse(json.dumps(data), mimetype="application/json")

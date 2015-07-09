@@ -33,6 +33,10 @@ StationTimeApp = function () {
 
     this.run_clock = function(time) {
 
+        if(self.debug) {
+            console.debug('StationTimeApp: run_clock', time);
+        }
+
         if(time != undefined) {
             self.current_time = new Date(time); // '2014-01-01 10:11:55'
             self.display_clock();
@@ -50,6 +54,11 @@ StationTimeApp = function () {
     };
 
     this.display_clock = function() {
+
+
+        if(self.debug) {
+            console.debug('StationTimeApp: display_clock', self.current_time);
+        }
 
         var time_string = [
             self.pad(self.current_time.getHours()),
