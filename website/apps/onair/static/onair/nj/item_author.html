@@ -53,10 +53,10 @@
             </div>
         </div>
 
-        {% if item.d_tags %}
+        {% if item.tags %}
         <div class="row tags text-left">
             <div class="small-12 columns">
-                {% for tag in item.d_tags.split(', ') %}
+                {% for tag in item.tags %}
                 <span class="tag">{{ tag }}</span>
                 {% endfor %}
             </div>

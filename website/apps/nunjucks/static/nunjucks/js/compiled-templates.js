@@ -574,10 +574,10 @@ output += "</a>\n                </p>\n                ";
 ;
 }
 output += "\n\n            </div>\n        </div>\n\n        ";
-if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"d_tags", env.opts.autoescape)) {
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"tags", env.opts.autoescape)) {
 output += "\n        <div class=\"row tags text-left\">\n            <div class=\"small-12 columns\">\n                ";
 frame = frame.push();
-var t_4 = (lineno = 62, colno = 45, runtime.callWrap(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"d_tags", env.opts.autoescape)),"split", env.opts.autoescape), "item[\"d_tags\"][\"split\"]", [","]));
+var t_4 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"tags", env.opts.autoescape);
 if(t_4) {var t_3 = t_4.length;
 for(var t_2=0; t_2 < t_4.length; t_2++) {
 var t_5 = t_4[t_2];
@@ -589,14 +589,9 @@ frame.set("loop.revindex0", t_3 - t_2 - 1);
 frame.set("loop.first", t_2 === 0);
 frame.set("loop.last", t_2 === t_3 - 1);
 frame.set("loop.length", t_3);
-output += "\n                ";
-if(!runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "loop")),"last", env.opts.autoescape)) {
-output += "<span class=\"tag\">";
+output += "\n                <span class=\"tag\">";
 output += runtime.suppressValue(t_5, env.opts.autoescape);
-output += "</span>";
-;
-}
-output += "\n                ";
+output += "</span>\n                ";
 ;
 }
 }
@@ -693,10 +688,10 @@ output += "\n                </p>\n                ";
 ;
 }
 output += "\n            </div>\n        </div>\n\n        ";
-if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"d_tags", env.opts.autoescape)) {
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"tags", env.opts.autoescape)) {
 output += "\n        <div class=\"row tags text-left\">\n            <div class=\"small-12 columns\">\n                ";
 frame = frame.push();
-var t_4 = (lineno = 58, colno = 45, runtime.callWrap(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"d_tags", env.opts.autoescape)),"split", env.opts.autoescape), "item[\"d_tags\"][\"split\"]", [", "]));
+var t_4 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"tags", env.opts.autoescape);
 if(t_4) {var t_3 = t_4.length;
 for(var t_2=0; t_2 < t_4.length; t_2++) {
 var t_5 = t_4[t_2];
@@ -810,10 +805,10 @@ output += "</a>\n                </p>\n                ";
 ;
 }
 output += "\n\n            </div>\n        </div>\n\n        ";
-if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"d_tags", env.opts.autoescape)) {
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"tags", env.opts.autoescape)) {
 output += "\n        <div class=\"row tags text-left\">\n            <div class=\"small-12 columns\">\n                ";
 frame = frame.push();
-var t_4 = (lineno = 61, colno = 45, runtime.callWrap(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"d_tags", env.opts.autoescape)),"split", env.opts.autoescape), "item[\"d_tags\"][\"split\"]", [", "]));
+var t_4 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"tags", env.opts.autoescape);
 if(t_4) {var t_3 = t_4.length;
 for(var t_2=0; t_2 < t_4.length; t_2++) {
 var t_5 = t_4[t_2];
@@ -919,11 +914,11 @@ output += runtime.suppressValue(env.getFilter("truncate").call(context, runtime.
 output += "\n            </p>\n            ";
 ;
 }
-output += "\n        </div>\n    </div>\n\n    ";
-if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"d_tags", env.opts.autoescape)) {
-output += "\n    <div class=\"row tags text-left\">\n        <div class=\"small-12 columns\">\n            ";
+output += "\n        </div>\n    </div>\n\n        ";
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"tags", env.opts.autoescape)) {
+output += "\n        <div class=\"row tags text-left\">\n            <div class=\"small-12 columns\">\n                ";
 frame = frame.push();
-var t_4 = (lineno = 49, colno = 41, runtime.callWrap(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"d_tags", env.opts.autoescape)),"split", env.opts.autoescape), "item[\"d_tags\"][\"split\"]", [","]));
+var t_4 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"tags", env.opts.autoescape);
 if(t_4) {var t_3 = t_4.length;
 for(var t_2=0; t_2 < t_4.length; t_2++) {
 var t_5 = t_4[t_2];
@@ -935,19 +930,14 @@ frame.set("loop.revindex0", t_3 - t_2 - 1);
 frame.set("loop.first", t_2 === 0);
 frame.set("loop.last", t_2 === t_3 - 1);
 frame.set("loop.length", t_3);
-output += "\n            ";
-if(!runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "loop")),"last", env.opts.autoescape)) {
-output += "<span class=\"tag\">";
+output += "\n                <span class=\"tag\">";
 output += runtime.suppressValue(t_5, env.opts.autoescape);
-output += "</span>";
-;
-}
-output += "\n            ";
+output += "</span>\n                ";
 ;
 }
 }
 frame = frame.pop();
-output += "\n        </div>\n    </div>\n    ";
+output += "\n            </div>\n        </div>\n        ";
 ;
 }
 output += "\n\n</div>";
@@ -1030,10 +1020,10 @@ output += "</a>\n                </p>\n                ";
 ;
 }
 output += "\n\n            </div>\n        </div>\n\n        ";
-if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"d_tags", env.opts.autoescape)) {
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"tags", env.opts.autoescape)) {
 output += "\n        <div class=\"row tags text-left\">\n            <div class=\"small-12 columns\">\n                ";
 frame = frame.push();
-var t_4 = (lineno = 58, colno = 45, runtime.callWrap(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"d_tags", env.opts.autoescape)),"split", env.opts.autoescape), "item[\"d_tags\"][\"split\"]", [","]));
+var t_4 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"tags", env.opts.autoescape);
 if(t_4) {var t_3 = t_4.length;
 for(var t_2=0; t_2 < t_4.length; t_2++) {
 var t_5 = t_4[t_2];
@@ -1045,14 +1035,9 @@ frame.set("loop.revindex0", t_3 - t_2 - 1);
 frame.set("loop.first", t_2 === 0);
 frame.set("loop.last", t_2 === t_3 - 1);
 frame.set("loop.length", t_3);
-output += "\n                ";
-if(!runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "loop")),"last", env.opts.autoescape)) {
-output += "<span class=\"tag\">";
+output += "\n                <span class=\"tag\">";
 output += runtime.suppressValue(t_5, env.opts.autoescape);
-output += "</span>";
-;
-}
-output += "\n                ";
+output += "</span>\n                ";
 ;
 }
 }
@@ -1144,10 +1129,10 @@ output += "\n                </p>\n                ";
 ;
 }
 output += "\n            </div>\n        </div>\n\n        ";
-if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"d_tags", env.opts.autoescape)) {
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"tags", env.opts.autoescape)) {
 output += "\n        <div class=\"row tags text-left\">\n            <div class=\"small-12 columns\">\n                ";
 frame = frame.push();
-var t_4 = (lineno = 51, colno = 45, runtime.callWrap(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"d_tags", env.opts.autoescape)),"split", env.opts.autoescape), "item[\"d_tags\"][\"split\"]", [","]));
+var t_4 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"tags", env.opts.autoescape);
 if(t_4) {var t_3 = t_4.length;
 for(var t_2=0; t_2 < t_4.length; t_2++) {
 var t_5 = t_4[t_2];
@@ -1159,14 +1144,9 @@ frame.set("loop.revindex0", t_3 - t_2 - 1);
 frame.set("loop.first", t_2 === 0);
 frame.set("loop.last", t_2 === t_3 - 1);
 frame.set("loop.length", t_3);
-output += "\n                ";
-if(!runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "loop")),"last", env.opts.autoescape)) {
-output += "<span class=\"tag\">";
+output += "\n                <span class=\"tag\">";
 output += runtime.suppressValue(t_5, env.opts.autoescape);
-output += "</span>";
-;
-}
-output += "\n                ";
+output += "</span>\n                ";
 ;
 }
 }
