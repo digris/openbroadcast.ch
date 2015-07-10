@@ -15,11 +15,23 @@
 
     <meta http-equiv="last-modified" content="{% page_attribute 'changed_date' %} UTC"/>
 
+    <script>
+        /*
+         * handle #_=_ from facebook oauth redirect
+         * https://developers.facebook.com/blog/post/552/
+         * http://stackoverflow.com/questions/7485111/weird-url-appended
+         */
+        if(window.location.hash == '#_=_') {
+            window.location.hash = '';
+        }
+    </script>
+
     {% block meta_opengraph %}{% endblock %}
 
     <link rel="icon" type="image/png" href="{{ STATIC_URL }}img/base/icon.png"/>
 
     <link rel="stylesheet" href="{{ STATIC_URL }}css/screen.css" id="style_light"/>
+
     <!--
     <link rel="stylesheet" href="{{ STATIC_URL }}css/screen-dark.css" id="style_dark" disabled />
     -->

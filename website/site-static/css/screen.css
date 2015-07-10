@@ -11825,6 +11825,11 @@ ul.dropdown-menu a:hover {
   color: #cd222d;
   font-style: italic;
 }
+#dialog_container .social-auth .service {
+  padding: 6px;
+  margin: 0 0 12px;
+  background: rgba(0, 0, 0, 0.1);
+}
 
 body.registration .section-claim-token {
   padding: 20px 20px 10px;

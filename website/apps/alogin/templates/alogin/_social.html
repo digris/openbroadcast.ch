@@ -1,0 +1,13 @@
+
+<p>Oder Anmelden mit:</p>
+
+<div class="row social-auth">
+    {% for service in social_auth.backends %}
+    <div class="small-12 medium-6 columns{% if forloop.last %} end{% endif %}">
+        <div class="service">
+            <i class="fa fa-fw fa-{{ service }}"></i>
+            <a href="{% url 'socialauth_begin' service %}?/#">{{ service|title }}</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>

@@ -190,6 +190,7 @@ INSTALLED_APPS = (
     #'stories',
     'teaser',
     'profiles',
+    'social_auth',
 
     # shop
     #'plata',
@@ -250,18 +251,20 @@ DATABASES = {
     }
 }
 
-
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 # auth
 AUTHENTICATION_BACKENDS = (
-    #'emailusernames.backends.EmailAuthBackend',
-    # Uncomment the following to make Django tests pass:
-    #'django.contrib.auth.backends.ModelBackend',
-    #'guardian.backends.ObjectPermissionBackend',
-
+    # social-auth
+    'social_auth.backends.twitter.TwitterBackend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'social_auth.backends.contrib.soundcloud.SoundcloudBackend',
+    # remote api auth
     'remoteauth.backends.RemoteUserBackend',
 
 )
+
 ANONYMOUS_USER_ID = -1
 ACCOUNT_ACTIVATION_DAYS = 7
 

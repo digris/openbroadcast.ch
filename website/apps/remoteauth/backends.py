@@ -63,18 +63,10 @@ class RemoteUserBackend(ModelBackend):
 
         r = requests.post(url , payload)
 
-        print '/////////////////////////////'
-        #print payload
-        print url
-        print r.status_code
-        print '/////////////////////////////'
-
         if not r.status_code == 200:
             return None
 
         data = r.json()
-
-        print data
 
         print '///////////////////////////////////////'
         print 'got user:     %s' % data['username']

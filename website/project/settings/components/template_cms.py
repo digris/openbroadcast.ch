@@ -98,5 +98,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django_mobile.context_processors.flavour',
     'sekizai.context_processors.sekizai',
     'django_settings_export.settings_export',
+
+    # authentication
+    'social_auth.context_processors.social_auth_backends',
+    'social_auth.context_processors.backends_data',
+    'social_auth.context_processors.social_auth_login_redirect',
 )
 
