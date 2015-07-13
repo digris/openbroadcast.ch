@@ -7,6 +7,14 @@ User = get_user_model()
 class UserAdmin(UserAdmin):
 
     list_display = UserAdmin.list_display + ('remote_id', )
+    date_hierarchy = 'last_login'
+
+    fieldsets =  UserAdmin.fieldsets + (
+        ('Extras',  {'fields': [
+            'remote_id',
+            ]}
+         ),
+    )
 
     #inlines = (EmployeeInline, )
 

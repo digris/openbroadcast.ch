@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import requests
+import json
 import re
 from django.db import models
 from django.conf import settings
@@ -36,25 +37,14 @@ class User(AbstractUser):
 def user_post_save(sender, instance, created, **kwargs):
 
     log.debug('user post-save: %s - created: %s' % (instance, created))
-    #instance.emit_message()
 
     if not instance.remote_id:
         log.debug('no remote id for user %s with pk: %s' % (instance, instance.id))
-
-        print '///////////////////////////////'
-        print 'trying to get remote user'
-
-        remote_user = get_social_user(instance)
-
-        print '************************'
-        print remote_user
+        remote_user = get_or_create_social_user(instance)
 
         if remote_user and 'id' in remote_user:
-
             remote_id = remote_user['id']
-
             print 'remote id: %s' % remote_user['id']
-
             if remote_id:
                 instance.remote_id = remote_id
                 instance.save()
@@ -109,7 +99,7 @@ def register_user(username, email, password):
     log.debug('%s %s' % (url, r.status_code))
 
 
-def get_social_user(user):
+def get_or_create_social_user(user):
 
     log.debug('get_remote_user %s' % (user))
 
@@ -120,30 +110,24 @@ def get_social_user(user):
 
     social_account = user.social_auth.all()[0]
 
-    # print '///// social_account'
-    # print social_account
-    # print social_account.user
-    # print social_account.provider
-    # print social_account.uid
-    # print social_account.extra_data
-
-
-
-
-    url = AUTH_ENDPOINT + 'get-social-user/'
+    url = AUTH_ENDPOINT + 'get-or-create-social-user/'
     payload = {
         'provider': social_account.provider,
         'uid': social_account.uid,
+        'extra_data': json.dumps(social_account.extra_data),
+        'user' : json.dumps({
+            'email': user.email,
+            'username': user.username,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+        })
     }
 
-    print url
-    print payload
 
     r = requests.post(url, payload)
 
     if not r.status_code == 200:
-        log.warning('Unable to communicate with the remoteauth API')
-        print r.status_code
+        log.warning('Unable to communicate with the remoteauth API. status: %s' % r.status_code)
         print r.text
 
         return
