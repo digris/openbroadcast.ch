@@ -234,6 +234,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #'django.middleware.cache.FetchFromCacheMiddleware',
 
+
+    'social_auth.middleware.SocialAuthExceptionMiddleware',
+
     'django_downloadview.SmartDownloadMiddleware',
 )
 
@@ -259,6 +262,7 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.twitter.TwitterBackend',
     'social_auth.backends.facebook.FacebookBackend',
     'social_auth.backends.google.GoogleOAuth2Backend',
+    'social_auth.backends.contrib.dropbox.DropboxBackend',
     'social_auth.backends.contrib.soundcloud.SoundcloudBackend',
     # remote api auth
     'remoteauth.backends.RemoteUserBackend',
