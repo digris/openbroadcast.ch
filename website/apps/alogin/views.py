@@ -78,6 +78,12 @@ def alogin_logout(request):
 
 
 
+def alogin_profile(request):
+    return render(request, 'alogin/profile.html', {})
+
+
+
+
 def socialauth_success(request):
     return render(request, 'ajaxlogin/socialauth_success.html', {})
 

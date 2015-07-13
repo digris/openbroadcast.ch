@@ -38,16 +38,44 @@ def user_post_save(sender, instance, created, **kwargs):
 
     log.debug('user post-save: %s - created: %s' % (instance, created))
 
+    remote_user = None
+
     if not instance.remote_id:
         log.debug('no remote id for user %s with pk: %s' % (instance, instance.id))
         remote_user = get_or_create_social_user(instance)
 
-        if remote_user and 'id' in remote_user:
-            remote_id = remote_user['id']
+        if remote_user:
+            remote_id = remote_user['user']['id']
             print 'remote id: %s' % remote_user['id']
             if remote_id:
                 instance.remote_id = remote_id
                 instance.save()
+
+
+    """
+    check for updated profile data
+    only needed if social enabled account ('default' accounts are updated via auth backend)
+    """
+    if instance.social_auth.exists():
+        log.debug('social enabled account. will check for profile updates')
+
+        if not remote_user:
+            remote_user = get_or_create_social_user(instance)
+
+        if instance.first_name != remote_user['user']['first_name']:
+            log.debug('first_name changed -> update user "%s"' % instance.first_name)
+            User.objects.filter(pk=instance.pk).update(
+                first_name=remote_user['user']['first_name'],
+            )
+
+        if instance.last_name != remote_user['user']['last_name']:
+            log.debug('last_name changed -> update user "%s"' % instance.last_name)
+            User.objects.filter(pk=instance.pk).update(
+                last_name=remote_user['user']['last_name'],
+            )
+
+
+
 
 
 

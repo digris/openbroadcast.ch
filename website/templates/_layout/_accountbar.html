@@ -7,6 +7,9 @@
     <li class="has-dropdown not-click"_>
         <a href="#">{% firstof user.get_full_name user.username %}</a>
         <ul class="dropdown">
+            <li>
+                <a href="{% url 'alogin-profile' %}" data-alogin-action="profile">{% trans 'profile & settings'|capfirst %}</a>
+            </li>
             {% if user.is_staff %}
                 <li><a target="_blank" href="/admin/">{% trans 'Administration' %}</a></li>
             {% endif %}
