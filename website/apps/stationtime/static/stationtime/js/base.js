@@ -55,11 +55,6 @@ StationTimeApp = function () {
 
     this.display_clock = function() {
 
-
-        if(self.debug) {
-            console.debug('StationTimeApp: display_clock', self.current_time);
-        }
-
         var time_string = [
             self.pad(self.current_time.getHours()),
             self.pad(self.current_time.getMinutes()),

@@ -10864,7 +10864,6 @@ body.loading #onair_container .item.playing .container .controls span.loading {
 #onair_container .item .progress-container .buffer {
   display: block;
   height: 1px;
-  position: absolute;
   bottom: 0;
   background-color: #e8e8e8;
 }
@@ -11413,7 +11412,7 @@ body.paused #bplayer_container .playlist .item.playing .controls .pause {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5;
 }
-#bplayer_container section.playlist.history.compact .item.playing:first-child {
+#bplayer_container section.playlist.history.compact .item:first-child {
   display: block;
 }
 #bplayer_container section.playlist.history.expanded .header {
