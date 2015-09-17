@@ -235,7 +235,7 @@ CELERYBEAT_SCHEDULE = {
     },
     'contentproxy-cleanup-cache': {
         'task': 'contentproxy.tasks.cleanup_cache',
-        'schedule': timedelta(seconds=10),
+        'schedule': timedelta(seconds=60*60),
         'kwargs': {'max_age': 12*60*60}
     },
 }
