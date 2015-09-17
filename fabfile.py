@@ -222,6 +222,7 @@ def deploy():
             """
             print green('reloading application server')
             run('supervisorctl restart %s' % env.site_id)
+            run('supervisorctl restart services.%s:*' % env.site_id)
             print green('status for: %s' % env.site_id)
             run('supervisorctl status | grep %s' % env.site_id)
             print green('*' * 72)
