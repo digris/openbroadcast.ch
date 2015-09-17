@@ -7,8 +7,6 @@ from tastypie.http import HttpForbidden
 from achat.models import Message, MentionedUser
 from achat.util import parse_text, extract_mentioned_users, message_to_html, is_spam
 
-User = settings.AUTH_USER_MODEL
-
 class MessageResource(ModelResource):
 
     class Meta:

@@ -7,13 +7,11 @@ needs of custom user models, you will need to write your own forms if
 you're using a custom model.
 
 """
-
-
-from django.conf import settings
-User = settings.AUTH_USER_MODEL
+from django.contrib.auth import get_user_model
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
+User = get_user_model()
 
 class RegistrationForm(forms.Form):
     """

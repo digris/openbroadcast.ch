@@ -17,6 +17,7 @@ from django.dispatch.dispatcher import receiver
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
 from jsonfield import JSONField
 from django.conf import settings
@@ -69,7 +70,9 @@ class Message(models.Model):
 
                 try:
                     username = bit[1:]
-                    user = User.objects.get(username=username)
+                    # TODO: eventually this is not working!
+                    #user = User.objects.get(username=username)
+                    user = get_user_model().objects.get(username=username)
                     rendered_bit = u"""<a data-ct="user" data-id="{id}" data-name="{name}" data-profile_uri="{profile_uri}">@{username}</a>""".format(
                         username=user.username,
                         name=user.get_full_name(),

@@ -34,7 +34,7 @@ from django.conf import settings
 # migration steps
 
 
-SQL "ALTER TABLE django_content_type DROP COLUMN name;"
+SQL "ALTER TABLE `django_content_type` DROP `name`;"
 
 ./manage.py migrate cms 0004
 ./manage.py migrate cms 0003 --fake

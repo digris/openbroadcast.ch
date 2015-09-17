@@ -5,12 +5,12 @@ from django.contrib.auth.forms import (
     ReadOnlyPasswordHashField, ReadOnlyPasswordHashWidget,
     PasswordResetForm as OldPasswordResetForm
 )
-from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import identify_hasher
 from django.utils.translation import ugettext_lazy as _, ugettext
 from django.utils.html import format_html
 
-User = settings.AUTH_USER_MODEL
+User = get_user_model()
 
 
 def is_password_usable(pw):

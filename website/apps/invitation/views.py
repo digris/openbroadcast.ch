@@ -14,7 +14,6 @@ import json
 
 from invitation.models import Invitation
 
-User = settings.AUTH_USER_MODEL
 
 class CheckTokenView(TemplateView):
 
