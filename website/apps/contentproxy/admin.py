@@ -6,6 +6,7 @@ admin.site.register(CachedEvent)
 
 class CachedMediaAdmin(admin.ModelAdmin):
 
-    list_display = ('uuid', 'status')
+    date_hierarchy = 'created'
+    list_display = ('uuid', 'created', 'updated', 'status')
 
 admin.site.register(CachedMedia, CachedMediaAdmin)

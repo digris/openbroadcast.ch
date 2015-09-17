@@ -28,6 +28,8 @@ if not API_BASE_AUTH:
 class CachedMedia(models.Model):
 
     uuid = models.CharField(max_length=36, db_index=True, unique=True)
+    created = models.DateTimeField(auto_now_add=True, editable=False)
+    updated = models.DateTimeField(auto_now=True, editable=False)
 
     STATUS_CHOICES = (
         (0, _('Initial')),
@@ -49,9 +51,15 @@ class CachedMedia(models.Model):
     def uri(self):
         return MEDIA_URL + 'private/' + 'media/' + self.uuid + '/stream.mp3'
 
+
+    @property
+    def directory(self):
+        return os.path.join(MEDIA_ROOT, 'private', 'media', self.uuid)
+
+
     @property
     def path(self):
-        return os.path.join(MEDIA_ROOT, 'private', 'media', self.uuid, 'stream.mp3')
+        return os.path.join(self.directory, 'stream.mp3')
 
 
     def get_remote_file(self):
@@ -65,17 +73,21 @@ class CachedMedia(models.Model):
         directory = os.path.join(MEDIA_ROOT, 'private', 'media', self.uuid)
         filename = 'stream.mp3'
 
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-
-        path = os.path.join(directory, filename)
-
         if r.status_code == 200:
+
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+
+            path = os.path.join(directory, filename)
+
             with open(path, 'wb') as f:
                 for chunk in r.iter_content(1024):
                     f.write(chunk)
+
+            self.status = 1
         else:
             log.warn(u'unable to fetch remote file. %s - %s' % (r.status_code, r.text))
+            self.status = 99
 
 
 
@@ -87,6 +99,30 @@ def cached_media_post_save(sender, **kwargs):
         log.debug('instance created: %s' % obj)
         obj.get_remote_file()
         obj.save()
+
+
+
+
+@receiver(pre_delete, sender=CachedMedia)
+def cached_media_pre_delete(sender, **kwargs):
+    obj = kwargs['instance']
+    log.debug('delete: %s' % obj.directory)
+    log.debug('delete: %s' % obj.path)
+
+    if os.path.isfile(obj.path):
+        log.debug('delete file: %s' % obj.path)
+        try:
+            os.remove(obj.path)
+        except Exception as e:
+            log.debug('unable to delete file: %s - %s' % (obj.path, e))
+
+    if os.path.isdir(obj.directory):
+        log.debug('delete directory: %s' % obj.directory)
+        try:
+            os.rmdir(obj.directory)
+        except Exception as e:
+            log.debug('unable to delete directory: %s - %s' % (obj.path, e))
+
 
 
 

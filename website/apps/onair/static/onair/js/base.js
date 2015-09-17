@@ -268,7 +268,7 @@ var OnAirApp = function () {
     this.process_data = function () {
 
         if(self.debug) {
-            console.log('OnAirApp - update_data', self.local_data);
+            console.debug('OnAirApp - update_data', self.local_data);
         }
 
         // clean 'old' data

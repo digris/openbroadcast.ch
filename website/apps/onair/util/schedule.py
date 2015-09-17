@@ -75,3 +75,10 @@ def fetch_from_api(range_start=0, range_end=0, channel=None):
     return remote_schedule['objects']
 
 
+def cleanup_old_entries(max_age):
+    old_entries = ScheduledItem.objects.filter(
+        time_end__lte=datetime.datetime.now() - datetime.timedelta(seconds=max_age)
+    )
+    log.debug('%s sheduled items to delete' % old_entries.count())
+    old_entries.delete()
+

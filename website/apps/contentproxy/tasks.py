@@ -5,7 +5,7 @@ import os
 from datetime import datetime, timedelta
 from django.conf import settings
 from project.celery import app
-from contentproxy.models import CachedEvent
+from contentproxy.models import CachedEvent, CachedMedia
 
 log = logging.getLogger(__name__)
 
@@ -32,3 +32,14 @@ def create_cached_event(ct, ct_uuid, user, action):
         log.debug('event created: %s %s %s %s' % (ct, ct_uuid, user, action))
     else:
         log.debug('duplicate event, skipped: %s %s %s %s' % (ct, ct_uuid, user, action))
+
+
+@app.task
+def cleanup_cache(max_age=3600):
+    log.info('cleaning up contentproxy cache: max age: %s' % (max_age))
+    old_entries = CachedMedia.objects.filter(
+        updated__lte=datetime.now() - timedelta(seconds=max_age)
+    )
+    log.debug('%s cached items to delete' % old_entries.count())
+    old_entries.delete()
+

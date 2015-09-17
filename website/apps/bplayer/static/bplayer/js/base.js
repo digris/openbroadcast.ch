@@ -727,7 +727,7 @@ var BPlayerApp = function () {
 
         } else {
             if(self.debug) {
-                debug.debug('bplayer - no playlist available');
+                console.debug('bplayer - no playlist available');
             }
         }
 

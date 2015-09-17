@@ -2,6 +2,7 @@
 import os
 import sys
 import posixpath
+from datetime import timedelta
 
 
 gettext = lambda s: s
@@ -86,11 +87,9 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 INSTALLED_APPS = (
 
-    # admin apps
-    #'adminmodelaction',
+
     'djangocms_admin_style',
     'admin_shortcuts',
-
     # django base
     'django.contrib.admin',
     'django.contrib.auth',
@@ -101,36 +100,19 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'django.contrib.humanize',
-    #'authtools',
-    #'ajaxlogin',
     'solid_i18n',
-    #'registration',
     'alogin',
-
 
     # wip only
     'django.contrib.webdesign',
 
-    # auth
-    #'emailusernames',
-    #'registration',
-
-    # api
 
     # life-savers
     'crispy_forms',
     'raven.contrib.django.raven_compat',
-    #'south',
-    #'reversion',
-    #'django_jenkins',
     'tastypie',
-    #'djcelery',
     'kombu.transport.django',
-    #'guardian',
     'relatedadminlink',
-    #'djangosecure',
-    #'badbrowser',
-
 
     'remoteauth',
 
@@ -165,17 +147,13 @@ INSTALLED_APPS = (
     'apiproxy',
     'pushy_client',
 
-    # APPS MIGRATED
     'django_extensions',
     'compressor',
     'easy_thumbnails',
-    #'debug_toolbar',
     'analytics',
-    #'polymorphic',
     'absolute',
     'emailit',
-    'hvad', # other model translations
-    #'nested_inline',
+    'hvad',
     'colorfield',
     'geoposition',
 
@@ -187,8 +165,6 @@ INSTALLED_APPS = (
     'stationtime',
     'remotelink',
     'contentproxy',
-    #'stories',
-    #'teaser',
     'profiles',
     'social_auth',
 
@@ -215,11 +191,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # flavour
-    # browser
-    #'badbrowser.middleware.BrowserSupportDetection',
-    # cms
-    #'django.middleware.locale.LocaleMiddleware',
     'solid_i18n.middleware.SolidLocaleMiddleware',
     #'django.middleware.doc.XViewMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -229,11 +200,8 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.language.LanguageCookieMiddleware',
     # /cms
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'django.middleware.cache.FetchFromCacheMiddleware',
-
 
     'social_auth.middleware.SocialAuthExceptionMiddleware',
-
     'django_downloadview.SmartDownloadMiddleware',
 )
 
@@ -251,10 +219,29 @@ DATABASES = {
     }
 }
 
-
-
-
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
+# TASKS
+CELERYBEAT_SCHEDULE = {
+    'onair-update-schedule': {
+        'task': 'onair.tasks.update_schedule',
+        'schedule': timedelta(seconds=60),
+        'kwargs': {'range_start': 600, 'range_end': 600}
+    },
+    'onair-cleanup-schedule': {
+        'task': 'onair.tasks.cleanup_schedule',
+        'schedule': timedelta(seconds=60*60),
+        'kwargs': {'max_age': 12*60*60}
+    },
+    'contentproxy-cleanup-cache': {
+        'task': 'contentproxy.tasks.cleanup_cache',
+        'schedule': timedelta(seconds=10),
+        'kwargs': {'max_age': 12*60*60}
+    },
+}
+
+
+
 
 # auth
 AUTHENTICATION_BACKENDS = (
@@ -266,7 +253,6 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.contrib.soundcloud.SoundcloudBackend',
     # remote api auth
     'remoteauth.backends.RemoteUserBackend',
-
 )
 
 LOGIN_ERROR_URL = '/'
@@ -291,13 +277,10 @@ JENKINS_TASKS = (
 # registration
 ACCOUNT_ACTIVATION_DAYS = 7
 
-
 # Apps to run ci-tests on
 PROJECT_APPS = (
     # 'my_app',
 )
-
-
 
 SETTINGS_EXPORT = [
     'DEBUG',

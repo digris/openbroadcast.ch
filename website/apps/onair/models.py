@@ -5,7 +5,7 @@ import datetime
 import logging
 import requests
 from django.db import models
-from django.db.models.signals import post_save, pre_delete
+from django.db.models.signals import post_save, pre_delete, post_delete
 from django.dispatch import receiver
 from django.utils.translation import ugettext as _
 from django.utils import timezone
@@ -107,7 +107,6 @@ class ScheduledItem(models.Model):
 
     def populate_from_api(self):
 
-
         headers = {'Authorization': 'ApiKey %s:%s' % (API_BASE_AUTH['username'], API_BASE_AUTH['api_key'])}
 
         url = API_BASE_URL + self.emission_url.replace('/api/', '') # sorry!
@@ -137,4 +136,11 @@ def scheduled_item_post_save(sender, **kwargs):
         log.debug('instance created: %s' % obj)
         obj.populate_from_api()
         obj.save()
+
+
+@receiver(post_delete, sender=ScheduledItem)
+def scheduled_item_post_delete(sender, **kwargs):
+    obj = kwargs['instance']
+    log.debug('post delete (stub): %s' % obj)
+
 

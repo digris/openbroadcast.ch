@@ -13,7 +13,7 @@ StationTimeApp = function () {
     this.init = function () {
 
         if(self.debug) {
-            debug.debug('StationTimeApp: init');
+            console.debug('StationTimeApp: init');
         }
 
         self.sync_time();
