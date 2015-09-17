@@ -2,18 +2,19 @@
 
 # manual steps, should be represented in requirements
 pip install Django==1.8.3
-pip install django-sekizai-0.8.2
+pip install django-sekizai==0.8.2
 pip install django-cms==3.1.2
 pip install django-filer==0.9.11
 pip install django-mptt==0.7.4
 pip install django-hvad==1.2.2
-pip uninstall South
 pip install djangocms-text-ckeditor==2.5.3
 pip install django-tastypie==0.12.2
-
 pip install simplejson==3.8.0
-pip install django_compressor==1.5
+pip install django-compressor==1.5
 pip install celery==3.1.18
+
+
+pip uninstall South
 
 
 
