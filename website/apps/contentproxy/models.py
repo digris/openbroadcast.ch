@@ -34,7 +34,7 @@ class CachedMedia(models.Model):
         (1, _('Ready')),
         (99, _('Error')),
     )
-    status = models.PositiveIntegerField(max_length=2, default=0, choices=STATUS_CHOICES)
+    status = models.PositiveIntegerField(default=0, choices=STATUS_CHOICES)
 
     class Meta:
         app_label = 'contentproxy'

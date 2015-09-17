@@ -53,7 +53,7 @@ class ScheduledItem(models.Model):
         (1, _('Done')),
         (2, _('Error')),
     )
-    status = models.PositiveIntegerField(max_length=2, default=0, choices=STATUS_CHOICES)
+    status = models.PositiveIntegerField(default=0, choices=STATUS_CHOICES)
 
     objects = ScheduledItemManager()
 
