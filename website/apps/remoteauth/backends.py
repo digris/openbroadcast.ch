@@ -3,13 +3,13 @@ import logging
 import requests
 from django.conf import settings
 from django.contrib.auth.backends import ModelBackend
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.exceptions import ImproperlyConfigured
 
 
 
-User = get_user_model()
+User = settings.AUTH_USER_MODEL
 log = logging.getLogger(__name__)
 
 AUTH_ENDPOINT = getattr(settings, 'REMOTE_AUTH_ENDPOINT', None)

@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from tastypie.resources import ModelResource
 from tastypie.authentication import SessionAuthentication, Authentication, MultiAuthentication
 from tastypie.authorization import Authorization
@@ -7,7 +7,7 @@ from tastypie.http import HttpForbidden
 from achat.models import Message, MentionedUser
 from achat.util import parse_text, extract_mentioned_users, message_to_html, is_spam
 
-User = get_user_model()
+User = settings.AUTH_USER_MODEL
 
 class MessageResource(ModelResource):
 

@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.contrib.auth import get_user_model, REDIRECT_FIELD_NAME
+from django.conf import settings, REDIRECT_FIELD_NAME
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib import auth
@@ -14,7 +14,7 @@ import json
 
 from invitation.models import Invitation
 
-User = get_user_model()
+User = settings.AUTH_USER_MODEL
 
 class CheckTokenView(TemplateView):
 

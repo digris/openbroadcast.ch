@@ -5,7 +5,6 @@ TEMPLATE_DIRS = (
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
-FLAVOURS = ('full', 'mobile', 'tablet', 'experiment')
 
 CMS_REDIRECTS = True
 CMS_SEO_FIELDS = True
@@ -71,21 +70,11 @@ CMS_PLUGIN_PROCESSORS = (
 )
 
 TEMPLATE_LOADERS = (
-    'django_mobile.loader.Loader',
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
     'django.template.loaders.eggs.Loader',
 )
-"""
-TEMPLATE_LOADERS = (
-    'django_mobile.loader.Loader',
-    ('django.template.loaders.cached.Loader', (
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-        'django.template.loaders.eggs.Loader',
-    )),
-)
-"""
+
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.i18n',
@@ -95,9 +84,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'cms.context_processors.cms_settings',
-    'django_mobile.context_processors.flavour',
     'sekizai.context_processors.sekizai',
     'django_settings_export.settings_export',
+
 
     # authentication
     'social_auth.context_processors.social_auth_backends',
@@ -105,3 +94,17 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'social_auth.context_processors.social_auth_login_redirect',
 )
 
+
+
+
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': TEMPLATE_DIRS,
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': TEMPLATE_CONTEXT_PROCESSORS,
+        },
+    },
+]

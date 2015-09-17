@@ -4,8 +4,13 @@ import random
 import re
 
 from django.conf import settings
-from django.contrib.auth import get_user_model
-User = get_user_model()
+from django.conf import settings
+
+
+#User = settings.AUTH_USER_MODEL
+User = settings.AUTH_USER_MODEL
+
+
 from django.db import models
 from django.db import transaction
 from django.template.loader import render_to_string

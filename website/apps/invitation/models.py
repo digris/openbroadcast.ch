@@ -2,7 +2,7 @@ import logging
 from django.db import models
 from django.conf import settings
 from django.core.mail import send_mail
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from datetime import datetime, timedelta
 from django.utils import timezone
 from django.dispatch import receiver
@@ -14,7 +14,7 @@ INSPECTOR_EMAIL = getattr(settings, 'INSPECTOR_EMAIL', None)
 
 log = logging.getLogger(__name__)
 
-User = get_user_model()
+User = settings.AUTH_USER_MODEL
 
 class Invitation(models.Model):
 

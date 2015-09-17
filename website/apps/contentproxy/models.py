@@ -9,14 +9,14 @@ from django.dispatch import receiver
 from django.utils.translation import ugettext as _
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.contrib.auth import get_user_model
+from django.conf import settings
 
 MEDIA_ROOT = getattr(settings, 'MEDIA_ROOT', None)
 MEDIA_URL = getattr(settings, 'MEDIA_URL', None)
 API_BASE_URL = getattr(settings, 'API_BASE_URL', None)
 API_BASE_AUTH = getattr(settings, 'API_BASE_AUTH', None)
 
-User = get_user_model()
+User = settings.AUTH_USER_MODEL
 log = logging.getLogger(__name__)
 
 if not API_BASE_URL:

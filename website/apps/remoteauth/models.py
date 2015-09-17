@@ -31,6 +31,13 @@ class User(AbstractUser):
     profile_uri = models.CharField(max_length=256, null=True, blank=True)
 
 
+    class Meta(object):
+        app_label = 'remoteauth'
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
+
+
+
 
 
 @receiver(post_save, sender=User)

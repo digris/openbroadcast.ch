@@ -10,6 +10,7 @@ class BackfeedForm(forms.ModelForm):
     
     class Meta():
         model = Backfeed
+        exclude = ()
         #exclude = ('creator', 'updated', 'created','topic', 'user_ip',)
 
     def clean_message(self):

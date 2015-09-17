@@ -5,7 +5,7 @@ implemented as class-based views.
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.contrib.auth import get_user_model, REDIRECT_FIELD_NAME
+from django.conf import settings, REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import (AuthenticationForm, SetPasswordForm,
                                        PasswordChangeForm, PasswordResetForm)
@@ -25,7 +25,7 @@ from django.views.generic import FormView, TemplateView, RedirectView
 from authtools.forms import FriendlyPasswordResetForm
 
 
-User = get_user_model()
+User = settings.AUTH_USER_MODEL
 
 
 def _safe_resolve_url(url):

@@ -31,7 +31,7 @@ class RegistrationProfileTestCase(TestCase):
         self.mock_site = mock_site()
 
     def create_inactive_user(self):
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         new_user = User.objects.create_user(**self.user_info)
         new_user.set_unusable_password()
         new_user.is_active = False
@@ -495,7 +495,7 @@ class RegistrationProfileManagerTestCase(TestCase):
 
         RegistrationProfile.objects.delete_expired_users()
         # Only expired accepted user is deleted
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         self.assertEqual(RegistrationProfile.objects.count(), 5)
         self.assertRaises(User.DoesNotExist, User.objects.get, 
                           username='expired accepted user')
@@ -560,7 +560,7 @@ class RegistrationProfileManagerTestCase(TestCase):
 
         RegistrationProfile.objects.delete_rejected_users()
         # new_rejected_user and expired rejected user are deleted
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         self.assertEqual(RegistrationProfile.objects.count(), 4)
         self.assertRaises(User.DoesNotExist, User.objects.get, 
                           username='new rejected user')
@@ -627,7 +627,7 @@ class RegistrationProfileManagerTestCase(TestCase):
 
         management.call_command('cleanup_expired_registrations')
         # Only expired accepted user is deleted
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         self.assertEqual(RegistrationProfile.objects.count(), 5)
         self.assertRaises(User.DoesNotExist, User.objects.get, 
                           username='expired accepted user')
@@ -692,7 +692,7 @@ class RegistrationProfileManagerTestCase(TestCase):
 
         management.call_command('cleanup_rejected_registrations')
         # new_rejected_user and expired rejected user are deleted
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         self.assertEqual(RegistrationProfile.objects.count(), 4)
         self.assertRaises(User.DoesNotExist, User.objects.get, 
                           username='new rejected user')
@@ -759,7 +759,7 @@ class RegistrationProfileManagerTestCase(TestCase):
 
         management.call_command('cleanup_registrations')
         # new_rejected_user, expired rejected_user and expired_accepted_user are deleted
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         self.assertEqual(RegistrationProfile.objects.count(), 3)
         self.assertRaises(User.DoesNotExist, User.objects.get, 
                           username='new rejected user')
@@ -829,7 +829,7 @@ class RegistrationProfileManagerTestCase(TestCase):
         # django-registration compatibility
         management.call_command('cleanupregistration')
         # new_rejected_user, expired rejected_user and expired_accepted_user are deleted
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         self.assertEqual(RegistrationProfile.objects.count(), 3)
         self.assertRaises(User.DoesNotExist, User.objects.get, 
                           username='new rejected user')

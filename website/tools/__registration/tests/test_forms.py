@@ -18,7 +18,7 @@ class ActivationFormTests(TestCase):
         and matching passwords.
 
         """
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         # Create a user so we can verify that duplicate usernames aren't
         # permitted.
         User.objects.create_user('alice', 'alice@example.com', 'secret')
@@ -52,7 +52,7 @@ class RegistrationFormTests(TestCase):
         and matching passwords.
 
         """
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         # Create a user so we can verify that duplicate usernames aren't
         # permitted.
         User.objects.create_user('alice', 'alice@example.com', 'secret')
@@ -111,7 +111,7 @@ class RegistrationFormTests(TestCase):
         of email addresses.
 
         """
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         # Create a user so we can verify that duplicate addresses
         # aren't permitted.
         User.objects.create_user('alice', 'alice@example.com', 'secret')

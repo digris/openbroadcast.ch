@@ -124,7 +124,7 @@ class DefaultRegistrationBackendTestCase(TestCase):
         self.failUnless(activated_user.has_usable_password())
 
     def test_untreated_activation(self):
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         new_user = self.backend.register(
                 username='bob', email='bob@example.com',
                 request=self.mock_request)
@@ -141,7 +141,7 @@ class DefaultRegistrationBackendTestCase(TestCase):
         self.failIf(new_user.has_usable_password())
 
     def test_rejected_activation(self):
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         new_user = self.backend.register(
                 username='bob', email='bob@example.com',
                 request=self.mock_request)
@@ -159,7 +159,7 @@ class DefaultRegistrationBackendTestCase(TestCase):
         self.failIf(new_user.has_usable_password())
 
     def test_expired_activation(self):
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         expired_user = self.backend.register(
                 username='bob', email='bob@example.com',
                 request=self.mock_request)
@@ -198,7 +198,7 @@ class DefaultRegistrationBackendTestCase(TestCase):
         self.failUnless(form_class is forms.ActivationForm)
 
     def test_get_registration_complete_url(self):
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         fake_user = User()
         url = self.backend.get_registration_complete_url(fake_user)
         self.assertEqual(url, reverse('registration_complete'))
@@ -208,7 +208,7 @@ class DefaultRegistrationBackendTestCase(TestCase):
         self.assertEqual(url, reverse('registration_disallowed'))
 
     def test_get_activation_complete_url(self):
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         fake_user = User()
         url = self.backend.get_activation_complete_url(fake_user)
         self.assertEqual(url, reverse('registration_activation_complete'))

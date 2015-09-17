@@ -19,11 +19,14 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.core.exceptions import ImproperlyConfigured
 from jsonfield import JSONField
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from base.models import TimestampedModel
 
 log = logging.getLogger(__name__)
-User = get_user_model()
+
+#User = settings.AUTH_USER_MODEL
+User = settings.AUTH_USER_MODEL
+
 
 REDIS_HOST = getattr(settings, 'PUSHY_REDIS_HOST', None)
 REDIS_SITE_ID = getattr(settings, 'PUSHY_REDIS_SITE_ID', None)

@@ -1,32 +1,39 @@
 # -*- coding: utf-8 -*-
-from south.utils import datetime_utils as datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'CachedMedia'
-        db.create_table(u'contentproxy_cachedmedia', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('status', self.gf('django.db.models.fields.PositiveIntegerField')(default=0, max_length=2)),
-        ))
-        db.send_create_signal('contentproxy', ['CachedMedia'])
+    dependencies = [
+    ]
 
-
-    def backwards(self, orm):
-        # Deleting model 'CachedMedia'
-        db.delete_table(u'contentproxy_cachedmedia')
-
-
-    models = {
-        'contentproxy.cachedmedia': {
-            'Meta': {'object_name': 'CachedMedia'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'status': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0', 'max_length': '2'})
-        }
-    }
-
-    complete_apps = ['contentproxy']
+    operations = [
+        migrations.CreateModel(
+            name='CachedEvent',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('ct', models.CharField(max_length=36)),
+                ('ct_uuid', models.CharField(max_length=36)),
+                ('action', models.CharField(max_length=36)),
+                ('processed', models.BooleanField(default=False)),
+            ],
+            options={
+                'verbose_name': 'Cached Event',
+            },
+        ),
+        migrations.CreateModel(
+            name='CachedMedia',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('uuid', models.CharField(unique=True, max_length=36, db_index=True)),
+                ('status', models.PositiveIntegerField(default=0, max_length=2, choices=[(0, 'Initial'), (1, 'Ready'), (99, 'Error')])),
+            ],
+            options={
+                'verbose_name': 'Cached Media',
+                'verbose_name_plural': 'Cached Media',
+            },
+        ),
+    ]

@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext as _
-from django.contrib.auth import get_user_model
-User = get_user_model()
+from django.conf import settings
+User = settings.AUTH_USER_MODEL
 
 # Create your models here.
 class Backfeed(models.Model):

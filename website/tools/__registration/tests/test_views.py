@@ -157,7 +157,7 @@ class RegistrationViewTestCase(TestCase):
         handles a valid activation
 
         """
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         new_user = self.backend.register(username='alice', email='alice@example.com', request=self.mock_request)
         new_user = self.backend.accept(new_user.registration_profile, request=self.mock_request)
     

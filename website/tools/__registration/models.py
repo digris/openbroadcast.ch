@@ -100,7 +100,7 @@ class RegistrationManager(models.Manager):
         method, the newly created user will be rollbacked.
 
         """
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         #new_user = User.objects.create_user(username, email, 'password')
         new_user = User.objects.create_user(email, 'password')
         new_user.set_unusable_password()

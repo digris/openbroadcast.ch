@@ -104,7 +104,7 @@ INSTALLED_APPS = (
     #'authtools',
     #'ajaxlogin',
     'solid_i18n',
-    'registration',
+    #'registration',
     'alogin',
 
 
@@ -120,11 +120,10 @@ INSTALLED_APPS = (
     # life-savers
     'crispy_forms',
     'raven.contrib.django.raven_compat',
-    'south',
+    #'south',
     #'reversion',
     #'django_jenkins',
     'tastypie',
-    'django_mobile',
     #'djcelery',
     'kombu.transport.django',
     #'guardian',
@@ -132,9 +131,13 @@ INSTALLED_APPS = (
     #'djangosecure',
     #'badbrowser',
 
+
+    'remoteauth',
+
     # cms
     'cms',
     'mptt',
+    'treebeard', # mptt replacement for cms
     'menus',
     'sekizai',
     # cms extension
@@ -148,19 +151,17 @@ INSTALLED_APPS = (
     # cms / filer
 
     'filer',
-    'cmsplugin_filer_file',
-    'cmsplugin_filer_folder',
-    'cmsplugin_filer_image',
-    'cmsplugin_filer_teaser',
-    'cmsplugin_filer_video',
+    #'cmsplugin_filer_file',
+    #'cmsplugin_filer_folder',
+    #'cmsplugin_filer_image',
+    #'cmsplugin_filer_teaser',
+    #'cmsplugin_filer_video',
 
     'turbolinks',
     'nunjucks',
 
     # new-school-plugins
     'djangocms_text_ckeditor',
-
-    'remoteauth',
     'apiproxy',
     'pushy_client',
 
@@ -170,12 +171,11 @@ INSTALLED_APPS = (
     'easy_thumbnails',
     #'debug_toolbar',
     'analytics',
-    'crispy_forms',
     #'polymorphic',
     'absolute',
     'emailit',
     'hvad', # other model translations
-    'nested_inline',
+    #'nested_inline',
     'colorfield',
     'geoposition',
 
@@ -188,7 +188,7 @@ INSTALLED_APPS = (
     'remotelink',
     'contentproxy',
     #'stories',
-    'teaser',
+    #'teaser',
     'profiles',
     'social_auth',
 
@@ -216,15 +216,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # flavour
-    'django_mobile.middleware.MobileDetectionMiddleware',
-    #'base.mobile_middleware.MobileDetectionMiddleware',
-    'django_mobile.middleware.SetFlavourMiddleware',
     # browser
     #'badbrowser.middleware.BrowserSupportDetection',
     # cms
     #'django.middleware.locale.LocaleMiddleware',
     'solid_i18n.middleware.SolidLocaleMiddleware',
-    'django.middleware.doc.XViewMiddleware',
+    #'django.middleware.doc.XViewMiddleware',
     'django.middleware.common.CommonMiddleware',
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.user.CurrentUserMiddleware',
@@ -253,6 +250,9 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'data.sqlite3'),
     }
 }
+
+
+
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
@@ -361,9 +361,13 @@ BADBROWSER_REQUIREMENTS = (
 )
 BADBROWSER_SUGGEST = ('chrome', 'safari', 'ie', 'firefox', )
 
-SOUTH_MIGRATION_MODULES = {
-    'easy_thumbnails': 'easy_thumbnails.south_migrations',
-}
+#SOUTH_MIGRATION_MODULES = {
+#    'easy_thumbnails': 'easy_thumbnails.south_migrations',
+#}
+
+
+
+
 #LOGIN_REDIRECT_URL = '/accounts/contact/'
 LOGIN_REDIRECT_URL = '/'
 

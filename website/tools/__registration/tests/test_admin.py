@@ -24,7 +24,7 @@ from registration.tests.compat import override_settings
 class RegistrationAdminTestCase(TestCase):
 
     def setUp(self):
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         self.backend = DefaultRegistrationBackend()
         self.mock_request = mock_request()
         self.admin = User.objects.create_superuser(

@@ -1,6 +1,6 @@
 from django.conf import settings
-from django.contrib.auth import get_user_model
-User = get_user_model()
+from django.conf import settings
+User = settings.AUTH_USER_MODEL
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 

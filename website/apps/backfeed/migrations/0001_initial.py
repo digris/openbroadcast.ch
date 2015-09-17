@@ -1,38 +1,28 @@
 # -*- coding: utf-8 -*-
-from south.utils import datetime_utils as datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'Backfeed'
-        db.create_table(u'backfeed_backfeed', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('created', self.gf('django.db.models.fields.DateField')(auto_now_add=True, blank=True)),
-            ('updated', self.gf('django.db.models.fields.DateField')(auto_now=True, blank=True)),
-            ('subject', self.gf('django.db.models.fields.CharField')(max_length=250)),
-            ('message', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal('backfeed', ['Backfeed'])
+    dependencies = [
+    ]
 
-
-    def backwards(self, orm):
-        # Deleting model 'Backfeed'
-        db.delete_table(u'backfeed_backfeed')
-
-
-    models = {
-        'backfeed.backfeed': {
-            'Meta': {'ordering': "('-created',)", 'object_name': 'Backfeed'},
-            'created': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'message': ('django.db.models.fields.TextField', [], {}),
-            'subject': ('django.db.models.fields.CharField', [], {'max_length': '250'}),
-            'updated': ('django.db.models.fields.DateField', [], {'auto_now': 'True', 'blank': 'True'})
-        }
-    }
-
-    complete_apps = ['backfeed']
+    operations = [
+        migrations.CreateModel(
+            name='Backfeed',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', models.DateField(auto_now_add=True)),
+                ('updated', models.DateField(auto_now=True)),
+                ('subject', models.CharField(max_length=250)),
+                ('message', models.TextField()),
+            ],
+            options={
+                'ordering': ('-created',),
+                'verbose_name': 'Feedback',
+                'verbose_name_plural': 'Feedbacks',
+            },
+        ),
+    ]

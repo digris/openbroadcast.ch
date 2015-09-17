@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 from bs4 import BeautifulSoup
-from django.contrib.auth import get_user_model
+from django.conf import settings
 #from feincms_cleanse import cleanse_html
 from achat.cleantalk import CleanTalk
 
@@ -9,7 +9,7 @@ CLEANTALK_KEY = 'a8yruqe6esy8'
 CLEANTALK_SERVER_URL = 'https://moderate5.cleantalk.org'
 
 log = logging.getLogger(__name__)
-User = get_user_model()
+User = settings.AUTH_USER_MODEL
 
 def parse_text(html_text):
 

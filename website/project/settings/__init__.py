@@ -18,3 +18,6 @@ if not site_domain:
         os.path.join(os.getcwd(), 'project/local_settings.py'),
         scope=locals()
     )
+
+
+

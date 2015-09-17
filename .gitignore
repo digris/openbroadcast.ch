@@ -21,6 +21,7 @@ website/reports
 website/device_data
 website/dev
 website/static/CACHE
+website/celerybeat*
 
 doc/_build
 

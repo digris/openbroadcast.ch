@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from django import forms
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.utils.crypto import get_random_string
 from django.contrib.auth.forms import PasswordResetForm
 from authtools.forms import FriendlyPasswordResetForm
@@ -17,7 +17,7 @@ from models import Contact
 
 THUMBNAIL_OPT = dict(size=(120, 80), crop=True, bw=False, quality=80)
 
-User = get_user_model()
+User = settings.AUTH_USER_MODEL
 
 
 

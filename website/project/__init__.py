@@ -1,5 +1,4 @@
 from __future__ import absolute_import
-from south.signals import post_migrate
 
 from .celery import app as celery_app
 
@@ -16,7 +15,7 @@ def update_permissions_after_migration(app,**kwargs):
 
     create_permissions(get_app(app), get_models(), 2 if settings.DEBUG else 0)
 
-post_migrate.connect(update_permissions_after_migration)
+#post_migrate.connect(update_permissions_after_migration)
 
 
 

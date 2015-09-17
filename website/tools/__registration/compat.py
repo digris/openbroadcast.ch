@@ -104,7 +104,7 @@ except ImportError:
 user_model_label = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
 try:
-    from django.contrib.auth import get_user_model
+    from django.conf import settings
 except ImportError:
     from django.contrib.auth.models import User
     get_user_model = lambda: User

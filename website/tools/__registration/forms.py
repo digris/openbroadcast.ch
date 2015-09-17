@@ -118,7 +118,7 @@ class RegistrationForm(forms.Form):
         """
         Validate that the username is alphanumeric and is not already in use.
         """
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         try:
             User.objects.get(email__iexact=self.cleaned_data['email1'])
         except User.DoesNotExist:
@@ -161,7 +161,7 @@ class RegistrationFormUniqueEmail(RegistrationForm):
 
     def clean_email1(self):
         """Validate that the supplied email address is unique for the site."""
-        User = get_user_model()
+        User = settings.AUTH_USER_MODEL
         if User.objects.filter(email__iexact=self.cleaned_data['email1']):
             raise forms.ValidationError(_(
                 "This email address is already in use. "

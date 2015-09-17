@@ -11,4 +11,4 @@ def current_time(request):
         'time': now.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
         'timezone': u'%s' % TIME_ZONE
     }
-    return HttpResponse(json.dumps(data), mimetype="application/json")
+    return HttpResponse(json.dumps(data), content_type="application/json")
