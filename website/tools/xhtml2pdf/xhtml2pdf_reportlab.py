@@ -470,7 +470,7 @@ class PmlImageReader(object):  # TODO We need a factory here, returning either a
 
 class PmlImage(Flowable, PmlMaxHeightMixIn):
 
-    def __init__(self, data, width=None, height=None, mask="auto", mimetype=None, **kw):
+    def __init__(self, data, width=None, height=None, mask="auto", content_type=None, **kw):
         self.kw = kw
         self.hAlign = 'CENTER'
         self._mask = mask

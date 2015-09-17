@@ -17,7 +17,7 @@ def ajax_login(request):
         if form.is_valid():
             login(request, form.get_user())
             return HttpResponse(json.dumps({'success': 'ok'})
-                , mimetype='application/json')
+                , content_type='application/json')
     return render(request, 'ajaxlogin/ajax_registration_modal.html', {'form': form})
     #return render(request, 'ajaxlogin/ajax_login.html', {'form': form})
 
@@ -28,7 +28,7 @@ def ajax_registration(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             return HttpResponse(json.dumps({'success': 'ok', 'mail_activation': True})
-                , mimetype='application/json')
+                , content_type='application/json')
     return render(request, 'ajaxlogin/ajax_registration.html', {'form': form})
 
 

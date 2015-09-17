@@ -40,7 +40,7 @@ def alogin_login(request):
                     'username': user.username,
                 }
             })
-            , mimetype='application/json')
+            , content_type='application/json')
     return render(request, 'alogin/login.html', {'form': form})
 
 
@@ -62,7 +62,7 @@ def alogin_register(request):
 
 
             #return HttpResponse(json.dumps({'success': True, 'mail_activation': True})
-            #    , mimetype='application/json')
+            #    , content_type='application/json')
 
     return render(request, 'alogin/register.html', {'form': form})
 
@@ -74,7 +74,7 @@ def alogin_logout(request):
         'success': True,
         'user': False,
     }
-    return HttpResponse(json.dumps(response), mimetype='application/json')
+    return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 

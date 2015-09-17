@@ -73,7 +73,7 @@ def order_as_pdf(request, pk):
 
 
     #return HttpResponse(pdf_content)
-    return HttpResponse(render_html(pdf_content), mimetype='application/pdf')
+    return HttpResponse(render_html(pdf_content), content_type='application/pdf')
 
 
 

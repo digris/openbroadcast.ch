@@ -413,7 +413,7 @@ def showLogging(debug=False):
 # Background informations in data URI here:
 # http://en.wikipedia.org/wiki/Data_URI_scheme
 
-def makeDataURI(data=None, mimetype=None, filename=None):
+def makeDataURI(data=None, content_type=None, filename=None):
     import base64
 
     if not mimetype:

@@ -75,7 +75,7 @@ def construct_mail(recipients=None, context=None, template_base='emailit/email',
             mail.attach_alternative(html, 'text/html')
 
         for attachment in attachments:
-            mail.attach(filename=attachment['filename'], content=attachment['content'], mimetype=attachment['mimetype'])
+            mail.attach(filename=attachment['filename'], content=attachment['content'], content_type=attachment['mimetype'])
 
     return mail
 
