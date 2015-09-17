@@ -8,7 +8,7 @@ anyjson==0.3.3
 app-version==0.2.1
 beautifulsoup4==4.3.2
 BeautifulSoup==3.2.1
-billiard==3.3.0.18
+billiard==3.3.0.20
 celery==3.1.18
 cmsplugin-filer==0.10
 cmsplugin-twitter==1.0.4
@@ -65,7 +65,7 @@ gunicorn==19.1.1
 html5lib==1.0b1
 httpagentparser==1.7.4
 jdcal==1.0
-kombu==3.0.23
+kombu==3.0.26
 lxml==3.4.0
 nydus==0.10.8
 oauthlib==0.6.3

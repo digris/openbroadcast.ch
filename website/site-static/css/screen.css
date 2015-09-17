@@ -3561,6 +3561,7 @@ body.loading #onair_container .item.playing .container .controls span.loading {
 @media only screen and (min-width: 40.063em) {
   #onair_container #media_prev_next div.next,
   #onair_container #media_prev_next div.previous {
+    z-index: 999;
     position: absolute;
     top: 45%;
   }
