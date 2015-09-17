@@ -150,7 +150,6 @@ def deploy():
                 print(green('database sync & migration'))
                 try:
                     with cd(env.path + '/src/website/'):
-                        run('/srv/%s/bin/python /%s/src_new/website/manage.py syncdb' % (env.site_id, env.path))
                         run('/srv/%s/bin/python /%s/src_new/website/manage.py migrate' % (env.site_id, env.path))
 
                 except Exception, e:
