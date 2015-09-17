@@ -39,6 +39,7 @@ StationTimeApp = function () {
 
         if(time != undefined) {
             self.current_time = new Date(time); // '2014-01-01 10:11:55'
+            self.current_time = self.tz_offset(self.current_time);
             self.display_clock();
         }
 
@@ -51,6 +52,14 @@ StationTimeApp = function () {
             }, self.interval_duration);
         }
 
+    };
+
+    this.tz_offset = function(date) {
+
+        var offset = date.getTimezoneOffset();
+        date.setTime( date.getTime() + (offset * 60 * 1000));
+
+        return date;
     };
 
     this.display_clock = function() {

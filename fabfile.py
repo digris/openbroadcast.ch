@@ -162,12 +162,12 @@ def deploy():
             staticfiles & compress
             """
 
-            #try:
-            #    with cd(env.path + '/src_new/website/site-static/'):
-            #        print(green('compiling sass files'))
-            #        run('%s compile -c config-production.rb' % (env.compass_binary))
-            #except Exception, e:
-            #    pass
+            try:
+                with cd(env.path + '/src_new/website/site-static/'):
+                    print(green('compiling sass files'))
+                    run('%s compile -c config-production.rb' % (env.compass_binary))
+            except Exception, e:
+                print red('unable to compile sass: %s' % e)
 
 
 
