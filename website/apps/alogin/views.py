@@ -30,7 +30,7 @@ def alogin_login(request):
 
             messages.add_message(
                 request, messages.INFO,
-                _(u'Welcome {username}. You have successfully logged in.').format(username=user.username)
+                _(u'Welcome {username}. \r\nYou have successfully logged in.').format(username=user.username)
             )
 
             return HttpResponse(json.dumps({

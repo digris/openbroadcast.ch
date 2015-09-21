@@ -28,40 +28,50 @@ CMS_TEMPLATES = (
 CONTENT_PLUGINS = ['TextPlugin', 'LinkPlugin']
 CONTENT_PLUGINS.extend(['AppshotPlugin', 'BoxedPlugin', 'FAQMultiListPlugin', 'FilerFilePlugin', 'FilerImagePlugin', 'FilerSVGPlugin', 'MapPlugin', 'SingleProductPlugin', 'SnippetPlugin', 'TextPlugin', 'YouTubePlugin', ])
 
+
+
+DEFAULT_PLUGINS = [
+            {
+                'plugin_type': 'TextPlugin',
+                'values': {
+                    'body':'<h1>Lorem ipsum dolor sit amet... </h1><p>(Double-click me to edit!)</p>',
+                },
+            },
+        ]
+
+
 CMS_PLACEHOLDER_CONF = {
-    'main_content': {
+    'content': {
         #'plugins': ['TextPlugin', 'PicturePlugin'],
-        'text_only_plugins': ['LinkPlugin'],
+        #'text_only_plugins': ['LinkPlugin'],
         'extra_context': {"width": 640},
-        'name': _("Content"),
+        'name': _("Main Content"),
+        'default_plugins': DEFAULT_PLUGINS,
     },
     'sidebar': {
-        "plugins": ['TextPlugin', 'LinkPlugin'],
+        #"plugins": ['TextPlugin', 'LinkPlugin'],
         "extra_context": {"width": 280},
-        'name': _("Right Column"),
+        'name': _("Sidebar"),
         'limits': {
-            'global': 2,
+            'global': 4,
             'TeaserPlugin': 1,
             'LinkPlugin': 1,
         },
+        'default_plugins': DEFAULT_PLUGINS,
     },
-    'content_right': {
-        "plugins": CONTENT_PLUGINS,
-        'name': "Main Content",
-        'limits': {
-            'global': 20,
-            #'TeaserPlugin': 1,
-        },
-    },
-    'content_left': {
-        "plugins": CONTENT_PLUGINS,
-        'name': "Secondary Content",
-        'limits': {
-            'global': 20,
-        },
-    },
-    'cms_onepage.html main_content': {
-        "plugins": ['EmbeddedPagesPlugin', ]
+    'ticker_article_content': {
+        #'plugins': ['TextPlugin', 'PicturePlugin'],
+        #'text_only_plugins': ['LinkPlugin'],
+        'extra_context': {"width": 640},
+        'name': _("Main Content"),
+        'default_plugins': [
+            {
+                'plugin_type': 'TextPlugin',
+                'values': {
+                    'body':'<h1>I\'m a blog post... </h1><p>(Double-click me to edit!)</p>',
+                },
+            },
+        ],
     },
 }
 
@@ -108,3 +118,64 @@ TEMPLATES = [
         },
     },
 ]
+
+
+
+
+
+CKEDITOR_SETTINGS = {
+    'language': '{{ language }}',
+    'uiColor': '#ffffff',
+    'contentsCss': STATIC_URL + 'css/cms/editor.css',
+    'toolbar_CMS': [
+        ['Undo', 'Redo'],
+        ['cmsplugins', 'ShowBlocks',],
+        #['Format', 'Styles'],
+        ['Styles',],
+        ['Cut','Copy','Paste','PasteText', '-', 'Find','Replace'],
+        ['NumberedList', 'BulletedList',],
+        ['Source',],
+        ['Bold', 'Italic', 'Underline', '-', 'Subscript', 'Superscript', '-', 'RemoveFormat'],
+    ],
+    'startupOutlineBlocks': True,
+    'skin': 'moono',
+    #'extraPlugins': 'blockquote',
+
+    'stylesSet': [
+
+        # alternative to 'format' selector
+        {'name': 'Paragraph', 'element': 'p',},
+        {'name': 'Heading 1 (only _one_ per page!)', 'element': 'h1',},
+        {'name': 'Heading 2', 'element': 'h2',},
+        {'name': 'Heading 3', 'element': 'h3',},
+        {'name': 'Heading 4', 'element': 'h4',},
+
+        {'name': 'Highlight', 'element': 'p', 'attributes': { 'class': 'highlight' }},
+
+        #{'name': 'BQ', 'element': 'blockquote', 'attributes': { 'class': 'bq' }},
+
+        {'name': 'Marked "info"', 'element': 'p', 'attributes': { 'class': 'marked-info' }},
+        {'name': 'Marked "hint"', 'element': 'p', 'attributes': { 'class': 'marked-hint' }},
+        {'name': 'Marked "warning"', 'element': 'p', 'attributes': { 'class': 'marked-warning' }},
+        {'name': 'Marked "alert"', 'element': 'p', 'attributes': { 'class': 'marked-alert' }},
+
+        {'name': 'Quote', 'element': 'p', 'attributes': { 'class': 'blockquote' }},
+
+        {'name': 'Dimmed', 'element': 'p', 'attributes': { 'class': 'dimmed' }},
+        #{'name': 'Address', 'element': 'address',},
+
+        {'name': 'Cited Work', 'element': 'cite',},
+        {'name': 'Inline Quotation', 'element': 'q',},
+
+
+
+        # custom elements
+        {'name': 'Italic Title',
+        'element': 'h2',
+        'styles': {
+            'font-style': 'italic'
+        }},
+
+    ]
+
+}

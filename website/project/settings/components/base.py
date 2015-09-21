@@ -132,10 +132,13 @@ INSTALLED_APPS = (
     #'cms.plugins.snippet',
     # cms / filer
 
+    'djangocms_picture',
+    'djangocms_link',
+
     'filer',
-    #'cmsplugin_filer_file',
+    'cmsplugin_filer_file',
     #'cmsplugin_filer_folder',
-    #'cmsplugin_filer_image',
+    'cmsplugin_filer_image',
     #'cmsplugin_filer_teaser',
     #'cmsplugin_filer_video',
 
@@ -166,6 +169,7 @@ INSTALLED_APPS = (
     'remotelink',
     'contentproxy',
     'profiles',
+    'ticker',
     'social_auth',
 
     # shop
@@ -199,6 +203,10 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
     # /cms
+
+    # cms ajax-loader redirect
+    'base.middleware.AJAXLoaderRedireckMiddleware',
+
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'social_auth.middleware.SocialAuthExceptionMiddleware',
@@ -343,12 +351,6 @@ BADBROWSER_REQUIREMENTS = (
 	("opera", None),
 )
 BADBROWSER_SUGGEST = ('chrome', 'safari', 'ie', 'firefox', )
-
-#SOUTH_MIGRATION_MODULES = {
-#    'easy_thumbnails': 'easy_thumbnails.south_migrations',
-#}
-
-
 
 
 #LOGIN_REDIRECT_URL = '/accounts/contact/'

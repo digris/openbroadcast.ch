@@ -1,10 +1,44 @@
-// topbar
+///////////////////////////////////////////////////
+// additional navigation styles
+///////////////////////////////////////////////////
+
+
+// logo
+ul.title-area > li.name
+  width: 224px
+  .logo-icon
+    float: left
+
+  .logo-text
+    padding-top: 7px
+    font-weight: 300
+    text-align: left
+    margin-left: 48px
+    span
+      //+opacity(0.8)
+      font-size: rem-calc(13)
+    a:hover
+      color: #333
+
+
+
+ul.desktop-navigation
+  position: absolute
+  left: 224px
+  top: -40px
+
+
+
+
 @media #{$medium-up}
   nav.top-bar
-    text-align: center
+    a
+      text-align: center
 
   section.top-bar-section
-    display: inline-block
+    //display: inline-block
+    //height: $topbar-height
+
 
 
 @media #{$small-only}
@@ -44,4 +78,3 @@
       top: 0
       width: 100%
       z-index: 99
-

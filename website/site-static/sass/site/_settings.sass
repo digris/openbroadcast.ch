@@ -1157,83 +1157,45 @@ $table-border-style: none
 // TOP BAR
 //
 
-// $include-html-top-bar-classes: $include-html-classes;
+// non-foundation variables
+$topbar-font-weight: 300
+$topbar-font-color: #000
+$tobbar-bg-hover-color: rgba(0, 0, 0, 0.1)
+// end: non-foundation variables
 
-// Background color for the top bar
-$topbar-bg-color: $primary-color
-$topbar-bg: $topbar-bg-color
 
-// Height and margin
 $topbar-height: rem-calc(40)
+$topbar-bg-color: rgba(0, 0, 0, 0.0)
 
-// $topbar-margin-bottom: 0;
 
-// Controlling the styles for the title in the top bar
-// $topbar-title-weight: normal;
-// $topbar-title-font-size: rem-calc(17);
-
-// Style the top bar dropdown elements
-$topbar-dropdown-bg: transparent
-$topbar-link-bg: transparent
-$topbar-dropdown-link-color: #333
-//$topbar-dropdown-link-bg: #f0f;
-$topbar-dropdown-link-weight: 300
+$topbar-dropdown-bg: $topbar-bg-color
+$topbar-dropdown-link-color: $topbar-font-color
+$topbar-dropdown-link-color-hover: $topbar-font-color
+$topbar-dropdown-link-bg: rgba(0, 0, 0, 0.0)
+$topbar-dropdown-link-bg-hover: $tobbar-bg-hover-color
+$topbar-dropdown-link-weight: $topbar-font-weight
 $topbar-dropdown-toggle-size: 5px
-$topbar-dropdown-toggle-color: #333
-$topbar-dropdown-toggle-alpha: 0.5
+$topbar-dropdown-toggle-color: $topbar-font-color
+$topbar-dropdown-toggle-alpha: 1.0
 
-// Set the link colors and styles for top-level nav
-$topbar-link-color: #333
-$topbar-link-color-hover: #333
-//$topbar-link-color-active: $nav-color-active
 
-// $topbar-link-color-active-hover: #fff;
-$topbar-link-weight: 300
+$topbar-link-color: $topbar-font-color
+$topbar-link-color-hover: $topbar-font-color
+$topbar-link-color-active: #fff
+$topbar-link-color-active-hover: #fff
+$topbar-link-weight: $topbar-font-weight
 $topbar-link-font-size: rem-calc(16)
-// $topbar-link-hover-lightness: -10%; // Darken by 10%
-$topbar-link-bg-hover: scale-color($primary-color, $lightness: -14%)
-$topbar-link-bg-active: scale-color($primary-color, $lightness: -14%)
-$topbar-link-bg-active-hover: scale-color($primary-color, $lightness: -14%)
+//$topbar-link-hover-lightness: -10% !default; // Darken by 10%
+$topbar-link-bg: $topbar-bg-color
+$topbar-link-bg-hover: $tobbar-bg-hover-color
+//$topbar-link-bg-color-hover: $charcoal !default;
+$topbar-link-bg-active: $topbar-font-color
+$topbar-link-bg-active-hover: scale-color($topbar-font-color, $lightness: 10%)
+//$topbar-link-font-family: $body-font-family !default;
+//$topbar-link-text-transform: none !default;
+//$topbar-link-padding: ($topbar-height / 3) !default;
 
-$topbar-link-bg-hover: rgba(0, 0, 0, 0.1)
-$topbar-link-bg-active: #333
-$topbar-link-bg-active-hover: #333
 
-// $topbar-link-font-family: $body-font-family;
-//$topbar-link-text-transform: uppercase
-$topbar-link-padding: $topbar-height / 3
-
-//$topbar-button-font-size: 0.75rem
-//$topbar-button-top: 7px
-
-// $topbar-dropdown-label-color: #777;
-// $topbar-dropdown-label-text-transform: uppercase;
-// $topbar-dropdown-label-font-weight: bold;
-// $topbar-dropdown-label-font-size: rem-calc(10);
-// $topbar-dropdown-label-bg: #333;
-
-// Top menu icon styles
-//$topbar-menu-link-transform: none
-// $topbar-menu-link-font-size: rem-calc(13);
-//$topbar-menu-link-weight: 300
-// $topbar-menu-link-color: #fff;
-// $topbar-menu-icon-color: #fff;
-// $topbar-menu-link-color-toggled: #888;
-// $topbar-menu-icon-color-toggled: #888;
-
-// Transitions and breakpoint styles
-// $topbar-transition-speed: 300ms;
-// Using rem-calc for the below breakpoint causes issues with top bar
-// $topbar-breakpoint: #{upper-bound($medium-range)}; // Change to 9999px for always mobile layout
-// $topbar-media-query: "only screen and (min-width: #{upper-bound($medium-range)})";
-
-// Divider Styles
-// $topbar-divider-border-bottom: solid 1px  scale-color($topbar-bg-color, $lightness: 13%);
-// $topbar-divider-border-top: solid 1px scale-color($topbar-bg-color, $lightness: -50%);
-
-// Sticky Class
-// $topbar-sticky-class: ".sticky";
-// $topbar-arrows: true; //Set false to remove the triangle icon from the menu item
 
 //
 // VISIBILITY CLASSES

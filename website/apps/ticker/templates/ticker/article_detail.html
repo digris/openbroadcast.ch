@@ -1,0 +1,35 @@
+{% extends "app_base.html" %}
+{% load cms_tags menu_tags markup thumbnail i18n sekizai_tags %}
+
+{% block body_extra_class %}detail article blossom{% endblock %}
+
+{% block app_content %}
+    <div class="row">
+        <div class="small-12 columns main-content">
+            <section class="detail article">
+                <div class="header">
+                    <div class="row">
+                        <div class="small-12 columns end">
+                            <h1>{{ object.name }}</h1>
+                            {% if object.subline %}
+                                <h3>{{ object.subline }}</h3>
+                            {% endif %}
+                            <p class="date">
+                                {% trans 'published'|title %}: {{ object.created|date:'DATETIME_FORMAT' }}
+                                -
+                                {% trans 'last update'|title %}: {{ object.updated|date:'DATETIME_FORMAT' }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <div class="small-12 columns main">
+                        {% render_placeholder object.content %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

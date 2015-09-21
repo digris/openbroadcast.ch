@@ -77,7 +77,7 @@
     <script type="text/javascript" src="http://fast.fonts.net/jsapi/1ca04628-74f1-4059-8dd2-c91d0a2a63bc.js"></script>
     -->
 </head>
-<body id="base" class="{% block body_extra_class %}{% endblock %}" data-livebg__ data-bplayer_state="init">
+<body id="base" class="{% block body_extra_class %}{% endblock %}" data-livebg data-bplayer_state="init">
 
 {% cms_toolbar %}
 
@@ -100,7 +100,7 @@
                         </ul>
                     </div>
                     <div class="logo-text">
-                        <span>open broadcast</span>
+                        <span>Open Broadcast</span>
                     </div>
                 </a>
             </li>
@@ -121,7 +121,7 @@
 
         <!-- start: desktop version -->
         <section class="top-bar-section center show-for-medium-up">
-            <ul>
+            <ul class="desktop-navigation">
                 {% show_menu 0 100 100 100 "_layout/_navigation.html" %}
             </ul>
         </section>
@@ -206,6 +206,7 @@
 <script src="{{ STATIC_URL }}onair/js/base.js"></script>
 <script src="{{ STATIC_URL }}stationtime/js/base.js"></script>
 <script src="{{ STATIC_URL }}remotelink/js/base.js"></script>
+<script src="{{ STATIC_URL }}ticker/js/base.js"></script>
 
 {% endcompress %}
 
@@ -272,7 +273,7 @@
         // AJAX Loader
         /////////////////////////////////////////////
         var ajax_loader = new AJAXLoader();
-        ajax_loader.debug = false;
+        ajax_loader.debug = true;
         ajax_loader.init();
 
 

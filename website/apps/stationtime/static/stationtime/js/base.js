@@ -23,7 +23,45 @@ StationTimeApp = function () {
             self.sync_time();
         }, self.resync_interval_duration);
 
+        self.bindings();
+
     };
+
+    this.bindings = function() {
+
+        // TODO: hakish implementation - show logo on station-time hover
+
+        self.container.on('mouseover', '.wrapper', function(){
+
+            if(self.debug) {
+                console.debug('StationTimeApp: mouseover');
+            }
+
+
+            if ($('#onair_container').hasClass('onair')) {
+                //$('.switch-panel.offline').fadeIn(500);
+                //$('.switch-panel.online').fadeOut(500);
+                $('.switch-panel.offline').css('opacity', 1.0);
+                $('.switch-panel.online').css('opacity', 0.0);
+                $('.switch-panel.offline .controls').hide();
+            }
+
+            //$('.logo-container', self.container).fadeIn(500);
+        })
+        self.container.on('mouseout', '.wrapper', function(){
+
+            if(self.debug) {
+                console.debug('StationTimeApp: mouseout');
+            }
+
+            $('.switch-panel.offline').css('opacity', 0.0);
+            $('.switch-panel.online').css('opacity', 1.0);
+                $('.switch-panel.offline .controls').show();
+
+            //$('.logo-container', self.container).fadeOut(500);
+        }, 100);
+    };
+
 
     this.sync_time = function() {
         $.get(self.api_url, function(data){
@@ -70,7 +108,7 @@ StationTimeApp = function () {
             self.pad(self.current_time.getSeconds())
         ].join(':');
 
-        self.container.html('<a href="#">' + time_string + '</a>');
+        $('input', self.container).val(time_string);
     };
 
     this.pad = function(n) {

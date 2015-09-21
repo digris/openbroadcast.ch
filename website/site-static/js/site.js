@@ -10,11 +10,11 @@ var SiteUI = function () {
         '#609E80'
     ];
     this.colors = [
-        '#cacaca'
+        '#00ffff'
     ];
-    this.colors = [
-        '#dddddd'
-    ];
+    //this.colors = [
+    //    '#dddddd'
+    //];
     this.current_color = 0;
 
     this.remote_window = false;
@@ -57,22 +57,18 @@ var SiteUI = function () {
             //$('body').removeClass('xhr-load');
         });
 
-
-        $( window ).resize(function() {
+        $(window).on('resize', function(e){
             self.layout();
         });
 
 
         // handling urls on external sites
         $('body__').on('click', 'a', function(e){
-
             var url = $(this).attr('href');
-
             if(url != '#' && util.is_external(url)) {
                 e.preventDefault();
                 self.remote_window = window.open(url);
             }
-
         });
 
         $(document).on('ajax-loader', function(e, action) {
@@ -103,32 +99,33 @@ var SiteUI = function () {
      */
     this.layout = function() {
 
-        // hack!
-        // TODO: modularize!
-        //var ice = $('.info-container .items');
-        //ice.height(ice.width());
+        // center navigation
+        var nav_container = $('.desktop-navigation');
+        if(nav_container.length) {
+            var offset = 0.5 * $(window).width() - 0.5 * nav_container.width();
+            nav_container.css('left', 0.5 * $(window).width() - 0.5 * nav_container.width())
+            if(nav_container.position().top < 0){
+                nav_container.css('top', '0px');
+            }
+        }
 
+
+
+        // map width to height
         $('[data-width-to-height]').each(function(){
             $(this).height($(this).width());
         });
-
-
-
 
     };
 
 
 
     this.init = function () {
-
         self.is_retina = isRetinaDisplay();
-
         self.layout();
         self.set_color();
         self.bindings();
-
         self.init_fd5();
-
     };
 
 
@@ -202,3 +199,8 @@ function isRetinaDisplay() {
             }
         }
     }
+
+
+
+
+// mudule specific functionality

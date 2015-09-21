@@ -3,8 +3,84 @@
   //background: #ffff00
   // background handled through 'livebg'
 
-// text styling
-.textplugin_holder
+
+.cmsplugin_holder
+  max-width: 740px
+  margin: 16px auto
+  font-weight: 300
+
+
+  // TODO: eventually move to separate "ticker" sheet
+  .article
+    padding: 4px 4px 16px
+    border-bottom: 2px solid #000
+    position: relative
+    padding-top: 16px
+
+    &:first-child
+      border-top: 2px solid #000
+      margin-top: 54px
+
+    p
+      text-indent: 30px
+
+      a
+        //text-decoration: underline
+        border-bottom: 1px dotted black
+        &:hover
+          border-bottom: 1px solid black
+
+      &.published
+        font-size: rem-calc(12)
+        margin-bottom: 0
+
+
+    .content
+      display: none
+
+    .show-while-expanded
+      display: none !important
+    .hide-while-expanded
+      display: block
+
+    &.hover:not(.expanded)
+      cursor: pointer
+      background-color: rgba(0, 0, 0, 0.1)
+
+    &.expanded
+
+      .show-while-expanded
+        display: block !important
+      .hide-while-expanded
+        display: none
+
+      .content
+        display: block
+
+
+    .toggle
+      z-index: 999
+      position: absolute
+      right: 4px
+      top: 22px
+      > a
+        width: 30px
+        height: 30px
+        border-radius: 15px
+        color: white
+        background: black
+        display: block
+        text-align: center
+        line-height: 27px
+        font-size: 20px
+        padding-left: 2px
+
+
+
+
+
+  // text styling
+.main-content > .textplugin_holder
   max-width: 740px
   margin: 16px auto
   font-weight: 300
@@ -21,46 +97,9 @@
     text-indent: 30px
 
 
-
-  &.__disabled__
-    margin-bottom: 14px
-    padding-bottom: 14px
-
-    border-bottom: 1px solid $grey-light
-    &:last-child, &:first-child
-      border-bottom: none
-
-
-    h1, h2, h3, h4, h5, h6
-      color: $grey-dark
-
-      &.highlight
-        color: $primary-color
-
-    h1.highlight
-      margin-top: 70px
-      font-size: rem-calc(50)
-
-    p
-      //max-width: 720px
-      //padding: 0 0 12px 0
-
-      &.unpadded
-        padding: 0
-        margin: 0
-
-    blockquote
-      margin: 16px 0
-      padding: 0 16px 0 16px
-      border-left-width: 4px
-      p
-        padding: 0
-        margin: 0
-
-
 @media #{$small-only}
 
-  .textplugin_holder
+  .cmsplugin_holder
 
     border-top: none !important
     padding: 0 20px

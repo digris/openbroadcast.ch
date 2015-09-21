@@ -35,3 +35,5 @@ THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.filters',
 )
 THUMBNAIL_QUALITY = 80
+
+THUMBNAIL_HIGH_RESOLUTION = True

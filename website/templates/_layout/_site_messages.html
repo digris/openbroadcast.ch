@@ -17,18 +17,16 @@
 <div id="messages_container">
 {% if messages %}
 <div id="site_messages">
-    <div class="row">
-        <div class="small-10 small-centered columns">
-            <ul class="messages no-bullet">
-                {% for message in messages %}
-                <li class="{% if message.tags %}{{ message.tags }}{% endif %}">
-                    {{ message|linebreaksbr }}
-                    <a class="right mark-seen"><i class="fa fa-times"></i></a>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
+
+    <ul class="messages no-bullet">
+        {% for message in messages %}
+        <li class="{% if message.tags %}{{ message.tags }}{% endif %}">
+            {{ message|linebreaksbr }}
+            <a class="right mark-seen"><i class="fa fa-times"></i></a>
+        </li>
+        {% endfor %}
+    </ul>
+
 </div>
 {% endif %}
 </div>

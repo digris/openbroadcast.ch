@@ -109,22 +109,9 @@ var OnAirApp = function () {
         });
 
         // TODO: hackish implementation here, should be done more generic
-        self.container.on('click', '#back_onair a', function(e){
+        self.container.on('click', '#back_onair .wrapper', function(e){
             e.preventDefault();
             self.handle_pagination(0)
-        });
-
-        // TODO: hakish implementation - show logo on station-time hover
-        $('#station_time')
-        .on('mouseover', 'a', function(){
-            $('.show-while-fallback', self.container).css('display', 'block');
-            $('.logo-container', self.container).fadeIn(500);
-        })
-        .on('mouseout', 'a', function(){
-            $('.logo-container', self.container).fadeOut(500);
-                setTimeout(function(){
-                    $('.show-while-fallback', self.container).css('display', 'none');
-                }, 500);
         });
 
 

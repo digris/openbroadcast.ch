@@ -84,7 +84,7 @@ var AJAXLoader = function () {
         $.ajax({
             type: 'GET',
             dataType: "text",
-            crossDomain: true,
+            crossDomain: false,
             url: uri,
             success: function (data) {
                 if(self.debug) {
