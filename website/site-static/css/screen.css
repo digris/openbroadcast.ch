@@ -4486,7 +4486,7 @@ label.error {
   display: block;
   float: left;
   list-style: none;
-  margin-left: 1.46667rem;
+  margin-left: 0;
 }
 /* line 47, ../sass/lib/fd-5.5.2/components/_inline-lists.scss */
 .inline-list > li > * {
@@ -13593,7 +13593,7 @@ body.paused #bplayer_container .playlist .item.playing .controls .pause {
 /* line 230, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.compact .item {
   display: none;
-  padding: 5px 0 0 10px;
+  padding: 3px 0 0 10px;
 }
 /* line 233, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.compact .item a, #bplayer_container section.playlist.history.compact .item span {
@@ -13623,7 +13623,7 @@ body.paused #bplayer_container .playlist .item.playing .controls .pause {
   padding: 4px 0;
   margin: 4px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 4px 0;
+  padding: 3px 0;
 }
 /* line 255, ../sass/site/apps/_bplayer.sass */
 #bplayer_container section.playlist.history.expanded .item.hover {
