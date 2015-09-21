@@ -9,12 +9,10 @@ var SiteUI = function () {
         '#75DB87',
         '#609E80'
     ];
+
     this.colors = [
-        '#00ffff'
+        '#dddddd'
     ];
-    //this.colors = [
-    //    '#dddddd'
-    //];
     this.current_color = 0;
 
     this.remote_window = false;

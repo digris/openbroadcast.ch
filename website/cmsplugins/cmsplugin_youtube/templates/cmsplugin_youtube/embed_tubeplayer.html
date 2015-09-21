@@ -1,0 +1,9 @@
+{% load sekizai_tags calc %}
+
+<div class="wrapper youtube">
+    {% if instance.name %}<h2>{{ instance.name }}</h2>{% endif %}
+    <div id="yp_{{ instance.pk }}"
+         class="flex-video {% if instance.ratio > 1.33 %}widescreen {% endif %}">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ instance.video_id }}?autoplay=0&showinfo=2&controls=1&modestbranding=1&theme={{ instance.theme }}" frameborder="0" allowfullscreen></iframe>
+    </div>
+</div>
