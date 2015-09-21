@@ -23,6 +23,8 @@
 
     p
       text-indent: 30px
+      img
+        margin-left: -30px
 
       a
         //text-decoration: underline
@@ -95,6 +97,14 @@
 
   p
     text-indent: 30px
+    img
+      margin-left: -30px
+
+  a
+    //text-decoration: underline
+    border-bottom: 1px dotted black
+    &:hover
+      border-bottom: 1px solid black
 
 
 @media #{$small-only}
@@ -112,4 +122,6 @@
 
     p
       text-indent: 0px
+      img
+        margin-left: 0
 

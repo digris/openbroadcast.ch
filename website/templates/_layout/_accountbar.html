@@ -7,12 +7,26 @@
     <li class="has-dropdown not-click"_>
         <a href="#">{% firstof user.get_full_name user.username %}</a>
         <ul class="dropdown">
+            {% if user.is_staff %}
+
+                <li class="divider"></li>
+
+                {% if not cms_toolbar_disabled %}
+                    <li><a href="?toolbar_off">{% trans 'Hide Toolbar' %}</a></li>
+                {% else %}
+                    <li><a href="?edit">{% trans 'Show Toolbar' %}</a></li>
+                {% endif %}
+                <li><a target="_blank" href="/admin/">{% trans 'Administration' %}</a></li>
+
+
+                <li class="divider"></li>
+            {% endif %}
+
+
+
             <li>
                 <a href="{% url 'alogin-profile' %}" data-alogin-action="profile">{% trans 'profile & settings'|capfirst %}</a>
             </li>
-            {% if user.is_staff %}
-                <li><a target="_blank" href="/admin/">{% trans 'Administration' %}</a></li>
-            {% endif %}
             <li>
                 <a href="{% url 'alogin-logout' %}" data-alogin-action="logout">{% trans 'logout'|capfirst %}</a>
             </li>

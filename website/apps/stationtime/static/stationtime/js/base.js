@@ -54,9 +54,16 @@ StationTimeApp = function () {
                 console.debug('StationTimeApp: mouseout');
             }
 
-            $('.switch-panel.offline').css('opacity', 0.0);
-            $('.switch-panel.online').css('opacity', 1.0);
+            if ($('#onair_container').hasClass('onair')) {
+                $('.switch-panel.offline').css('opacity', 0.0);
+                $('.switch-panel.online').css('opacity', 1.0);
                 $('.switch-panel.offline .controls').show();
+            } else {
+                $('.switch-panel.offline').css('opacity', 1.0);
+                $('.switch-panel.online').css('opacity', 0.0);
+                $('.switch-panel.offline .controls').show();
+            }
+
 
             //$('.logo-container', self.container).fadeOut(500);
         }, 100);

@@ -35,10 +35,24 @@ class AJAXLoaderRedireckMiddleware(object):
 
 
                 if page and not request.is_ajax():
+
+                    redirect_required = True
+
                     new_path = '/#%s' % path
 
                     log.info('new_path: %s' % new_path)
-                    if not request.toolbar.edit_mode:
+
+                    if request.toolbar.edit_mode:
+                        redirect_required = False
+
+                    if 'cms_toolbar_disabled' in request.session and request.session['cms_toolbar_disabled']:
+                        redirect_required = True
+
+
+                    print 'redirect_required: %s' % redirect_required
+
+                    if redirect_required:
                         return http.HttpResponseRedirect(new_path)
+
 
 

@@ -10,7 +10,7 @@ class ArticleToolbar(CMSToolbar):
 
     def populate(self):
 
-        menu = self.toolbar.get_or_create_menu('ticker-app', _('KB Articles'))
+        menu = self.toolbar.get_or_create_menu('ticker-app', _('News'))
         url = reverse('admin:ticker_article_changelist')
         #menu.add_sideframe_item(_('Play List'), url=url)
         menu.add_link_item(_('Article List'), url=url)

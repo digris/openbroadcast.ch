@@ -16,9 +16,12 @@ def parse_text(html_text):
     soup = BeautifulSoup(html_text)
 
     # not so nice - nbsp to space
-    text = soup.getText().replace(u'\xa0', u' ')
+    text = soup.get_text().replace(u'\xa0', u' ')
 
-    return text
+    # strip all tags
+    stipped_text = BeautifulSoup(text).text
+
+    return stipped_text
 
 def extract_mentioned_users(html_text):
 

@@ -102,6 +102,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'social_auth.context_processors.social_auth_backends',
     'social_auth.context_processors.backends_data',
     'social_auth.context_processors.social_auth_login_redirect',
+
+    # custom
+    'base.context_processors.cms_toolbar'
 )
 
 

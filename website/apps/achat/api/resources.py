@@ -4,8 +4,11 @@ from tastypie.authentication import SessionAuthentication, Authentication, Multi
 from tastypie.authorization import Authorization
 from tastypie.exceptions import ImmediateHttpResponse
 from tastypie.http import HttpForbidden
+from django.utils.translation import ugettext_lazy as _
 from achat.models import Message, MentionedUser
 from achat.util import parse_text, extract_mentioned_users, message_to_html, is_spam
+
+MESSAGE_MAX_LENGTH = 720
 
 class MessageResource(ModelResource):
 
@@ -20,19 +23,22 @@ class MessageResource(ModelResource):
         excludes = ['id', 'rendered_text',]
 
     def obj_create(self, bundle, **kwargs):
-        print 'obj_create MessageResource'
 
         html_text = bundle.data['text']
         parsed_text = parse_text(html_text)
         bundle.data['text'] = parsed_text
-
-
 
         spam, reason = is_spam(parsed_text, bundle.request)
         if spam:
             raise ImmediateHttpResponse(
                 HttpForbidden(reason)
             )
+
+        if len(parsed_text) > MESSAGE_MAX_LENGTH:
+            raise ImmediateHttpResponse(
+                HttpForbidden(_(u'Your message is too long. Maximum {max_length} characters are allowed.').format(max_length=MESSAGE_MAX_LENGTH))
+            )
+
 
         # creation needed here to get pk for assignment
         bundle = super(MessageResource, self).obj_create(bundle, user=bundle.request.user)

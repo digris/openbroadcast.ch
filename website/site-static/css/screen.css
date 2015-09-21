@@ -12167,56 +12167,60 @@ x:-o-prefocus {
 .cmsplugin_holder .article p {
   text-indent: 30px;
 }
-/* line 27, ../sass/site/apps/_cms.sass */
+/* line 26, ../sass/site/apps/_cms.sass */
+.cmsplugin_holder .article p img {
+  margin-left: -30px;
+}
+/* line 29, ../sass/site/apps/_cms.sass */
 .cmsplugin_holder .article p a {
   border-bottom: 1px dotted black;
 }
-/* line 30, ../sass/site/apps/_cms.sass */
+/* line 32, ../sass/site/apps/_cms.sass */
 .cmsplugin_holder .article p a:hover {
   border-bottom: 1px solid black;
 }
-/* line 33, ../sass/site/apps/_cms.sass */
+/* line 35, ../sass/site/apps/_cms.sass */
 .cmsplugin_holder .article p.published {
   font-size: 0.8rem;
   margin-bottom: 0;
 }
-/* line 38, ../sass/site/apps/_cms.sass */
+/* line 40, ../sass/site/apps/_cms.sass */
 .cmsplugin_holder .article .content {
   display: none;
 }
-/* line 41, ../sass/site/apps/_cms.sass */
+/* line 43, ../sass/site/apps/_cms.sass */
 .cmsplugin_holder .article .show-while-expanded {
   display: none !important;
 }
-/* line 43, ../sass/site/apps/_cms.sass */
+/* line 45, ../sass/site/apps/_cms.sass */
 .cmsplugin_holder .article .hide-while-expanded {
   display: block;
 }
-/* line 46, ../sass/site/apps/_cms.sass */
+/* line 48, ../sass/site/apps/_cms.sass */
 .cmsplugin_holder .article.hover:not(.expanded) {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.1);
 }
-/* line 52, ../sass/site/apps/_cms.sass */
+/* line 54, ../sass/site/apps/_cms.sass */
 .cmsplugin_holder .article.expanded .show-while-expanded {
   display: block !important;
 }
-/* line 54, ../sass/site/apps/_cms.sass */
+/* line 56, ../sass/site/apps/_cms.sass */
 .cmsplugin_holder .article.expanded .hide-while-expanded {
   display: none;
 }
-/* line 57, ../sass/site/apps/_cms.sass */
+/* line 59, ../sass/site/apps/_cms.sass */
 .cmsplugin_holder .article.expanded .content {
   display: block;
 }
-/* line 61, ../sass/site/apps/_cms.sass */
+/* line 63, ../sass/site/apps/_cms.sass */
 .cmsplugin_holder .article .toggle {
   z-index: 999;
   position: absolute;
   right: 4px;
   top: 22px;
 }
-/* line 66, ../sass/site/apps/_cms.sass */
+/* line 68, ../sass/site/apps/_cms.sass */
 .cmsplugin_holder .article .toggle > a {
   width: 30px;
   height: 30px;
@@ -12230,7 +12234,7 @@ x:-o-prefocus {
   padding-left: 2px;
 }
 
-/* line 83, ../sass/site/apps/_cms.sass */
+/* line 85, ../sass/site/apps/_cms.sass */
 .main-content > .textplugin_holder {
   max-width: 740px;
   margin: 16px auto;
@@ -12238,33 +12242,49 @@ x:-o-prefocus {
   padding: 4px 0 16px;
   border-bottom: 2px solid black;
 }
-/* line 91, ../sass/site/apps/_cms.sass */
+/* line 93, ../sass/site/apps/_cms.sass */
 .main-content > .textplugin_holder:first-child {
   border-top: 2px solid black;
   padding-top: 16px;
   margin-top: 54px;
 }
-/* line 96, ../sass/site/apps/_cms.sass */
+/* line 98, ../sass/site/apps/_cms.sass */
 .main-content > .textplugin_holder p {
   text-indent: 30px;
 }
+/* line 100, ../sass/site/apps/_cms.sass */
+.main-content > .textplugin_holder p img {
+  margin-left: -30px;
+}
+/* line 103, ../sass/site/apps/_cms.sass */
+.main-content > .textplugin_holder a {
+  border-bottom: 1px dotted black;
+}
+/* line 106, ../sass/site/apps/_cms.sass */
+.main-content > .textplugin_holder a:hover {
+  border-bottom: 1px solid black;
+}
 
 @media only screen and (max-width: 40em) {
-  /* line 102, ../sass/site/apps/_cms.sass */
+  /* line 112, ../sass/site/apps/_cms.sass */
   .cmsplugin_holder {
     border-top: none !important;
     padding: 0 20px;
     margin: 16px auto;
     font-weight: 300;
   }
-  /* line 109, ../sass/site/apps/_cms.sass */
+  /* line 119, ../sass/site/apps/_cms.sass */
   .cmsplugin_holder h1, .cmsplugin_holder h2, .cmsplugin_holder h3 {
     text-align: center;
     font-size: 1.2rem;
   }
-  /* line 113, ../sass/site/apps/_cms.sass */
+  /* line 123, ../sass/site/apps/_cms.sass */
   .cmsplugin_holder p {
     text-indent: 0px;
+  }
+  /* line 125, ../sass/site/apps/_cms.sass */
+  .cmsplugin_holder p img {
+    margin-left: 0;
   }
 }
 /* line 6, ../sass/site/apps/_generic.sass */
@@ -13819,7 +13839,7 @@ body {
   border: 1px solid #999999;
   padding: 2px 4px;
   margin: 0;
-  height: 30px;
+  min-height: 30px;
 }
 /* line 19, ../sass/site/apps/_achat.sass */
 #achat_container form div.chat-message p:focus {
@@ -15149,33 +15169,46 @@ ul.desktop-navigation {
   top: -40px;
 }
 
+/* line 31, ../sass/site/style/_navigation.sass */
+ul.dropdown li.divider {
+  background-color: black;
+}
+
 @media only screen and (min-width: 40.063em) {
-  /* line 35, ../sass/site/style/_navigation.sass */
+  /* line 37, ../sass/site/style/_navigation.sass */
   nav.top-bar a {
     text-align: center;
   }
+  /* line 41, ../sass/site/style/_navigation.sass */
+  nav.top-bar ul.accountbar > li {
+    min-width: 200px;
+  }
+  /* line 43, ../sass/site/style/_navigation.sass */
+  nav.top-bar ul.accountbar a {
+    text-align: left;
+  }
 }
 @media only screen and (max-width: 40em) {
-  /* line 47, ../sass/site/style/_navigation.sass */
+  /* line 55, ../sass/site/style/_navigation.sass */
   .top-bar .logo-text {
     padding-left: 40px;
   }
-  /* line 50, ../sass/site/style/_navigation.sass */
+  /* line 58, ../sass/site/style/_navigation.sass */
   .top-bar .toggle-topbar a {
     font-weight: 300;
     text-transform: none;
     color: black;
     line-height: 53px;
   }
-  /* line 56, ../sass/site/style/_navigation.sass */
+  /* line 64, ../sass/site/style/_navigation.sass */
   .top-bar .top-bar-section {
     text-align: center;
   }
-  /* line 59, ../sass/site/style/_navigation.sass */
+  /* line 67, ../sass/site/style/_navigation.sass */
   .top-bar .top-bar-section ul.account {
     padding: 10px 0;
   }
-  /* line 73, ../sass/site/style/_navigation.sass */
+  /* line 81, ../sass/site/style/_navigation.sass */
   .top-bar.expanded {
     background-color: white !important;
     box-shadow: 2px 2px 3px 1px rgba(51, 51, 51, 0.16);

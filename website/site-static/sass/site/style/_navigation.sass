@@ -27,13 +27,21 @@ ul.desktop-navigation
   left: 224px
   top: -40px
 
-
+ul.dropdown
+  li.divider
+    background-color: #000
 
 
 @media #{$medium-up}
   nav.top-bar
     a
       text-align: center
+
+    ul.accountbar
+      > li
+        min-width: 200px
+      a
+        text-align: left
 
   section.top-bar-section
     //display: inline-block

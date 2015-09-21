@@ -9,7 +9,7 @@ import django_extensions.db.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cms', '0013_auto_20150721_0012'),
+        ('cms', '0012_auto_20150607_2207'),
     ]
 
     operations = [

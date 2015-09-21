@@ -60,7 +60,6 @@ class Message(models.Model):
     def html(self):
 
         if self.rendered_text:
-            #pass
             return self.rendered_text
 
         bits = []

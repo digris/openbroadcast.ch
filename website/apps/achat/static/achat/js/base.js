@@ -6,6 +6,7 @@ AchatApp = function () {
     this.container;
     this.user;
     this.messages_container;
+    this.warning_container;
     this.max_messages = 24;
     this.static_url;
     this.base_url;
@@ -16,6 +17,7 @@ AchatApp = function () {
             console.debug('AchatApp: init');
         }
         self.messages_container = $('.messages-container', self.container);
+        self.warning_container = $('.warning-container', self.container);
         self.bindings();
 
         pushy_client.subscribe('achat', function(message){
@@ -271,11 +273,13 @@ AchatApp = function () {
                 dataType: 'json',
                 processData: false
             }).always(function(response){
+
                 if(response.status >= 300) {
                     var text = response.responseText;
                     var status = response.status;
-
-                    alert(status + ' - ' + text)
+                    self.show_warning(status, text)
+                } else {
+                    self.hide_warning()
                 }
             });
 
@@ -284,6 +288,17 @@ AchatApp = function () {
 
 
     };
+
+
+    this.show_warning = function(status, text) {
+        self.warning_container.html(text);
+    };
+
+    this.hide_warning = function() {
+        self.warning_container.html('');
+    };
+
+
 
     this.create_dummy_message = function(){
 
