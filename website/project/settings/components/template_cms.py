@@ -13,8 +13,8 @@ CMS_SHOW_START_DATE = True
 CMS_SHOW_END_DATE = True
 
 CMS_TEMPLATES = (
-    ('_cms/two-columns.html', '2 Columns'),
     ('_cms/single-column.html', '1 Column'),
+    ('_cms/two-columns.html', '2 Columns'),
     ('_cms/home.html', 'Home'),
     ('_cms/fs-video.html', 'Video (full-screen)'),
     #('_templates/cms_construction.html', 'Under construction'),
@@ -55,7 +55,7 @@ CMS_PLACEHOLDER_CONF = {
         'limits': {
             'global': 4,
             'TeaserPlugin': 1,
-            'LinkPlugin': 1,
+            'LinkPlugin': 10,
         },
         'default_plugins': DEFAULT_PLUGINS,
     },
@@ -68,7 +68,7 @@ CMS_PLACEHOLDER_CONF = {
             {
                 'plugin_type': 'TextPlugin',
                 'values': {
-                    'body':'<h1>I\'m a blog post... </h1><p>(Double-click me to edit!)</p>',
+                    'body':'<p>(Double-click me to edit!)</p>',
                 },
             },
         ],

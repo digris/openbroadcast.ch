@@ -15,7 +15,7 @@ def remove_query(path):
 
 class AJAXLoaderRedireckMiddleware(object):
 
-    def __process_request(self, request):
+    def process_request(self, request):
 
         if request.current_page:
 
