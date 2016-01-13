@@ -15,6 +15,7 @@ MEDIA_ROOT = getattr(settings, 'MEDIA_ROOT', None)
 MEDIA_URL = getattr(settings, 'MEDIA_URL', None)
 API_BASE_URL = getattr(settings, 'API_BASE_URL', None)
 API_BASE_AUTH = getattr(settings, 'API_BASE_AUTH', None)
+ASSET_BASE_URL = getattr(settings, 'ASSET_BASE_URL', None)
 
 User = settings.AUTH_USER_MODEL
 log = logging.getLogger(__name__)
@@ -49,7 +50,7 @@ class CachedMedia(models.Model):
 
     @property
     def uri(self):
-        return MEDIA_URL + 'private/' + 'media/' + self.uuid + '/stream.mp3'
+        return MEDIA_URL + 'private/' + 'media/' + self.uuid + '/default.mp3'
 
 
     @property
@@ -59,19 +60,22 @@ class CachedMedia(models.Model):
 
     @property
     def path(self):
-        return os.path.join(self.directory, 'stream.mp3')
+        return os.path.join(self.directory, 'default.mp3')
 
 
     def get_remote_file(self):
 
-        headers = {'Authorization': 'ApiKey %s:%s' % (API_BASE_AUTH['username'], API_BASE_AUTH['api_key'])}
+        headers = {
+            'Authorization': 'ApiKey %s:%s' % (API_BASE_AUTH['username'], API_BASE_AUTH['api_key'])
+        }
 
         url = API_BASE_URL + 'v1/library/track/{0}/stream.mp3'.format(self.uuid)
+        #url = ASSET_BASE_URL + 'media-asset/format/{0}/default.mp3'.format(self.uuid)
         log.debug('calling API with %s' % url)
         r = requests.get(url, headers=headers, stream=True, verify=False)
 
         directory = os.path.join(MEDIA_ROOT, 'private', 'media', self.uuid)
-        filename = 'stream.mp3'
+        filename = 'default.mp3'
 
         if r.status_code == 200:
 
@@ -86,7 +90,7 @@ class CachedMedia(models.Model):
 
             self.status = 1
         else:
-            log.warn(u'unable to fetch remote file. %s - %s' % (r.status_code, r.text))
+            log.warn(u'unable to fetch remote file. %s - %s' % (r.status_code, r.text[0:120]))
             self.status = 99
 
 

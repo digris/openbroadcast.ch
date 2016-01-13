@@ -14477,8 +14477,8 @@ body.fs-video .footer-wrapper {
   height: 100%;
   overflow: hidden;
 }
-/* line 8, ../sass/site/element/_nanoscroller.sass */
-.nano .content {
+/* line 9, ../sass/site/element/_nanoscroller.sass */
+.nano > .nano-content {
   position: absolute;
   overflow: scroll;
   overflow-x: hidden;
@@ -14487,16 +14487,22 @@ body.fs-video .footer-wrapper {
   bottom: 0;
   left: 0;
 }
-/* line 16, ../sass/site/element/_nanoscroller.sass */
-.nano .content:focus {
+/* line 18, ../sass/site/element/_nanoscroller.sass */
+.nano > .nano-content:focus {
   outline: thin dotted;
 }
-/* line 18, ../sass/site/element/_nanoscroller.sass */
-.nano .content::-webkit-scrollbar {
-  visibility: hidden;
-}
 /* line 21, ../sass/site/element/_nanoscroller.sass */
-.nano > .pane {
+.nano > .nano-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* line 24, ../sass/site/element/_nanoscroller.sass */
+.has-scrollbar > .nano-content::-webkit-scrollbar {
+  display: block;
+}
+
+/* line 28, ../sass/site/element/_nanoscroller.sass */
+.nano > .nano-pane {
   background: rgba(0, 0, 0, 0.25);
   position: absolute;
   width: 10px;
@@ -14510,37 +14516,32 @@ body.fs-video .footer-wrapper {
   -moz-transition: 0.2s;
   -o-transition: 0.2s;
   transition: 0.2s;
-  -moz-border-radius: 1px;
-  -webkit-border-radius: 1px;
-  border-radius: 1px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
-/* line 38, ../sass/site/element/_nanoscroller.sass */
-.nano > .pane > .slider {
+/* line 47, ../sass/site/element/_nanoscroller.sass */
+.nano > .nano-pane > .nano-slider {
   background: #444444;
   background: rgba(0, 0, 0, 0.5);
   position: relative;
   margin: 0 1px;
-  -moz-border-radius: 1px;
-  -webkit-border-radius: 1px;
-  border-radius: 1px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
 }
-/* line 46, ../sass/site/element/_nanoscroller.sass */
-.nano:hover > .pane {
+/* line 56, ../sass/site/element/_nanoscroller.sass */
+.nano:hover > .nano-pane {
   visibility: visible\9;
   /* Target only IE7 and IE8 with this hack */
-  opacity: 0.9;
+  opacity: 0.99;
 }
 
-/* line 52, ../sass/site/element/_nanoscroller.sass */
-.pane.active, .pane.flashed {
+/* line 63, ../sass/site/element/_nanoscroller.sass */
+.nano-pane.active, .nano-pane.flashed {
   visibility: visible\9;
   /* Target only IE7 and IE8 with this hack */
-  opacity: 0.9;
-}
-
-/* line 60, ../sass/site/element/_nanoscroller.sass */
-.has-scrollbar .content::-webkit-scrollbar {
-  visibility: visible;
+  opacity: 0.99;
 }
 
 /* line 6, ../sass/site/element/_wmd.sass */

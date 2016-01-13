@@ -1,5 +1,6 @@
 ;
 var OnAirApp = function () {
+
     var self = this;
     this.debug = false;
     this.api_url = '/api/v1/abcast/channel/';
@@ -169,6 +170,8 @@ var OnAirApp = function () {
         $(document).trigger('onair', ['onair-mode-change', mode]);
 
     };
+
+
 
 
 

@@ -5,6 +5,7 @@
 .idea
 .project
 .pydevproject
+util/remote_to_local.conf
 env
 website/env
 changelog.txt
