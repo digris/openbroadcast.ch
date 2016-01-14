@@ -108,7 +108,7 @@
         </ul>
 
         <!-- start: mobile version -->
-        <section class="top-bar-section center show-for-small-only">
+        <section class="top-bar-section center hide-for-large-up">
             <ul class="account">
                 {% include "_layout/_accountbar.html" %}
             </ul>
@@ -120,13 +120,13 @@
 
 
         <!-- start: desktop version -->
-        <section class="top-bar-section center show-for-medium-up">
+        <section class="top-bar-section center show-for-large-up">
             <ul class="desktop-navigation">
                 {% show_menu 0 100 100 100 "_layout/_navigation.html" %}
             </ul>
         </section>
 
-        <section class="top-bar-section right show-for-medium-up">
+        <section class="top-bar-section right show-for-large-up">
             <ul class="accountbar">
                 {% include "_layout/_accountbar.html" %}
             </ul>
@@ -243,6 +243,7 @@
 
 
     // define globally for debug purposes
+    var ui;
     var onair;
     var bplayer;
     var achat;
@@ -254,15 +255,15 @@
         /////////////////////////////////////////////
         // site
         /////////////////////////////////////////////
-        var site_ui = new SiteUI();
-        site_ui.debug = false;
-        site_ui.init();
+        ui = new SiteUI();
+        ui.debug = false;
+        ui.init();
 
 
         /////////////////////////////////////////////
         // AJAX Login App
         /////////////////////////////////////////////
-        var login_app = new AloginApp();
+        login_app = new AloginApp();
         login_app.debug = true;
         login_app.login_url = "{% url 'alogin-login' %}";
         login_app.user = current_user;

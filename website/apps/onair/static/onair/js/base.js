@@ -330,6 +330,9 @@ var OnAirApp = function () {
      */
     this.update_meta_display = function (item, fast) {
 
+
+        // console.debug(item)
+
         // non-animated version
         var html = $(nj.render('onair/nj/meta.html', {
             object: item,

@@ -76,7 +76,11 @@ body
         background: #efefef
         font-style: italic
         position: relative
-        //border-radius: 3px
+        border-radius: 3px
+
+        -webkit-filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.15))
+        -mox-filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.15))
+        filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.15))
 
         &:after
           content: ''
@@ -150,3 +154,16 @@ body
           text-align: right !important
 
 
+// profile (tooltip)
+
+.profile
+  .name
+  .pseudonym
+    font-size: 90%
+  .location
+    font-size: 90%
+  .roles
+    .role
+      opacity: 0.7
+      font-size: 80%
+      padding-right: 10px

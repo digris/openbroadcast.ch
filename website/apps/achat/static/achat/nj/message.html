@@ -1,10 +1,11 @@
-<li class="item message new{% if message.user.is_me %} me{% endif %} {% if message.extra_classes %} {{ message.extra_classes }}{% endif %}"
-     {% if message.user.is_me %}data-livebg_{% endif %}>
+<li class="item message new{% if message.user.is_me %} me{% endif %} {% if message.extra_classes %} {{ message.extra_classes }}{% endif %}">
 
-    <div class="body">
+    <div class="body"
+        {% if message.user.is_me %}data-livebg{% endif %}
+        >
         {% if message.text|length() > 240%}
             <p class="truncated">
-            {{ message.text|linebreaksbr|truncate(240, True, '<a class="show-full-text" href="#">&nbsp;&gt;&gt;&gt;</a>')|urlize() }}
+                {{ message.text|linebreaksbr|truncate(240, True, '<a class="show-full-text" href="#">&nbsp;&gt;&gt;&gt;</a>')|urlize() }}
             </p>
             <p class="full hide">
                 {{ message.text|linebreaksbr|urlize() }}
@@ -15,7 +16,6 @@
                 {{ message.text|linebreaksbr|urlize() }}
             </p>
         {% endif %}
-
     </div>
 
     <div class="author text-center">

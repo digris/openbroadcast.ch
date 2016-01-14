@@ -4,7 +4,7 @@
 
 
 // logo
-ul.title-area > li.name
+.__disabled__ ul.title-area > li.name
   width: 224px
   .logo-icon
     float: left
@@ -15,7 +15,20 @@ ul.title-area > li.name
     text-align: left
     margin-left: 48px
     span
-      //+opacity(0.8)
+      font-size: rem-calc(13)
+    a:hover
+      color: #333
+
+ul.title-area > li.name
+  width: 224px
+  .logo-icon
+    display: none
+
+  .logo-text
+    font-weight: 300
+    text-align: left
+    margin-left: 16px
+    span
       font-size: rem-calc(13)
     a:hover
       color: #333
@@ -28,11 +41,18 @@ ul.desktop-navigation
   top: -40px
 
 ul.dropdown
+
+  //border: 1px solid #c7c7c7
+  box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.1)
+  li,
+  li > a
+    text-align: left
+
   li.divider
     background-color: #000
 
 
-@media #{$medium-up}
+@media #{$large-up}
   nav.top-bar
     a
       text-align: center
@@ -46,6 +66,8 @@ ul.dropdown
   section.top-bar-section
     //display: inline-block
     //height: $topbar-height
+
+
 
 
 

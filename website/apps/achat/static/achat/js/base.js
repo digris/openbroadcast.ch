@@ -234,12 +234,11 @@ AchatApp = function () {
                 $(item).tipso({
                     delay: 50,
                     speed: 100,
-                    width: 350,
+                    width: 450,
                     position: 'bottom',
                     background: '#000',
                     color: '#ffffff',
                     useTitle: false,
-                    //tooltipHover: true,
                     content : function(inner) {
                         var inner = $(this);
                         $.get(uri, function(profile){

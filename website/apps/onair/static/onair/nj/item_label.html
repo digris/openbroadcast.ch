@@ -35,24 +35,13 @@
             </div>
         </div>
 
-        <div class="row body">
+        <div class="row body show-for-large-up">
             <div class="small-12 columns">
                 {% if item.description %}
                 <p>
                     {{ item.description|truncate(240) }}
                 </p>
                 {% endif %}
-
-
-                {% if debug %}
-                <p>
-                    <a href="{{ item.resource_uri }}">{{ item.resource_uri }}</a>
-                </p>
-                <p>
-                    <a href="{{ object.item.resource_uri }}">{{ object.item.resource_uri }}</a>
-                </p>
-                {% endif %}
-
             </div>
         </div>
 

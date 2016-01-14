@@ -36,18 +36,24 @@
         <dd>
             <a target="_blank" data-ct="author"
                href="{{ base_url }}{{ object.emission.user_co.absolute_url }}">
+
+
+                {{ object.emission.user_co.display_name|truncate(32) }}
+                <!--
                 {% if object.emission.user_co.full_name %}
                     {{ object.emission.user_co.full_name|truncate(32) }} ({{ object.emission.user_co.username }})
                 {% else %}
                     {{ object.emission.user_co.username }}
-                {% endif %}&nbsp;
+                {% endif %}
+                -->
+                &nbsp;
             </a>
         </dd>
 
         <dt>Airtime</dt>
         <dd>
             <span>{{ object.time_start|format_datetime('time_s') }}</span>
-            {% if not object.onair or 1 == 1 %}
+            {% if not object.onair %}
             -
             <span>{{ object.time_end|format_datetime('time_s') }}</span>
             {% endif %}
@@ -82,10 +88,6 @@
                href="{{ base_url }}{{ object.item.release.absolute_url }}"
                title="{{ object.item.release.name }}">
                 {{ object.item.release.name|truncate(22) }}
-
-                {% if object.item.release.country_code %}{{ object.item.release.country_code }}{% endif %}
-                {% if object.item.release.releasedate %}{{ object.item.release.releasedate|truncate(4, false, '') }}{% endif %}
-
                 &nbsp;
             </a>
         </dd>

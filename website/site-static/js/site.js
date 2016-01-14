@@ -81,14 +81,20 @@ var SiteUI = function () {
     };
 
 
-    this.set_color = function() {
+    this.set_color = function(color, duration) {
 
-        var color = self.colors[self.current_color];
-        var color = self.colors[Math.floor(Math.random() * self.colors.length)];
+        if(color === undefined) {
+            var color = self.colors[self.current_color];
+            var color = self.colors[Math.floor(Math.random() * self.colors.length)];
+        }
+
+        if(duration === undefined) {
+            var duration = 100;
+        }
 
         $('html *[data-livebg]').animate({
             backgroundColor: color
-        }, 1 );
+        }, duration );
     };
 
 
@@ -175,12 +181,12 @@ $(document).foundation(fd5_settings);
 var nj;
 
 
-$(function () {
-
-    if (site_ui == undefined) {
-       var site_ui = new SiteUI();
-    }
-});
+//$(function () {
+//
+//    if (site_ui === undefined) {
+//       var site_ui = new SiteUI();
+//    }
+//});
 
 
 
