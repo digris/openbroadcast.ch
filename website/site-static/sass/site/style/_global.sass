@@ -30,6 +30,7 @@ html.cms-toolbar-expanded
 ///////////////////////////////////////////////////////////////////////
 body
   > .container
+    height: 100%
     //padding-top: 30px
 
 
@@ -62,7 +63,7 @@ body
         padding-left: 5px
       i
         margin-right: 10px
-        +opacity(0.9)
+        opacity: 0.9
 
       &:hover
         background: scale-color($secondary-color, $lightness: -20%)
@@ -72,7 +73,7 @@ body
 // helpers
 ///////////////////////////////////////////////////////////////////////
 .dim
-  +opacity(0.5)
+  opacity: 0.5
 
 .upper
   text-transform: uppercase
@@ -95,7 +96,7 @@ body
 dl.horizontal
   dt
     font-weight: normal
-    +opacity(0.5)
+    opacity: 0.5
     margin: 0 0 4px 0
     float: left
     clear: left
@@ -107,6 +108,9 @@ dl.horizontal
       content: ''
       display: block
       clear: both
+
+h1, h2, h3, h4, h5, h6
+  color: inherit
 
 
 ///////////////////////////////////////////////////////////////////////

@@ -15,13 +15,13 @@
     </div>
 
     {% if object.image %}
-        <div class="small-3 columns">
+        <div class="small-3 columns image">
             <img src="{{ base_url }}{{ object.image }}">
         </div>
     {% endif %}
 
     {% if object.groups %}
-    <div class="row roles text-left">
+    <div class="row roles text-center">
         <div class="small-12 columns">
             {% for group in object.groups %}
             <span class="role">{{ group }}</span>

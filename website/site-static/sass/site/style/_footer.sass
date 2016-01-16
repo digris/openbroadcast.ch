@@ -1,42 +1,50 @@
 body footer
-  margin-top: 24px
-  margin-bottom: 54px
 
-  text-transform: uppercase
+  display: none
 
-  .seperator
-    padding-top: 12px
-    border-top: 1px solid $grey-light
+  box-shadow: 0px -2px 2px 1px rgba(51, 51, 51, 0.16)
 
-  p
+  padding: 24px 0 48px
+  background: #000
+
+  p, span, a, ul, ol, dl
+    font-size: rem-calc(13)
+
+  p, span
     color: $grey-darker
-    font-size: 0.9rem
     padding: 0
+    line-height: rem-calc(19)
 
   a
     color: $grey-darker
-    border-bottom: 1px solid $grey-darker
+    text-decoration: underline
+    //border-bottom: 1px solid $grey-darker
+    &:hover
+      color: #fff
 
+  .title
+    text-transform: uppercase
+    margin-bottom: 10px
 
   .copyright
     padding-top: 30px
-
     a
       border-bottom: 0px
 
-  .social-button
-    width: 34px
-    height: 34px
-    line-height: 34px
-    font-size: 20px
-    margin-left: 20px
-    transition: all 0.25s ease-in-out
-    background-color: $grey-light
-    background: $grey-light
-    color: $grey-darker
-    border: 0px
 
-    &:hover
-      color: $grey-light
-      background-color: $grey-darker
-      background: $grey-darker
+
+
+
+  dl.contact
+    maring: 0
+    line-height: rem-calc(19)
+    dt, dd
+      color: $grey-darker
+      font-weight: 300
+      padding: 0
+      margin: 0
+    dt
+      opacity: 1.0
+    dd
+      padding-left: 14px
+

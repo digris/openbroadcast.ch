@@ -1,22 +1,49 @@
-<li class="item message new{% if message.user.is_me %} me{% endif %} {% if message.extra_classes %} {{ message.extra_classes }}{% endif %}">
+<li class="item message new{% if message.user.is_me %} me{% endif %} {% if message.attachments %} has-attachments{% endif %} {% if message.extra_classes %} {{ message.extra_classes }}{% endif %}">
 
-    <div class="body"
-        {% if message.user.is_me %}data-livebg{% endif %}
-        >
-        {% if message.text|length() > 240%}
-            <p class="truncated">
-                {{ message.text|linebreaksbr|truncate(240, True, '<a class="show-full-text" href="#">&nbsp;&gt;&gt;&gt;</a>')|urlize() }}
-            </p>
-            <p class="full hide">
-                {{ message.text|linebreaksbr|urlize() }}
-                <a class="show-full-text" href="#">&nbsp;&lt;&lt;&lt;</a>
-            </p>
-        {% else %}
-            <p>
-                {{ message.text|linebreaksbr|urlize() }}
-            </p>
-        {% endif %}
+    <div class="bubble">
+        <div class="body"
+            {% if message.user.is_me %}data-livebg{% endif %}
+            >
+
+            {% if message.attachments %}
+                {% for attachment in message.attachments %}
+                    {{ attachment }}
+                {% endfor %}
+
+            {% endif %}
+
+
+            {% if message.text|length() > 240%}
+                <p class="truncated"{% if message.user.is_me %} data-livefg{% endif %}>
+                    {{ message.text|linebreaksbr|truncate(240, True, '<a class="show-full-text" href="#">&nbsp;&gt;&gt;&gt;</a>')|urlize() }}
+                </p>
+                <p class="full hide"{% if message.user.is_me %} data-livefg{% endif %}>
+                    {{ message.text|linebreaksbr|urlize() }}
+                    <a class="show-full-text" href="#">&nbsp;&lt;&lt;&lt;</a>
+                </p>
+            {% else %}
+                <p{% if message.user.is_me %} data-livefg{% endif %}>
+                    {{ message.text|linebreaksbr|urlize() }}
+                </p>
+            {% endif %}
+        </div>
+
+        <div class="triangle">
+
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                 x="0px" y="0px"
+                 viewBox="0 0 10 5"
+                 enable-background="new 0 0 10 5"
+                 xml:space="preserve"
+                 preserveAspectRatio="none"
+                 {% if message.user.is_me %}data-livefill{% endif %}
+            >
+                <polygon points="0,0 5,5 10,0 "/>
+            </svg>
+
+        </div>
     </div>
+
 
     <div class="author text-center">
         <span class="user">

@@ -39,11 +39,13 @@ var OnAirApp = function () {
 
         self.bindings();
 
+        self.container.css('height', 'auto');
+
 
 
         setTimeout(function(){
             self.load_schedule();
-        }, 2000)
+        }, 1000);
 
 
         pushy_client.subscribe('arating_vote', function(vote){

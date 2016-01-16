@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import re
 import sys
 import shutil
 import hashlib
@@ -57,10 +58,32 @@ class Message(models.Model):
 
 
     @property
+    def attachments(self):
+
+        items = None
+        has_youtube = re.findall(r'(https?://)?(www\.)?((youtube\.(com))/watch\?v=([-\w]+)|youtu\.be/([-\w]+))', self.text)
+        if has_youtube:
+            print has_youtube
+            video_id = [c for c in has_youtube[0] if c] # Get rid of empty list objects
+            video_id = video_id[len(video_id)-1] # Return the last item in the list
+            items = []
+            items.append('<div class="flex-video widescreen youtube"><iframe id="ytplayer" type="text/html" width="478" height="300" src="http://www.youtube.com/embed/{0}?autoplay=0&origin=http://example.com" frameborder="0"/></div>'.format(video_id))
+
+        return items
+
+
+        if 'youtube' in self.text:
+            items = []
+            items.append('<div class="flex-video widescreen youtube"><iframe id="ytplayer" type="text/html" width="478" height="300" src="http://www.youtube.com/embed/{0}?autoplay=0&origin=http://example.com" frameborder="0"/></div>')
+
+        return items
+
+    @property
     def html(self):
 
         if self.rendered_text:
-            return self.rendered_text
+            pass
+            #return self.rendered_text
 
         bits = []
         for bit in self.text.split(' '):
@@ -82,6 +105,8 @@ class Message(models.Model):
                     pass
 
             bits.append(rendered_bit)
+
+
 
         self.rendered_text = u' '.join(bits)
         self.save()

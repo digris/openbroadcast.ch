@@ -349,32 +349,83 @@ output += " me";
 ;
 }
 output += " ";
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"attachments")) {
+output += " has-attachments";
+;
+}
+output += " ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"extra_classes")) {
 output += " ";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"extra_classes"), env.opts.autoescape);
 ;
 }
-output += "\"\n     ";
+output += "\">\n\n    <div class=\"bubble\">\n        <div class=\"body\"\n            ";
 if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"user")),"is_me")) {
-output += "data-livebg_";
+output += "data-livebg";
 ;
 }
-output += ">\n\n    <div class=\"body\">\n        ";
+output += "\n            >\n\n            ";
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"attachments")) {
+output += "\n                ";
+frame = frame.push();
+var t_3 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"attachments");
+if(t_3) {var t_2 = t_3.length;
+for(var t_1=0; t_1 < t_3.length; t_1++) {
+var t_4 = t_3[t_1];
+frame.set("attachment", t_4);
+frame.set("loop.index", t_1 + 1);
+frame.set("loop.index0", t_1);
+frame.set("loop.revindex", t_2 - t_1);
+frame.set("loop.revindex0", t_2 - t_1 - 1);
+frame.set("loop.first", t_1 === 0);
+frame.set("loop.last", t_1 === t_2 - 1);
+frame.set("loop.length", t_2);
+output += "\n                    ";
+output += runtime.suppressValue(t_4, env.opts.autoescape);
+output += "\n                ";
+;
+}
+}
+frame = frame.pop();
+output += "\n\n            ";
+;
+}
+output += "\n\n\n            ";
 if(env.getFilter("length").call(context, runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"text")) > 240) {
-output += "\n            <p class=\"truncated\">\n                ";
+output += "\n                <p class=\"truncated\"";
+if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"user")),"is_me")) {
+output += " data-livefg";
+;
+}
+output += ">\n                    ";
 output += runtime.suppressValue(env.getFilter("urlize").call(context, env.getFilter("truncate").call(context, env.getFilter("linebreaksbr").call(context, runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"text")),240,runtime.contextOrFrameLookup(context, frame, "True"),"<a class=\"show-full-text\" href=\"#\">&nbsp;&gt;&gt;&gt;</a>")), env.opts.autoescape);
-output += "\n            </p>\n            <p class=\"full hide\">\n                ";
+output += "\n                </p>\n                <p class=\"full hide\"";
+if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"user")),"is_me")) {
+output += " data-livefg";
+;
+}
+output += ">\n                    ";
 output += runtime.suppressValue(env.getFilter("urlize").call(context, env.getFilter("linebreaksbr").call(context, runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"text"))), env.opts.autoescape);
-output += "\n                <a class=\"show-full-text\" href=\"#\">&nbsp;&lt;&lt;&lt;</a>\n            </p>\n        ";
+output += "\n                    <a class=\"show-full-text\" href=\"#\">&nbsp;&lt;&lt;&lt;</a>\n                </p>\n            ";
 ;
 }
 else {
-output += "\n            <p>\n                ";
-output += runtime.suppressValue(env.getFilter("urlize").call(context, env.getFilter("linebreaksbr").call(context, runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"text"))), env.opts.autoescape);
-output += "\n            </p>\n        ";
+output += "\n                <p";
+if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"user")),"is_me")) {
+output += " data-livefg";
 ;
 }
-output += "\n    </div>\n\n    <div class=\"author text-center\">\n        <span class=\"user\">\n            ";
+output += ">\n                    ";
+output += runtime.suppressValue(env.getFilter("urlize").call(context, env.getFilter("linebreaksbr").call(context, runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"text"))), env.opts.autoescape);
+output += "\n                </p>\n            ";
+;
+}
+output += "\n        </div>\n\n        <div class=\"triangle\">\n\n            <svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n                 x=\"0px\" y=\"0px\"\n                 viewBox=\"0 0 10 5\"\n                 enable-background=\"new 0 0 10 5\"\n                 xml:space=\"preserve\"\n                 preserveAspectRatio=\"none\"\n                 ";
+if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"user")),"is_me")) {
+output += "data-livefill";
+;
+}
+output += "\n            >\n                <polygon points=\"0,0 5,5 10,0 \"/>\n            </svg>\n\n        </div>\n    </div>\n\n\n    <div class=\"author text-center\">\n        <span class=\"user\">\n            ";
 if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"user")),"is_me")) {
 output += "\n            << me >>\n            ";
 ;
@@ -431,15 +482,7 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "\n\n<div class=\"row profile\">\n    ";
-if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"image")) {
-output += "\n        <div class=\"small-3 columns\">\n            <img src=\"";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "base_url"), env.opts.autoescape);
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"image"), env.opts.autoescape);
-output += "\">\n        </div>\n    ";
-;
-}
-output += "\n    <div class=\"small-";
+output += "\n\n<div class=\"row profile\">\n\n    <div class=\"small-";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"image")) {
 output += "9";
 ;
@@ -464,9 +507,17 @@ output += ", ";
 ;
 }
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"country"), env.opts.autoescape);
-output += "</li>\n\n            ";
+output += "</li>\n\n\n        </ul>\n    </div>\n\n    ";
+if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"image")) {
+output += "\n        <div class=\"small-3 columns image\">\n            <img src=\"";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "base_url"), env.opts.autoescape);
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"image"), env.opts.autoescape);
+output += "\">\n        </div>\n    ";
+;
+}
+output += "\n\n    ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"groups")) {
-output += "\n            <div class=\"row roles text-left\">\n                <div class=\"small-12 columns\">\n                    ";
+output += "\n    <div class=\"row roles text-center\">\n        <div class=\"small-12 columns\">\n            ";
 frame = frame.push();
 var t_3 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"groups");
 if(t_3) {var t_2 = t_3.length;
@@ -480,17 +531,17 @@ frame.set("loop.revindex0", t_2 - t_1 - 1);
 frame.set("loop.first", t_1 === 0);
 frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
-output += "\n                    <span class=\"role\">";
+output += "\n            <span class=\"role\">";
 output += runtime.suppressValue(t_4, env.opts.autoescape);
-output += "</span>\n                    ";
+output += "</span>\n            ";
 ;
 }
 }
 frame = frame.pop();
-output += "\n                </div>\n            </div>\n            ";
+output += "\n        </div>\n    </div>\n    ";
 ;
 }
-output += "\n\n            <li></li>\n\n        </ul>\n    </div>\n\n</div>\n\n";
+output += "\n\n</div>\n\n";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -667,7 +718,7 @@ output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLook
 output += "\n                        </li>\n                        ";
 ;
 }
-output += "\n                    </ul>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"row body\">\n            <div class=\"small-12 columns\">\n                ";
+output += "\n                    </ul>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"row body show-for-large-up\">\n            <div class=\"small-12 columns\">\n                ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"biography")) {
 output += "\n                <p>\n                    ";
 output += runtime.suppressValue(env.getFilter("truncate").call(context, runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"biography"),240), env.opts.autoescape);
@@ -803,7 +854,7 @@ output += "\n                            ";
 output += "\n                        </li>\n                        ";
 ;
 }
-output += "\n\n\n\n                    </ul>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"row body\">\n            <div class=\"small-12 columns\">\n                ";
+output += "\n\n\n\n                    </ul>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"row body show-for-large-up\">\n            <div class=\"small-12 columns\">\n                ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"biography")) {
 output += "\n                <p>\n                    ";
 output += runtime.suppressValue(env.getFilter("truncate").call(context, runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"biography"),240), env.opts.autoescape);
@@ -921,27 +972,14 @@ output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLook
 output += "\n                        </li>\n                        ";
 ;
 }
-output += "\n                    </ul>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"row body\">\n            <div class=\"small-12 columns\">\n                ";
+output += "\n                    </ul>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"row body show-for-large-up\">\n            <div class=\"small-12 columns\">\n                ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"description")) {
 output += "\n                <p>\n                    ";
 output += runtime.suppressValue(env.getFilter("truncate").call(context, runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"description"),240), env.opts.autoescape);
 output += "\n                </p>\n                ";
 ;
 }
-output += "\n\n\n                ";
-if(runtime.contextOrFrameLookup(context, frame, "debug")) {
-output += "\n                <p>\n                    <a href=\"";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"resource_uri"), env.opts.autoescape);
-output += "\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"resource_uri"), env.opts.autoescape);
-output += "</a>\n                </p>\n                <p>\n                    <a href=\"";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"item")),"resource_uri"), env.opts.autoescape);
-output += "\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"item")),"resource_uri"), env.opts.autoescape);
-output += "</a>\n                </p>\n                ";
-;
-}
-output += "\n\n            </div>\n        </div>\n\n        ";
+output += "\n            </div>\n        </div>\n\n        ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"tags")) {
 output += "\n        <div class=\"row tags text-left\">\n            <div class=\"small-12 columns\">\n                ";
 frame = frame.push();
@@ -1053,7 +1091,7 @@ output += runtime.suppressValue(env.getFilter("ms2time").call(context, runtime.m
 output += "\n                    </li>\n                    ";
 ;
 }
-output += "\n                </ul>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"row body\">\n        <div class=\"small-12 columns\">\n            ";
+output += "\n                </ul>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"row body show-for-large-up\">\n        <div class=\"small-12 columns\">\n            ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"description")) {
 output += "\n            <p>\n                ";
 output += runtime.suppressValue(env.getFilter("truncate").call(context, runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"description"),240), env.opts.autoescape);
@@ -1154,27 +1192,14 @@ output += runtime.suppressValue(env.getFilter("ms2time").call(context, runtime.m
 output += "\n                        </li>\n                        ";
 ;
 }
-output += "\n                    </ul>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"row body\">\n            <div class=\"small-12 columns\">\n                ";
+output += "\n                    </ul>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"row body  show-for-large-up\">\n            <div class=\"small-12 columns\">\n                ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"description")) {
 output += "\n                <p>\n                    ";
 output += runtime.suppressValue(env.getFilter("truncate").call(context, runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"description"),240), env.opts.autoescape);
 output += "\n                </p>\n                ";
 ;
 }
-output += "\n\n\n                ";
-if(runtime.contextOrFrameLookup(context, frame, "debug")) {
-output += "\n                <p>\n                    <a href=\"";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"resource_uri"), env.opts.autoescape);
-output += "\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"resource_uri"), env.opts.autoescape);
-output += "</a>\n                </p>\n                <p>\n                    <a href=\"";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"item")),"resource_uri"), env.opts.autoescape);
-output += "\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"item")),"resource_uri"), env.opts.autoescape);
-output += "</a>\n                </p>\n                ";
-;
-}
-output += "\n\n            </div>\n        </div>\n\n        ";
+output += "\n            </div>\n        </div>\n\n        ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"tags")) {
 output += "\n        <div class=\"row tags text-left\">\n            <div class=\"small-12 columns\">\n                ";
 frame = frame.push();
@@ -1285,7 +1310,7 @@ output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLook
 output += "\n                        </li>\n                        ";
 ;
 }
-output += "\n                    </ul>\n                </div>\n            </div>\n\n        </div>\n\n        <div class=\"row body\">\n            <div class=\"small-12 columns\">\n                ";
+output += "\n                    </ul>\n                </div>\n            </div>\n\n        </div>\n\n        <div class=\"row body show-for-large-up\">\n            <div class=\"small-12 columns\">\n                ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"description")) {
 output += "\n                <p>\n                    ";
 output += runtime.suppressValue(env.getFilter("truncate").call(context, runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"description"),240), env.opts.autoescape);
@@ -1347,7 +1372,7 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<!-- TODO: implement better responsive/mobile handling -->\n\n\n\n<div class=\"show-for-small-only\">\n    <!-- track related -->\n    <p class=\"text-center\">\n        <a target=\"_blank\" data-ct=\"artist\"\n           href=\"";
+output += "<!-- TODO: implement better responsive/mobile handling -->\n\n\n\n<div class=\"show-for-small-only\" data-livefg>\n    <!-- track related -->\n    <p class=\"text-center\">\n        <a target=\"_blank\" data-ct=\"artist\"\n           href=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "base_url"), env.opts.autoescape);
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"item")),"artist")),"absolute_url"), env.opts.autoescape);
 output += "\">\n            ";
@@ -1357,7 +1382,7 @@ output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "ba
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"item")),"absolute_url"), env.opts.autoescape);
 output += "\">\n            ";
 output += runtime.suppressValue(env.getFilter("shorten").call(context, runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"item")),"name"),30), env.opts.autoescape);
-output += "\n        </a>\n    </p>\n\n</div>\n\n\n\n<div class=\"show-for-medium-up\">\n    <!-- playlist related -->\n    <dl>\n        <dt>Playlist</dt>\n        <dd>\n            <a target=\"_blank\" data-ct=\"playlist\"\n               href=\"";
+output += "\n        </a>\n    </p>\n\n</div>\n\n\n\n<div class=\"show-for-medium-up\" data-livefg>\n    <!-- playlist related -->\n    <dl>\n        <dt>Playlist</dt>\n        <dd>\n            <a target=\"_blank\" data-ct=\"playlist\"\n               href=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "base_url"), env.opts.autoescape);
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"emission")),"content_object")),"absolute_url"), env.opts.autoescape);
 output += "\"\n               title=\"";
@@ -1367,7 +1392,9 @@ output += runtime.suppressValue(env.getFilter("truncate").call(context, runtime.
 output += "&nbsp;\n            </a>\n        </dd>\n\n        <dt>by</dt>\n        <dd>\n            <a target=\"_blank\" data-ct=\"author\"\n               href=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "base_url"), env.opts.autoescape);
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"emission")),"user_co")),"absolute_url"), env.opts.autoescape);
-output += "\">\n                ";
+output += "\">\n\n\n                ";
+output += runtime.suppressValue(env.getFilter("truncate").call(context, runtime.memberLookup((runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"emission")),"user_co")),"display_name"),32), env.opts.autoescape);
+output += "\n                <!--\n                ";
 if(runtime.memberLookup((runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"emission")),"user_co")),"full_name")) {
 output += "\n                    ";
 output += runtime.suppressValue(env.getFilter("truncate").call(context, runtime.memberLookup((runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"emission")),"user_co")),"full_name"),32), env.opts.autoescape);
@@ -1382,16 +1409,16 @@ output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runt
 output += "\n                ";
 ;
 }
-output += "&nbsp;\n            </a>\n        </dd>\n\n        <dt>Airtime</dt>\n        <dd>\n            <span>";
+output += "\n                -->\n                &nbsp;\n            </a>\n        </dd>\n\n        <dt>Airtime</dt>\n        <dd>\n            <span>";
 output += runtime.suppressValue(env.getFilter("format_datetime").call(context, runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"time_start"),"time_s"), env.opts.autoescape);
 output += "</span>\n            ";
-if(!runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"onair") || 1 == 1) {
+if(!runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"onair")) {
 output += "\n            -\n            <span>";
 output += runtime.suppressValue(env.getFilter("format_datetime").call(context, runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"time_end"),"time_s"), env.opts.autoescape);
 output += "</span>\n            ";
 ;
 }
-output += "\n        </dd>\n    </dl>\n\n    <div class=\"separator\"></div>\n\n    <!-- track related -->\n    <dl>\n        <dt>Song</dt>\n        <dd>\n            <a target=\"_blank\" data-ct=\"media\"\n               href=\"";
+output += "\n        </dd>\n    </dl>\n\n    <div class=\"separator\" data-livefg></div>\n\n    <!-- track related -->\n    <dl>\n        <dt>Song</dt>\n        <dd>\n            <a target=\"_blank\" data-ct=\"media\"\n               href=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "base_url"), env.opts.autoescape);
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"item")),"absolute_url"), env.opts.autoescape);
 output += "\"\n               title=\"";
@@ -1417,7 +1444,7 @@ output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "ba
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"item")),"label")),"absolute_url"), env.opts.autoescape);
 output += "\">\n                ";
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"item")),"label")),"name"), env.opts.autoescape);
-output += "&nbsp;\n            </a>\n        </dd>\n\n    </dl>\n\n\n    <div class=\"separator\"></div>\n\n    ";
+output += "&nbsp;\n            </a>\n        </dd>\n\n    </dl>\n\n\n    <div class=\"separator\" data-livefg></div>\n\n    ";
 var t_1;
 t_1 = runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"item")),"relations");
 frame.set("relations", t_1, true);

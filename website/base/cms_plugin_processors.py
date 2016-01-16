@@ -14,7 +14,7 @@ def wrap_text(instance, placeholder, rendered_content, original_context):
             return rendered_content
 
         # For simplicity's sake, construct the template from a string:
-        t = Template('<div class="' + str(instance.plugin_type).lower() + '_holder cmsplugin_holder">{{ content }}</div>')
+        t = Template('<div class="' + str(instance.plugin_type).lower() + '_holder cmsplugin_holder" data-livefg>{{ content }}</div>')
         # Prepare that template's context:
         c = Context({
             'content': rendered_content,

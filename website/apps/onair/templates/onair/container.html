@@ -1,18 +1,18 @@
 {% load i18n %}
-<section data-livebg id="onair_container" class="init">
+<section data-livebg id="onair_container" class="init" style="height: 100%;">
 
     <div class="row show-for-medium-up">
         <div class="small-12 columns text-center">
 
             <div id="station_time">
-                <div class="wrapper hoverable">
-                    <input type="text" value="00:00:00"/>
+                <div class="wrapper hoverable" data-livefg>
+                    <input data-livefg type="text" value="00:00:00"/>
                 </div>
             </div>
 
             <div id="back_onair" class="hide">
-                <div class="wrapper hoverable">
-                    <a href="#">Back to what's on air now...</a>
+                <div class="wrapper hoverable" data-livefg>
+                    <a data-livefg href="#">Back to what's on air now...</a>
                 </div>
             </div>
 
@@ -183,7 +183,7 @@
 
             </div>
 
-            <div class="meta-container-offline hide">
+            <div class="meta-container-offline hide" data-livefg>
 
 
                 <p>
@@ -195,7 +195,7 @@
                 <ul>
                     <li>
                         Nobody took care about <a target="_blank" href="https://www.openbroadcast.org/en/program/scheduler/">scheduling playlists</a>
-                        <br><span>Did you know the Open Broadcast channel <a href="#">can be managed</a> by the community?</span>
+                        <br>Did you know the Open Broadcast channel <a href="#">can be managed</a> by the community?
                     </li>
                     <li>
                         The <a target="_blank" href="https://www.openbroadcast.org/en/network/profiles/root/">developer in charge</a> did produce a bug.
@@ -214,7 +214,7 @@
     </div>
 
 
-    <div id="media_prev_next" class="show-for-xlarge-up">
+    <div id="media_prev_next" class="show-for-large-up">
 
         <div class="previous disabled">
             <a href="#"

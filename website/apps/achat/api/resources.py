@@ -6,7 +6,7 @@ from tastypie.exceptions import ImmediateHttpResponse
 from tastypie.http import HttpForbidden
 from django.utils.translation import ugettext_lazy as _
 from achat.models import Message, MentionedUser
-from achat.util import parse_text, extract_mentioned_users, message_to_html, is_spam
+from achat.util import parse_text, extract_mentioned_users, is_spam
 
 MESSAGE_MAX_LENGTH = 720
 
@@ -64,6 +64,7 @@ class MessageResource(ModelResource):
         bundle.data['options'] = bundle.obj.options if bundle.obj.options else {}
 
         bundle.data['text'] = bundle.obj.html
+        bundle.data['attachments'] = bundle.obj.attachments
 
         bundle.data['user'] = {
             'username': bundle.obj.user.username,

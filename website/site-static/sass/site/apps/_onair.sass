@@ -45,10 +45,6 @@
 
 // fa bug:
 .fa-circle-o-notch.fa-spin
-  -webkit-transform-origin: 48.2% 48.2%
-  -moz-transform-origin: 48.2% 48.2%
-  -ms-transform-origin: 48.2% 48.2%
-  -o-transform-origin: 48.2% 48.2%
   transform-origin: 48.2% 48.2%
 
 
@@ -76,24 +72,32 @@
 // show/hide element depending on state
 #onair_container
 
+  #media_prev_next
+    opacity: 0.0
+    transition: opacity 5.0s
+
   .switch-panel
-    -webkit-transition: all 0.7s ease
-    -moz-transition: all 0.7s ease
     transition: all 0.7s ease
 
 
   &.onair
     .switch-panel.offline
       //display: none
-      +opacity(0.0)
+      opacity: 0.0
       pointer-events: none
     .switch-panel.onair
       //display: block
-      +opacity(1.0)
+      opacity: 1.0
+
+    #media_prev_next
+      opacity: 1.0
 
   &.history
     .switch-panel.offline
       display: none
+
+    #media_prev_next
+      opacity: 1.0
 
 
   //
@@ -124,10 +128,10 @@
           &:hover
             background: transparent
         span
-          +opacity(0.5)
+          opacity: 0.5
 
     #media_prev_next
-      display: none !important
+      opacity: 0.0
 
 
 
@@ -173,7 +177,7 @@
         .text
           position: relative
           padding-right: 10px
-          +opacity(0.5)
+          opacity: 0.5
         img.logo
           width: 80px
 
@@ -181,15 +185,10 @@
   // actual 'playlist' display
   .info-container
     position: relative
-
-    -webkit-transition: all 10s linear
-    -moz-transition: all 10s linear
     transition: all 10s linear
 
     .items
       z-index: 5
-      -webkit-perspective: 800px
-      -moz-perspective: 800px
       perspective: 800px
 
     // slide history
@@ -215,22 +214,16 @@
       &.next
         z-index: 5
         &.next-1
-          -webkit-transform: rotateY(0deg) translateX(1850px) scale(1.3)
-          -moz-transform: rotateY(0deg) translateX(1850px) scale(1.3)
+          transform: rotateY(0deg) translateX(1850px) scale(1.3)
         &.next-2
-          -webkit-transform: rotateY(0deg) translateX(1850px) scale(1.3)
-          -moz-transform: rotateY(0deg) translateX(1850px) scale(1.3)
+          transform: rotateY(0deg) translateX(1850px) scale(1.3)
 
         &.next-x
-          -webkit-transform: rotateY(0deg) translateX(1850px) scale(1.3)
-          -moz-transform: rotateY(0deg) translateX(1850px) scale(1.3)
+          transform: rotateY(0deg) translateX(1850px) scale(1.3)
 
 
       &.previous
-
-        +opacity(0.5)
-
-        -webkit-filter: grayscale(1)
+        opacity: 0.5
         filter: grayscale(100%)
 
         cursor: pointer
@@ -239,41 +232,34 @@
           display: none
 
         &:hover
-          -webkit-filter: grayscale(0)
           filter: grayscale(0%)
 
         &.previous-1
-          -webkit-transform: rotateY(0deg) translateX(-140px) scale(0.9)
-          -moz-transform: rotateY(0deg) translateX(-140px) scale(0.9)
-          +opacity(0.6)
+          transform: rotateY(0deg) translateX(-140px) scale(0.9)
+          opacity: 0.6
           z-index: 3
         &.previous-2
-          -webkit-transform: rotateY(0deg) translateX(-280px) scale(0.7)
-          -moz-transform: rotateY(0deg) translateX(-280px) scale(0.7)
-          +opacity(0.4)
+          transform: rotateY(0deg) translateX(-280px) scale(0.7)
+          opacity: 0.4
           z-index: 2
         &.previous-3
-          -webkit-transform: rotateY(0deg) translateX(-400px) scale(0.5)
-          -moz-transform: rotateY(0deg) translateX(-400px) scale(0.5)
-          +opacity(0.1)
+          transform: rotateY(0deg) translateX(-400px) scale(0.5)
+          opacity: 0.1
           display: block !important
           z-index: 1
         &.previous-x
-          -webkit-transform: rotateY(0deg) translateX(-490px) scale(0.2)
-          -moz-transform: rotateY(0deg) translateX(-490px) scale(0.2)
-          +opacity(0.0)
+          transform: rotateY(0deg) translateX(-490px) scale(0.2)
+          opacity: 0.0
           display: block !important
 
 
     .item.info
-      position: relative
       width: 100%
       height: 100%
       position: absolute
-      -webkit-transition: -webkit-transform 1.0s, opacity 1.0s
-      -webkit-transform-style: preserve-3d
-      -moz-transition: -moz-transform 1.0s, opacity 1.0s
-      -moz-transform-style: preserve-3d
+      transition: transform 1.0s, opacity 1.0s
+      transform-style: preserve-3d
+
 
 
       // show details, a.k.a. 'backside'
@@ -325,7 +311,7 @@
                 margin-bottom: 0
               ul > li
                 font-size: rem-calc(14)
-                +opacity(0.7)
+                opacity: 0.7
 
 
             .body
@@ -343,6 +329,7 @@
               width: 90%
               .tag
                 font-size: rem-calc(12)
+                text-transform: uppercase
                 padding: 2px 6px
                 background: #E4E4E4
                 color: black
@@ -373,11 +360,11 @@
         height: 260px
         background-size: 250px
         background-position: center
-        +single-transition(background, 0.05s)
+        transition: background 0.05s
 
         span
           +xy-center
-          +single-transition(color, 0.4s)
+          transition: color 0.1s
           background-position: 50% 50%
           height: 200px
           width: 200px
@@ -398,9 +385,9 @@
 
         &.hover
           background-size: 260px
-          +single-transition(background, 0.05s)
+          transition: background 0.05s
           span a
-            +single-transition(color, 0.5s)
+            transition: color 0.5s
             color: #fff
 
 
@@ -504,8 +491,6 @@ body.loading #onair_container
   .item .container .controls
 
     // using display a.t.m.
-    //+opacity(0.0)
-    //+single-transition(opacity, 0.5s)
     display: none
 
     span
@@ -581,17 +566,15 @@ body.loading #onair_container
       bottom: -20px
       position: absolute
       width: 100%
-      //height: 50px
       padding: 0 10px
-      +single-transition(bottom, 0.1s)
+      transition: bottom 0.1s
 
       .progress
         cursor: pointer
         height: 8px
         padding: 0
         margin: 40px 0 0 0
-        +single-transition(height, 0.5s)
-        //border: 1px solid rgba(0, 0, 0, 0.40)
+        transition: height 0.5s
         border: none
         background-color: rgba(255, 255, 255, 0.4)
       .meter
@@ -608,7 +591,7 @@ body.loading #onair_container
       .progress
         height: 24px
         background-color: rgba(0, 0, 0, 0.8)
-        +single-transition(height, 0.1s)
+        transition: height 0.1s
       .meter
         background-color: rgba(255, 255, 255, 0.6)
         border-right: 2px solid #fff
@@ -647,7 +630,7 @@ body.loading #onair_container
 
       dt
         font-weight: $body-font-weight
-        +opacity(0.5)
+        opacity: 0.5
         float: left
         padding-right: 7px
 
@@ -656,10 +639,10 @@ body.loading #onair_container
           border-radius: 2px
 
     > div
-      +opacity(0.1)
+      opacity: 0.1
       &.fade-in
-        +single-transition(opacity, 1.5s)
-        +opacity(1.0)
+        transition: opacity 1.5s
+        opacity: 1.0
 
   .meta-container,
   .meta-container-offline
@@ -670,8 +653,9 @@ body.loading #onair_container
       color: white
     .separator
       width: 40%
-      border-top: 2px solid #000
-      margin: 12px 0px
+      border-top-width: 2px
+      border-top-style: solid
+      margin: 12px 0
 
 
 
@@ -689,13 +673,13 @@ body.loading #onair_container
         position: absolute
         top: 45%
         &.disabled
-          +opacity(0.3)
+          opacity: 0.3
           &:hover .icon
             cursor: not-allowed
             background: transparent !important
 
         .icon
-          +single-transition(background, 0.1s)
+          transition: background 0.1s
           background: rgba(0, 0, 0, 0.0)
           width: 120px
           height: 120px
@@ -711,7 +695,7 @@ body.loading #onair_container
 
         &:hover
           .icon
-            +single-transition(background, 0.1s)
+            transition: background 0.1s
             background: rgba(0, 0, 0, 1.0)
 
 
@@ -739,7 +723,7 @@ $vote-icon-size: 33px
   +clearfix()
 
   &.disabled
-    +opacity(0.3)
+    opacity: 0.3
     div.vote, div.vote a
       cursor: not-allowed
 
@@ -770,7 +754,7 @@ $vote-icon-size: 33px
       //width: $vote-icon-size
       //height: $vote-icon-size
       polyline, rect
-        +single-transition(fill, .5s)
+        transition: fill 0.5s
         stroke: #000
 
 
@@ -786,7 +770,6 @@ $vote-icon-size: 33px
         right: 0
       svg
         transform: rotateZ(180deg)
-        -webkit-transform: rotateZ(180deg)
         top: 18px
         right: $vote-icon-size
 
@@ -795,7 +778,7 @@ $vote-icon-size: 33px
         color: #000
       polyline, rect
         fill: #fff
-        +single-transition(fill, .2s)
+        transition: fill 0.2s
 
 
 

@@ -11,6 +11,8 @@ AchatApp = function () {
     this.static_url;
     this.base_url;
 
+    this.packery_container;
+
     this.init = function () {
 
         if(self.debug) {
@@ -22,6 +24,14 @@ AchatApp = function () {
 
         pushy_client.subscribe('achat', function(message){
             self.add_message(message);
+        });
+
+
+        self.packery_container = $('.messages-container');
+        self.packery_container.packery({
+                itemSelector: '.item.message',
+                gutter: 0,
+                //transitionDuration: 500
         });
 
     };
@@ -166,6 +176,10 @@ AchatApp = function () {
             $.each(data.objects.reverse(), function (i, message) {
                 self.add_message(message);
             });
+
+            self.packery_container.packery('reloadItems');
+            self.packery_container.packery();
+
         });
 
     };
@@ -192,7 +206,7 @@ AchatApp = function () {
         var html = $(nj.render('achat/nj/message.html', {message: message}));
         setTimeout(function () {
             html.removeClass('new');
-        }, 100)
+        }, 100);
 
         self.messages_container.prepend(html);
         self.messages_container.find('.item.message:gt(' + self.max_messages + ')').remove()
@@ -222,6 +236,9 @@ AchatApp = function () {
         }
 
         self.message_bindings(dom_el);
+
+        self.packery_container.packery('reloadItems');
+        self.packery_container.packery();
 
     };
 

@@ -13,18 +13,22 @@
   // TODO: eventually move to separate "ticker" sheet
   .article
     padding: 4px 4px 16px
-    border-bottom: 2px solid #000
+    border-bottom-width: 2px
+    border-bottom-style: solid
     position: relative
     padding-top: 16px
 
     &:first-child
-      border-top: 2px solid #000
+      border-top-width: 2px
+      border-top-style: solid
       margin-top: 54px
 
     p
       text-indent: 30px
+      text-indent: 14px
       img
         margin-left: -30px
+        margin-left: -14px
 
       a
         //text-decoration: underline
@@ -88,17 +92,24 @@
   font-weight: 300
 
   padding: 4px 0 16px
-  border-bottom: 2px solid #000
+  //border-bottom-width: 2px
+  //border-bottom-style: solid
+
+  border-top-width: 2px
+  border-top-style: solid
 
   &:first-child
-    border-top: 2px solid #000
+    //border-top-width: 2px
+    //border-top-style: solid
     padding-top: 16px
     margin-top: 54px
 
   p
     text-indent: 30px
+    text-indent: 14px
     img
       margin-left: -30px
+      margin-left: -14px
 
   a
     //text-decoration: underline

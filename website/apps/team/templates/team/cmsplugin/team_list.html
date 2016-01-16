@@ -1,0 +1,54 @@
+{% load thumbnail i18n %}
+<div class="team-list-plugin">
+    <div class="team-list">
+
+
+        {% for item in objects %}
+        <div class="item profile" data-livefg>
+            <div class="row">
+
+                <div class="small-6 medium-{% if item.image %}9{% else %}12{% endif %} columns">
+                    <div class="text">
+                        <h3 data-livefg>{{ item.name }}</h3>
+
+                        {% if item.title %}
+                            <h4 class="role" data-livefg>{{ item.title }}</h4>
+                        {% endif %}
+
+                        {% if item.description %}
+                        <p class="quote">{{ item.description|linebreaksbr }}</p>
+                        {% endif %}
+
+                        {% if item.email %}
+                        <p><a href="mailto:{{ item.email }}">{{ item.email }}</a></p>
+                        {% endif %}
+
+                        {% if item.website %}
+                        <p><a href="{{ item.website }}">{{ item.website }}</a></p>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+                {% if item.image %}
+                <div class="small-6 medium-3 columns">
+                    <div class="image-container">
+                        {% if not item.is_company %}
+                            <img class="image img-responsive pull-right" src="{% thumbnail item.image 210x210 crop bw upscale subject_location=item.image.subject_location %}" alt="{{ item.name }}"/>
+                        {% else %}
+                            {% if item.website %}<a href="{{ item.website }}">{% endif %}
+                            <img class="image img-responsive pull-right" src="{% thumbnail item.image 210x210 bw upscale subject_location=item.image.subject_location %}" alt="{{ item.name }}"/>
+                            {% if item.website %}</a>{% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+
+            </div>
+        </div>
+        {% endfor %}
+
+
+    </div>
+</div>

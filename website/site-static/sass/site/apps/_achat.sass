@@ -4,7 +4,7 @@ body
 
 #achat_container
   background: #fff
-  //min-height: 1000px
+  min-height: 600px
   form
     margin: 20px 0
     &.focus
@@ -16,6 +16,9 @@ body
         padding: 2px 4px
         margin: 0
         min-height: 30px
+
+        border-radius: 2px 0 0 2px
+
         &:focus
           border: 1px solid #000
           padding: 2px 4px
@@ -35,6 +38,9 @@ body
       color: #FFF
       padding-left: 7px
       line-height: 10px
+
+      border-radius: 0 2px 2px 0
+
       > span
         border-left: none
 
@@ -51,6 +57,7 @@ body
 
     &.focus .button
       background: #000
+      border-color: #000 !important
 
 
   .messages
@@ -65,35 +72,52 @@ body
     
     .item.message
       margin-bottom: 20px
-      +single-transition(opacity, 2.0s)
+      transition: opacity 2.0s
       &.new
-        +opacity(0.0)
-        +single-transition(opacity, 1.0s)
+        opacity: 0.0
+        transition: opacity 1.0s
+
+      &.has-attachments
+        width: 50%
+
+
+      .bubble
+        filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.15))
 
       .body
         padding: 10px
         color: #000
-        background: #efefef
+
         font-style: italic
         position: relative
         border-radius: 3px
 
-        -webkit-filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.15))
-        -mox-filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.15))
-        filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.15))
+      .triangle
+        height: 10px
+        line-height: 0
+        text-align: center
+        svg
+          width: 20px
+        svg:not([data-livefill])
+          fill: #efefef
 
-        &:after
-          content: ''
-          position: absolute
-          top: 100%
-          left: 0
-          right: 0
-          margin: 0 auto
-          width: 0
-          height: 0
-          border-top: solid 9px #efefef
-          border-left: solid 9px transparent
-          border-right: solid 9px transparent
+        //
+        //&:after
+        //  content: ''
+        //  position: absolute
+        //  top: 100%
+        //  left: 0
+        //  right: 0
+        //  margin: 0 auto
+        //  width: 0
+        //  height: 0
+        //  border-top-width: 9px
+        //  border-top-style: solid
+        //  border-left: solid 9px transparent
+        //  border-right: solid 9px transparent
+        //
+        //&:not([data-livebg]):after
+        //  border-top-color: #efefef
 
 
         a[data-ct="user"]
@@ -102,11 +126,16 @@ body
       .author
         margin-top: 12px
         font-size: 80%
-        +opacity(0.5)
+        opacity: 0.5
+
+
+    .item.message
+      .body:not([data-livebg])
+        background: #efefef
 
     // type dependant styles
     .item.message
-      &.me
+      &.__disabled__.me
         .body
           background: #CCC
           color: #000
@@ -133,7 +162,6 @@ body
   textarea:focus,
   input:focus
     font-size: 16px !important
-    background: #f0f
 
   #achat_container
 
@@ -150,19 +178,23 @@ body
         .author
           margin-top: 2px
           font-size: 76%
-          +opacity(0.3)
+          opacity: 0.3
           text-align: right !important
 
 
 // profile (tooltip)
-
 .profile
+  .image
+    //border: 2px solid green
   .name
   .pseudonym
     font-size: 90%
   .location
     font-size: 90%
   .roles
+    padding-top: 20px
+    width: 100%
+    text-align: center
     .role
       opacity: 0.7
       font-size: 80%

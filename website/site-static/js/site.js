@@ -72,7 +72,6 @@ var SiteUI = function () {
         $(document).on('ajax-loader', function(e, action) {
             if(action == 'loaded') {
                 self.init_fd5();
-                self.set_color();
             }
         });
 
@@ -81,21 +80,7 @@ var SiteUI = function () {
     };
 
 
-    this.set_color = function(color, duration) {
 
-        if(color === undefined) {
-            var color = self.colors[self.current_color];
-            var color = self.colors[Math.floor(Math.random() * self.colors.length)];
-        }
-
-        if(duration === undefined) {
-            var duration = 100;
-        }
-
-        $('html *[data-livebg]').animate({
-            backgroundColor: color
-        }, duration );
-    };
 
 
     /*
@@ -127,7 +112,7 @@ var SiteUI = function () {
     this.init = function () {
         self.is_retina = isRetinaDisplay();
         self.layout();
-        self.set_color();
+
         self.bindings();
         self.init_fd5();
     };

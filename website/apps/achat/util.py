@@ -19,9 +19,9 @@ def parse_text(html_text):
     text = soup.get_text().replace(u'\xa0', u' ')
 
     # strip all tags
-    stipped_text = BeautifulSoup(text).text
+    stripped_text = BeautifulSoup(text).text
 
-    return stipped_text
+    return stripped_text
 
 def extract_mentioned_users(html_text):
 
@@ -38,22 +38,6 @@ def extract_mentioned_users(html_text):
         rels.append(user)
 
     return rels
-
-
-def message_to_html(text):
-
-    html = u''
-    bits = []
-
-    for bit in text.split(' '):
-        rendered_bit = bit
-        if bit[0:1] == '@':
-            rendered_bit = u"""<span data-ct="user">{username}</span>""".format(username=bit[1:])
-
-        bits.append(rendered_bit)
-
-    return u' '.join(bits)
-
 
 def is_spam(text, request=None):
 

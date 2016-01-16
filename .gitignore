@@ -7,6 +7,7 @@
 .pydevproject
 util/remote_to_local.conf
 env
+node_modules
 website/env
 changelog.txt
 website/project/local_settings.py

@@ -5,18 +5,18 @@
 {% if user.is_authenticated  %}
 
     <li class="has-dropdown not-click"_>
-        <a href="#">{% firstof user.get_full_name user.username %}</a>
-        <ul class="dropdown">
+        <a data-livefg href="#">{% firstof user.get_full_name user.username %}</a>
+        <ul class="dropdown" data-livefg>
             {% if user.is_staff %}
 
                 <li class="divider"></li>
 
                 {% if not cms_toolbar_disabled %}
-                    <li><a href="?toolbar_off">{% trans 'Hide Toolbar' %}</a></li>
+                    <li><a data-livefg href="?toolbar_off">{% trans 'Hide Toolbar' %}</a></li>
                 {% else %}
-                    <li><a href="?edit">{% trans 'Show Toolbar' %}</a></li>
+                    <li><a data-livefg href="?edit">{% trans 'Show Toolbar' %}</a></li>
                 {% endif %}
-                <li><a target="_blank" href="/admin/">{% trans 'Administration' %}</a></li>
+                <li><a data-livefg target="_blank" href="/admin/">{% trans 'Administration' %}</a></li>
 
 
                 <li class="divider"></li>
@@ -25,10 +25,10 @@
 
 
             <li>
-                <a href="{% url 'alogin-profile' %}" data-alogin-action="profile">{% trans 'profile & settings'|capfirst %}</a>
+                <a data-livefg href="{% url 'alogin-profile' %}" data-alogin-action="profile">{% trans 'profile & settings'|capfirst %}</a>
             </li>
             <li>
-                <a href="{% url 'alogin-logout' %}" data-alogin-action="logout">{% trans 'logout'|capfirst %}</a>
+                <a data-livefg href="{% url 'alogin-logout' %}" data-alogin-action="logout">{% trans 'logout'|capfirst %}</a>
             </li>
         </ul>
     </li>
@@ -37,7 +37,7 @@
 
     <li>
 
-        <a href="{% url 'alogin-login' %}" data-alogin-action="login">{% trans 'login'|capfirst %} / {% trans 'register'|capfirst %}</a>
+        <a data-livefg href="{% url 'alogin-login' %}" data-alogin-action="login">{% trans 'login'|capfirst %} / {% trans 'register'|capfirst %}</a>
 
         <!--
         <a href="{% url 'alogin-register' %}" data-alogin-action="register">{% trans 'register'|capfirst %}</a>

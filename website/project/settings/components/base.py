@@ -4,29 +4,23 @@ import sys
 import posixpath
 from datetime import timedelta
 
-
 gettext = lambda s: s
 _ = gettext
 
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
-# add to python-path
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 sys.path.insert(0, os.path.join(BASE_DIR, 'tools'))
 sys.path.insert(0, os.path.join(BASE_DIR, 'cmsplugins'))
 sys.path.insert(0, os.path.join(BASE_DIR, 'ecommerce'))
 
 
+SITE_ID = 1
+BASE_SITE_ID = 1
 SECRET_KEY = 'j1odx#ji=z%r@in1k3pj4=&kwgv&4dv78^9!nymh+vhy9m4&e*'
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = []
-
-SITE_ID = 1
-
-BASE_SITE_ID = 1
-
 
 LOCALE_PATHS = ('%s/locale/' % BASE_DIR,)
 
@@ -82,14 +76,11 @@ SOLID_I18N_USE_REDIRECTS = False
 ROOT_URLCONF = 'project.urls'
 WSGI_APPLICATION = 'project.wsgi.application'
 
-
-# Application definition
-
 INSTALLED_APPS = (
-
 
     'djangocms_admin_style',
     'admin_shortcuts',
+
     # django base
     'django.contrib.admin',
     'django.contrib.auth',
@@ -106,7 +97,6 @@ INSTALLED_APPS = (
     # wip only
     'django.contrib.webdesign',
 
-
     # life-savers
     'crispy_forms',
     'raven.contrib.django.raven_compat',
@@ -122,15 +112,6 @@ INSTALLED_APPS = (
     'treebeard', # mptt replacement for cms
     'menus',
     'sekizai',
-    # cms extension
-    #'pagesetting',
-    # cms plugins
-    #'cms.plugins.file',
-    #'cms.plugins.link',
-    #'cms.plugins.text',
-    #'cms.plugins.video',
-    #'cms.plugins.snippet',
-    # cms / filer
 
     'djangocms_picture',
     'djangocms_link',
@@ -146,7 +127,6 @@ INSTALLED_APPS = (
     'turbolinks',
     'nunjucks',
 
-    # new-school-plugins
     'djangocms_text_ckeditor',
     'apiproxy',
     'pushy_client',
@@ -168,16 +148,13 @@ INSTALLED_APPS = (
     'backfeed',
     'stationtime',
     'remotelink',
+    'livecolor',
     'contentproxy',
     'profiles',
     'ticker',
+    'team',
+    'partnerlink',
     'social_auth',
-
-    # shop
-    #'plata',
-    #'plata.discount',
-    #'plata.payment',
-    #'plata.shop',
 
 )
 
@@ -197,30 +174,17 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'solid_i18n.middleware.SolidLocaleMiddleware',
-    #'django.middleware.doc.XViewMiddleware',
     'django.middleware.common.CommonMiddleware',
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
-    # /cms
-
-    # cms ajax-loader redirect
     'base.middleware.AJAXLoaderRedireckMiddleware',
-
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
     'social_auth.middleware.SocialAuthExceptionMiddleware',
     'django_downloadview.SmartDownloadMiddleware',
 )
 
-"""
-CKEDITOR_SETTINGS = {
-    'skin': 'moono',
-}
-"""
-
-# Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -230,7 +194,6 @@ DATABASES = {
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
-# TASKS
 CELERYBEAT_SCHEDULE = {
     'onair-update-schedule': {
         'task': 'onair.tasks.update_schedule',
@@ -276,8 +239,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 JENKINS_TASKS = (
     'django_jenkins.tasks.run_pylint',
     'django_jenkins.tasks.with_coverage',
-    #'django_jenkins.tasks.django_tests',
-    #'django_jenkins.tasks.run_csslint',
     'django_jenkins.tasks.run_pep8',
     'django_jenkins.tasks.run_pyflakes',
 )
@@ -314,13 +275,6 @@ ADMIN_SHORTCUTS = [
                 'open_new_window': True,
                 'class': 'tool',
             },
-            #{
-            #    'url': 'https://pbinteractive.teamwork.com/projects/96606/overview',
-            #    'title': _('Teamwork PM'),
-            #    'open_new_window': True,
-            #    'class': 'tool',
-            #},
-
         ]
     },
     {
@@ -330,17 +284,6 @@ ADMIN_SHORTCUTS = [
                 'url_name': 'admin:cms_page_changelist',
                 'title': _('CMS Pages'),
             },
-
-            #{
-            #    'url_name': 'admin:catalog_product_changelist',
-            #    'title': _('Products'),
-            #    'class': 'tool',
-            #},
-            #{
-            #    'url_name': 'admin:stories_story_changelist',
-            #    'title': _('Stories'),
-            #    'class': 'tool',
-            #},
         ]
     },
 ]
@@ -353,23 +296,5 @@ BADBROWSER_REQUIREMENTS = (
 )
 BADBROWSER_SUGGEST = ('chrome', 'safari', 'ie', 'firefox', )
 
-
 #LOGIN_REDIRECT_URL = '/accounts/contact/'
 LOGIN_REDIRECT_URL = '/'
-
-# shop
-#PLATA_SHOP_PRODUCT = 'catalog.Combo'
-CURRENCIES = ('CHF', 'EUR',)
-
-#PLATA_PAYMENT_MODULES = [
-    #'plata.payment.modules.cod.PaymentProcessor',
-    #'bshop.payment.postpay.PaymentProcessor',
-    #'plata.payment.modules.paypal.PaymentProcessor',
-#]
-
-#PLATA_REPORTING_ADDRESSLINE = 'Example Corp. - 3. Example Street - 1234 Example'
-
-PAYPAL = {
-    'LIVE': False, # Use sandbox or live payment interface?
-    'BUSINESS': 'paypal@example.com',
-    }
