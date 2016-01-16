@@ -11,7 +11,6 @@ env.warn_only = True
 env.debug = False
 env.supervisor = '/etc/supervisor/conf.d'
 env.nginx = '/etc/nginx/sites-enabled'
-env.compass_binary = '/var/lib/gems/1.9.1/gems/compass-0.12.7/bin/compass'
 
 # skip functions for faster deploy...
 env.skip_requirements = False
@@ -156,18 +155,6 @@ def deploy():
                     print red('*' * 72)
                     print red('sync / migration error: %s' % e)
                     print red('*' * 72)
-
-
-            """
-            staticfiles & compress
-            """
-
-            try:
-                with cd(env.path + '/src_new/website/site-static/'):
-                    print(green('compiling sass files'))
-                    run('%s compile -c config-production.rb' % (env.compass_binary))
-            except Exception, e:
-                print red('unable to compile sass: %s' % e)
 
 
 
