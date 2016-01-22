@@ -67,16 +67,10 @@ class Message(models.Model):
             video_id = [c for c in has_youtube[0] if c] # Get rid of empty list objects
             video_id = video_id[len(video_id)-1] # Return the last item in the list
             items = []
-            items.append('<div class="flex-video widescreen youtube"><iframe id="ytplayer" type="text/html" width="478" height="300" src="http://www.youtube.com/embed/{0}?autoplay=0&origin=http://example.com" frameborder="0"/></div>'.format(video_id))
+            items.append('<div class="flex-video widescreen youtube"><iframe id="ytplayer" type="text/html" width="478" height="300" src="https://www.youtube.com/embed/{0}?autoplay=0&origin=http://example.com" frameborder="0"/></div>'.format(video_id))
 
         return items
 
-
-        if 'youtube' in self.text:
-            items = []
-            items.append('<div class="flex-video widescreen youtube"><iframe id="ytplayer" type="text/html" width="478" height="300" src="http://www.youtube.com/embed/{0}?autoplay=0&origin=http://example.com" frameborder="0"/></div>')
-
-        return items
 
     @property
     def html(self):
