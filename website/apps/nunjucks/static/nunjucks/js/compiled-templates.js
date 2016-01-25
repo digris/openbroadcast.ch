@@ -156,7 +156,7 @@ output += " onair";
 }
 output += "\">\n\n            <div class=\"small-2 col-action columns\">\n                ";
 if(runtime.memberLookup((t_8),"onair")) {
-output += "\n                    <a href=\"#\"><!--<i class=\"fa fa-pause\"></i>-->||</a>\n                ";
+output += "\n                    <a href=\"#\"><i class=\"fa fa-pause\"></i></a>\n                ";
 ;
 }
 else {
@@ -225,16 +225,7 @@ output += "\n                    ";
 output += "\n                ";
 ;
 }
-output += "\n                &nbsp;\n            </div>\n\n            <div class=\"col-action columns\">\n\n\n                <!--\n                ";
-if(runtime.memberLookup((t_12),"onair")) {
-output += "\n                    <a href=\"#\">||</a>\n                ";
-;
-}
-else {
-output += "\n                    <a data-login-required href=\"#\"><i class=\"fa fa-play\"></i></a>\n                ";
-;
-}
-output += "\n                -->\n\n\n                <div class=\"controls hoverable\">\n\n                    <span class=\"play\">\n                        <a href=\"#\" data-login-required data-bplayer-controls=\"play\"><i class=\"fa fa-play\"></i></a>\n                    </span>\n\n                    <span class=\"pause\">\n                        <a data-bplayer-controls=\"pause\" href=\"#\">||</a>\n                    </span>\n\n                    <!--\n                    <span class=\"loading\">\n                        <a href=\"#\"><i class=\"fa fa-circle-o-notch fa-spin fa-fw\"></i></a>\n                    </span>\n                    -->\n                </div>\n\n\n\n            </div>\n\n            <div class=\"col-name columns\">\n                ";
+output += "\n                &nbsp;\n            </div>\n\n            <div class=\"col-action columns\">\n\n                <div class=\"controls hoverable\">\n\n                    <span class=\"play\">\n                        <a href=\"#\" data-login-required data-bplayer-controls=\"play\"><i class=\"fa fa-play\"></i></a>\n                    </span>\n\n                    <span class=\"pause\">\n                        <a data-bplayer-controls=\"pause\" href=\"#\"><i class=\"fa fa-pause\"></i></a>\n                    </span>\n\n                </div>\n\n\n\n            </div>\n\n            <div class=\"col-name columns\">\n                ";
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((t_12),"item")),"name"), env.opts.autoescape);
 output += "\n            </div>\n\n            <div class=\"col-artist columns\">\n                ";
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.memberLookup((t_12),"item")),"artist")),"name"), env.opts.autoescape);
@@ -628,7 +619,7 @@ if(t_23) { cb(t_23); return; }
 t_21.render(context.getVariables(), frame, function(t_24,t_22) {
 if(t_24) { cb(t_24); return; }
 output += t_22
-output += "\n        </div>\n\n        <!-- action wrapper - play/pause/listen -->\n        <div class=\"wrapper\">\n\n            <div class=\"controls hoverable\">\n\n                <span class=\"play\">\n                    <a href=\"#\" data-login-required data-onair-controls=\"play\">Play</a>\n                </span>\n\n                <span class=\"listen\">\n                    <a data-onair-controls=\"play\" href=\"#\">Listen</a>\n                </span>\n\n                <span class=\"pause\">\n                    <a data-onair-controls=\"pause\" href=\"#\">||</a>\n                </span>\n\n                <span class=\"loading\">\n                    <a href=\"#\">\n                        <i class=\"fa fa-circle-o-notch fa-spin fa-fw\"></i>\n                    </a>\n                </span>\n\n            </div>\n\n\n        </div>\n\n\n\n\n        <!-- levelbridge live-data -->\n        <div class=\"level-container\">\n            <ul class=\"level\"></ul>\n        </div>\n\n\n\n\n\n        <div class=\"progress-container hoverable\">\n            <div class=\"progress\">\n              <span class=\"meter\" style=\"width: 0%\"></span>\n              <span class=\"buffer\" style=\"width: 0%\"></span>\n            </div>\n        </div>\n\n\n\n\n\n\n    </div>\n\n</div>\n<!-- item end -->";
+output += "\n        </div>\n\n        <!-- action wrapper - play/pause/listen -->\n        <div class=\"wrapper\">\n\n            <div class=\"controls hoverable\">\n\n                <span class=\"play\">\n                    <a href=\"#\" data-login-required data-onair-controls=\"play\">Play</a>\n                </span>\n\n                <span class=\"listen\">\n                    <a data-onair-controls=\"play\" href=\"#\">Listen</a>\n                </span>\n\n                <span class=\"pause\">\n                    <a data-onair-controls=\"pause\" href=\"#\"><i class=\"fa fa-pause\"></i></a>\n                </span>\n\n                <span class=\"loading\">\n                    <a href=\"#\">\n                        <i class=\"fa fa-circle-o-notch fa-spin fa-fw\"></i>\n                    </a>\n                </span>\n\n            </div>\n\n\n        </div>\n\n\n\n\n        <!-- levelbridge live-data -->\n        <div class=\"level-container\">\n            <ul class=\"level\"></ul>\n        </div>\n\n\n\n\n\n        <div class=\"progress-container hoverable\">\n            <div class=\"progress\">\n              <span class=\"meter\" style=\"width: 0%\"></span>\n              <span class=\"buffer\" style=\"width: 0%\"></span>\n            </div>\n        </div>\n\n\n\n\n\n\n    </div>\n\n</div>\n<!-- item end -->";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -725,20 +716,7 @@ output += runtime.suppressValue(env.getFilter("truncate").call(context, runtime.
 output += "\n                </p>\n                ";
 ;
 }
-output += "\n\n                ";
-if(runtime.contextOrFrameLookup(context, frame, "debug")) {
-output += "\n                <p>\n                    <a href=\"";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"resource_uri"), env.opts.autoescape);
-output += "\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"resource_uri"), env.opts.autoescape);
-output += "</a>\n                </p>\n                <p>\n                    <a href=\"";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"item")),"resource_uri"), env.opts.autoescape);
-output += "\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"item")),"resource_uri"), env.opts.autoescape);
-output += "</a>\n                </p>\n                ";
-;
-}
-output += "\n\n            </div>\n        </div>\n\n        ";
+output += "\n            </div>\n        </div>\n\n        ";
 if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"tags")) {
 output += "\n        <div class=\"row tags text-left\">\n            <div class=\"small-12 columns\">\n                ";
 frame = frame.push();
@@ -1618,7 +1596,7 @@ output += " onair";
 }
 output += "\">\n\n            <div class=\"small-2 col-action columns\">\n                ";
 if(runtime.memberLookup((t_8),"onair")) {
-output += "\n                    <a href=\"#\"><!--<i class=\"fa fa-pause\"></i>-->||</a>\n                ";
+output += "\n                    <a href=\"#\"><i class=\"fa fa-pause\"></i></a>\n                ";
 ;
 }
 else {
@@ -1687,7 +1665,7 @@ output += "\n                ";
 }
 output += "\n                &nbsp;\n            </div>\n\n            <div class=\"col-action columns\">\n                ";
 if(runtime.memberLookup((t_12),"onair")) {
-output += "\n                    <a href=\"#\"><!--<i class=\"fa fa-pause\"></i>-->||</a>\n                ";
+output += "\n                    <a href=\"#\"><i class=\"fa fa-pause\"></i></a>\n                ";
 ;
 }
 else {

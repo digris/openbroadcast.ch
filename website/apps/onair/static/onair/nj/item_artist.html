@@ -44,16 +44,6 @@
                     {{ item.biography|truncate(240) }}
                 </p>
                 {% endif %}
-
-                {% if debug %}
-                <p>
-                    <a href="{{ item.resource_uri }}">{{ item.resource_uri }}</a>
-                </p>
-                <p>
-                    <a href="{{ object.item.resource_uri }}">{{ object.item.resource_uri }}</a>
-                </p>
-                {% endif %}
-
             </div>
         </div>
 
