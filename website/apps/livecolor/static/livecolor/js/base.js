@@ -47,6 +47,8 @@ LiveColorApp = function () {
             console.debug('LiveColorApp: update', data);
         }
 
+        self.set_color(data.bg_color, data.fg_color, data.duration)
+
 
     };
 
@@ -94,7 +96,7 @@ LiveColorApp = function () {
             delay = 0;
         }
 
-        if(fg_color === undefined) {
+        if(fg_color === undefined || fg_color === false) {
             var fg_color = self.get_contrast_color(bg_color);
         }
 
@@ -110,7 +112,8 @@ LiveColorApp = function () {
 
             // add colors and re-add styles after animation
             var style_fg = '';
-            style_fg += '[data-livefg] { color: ' + fg_color + '; border-color: ' + fg_color + '; }';
+            style_fg += '[data-livefg] { color: ' + fg_color + ' !important; border-color: ' + fg_color + '; }';
+            style_fg += '.active [data-livefg], nav li:hover [data-livefg] { color: ' + bg_color + ' !important; background-color: ' + fg_color + ' !important;}';
 
             setTimeout(function(){
                 self.stylesheet_fg.text(style_fg);

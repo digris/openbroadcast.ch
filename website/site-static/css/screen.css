@@ -17775,6 +17775,18 @@ x:-o-prefocus {
       .cmsplugin_holder p img {
         margin-left: 0; } }
 
+.filer-image figcaption {
+  opacity: 0.7;
+  font-size: 90%;
+  font-style: italic; }
+
+.filer-image.inline {
+  display: inline;
+  float: left;
+  padding-top: 6px;
+  padding-right: 12px;
+  padding-bottom: 2px; }
+
 .listing .item {
   margin: 0 0 10px 0; }
 
@@ -19646,6 +19658,9 @@ dl.horizontal dd {
 
 h1, h2, h3, h4, h5, h6 {
   color: inherit; }
+
+figure {
+  margin: 0; }
 
 .button-group.simple li:first-child button, .button-group.simple .button-group li:first-child .button {
   border-left: 1px solid red;

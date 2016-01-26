@@ -102,7 +102,7 @@ INSTALLED_APPS = (
     'raven.contrib.django.raven_compat',
     'tastypie',
     'kombu.transport.django',
-    'relatedadminlink',
+    #'relatedadminlink',
 
     'remoteauth',
 
@@ -115,6 +115,9 @@ INSTALLED_APPS = (
 
     'djangocms_picture',
     'djangocms_link',
+
+    'djangocms_gmaps',
+
 
     'filer',
     'cmsplugin_filer_file',
