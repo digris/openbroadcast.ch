@@ -94,5 +94,5 @@ django-geoposition==0.2.2
 -e git+https://github.com/hzlf/graypy.git@master#egg=graypy
 
 
-
+djangocms-gmaps==0.1.4.0
 colorlog
