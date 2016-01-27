@@ -156,6 +156,7 @@ INSTALLED_APPS = (
     'profiles',
     'ticker',
     'team',
+    'program',
     'partnerlink',
     'social_auth',
 

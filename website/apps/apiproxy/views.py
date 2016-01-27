@@ -29,5 +29,6 @@ class ResourceView(View):
 
         log.debug('Requesting: %s - %s' % (type, uri))
         r = requests.get(API_BASE_URL + uri, verify=False)
-        response = HttpResponse(r.text, content_type='application/json', status=r.status_code)
+        response = HttpResponse(r.text, content_type='application/json', status=r.status_code, charset='utf-8')
+
         return response

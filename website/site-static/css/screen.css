@@ -19023,6 +19023,36 @@ body.registration .section-claim-token {
       max-height: 240px;
       width: auto !important; }
 
+.program-plugin .program-list .date-separator {
+  margin-bottom: 20px; }
+
+.program-plugin .program-list .item {
+  margin: 0 0 0;
+  padding: 10px 10px 20px;
+  border-top-width: 2px;
+  border-top-style: solid; }
+  .program-plugin .program-list .item h3 {
+    text-align: center;
+    margin-bottom: 20px; }
+    .program-plugin .program-list .item h3 .time {
+      padding-right: 20px; }
+  .program-plugin .program-list .item .classification .header {
+    text-align: center;
+    margin: 10px 0 10px; }
+    .program-plugin .program-list .item .classification .header span {
+      opacity: 0.7;
+      padding-left: 10px; }
+  .program-plugin .program-list .item .classification .body {
+    padding: 0 10px; }
+  .program-plugin .program-list .item .credits {
+    text-align: center; }
+    .program-plugin .program-list .item .credits span {
+      opacity: 0.7; }
+    .program-plugin .program-list .item .credits a {
+      text-decoration: underline; }
+      .program-plugin .program-list .item .credits a:hover {
+        opacity: 0.5; }
+
 form.form-base small.error {
   display: block;
   font-size: 0.8rem;
