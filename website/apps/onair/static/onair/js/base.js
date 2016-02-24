@@ -22,6 +22,8 @@ var OnAirApp = function () {
     this.load_schedule_timeout = false;
     this.default_timeout = 30000;
 
+    this.stream_delay = 6500;
+
     // holding on-air status and playback modes
     this.is_onair = false;
     this.mode = 'init'; // 'live' or 'history'
@@ -44,7 +46,7 @@ var OnAirApp = function () {
 
 
         setTimeout(function(){
-            self.load_schedule();
+            self.load_schedule(true);
         }, 1000);
 
 
@@ -72,19 +74,19 @@ var OnAirApp = function () {
         }).on('mouseout', 'a', function (e) {
             self.info_timeout = setTimeout(function () {
                 $('.current', self.info_container).removeClass('details-visible');
-            }, 400)
+            }, 200)
         });
 
         // keep visible on info-hover
-        self.info_container.on('mouseover', '.item', function (e) {
-            if (self.info_timeout) {
-                clearTimeout(self.info_timeout);
-            }
-        }).on('mouseout', '.item', function (e) {
-            self.info_timeout = setTimeout(function () {
-                $('.current', self.info_container).removeClass('details-visible');
-            }, 400)
-        });
+        //self.info_container.on('mouseover', '.item', function (e) {
+        //    if (self.info_timeout) {
+        //        clearTimeout(self.info_timeout);
+        //    }
+        //}).on('mouseout', '.item', function (e) {
+        //    self.info_timeout = setTimeout(function () {
+        //        $('.current', self.info_container).removeClass('details-visible');
+        //    }, 400)
+        //});
 
         // pagination arrows
         self.prevnext_container.on('click', 'a', function (e) {
@@ -181,8 +183,9 @@ var OnAirApp = function () {
 
 
 
-    this.load_schedule = function (limit) {
+    this.load_schedule = function (initial, limit) {
 
+        var initial = typeof initial !== 'undefined' ? true : false;
         var limit = typeof limit !== 'undefined' ? limit : self.initial_items;
         var url = '/api/v1/onair/schedule/?expand=item+emission&limit=' + limit;
 
@@ -197,8 +200,8 @@ var OnAirApp = function () {
                 self.load_schedule_timeout = setTimeout(function(){
                     // we have to load the previos item as well to update our data
                     // TODO: this could be handled better!
-                    self.load_schedule(2)
-                }, Number((meta.next_starts_in + 1) * 1000));
+                    self.load_schedule(false, 2)
+                }, Number((meta.next_starts_in) * 1000 + self.stream_delay));
             } else {
 
                 console.debug('EMPTY SCHEDULE > OFFLINE')
@@ -249,6 +252,19 @@ var OnAirApp = function () {
 
             self.process_data();
 
+
+
+            // TODO: this is an ugly hack!
+
+            if(initial) {
+
+                setTimeout(function(){
+                    self.bplayer.state_change('paused')
+                    //self.bplayer.controls({action: 'pause'})
+                }, 2000)
+            }
+
+
         });
 
     };
@@ -296,11 +312,11 @@ var OnAirApp = function () {
             }));
 
             if(dom_el.length) {
-                console.debug('got element in dom > replace it')
+                //console.debug('got element in dom > replace it')
                 //dom_el.replaceWith(html);
                 dom_el.removeClass('onair');
             } else {
-                console.debug('element not in dom > append it')
+                //console.debug('element not in dom > append it')
                 $('.info-container .items').append(html)
             }
 
@@ -312,15 +328,19 @@ var OnAirApp = function () {
 
         });
 
-        // handle own timeline
-        setTimeout(function () {
-            self.handle_timeline();
-        }, 100);
 
         // map on-air history to player app
-        setTimeout(function () {
+        //setTimeout(function () {
             self.bplayer.set_playlist(self.local_data);
-        }, 200);
+        //}, 2);
+
+        // handle own timeline
+        //if(self.mode != 'history') {
+            setTimeout(function () {
+                self.handle_timeline(true);
+            }, 100);
+        //}
+
 
 
     };
@@ -362,7 +382,7 @@ var OnAirApp = function () {
     /**
      * handles timeline display: prev/next etc.
      */
-    this.handle_timeline = function () {
+    this.handle_timeline = function (reindex) {
 
         // cases: onair mode -> item with onair flag is set to current
         // cases: history mode -> item with <to-be-defined> flag is set to current
@@ -383,6 +403,34 @@ var OnAirApp = function () {
 
         // not sure if this introduces other problems... but in case that nothing is "on air" we just add a dummy item
         var schedule = self.local_data;
+
+
+        // reindex timeline offset
+        if(reindex !== undefined && self.mode == 'history') {
+            console.debug('reindex timeline offset');
+
+            console.debug('self.timeline_offset:', self.timeline_offset);
+            console.debug('self.local_data:', self.local_data);
+
+            var current_uuid = self.current_item.item.uuid;
+            console.warn('current_uuid', current_uuid);
+            $.each(self.local_data, function(i, el){
+                console.debug(el.item.uuid)
+
+                if(el.item.uuid == current_uuid) {
+                    console.log('match:', i);
+                    var new_offset = (self.local_data.length - i -1) * -1;
+                    console.log('new_offset:', new_offset);
+
+                    self.timeline_offset = new_offset;
+
+                }
+
+            });
+
+
+        }
+
 
         onair_index = schedule.length -1;
         var current_index = onair_index + self.timeline_offset;
@@ -447,9 +495,9 @@ var OnAirApp = function () {
             $('.next', self.prevnext_container).addClass('disabled');
         }
 
-        // TODO: hack!!
-        //self.bplayer.mark_by_uuid();
-        self.bplayer.update_player();
+        setTimeout(function(){
+            self.bplayer.update_player(true);
+        }, 1)
 
     };
 

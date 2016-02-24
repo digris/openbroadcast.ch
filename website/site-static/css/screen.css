@@ -18633,7 +18633,7 @@ body.paused #bplayer_container .playlist .item.playing .controls .pause {
   #bplayer_container section.playlist.history.compact .item span {
     opacity: 0.5; }
 
-#bplayer_container section.playlist.history.compact .item:first-child {
+#bplayer_container section.playlist.history.compact .item.playing {
   display: block; }
 
 #bplayer_container section.playlist.history.expanded .header {
@@ -18766,6 +18766,13 @@ body.paused #bplayer_container .playlist .item.playing .controls .pause {
       #bplayer_container.show-history .actions-expanded a {
         font-size: 2.2666666667rem;
         line-height: 100%; } }
+
+#bplayer_container ::-webkit-scrollbar {
+  width: 4px;
+  background: transparent; }
+
+#bplayer_container ::-webkit-scrollbar-thumb {
+  background: #999; }
 
 body {
   overflow-y: scroll;
@@ -19282,26 +19289,17 @@ body.fs-video .footer-wrapper {
     max-height: 85vh; } }
 
 /** initial setup * */
-.nano {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden; }
-  .nano > .nano-content {
-    position: absolute;
-    overflow: scroll;
-    overflow-x: hidden;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0; }
-    .nano > .nano-content:focus {
-      outline: thin dotted; }
-    .nano > .nano-content::-webkit-scrollbar {
-      display: none; }
-
-.has-scrollbar > .nano-content::-webkit-scrollbar {
-  display: block; }
+.nano > .nano-content {
+  overflow: scroll;
+  overflow-x: hidden;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0; }
+  .nano > .nano-content:focus {
+    outline: thin dotted; }
+  .nano > .nano-content::-webkit-scrollbar {
+    display: none; }
 
 .nano > .nano-pane {
   background: rgba(0, 0, 0, 0.25);

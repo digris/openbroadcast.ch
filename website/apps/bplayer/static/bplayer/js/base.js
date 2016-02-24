@@ -19,7 +19,7 @@ var BPlayerApp = function () {
     //this.stream_url = 'http://stream.openbroadcast.ch:80/openbroadcast';
     //this.stream_url = 'http://pypo:8000/master.mp3';
     this.r;
-    this.style = 'large'
+    this.style = 'large';
     this.states = ['init', 'ready', 'playing', 'stopped', 'paused', 'buffering', 'loading', 'error'];
     this.history_expanded = false;
 
@@ -142,7 +142,7 @@ var BPlayerApp = function () {
     this.state_change = function (state) {
 
         if(self.debug) {
-            //console.log('BPlayerApp - state changed to: ' + state);
+            console.log('BPlayerApp - state changed to: ' + state);
         }
 
         var classes = removeA(self.states.slice(0), state).join(' ');
@@ -183,73 +183,6 @@ var BPlayerApp = function () {
          * generic actions
          *****************************************************************************/
 
-        /* not in use
-        $('body').on('click', 'a[data-bplayer-action]', function (e) {
-            e.preventDefault();
-
-            var action = $(this).data('bplayer-action');
-            var uri = $(this).parents('.item').data('resource_uri');
-            var ctype = $(this).parents('.item').data('ct');
-
-            $.get(uri, function (data) {
-
-                // content-type based parsers
-                if (ctype == 'release') {
-                    var playlist = self.parse_release(data);
-                }
-                if (ctype == 'playlist') {
-                    var playlist = self.parse_playlist(data);
-                }
-                if (ctype == 'media') {
-                    var playlist = [data];
-                }
-
-                if (action == 'play') {
-                    self.set_playlist(playlist);
-                    self.controls({action: 'play', index: 0});
-                }
-                if (action == 'queue') {
-                    self.set_playlist(playlist, true);
-                    self.update_player();
-                    //self.controls({action: 'queue'});
-                }
-
-            });
-        });
-        */
-
-        /* not in use
-        $('body').on('click', '#bplayer_ios', function (e) {
-            e.preventDefault();
-            var sound = {
-                url: self.stream_url
-            }
-            self.current_sound.load(sound);
-            self.current_sound.play();
-
-        });
-        */
-
-
-        /*****************************************************************************
-         * playlist actions
-         *****************************************************************************/
-        $('__body__').on('click', '#bplayer_playlist_container .item', function (e) {
-            e.preventDefault();
-            var index = $(this).index() -1;
-
-            // TODO: ugly hack!!
-            onair.handle_pagination(index);
-
-            // hack - select play vs pause
-            if($(this).hasClass('playing')){
-                //self.controls({action: 'pause'});
-            } else {
-                //self.controls({action: 'play', index: index});
-            }
-
-
-        });
 
         /*****************************************************************************
          * player controls. triggered by various apps.
@@ -264,30 +197,17 @@ var BPlayerApp = function () {
 
             if(action == 'play') {
                 self.controls({action: 'play', index: index});
+                onair.handle_pagination(index);
             }
 
             if(action == 'pause') {
                 self.controls({action: 'pause'});
             }
 
-            onair.handle_pagination(index);
-
-            /*
-            e.preventDefault();
-            var action = $(this).data('bplayer-controls');
-
-            switch(action) {
-                case 'listen':
-                    var sound = {
-                        url: self.stream_url
-                    }
-                    self.current_sound.load(sound);
-                    self.current_sound.play();
-                    break;
-                default:
-                    self.controls({action: action});
+            if(action == 'resume') {
+                self.controls({action: 'play'});
             }
-            */
+
         });
 
         // player display
@@ -572,73 +492,6 @@ var BPlayerApp = function () {
     };
 
 
-    this.__old__play_file = function (data) {
-
-
-        console.info('BPlayerApp - play_file: ', data.item.name, data.item.uuid);
-        console.debug(data);
-
-        var url;
-        if(data.onair) {
-            var url = self.stream_url;
-        } else {
-            var url = data.item.stream.uri;
-        }
-
-        url = self.base_url + url;
-
-        // debug
-        //url = 'http://media.zhdk.sonicsquirrel.net/Soisloscerdos/Soisloscerdos/SLC08/Angel_Garcia-Happy_Jambo.mp3';
-        //url = 'http://media.zhdk.sonicsquirrel.net/toucan_music/tou295/tou295_marc_burt_bungee_jump.mp3';
-
-        try {
-            self.current_sound.destruct();
-        } catch (e) {
-            if(self.debug) {
-                console.debug('unable to destruct sound: ' + e.message);
-            }
-        }
-
-
-        if (self.current_sound == undefined) {
-
-            if(self.debug) {
-                console.debug('BPlayerApp - no "current_sound" object -> create one');
-            }
-
-            // soundmanager complains with:
-            // "Unavailable - wait until onready() has fired"
-
-            // create sound object
-            self.current_sound = soundManager.createSound({
-                url: decodeURI(url),
-                autoLoad: true,
-                autoPlay: false,
-                stream: true,
-                onplay: self.events.play,
-                onstop: self.events.stop,
-                onpause: self.events.pause,
-                onresume: self.events.resume,
-                onfinish: self.events.finish,
-                whileloading: self.events.whileloading,
-                whileplaying: self.events.whileplaying,
-                onload: self.events.onload,
-                volume: 80
-            });
-
-            self.current_sound.play();
-
-        } else {
-
-            if(self.debug) {
-                console.debug('BPlayerApp - re-using "current_sound" object');
-            }
-
-            self.current_sound.load({url: url}).play();
-        }
-
-        self.update_player();
-    };
 
     this.progress = function (data) {
 
@@ -664,8 +517,15 @@ var BPlayerApp = function () {
         //$('.playhead .loading', self.container).css('background-position-x', pos * width + 'px');
     };
 
-    this.update_player = function () {
-        // get current sound
+    this.update_player = function (reindex) {
+
+        if(reindex !== undefined && self.current_uuid !== undefined && self.current_index != 0) {
+            $.each(self.playlist, function(i, el){
+               if(i > 0 && el.item.uuid == self.current_uuid) {
+                   self.current_index = i;
+               }
+            });
+        }
 
         var media = self.playlist[self.current_index];
 
@@ -694,7 +554,8 @@ var BPlayerApp = function () {
                 index: self.current_index + 1,
                 num_tracks: self.playlist.length,
                 duration: self.playlist.length * 60
-            }
+            };
+
             $('#totals_container', self.container).html(nj.render('bplayer/nj/totals.html', {
                 data: totals
             }));
@@ -712,17 +573,26 @@ var BPlayerApp = function () {
 
             self.playing_uuids = uuids;
 
-            setTimeout(function(){
-                self.mark_by_uuid();
-            }, 1)
+
+            try {
+                self.current_uuid = media.item.uuid;
+            } catch (e) {
+                self.current_uuid = undefined;
+            }
+
 
 
             // hack - mark 'onair' as playing
+            // TODO: investigate! this breaks onair player
             if(media.onair) {
                 setTimeout(function(){
                     $('.item.onair').addClass('playing');
-                }, 200)
+                    //$('.item.onair', self.container).addClass('playing');
+                }, 1)
             }
+
+            self.mark_playing_by_uuid();
+
 
 
         } else {
@@ -733,13 +603,22 @@ var BPlayerApp = function () {
 
     };
 
-    this.mark_by_uuid = function () {
-        $('[data-uuid]').removeClass('playing');
-        $(self.playing_uuids).each(function (i, el) {
-            setTimeout(function () {
-                $('[data-uuid="' + el + '"]').addClass('playing');
-            }, 1);
-        });
+    this.mark_playing_by_uuid = function () {
+
+        console.debug('mark_playing_by_uuid', self.playing_uuids);
+
+
+        setTimeout(function () {
+            $('[data-uuid]').removeClass('playing');
+            $('[data-uuid="' + self.current_uuid + '"]').addClass('playing');
+        }, 100);
+
+
+
+
+
+
+
     };
 
 };
