@@ -12,7 +12,7 @@ admin.autodiscover()
 urlpatterns = solid_i18n_patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^layouting/$', TemplateView.as_view(template_name='layouting.html')),
+    url(r'^debug/$', TemplateView.as_view(template_name='debug.html')),
     #url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^alogin/', include('alogin.urls')),
     url(r'^sa/', include('social_auth.urls')),

@@ -7,16 +7,12 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('team', '0001_initial'),
+        ('team', '0002_auto_20160116_1700'),
     ]
 
     operations = [
         migrations.AlterModelOptions(
             name='profile',
-            options={'ordering': ('-is_company', 'sort', 'name'), 'verbose_name': 'Profile', 'verbose_name_plural': 'Profiles'},
-        ),
-        migrations.RemoveField(
-            model_name='profile',
-            name='is_core_team',
+            options={'ordering': ('is_company', 'sort', 'name'), 'verbose_name': 'Profile', 'verbose_name_plural': 'Profiles'},
         ),
     ]

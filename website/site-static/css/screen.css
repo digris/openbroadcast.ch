@@ -18057,6 +18057,9 @@ x:-o-prefocus {
                 #onair_container .info-container .item.info .container > div.details .ct-panel .tags .tag:nth-of-type(1n+6) {
                   display: none; }
 
+.playing #onair_container .logo-container .controls.hover span a {
+  color: #fff !important; }
+
 #onair_container .logo-container .wrapper,
 #onair_container .container .wrapper {
   position: absolute;

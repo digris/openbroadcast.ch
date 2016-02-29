@@ -29,8 +29,6 @@ class Livecolor(object):
                 duration
         ))
 
-
-
         rs = redis.StrictRedis(host=REDIS_HOST)
 
         message = {

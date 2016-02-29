@@ -214,6 +214,11 @@ CELERYBEAT_SCHEDULE = {
         'schedule': timedelta(seconds=60*60),
         'kwargs': {'max_age': 12*60*60}
     },
+    # 'livecolor-update-colors': {
+    #     'task': 'livecolor.tasks.update_colors',
+    #     'schedule': timedelta(seconds=120),
+    #     #'kwargs': {'range_start': 600, 'range_end': 600}
+    # },
 }
 
 

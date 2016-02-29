@@ -37,6 +37,8 @@ var BPlayerApp = function () {
 
     this.init = function () {
 
+        console.log('BPlayerApp - INIT');
+
         if(self.debug) {
             console.log('BPlayerApp - init');
         }
@@ -50,8 +52,8 @@ var BPlayerApp = function () {
             multiShot: false,
             debugMode: self.debug,
             debugFlash: self.debug,
-            //useConsole: self.debug
-            useConsole: false
+            useConsole: self.debug
+            //useConsole: false
         };
         //soundManager.debugFlash = self.debug;
         //soundManager.debugMode = self.debug;
@@ -64,6 +66,27 @@ var BPlayerApp = function () {
         self.bindings();
     };
 
+    this.ios_create_sound = function() {
+
+        //alert('ios_create_sound')
+
+        self.current_sound = soundManager.createSound({
+                autoLoad: true,
+                autoPlay: true,
+                volume: 80,
+                id: 'the_sound',
+                url: 'https://www.openbroadcast.org/stream/openbroadcast.mp3',
+            });
+
+
+        self.current_sound.pause();
+        self.current_sound.play();
+
+        $('#ios_sound').hide();
+
+
+    };
+
 
     this.init_sm2 = function() {
 
@@ -74,11 +97,14 @@ var BPlayerApp = function () {
          return soundManager.setup({
             url: self.static_url + 'bplayer/swf/lib/soundmanager2_flash9_debug.swf',
             flashVersion: 9,
+            useHTML5Audio: true,
             preferFlash: false,
             debugMode: self.debug,
             debugFlash: self.debug,
-            //useConsole: self.debug,
-            useConsole: false,
+            useConsole: self.debug,
+            //useConsole: true,
+
+
             onready: function () {
 
                 self.current_sound = soundManager.createSound({
@@ -175,9 +201,21 @@ var BPlayerApp = function () {
 
     this.bindings = function () {
 
+
+
         if(self.debug) {
             console.log('BPlayerApp - bindings');
         }
+
+
+        // just testing ios
+        $('#ios_sound').on('click', function() {
+            self.ios_create_sound()
+        });
+
+
+
+
 
         /*****************************************************************************
          * generic actions

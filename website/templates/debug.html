@@ -1,0 +1,45 @@
+{% load cms_tags compress sekizai_tags i18n menu_tags bplayer_tags backfeed_tags pushy_client_tags nunjucks_tags analytics raven %}<!doctype html>
+<html class="no-js{% if user.is_authenticated %} is-authenticated{% endif %}" lang="{{ LANGUAGE_CODE }}">
+<head>
+    <script src="{{ STATIC_URL }}js/lib/jquery-2.1.0.js"></script>
+    <script src="{{ STATIC_URL }}bplayer/js/lib/sm2/soundmanager2.js"></script>
+</head>
+<body>
+
+    <h1 style="font-size: 120px;" onclick="create_sound()">!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</h1>
+
+
+    <script>
+
+        var current_sound;
+
+        soundManager.setup({
+            url: '{{ STATIC_URL }}bplayer/swf/lib/soundmanager2_flash9_debug.swf',
+            flashVersion: 9,
+            useHTML5Audio: true,
+            preferFlash: false,
+            debugMode: true,
+            debugFlash: true,
+            useConsole: true,
+            onready: function () {
+                console.log('ready');
+                console.log('created')
+            }
+        });
+
+
+        var create_sound = function() {
+            current_sound = soundManager.createSound({
+                autoLoad: true,
+                autoPlay: true,
+                volume: 80,
+                id: 'the_sound',
+                url: 'https://www.openbroadcast.org/stream/openbroadcast.mp3',
+            });
+        };
+
+
+    </script>
+
+</body>
+</html>
