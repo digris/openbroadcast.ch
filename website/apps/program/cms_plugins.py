@@ -20,8 +20,8 @@ class ProgramPlugin(CMSPluginBase):
 
         uri = 'v1/abcast/channel/1/program/'
 
-        print API_BASE_URL
-        print uri
+        #print API_BASE_URL
+        #print uri
 
         r = requests.get(API_BASE_URL + uri, verify=False)
 

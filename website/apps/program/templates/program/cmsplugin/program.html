@@ -11,59 +11,50 @@
 
                     <h3 data-livefg><span class="time">{{ item.time_start }}</span>{{ item.name }}</h3>
 
-                    <div class="row">
 
-                        <div class="small-4 columns classification">
-                            <p class="header">
-                                <i class="fa fa-heart"></i>
-                                <span>{% trans 'Mood' %}</span>
-                            </p>
-                            <p class="body">{{ item.mood }}</p>
-                        </div>
+                    {% for emission in item.emissions %}
 
-                        <div class="small-4 columns classification">
-                            <p class="header">
-                                <i class="fa fa-headphones"></i>
-                                <span>{% trans 'Sound' %}</span>
-                            </p>
-                            <p class="body">{{ item.sound }}</p>
-                        </div>
 
-                        <div class="small-4 columns classification">
-                            <p class="header">
-                                <i class="fa fa-microphone"></i>
-                                <span>{% trans 'Talk' %}</span>
-                            </p>
-                            <p class="body">{{ item.talk }}</p>
-                        </div>
+                        <div class="row">
 
-                    </div>
+                            <div class="small-12 columns">
 
-                    <div class="row">
+                                <div class="row">
 
-                        <div class="small-12 columns">
+                                    <div class="small-3 columns">
+                                        <p>
+                                            <span>{{ emission.time_start|slice:'11:16' }} - {{ emission.time_start|slice:'11:16' }}</span>
+                                        </p>
+                                    </div>
+                                    <div class="small-9 columns">
 
-                        {% if item.content_creators %}
-                        <p class="credits">
-                            <span>{% trans 'Mit Beiträgen von' %}</span><br>
-                            {% for user in item.content_creators %}
-                                <a href="//www.openbroadcast.org{{ user.absolute_url }}">{{ user.display_name }}</a>{% if not forloop.last %}, {% endif %}
-                            {% endfor %}
-                        </p>
-                        {% endif %}
+                                        {% if emission.series %}
+                                            <h4>
+                                                {{ emission.series }}
+                                                {% if emission.series_number %}#{{ emission.series_number }}{% endif %}
+                                                -
+                                                {{ emission.name }}
+                                            </h4>
+                                        {% else %}
+                                            <h4>{{ emission.name }}</h4>
+                                        {% endif %}
 
-                        {% if item.content_programmers %}
-                        <p class="credits">
-                            <span>{% trans 'Verantwortlich' %}</span><br>
-                            {% for user in item.content_programmers %}
-                                <a href="//www.openbroadcast.org{{ user.absolute_url }}">{{ user.display_name }}</a>{% if not forloop.last %}, {% endif %}
-                            {% endfor %}
-                        </p>
-                        {% endif %}
+
+                                        <p>
+                                            <span><span class="dim">{% trans 'Kuratiert' %}:</span> {{ emission.user_co.pseudonym }}</span>
+                                            &mdash;
+                                            <span><span class="dim">{% trans 'Programmiert' %}:</span> {{ emission.user.pseudonym }}</span>
+                                        </p>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
 
                         </div>
 
-                    </div>
+                    {% endfor %}
 
                 </div>
 
