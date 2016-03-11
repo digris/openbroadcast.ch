@@ -117,6 +117,7 @@ INSTALLED_APPS = (
     'djangocms_link',
 
     'djangocms_gmaps',
+    'djangocms_snippet',
 
 
     'filer',
