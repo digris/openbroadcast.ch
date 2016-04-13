@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import  unicode_literals
+
 import logging
 from django.db import models
 from django.db.models.signals import post_delete, post_save, pre_save
@@ -6,7 +8,6 @@ from django.dispatch.dispatcher import receiver
 from livecolor.util import Livecolor
 
 log = logging.getLogger(__name__)
-
 
 class Colorset(models.Model):
 
@@ -25,10 +26,10 @@ class Colorset(models.Model):
     def save(self, *args, **kwargs):
         super(Colorset, self).save(*args, **kwargs)
 
+
 @receiver(post_save, sender=Colorset)
 def message_post_save(sender, instance, **kwargs):
     log.debug('Post-save action: %s' % (instance))
-    #instance.emit_message()
 
     lc = Livecolor()
     lc.set_color(

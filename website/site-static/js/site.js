@@ -98,8 +98,6 @@ var SiteUI = function () {
             }
         }
 
-
-
         // map width to height
         $('[data-width-to-height]').each(function(){
             $(this).height($(this).width());

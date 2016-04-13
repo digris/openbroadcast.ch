@@ -19848,7 +19848,7 @@ ul.desktop-navigation {
   top: -40px; }
 
 ul.dropdown {
-  background: rgba(0, 0, 0, 0.02) !important; }
+  background: rgba(0, 0, 0, 0.2) !important; }
   ul.dropdown li,
   ul.dropdown li > a {
     text-align: left; }

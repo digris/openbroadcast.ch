@@ -23,7 +23,7 @@
 
                                     <div class="small-3 columns">
                                         <p>
-                                            <span>{{ emission.time_start|slice:'11:16' }} - {{ emission.time_start|slice:'11:16' }}</span>
+                                            <span>{{ emission.time_start|slice:'11:16' }} - {{ emission.time_end|slice:'11:16' }}</span>
                                         </p>
                                     </div>
                                     <div class="small-9 columns">
@@ -39,13 +39,11 @@
                                             <h4>{{ emission.name }}</h4>
                                         {% endif %}
 
-
                                         <p>
                                             <span><span class="dim">{% trans 'Kuratiert' %}:</span> {{ emission.user_co.pseudonym }}</span>
                                             &mdash;
                                             <span><span class="dim">{% trans 'Programmiert' %}:</span> {{ emission.user.pseudonym }}</span>
                                         </p>
-
 
                                     </div>
                                 </div>

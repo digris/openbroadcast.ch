@@ -1,4 +1,4 @@
-{% load cms_tags compress sekizai_tags i18n menu_tags bplayer_tags backfeed_tags pushy_client_tags nunjucks_tags analytics raven %}<!doctype html>
+{% load cms_tags compress sekizai_tags i18n menu_tags bplayer_tags backfeed_tags pushy_client_tags nunjucks_tags analytics raven livecolor_tags %}<!doctype html>
 <html class="no-js{% if user.is_authenticated %} is-authenticated{% endif %}" lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="utf-8"/>
@@ -52,7 +52,8 @@
 
     <script src="{{ STATIC_URL }}js/lib/modernizr.js"></script>
     <script src="{{ STATIC_URL }}js/lib/jquery-2.1.0.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/fd5/foundation.min.js"></script>
+
+    <!--<script src="{{ STATIC_URL }}js/lib/fd5/foundation.min.js"></script>-->
 
     <!--<script src="{{ STATIC_URL }}turbolinks/turbolinks.js"></script>-->
     <script src="{{ STATIC_URL }}js/lib/textcomplete-0.3.3/jquery.textcomplete.js"></script>
@@ -195,6 +196,13 @@
 <script src="{{ STATIC_URL }}js/lib/packery.pkgd.min-1.4.3.js"></script>
 <script src="{{ STATIC_URL }}js/lib/js.cookie.js"></script>
 
+
+<!-- foundation [5.5.2] -->
+<script src="{{ STATIC_URL }}js/lib/fd5/foundation.min.js"></script>
+<script src="{{ STATIC_URL }}js/lib/fd5/foundation.topbar.js"></script>
+<script src="{{ STATIC_URL }}js/lib/fd5/foundation.dropdown.js"></script>
+<script src="{{ STATIC_URL }}js/lib/fd5/foundation.tooltip.js"></script>
+<script src="{{ STATIC_URL }}js/lib/fd5/foundation.clearing.js"></script>
 
 <!-- global scripts -->
 <script src="{{ STATIC_URL }}js/lib/ba-debug.js"></script>
@@ -361,16 +369,19 @@
         /////////////////////////////////////////////
         // live-bg
         /////////////////////////////////////////////
+        {% current_colors as colors %}
         livecolor = new LiveColorApp();
         livecolor.debug = true;
-        livecolor.bg_color = '#00ffff';
-        livecolor.fg_color = '#ee3333';
-        livecolor.bg_color = '#882233';
-        livecolor.fg_color = '#FFEF00';
-        livecolor.bg_color = '#222222';
-        livecolor.fg_color = '#00ffff';
-        livecolor.bg_color = '#efefef';
-        livecolor.fg_color = '#000000';
+        //livecolor.bg_color = '#00ffff';
+        //livecolor.fg_color = '#ee3333';
+        //livecolor.bg_color = '#882233';
+        //livecolor.fg_color = '#FFEF00';
+        //livecolor.bg_color = '#222222';
+        //livecolor.fg_color = '#00ffff';
+        //livecolor.bg_color = '#efefef';
+        //livecolor.fg_color = '#000000';
+        livecolor.bg_color = '{{ colors.bg }}';
+        livecolor.fg_color = '{{ colors.fg }}';
         livecolor.init();
 
 
