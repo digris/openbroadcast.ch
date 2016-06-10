@@ -18971,27 +18971,6 @@ ul.dropdown-menu {
   margin: 0 0 12px;
   background: rgba(0, 0, 0, 0.1); }
 
-body.registration .section-claim-token {
-  padding: 20px 20px 10px;
-  background: #fafafa;
-  border-bottom: 3px solid #333; }
-  body.registration .section-claim-token #split_token input {
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: bold; }
-  body.registration .section-claim-token .message p {
-    color: #cd222d; }
-  body.registration .section-claim-token.token-valid #split_token input {
-    color: #64ae00;
-    border-color: #64ae00;
-    background-color: #dbffab; }
-  body.registration .section-claim-token.token-valid button {
-    color: #64ae00; }
-  body.registration .section-claim-token.token-error #split_token input {
-    color: #cd222d;
-    border-color: #cd222d;
-    background-color: #f5c5c8; }
-
 #dialog_container.remotelink-dialog .section-header {
   margin-bottom: 20px; }
 

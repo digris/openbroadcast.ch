@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, "templates"),
-)
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
@@ -79,6 +77,11 @@ CMS_PLUGIN_PROCESSORS = (
     'base.cms_plugin_processors.wrap_text',
 )
 
+
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, "templates"),
+)
+
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
@@ -106,8 +109,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     # custom
     'base.context_processors.cms_toolbar'
 )
-
-
 
 
 

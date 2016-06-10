@@ -19,7 +19,6 @@ SITE_ID = 1
 BASE_SITE_ID = 1
 SECRET_KEY = 'j1odx#ji=z%r@in1k3pj4=&kwgv&4dv78^9!nymh+vhy9m4&e*'
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = []
 
 LOCALE_PATHS = ('%s/locale/' % BASE_DIR,)

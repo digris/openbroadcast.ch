@@ -12,16 +12,11 @@ admin.autodiscover()
 urlpatterns = solid_i18n_patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^debug/$', TemplateView.as_view(template_name='debug.html')),
-    #url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^alogin/', include('alogin.urls')),
     url(r'^sa/', include('social_auth.urls')),
     url(r'^feedback/', include('backfeed.urls')),
     url(r'^stationtime/', include('stationtime.urls')),
     url(r'^remotelink/', include('remotelink.urls')),
-
-    url(r'^docs/(?P<path>.*)', login_required(serve), {'document_root': '../doc/_build/html'}, 'docs'),
-    url(r'^bad-browser/', include('badbrowser.urls')),
 
 )
 
