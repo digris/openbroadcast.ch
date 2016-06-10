@@ -199,6 +199,9 @@ DATABASES = {
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
+# http://docs.celeryproject.org/en/latest/configuration.html#celeryd-prefetch-multiplier
+CELERYD_PREFETCH_MULTIPLIER = 1
+
 CELERYBEAT_SCHEDULE = {
     'onair-update-schedule': {
         'task': 'onair.tasks.update_schedule',

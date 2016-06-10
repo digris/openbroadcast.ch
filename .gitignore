@@ -5,6 +5,7 @@
 .idea
 .project
 .pydevproject
+*.ipynb_checkpoints
 util/remote_to_local.conf
 env
 node_modules

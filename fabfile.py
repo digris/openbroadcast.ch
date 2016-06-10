@@ -31,6 +31,16 @@ def openbroadcast_ch():
     env.storage = '/nas/storage/prod.openbroadcast.ch'
     env.user = 'root'
 
+def dev_openbroadcast_ch():
+    env.site_id = 'dev.openbroadcast.ch'
+    env.hosts = ['10.40.10.220',]
+    env.ci_host = 'ci.lab.anorg.net'
+    env.git_url = 'https://github.com/hzlf/openbroadcast.ch.git'
+    env.git_branch = 'development'
+    env.path = '/var/www/openbroadcast.ch'
+    env.storage = '/storage/dev.openbroadcast.ch'
+    env.user = 'root'
+
 
 def skip_req():
     env.skip_requirements = True
