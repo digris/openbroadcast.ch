@@ -13,7 +13,6 @@ if not site_domain:
         'components/base.py',
         'components/media.py',
         'components/template_cms.py',
-        #'components/ecommerce.py',
 
         os.path.join(os.getcwd(), 'project/local_settings.py'),
         scope=locals()
