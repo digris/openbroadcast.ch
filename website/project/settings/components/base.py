@@ -186,7 +186,6 @@ MIDDLEWARE_CLASSES = (
     'base.middleware.AJAXLoaderRedireckMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_auth.middleware.SocialAuthExceptionMiddleware',
-    'django_downloadview.SmartDownloadMiddleware',
 )
 
 DATABASES = {

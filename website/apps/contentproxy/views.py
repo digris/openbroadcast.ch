@@ -10,9 +10,6 @@ from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse
 from django.views.generic import View
 from braces.views import LoginRequiredMixin
-
-from django_downloadview import PathDownloadView
-
 from models import CachedMedia, CachedEvent
 from tasks import create_cached_event
 
@@ -56,32 +53,3 @@ class MediaResourceView(LoginRequiredMixin, View):
 
         return sf_response
 
-
-
-
-
-
-
-
-class DVMediaResourceView(PathDownloadView):
-
-    def get(self, *args, **kwargs):
-        self.uuid = kwargs.get('uuid', None)
-        return super(DVMediaResourceView, self).get(*args, **kwargs)
-
-
-    def get_path(self):
-        """Return path inside fixtures directory."""
-        # Get path from URL resolvers or as_view kwarg.
-        relative_path = super(DVMediaResourceView, self).get_path()
-
-        print 'uuid: %s' % self.uuid
-
-        log.debug(u'media request for %s by %s' % (self.request.user, self.uuid))
-        requested_range = self.request.META.get('HTTP_RANGE', None)
-        cached_media, created = CachedMedia.objects.get_or_create(uuid=self.uuid)
-
-
-        # Make it absolute.
-        absolute_path = cached_media.path
-        return absolute_path

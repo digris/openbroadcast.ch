@@ -4,9 +4,9 @@ After=network.target
 
 [Service]
 User=django
-Group=nginx
+Group=django
 WorkingDirectory=/var/www/dev.openbroadcast.ch/src/website
-ExecStart=/srv/dev.openbroadcast.ch/bin/gunicorn --workers 4 --bind 0.0.0.0:8001 project.wsgi
+ExecStart=/srv/dev.openbroadcast.ch/bin/gunicorn --workers 1 --bind 0.0.0.0:8001 project.wsgi
 
 [Install]
 WantedBy=multi-user.target
