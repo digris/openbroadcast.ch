@@ -1,3 +1,8 @@
+"""
+TODO: depreciated. rework to pass settings via supervisord conf
+"""
+
+
 proc_name = "openbroadcast.ch"
 backlog = 2048
 bind = "0.0.0.0:8002"

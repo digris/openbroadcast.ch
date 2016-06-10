@@ -207,22 +207,23 @@ def deploy():
 
             """
             linking config files
+            NOTE: changed to systemd
             """
-            try:
-                run('rm %s/%s.conf' % (env.supervisor, env.site_id))
-                run('ln -s %s/src/conf/%s.supervised.conf %s/%s.conf' % (env.path, env.site_id, env.supervisor, env.site_id))
-            except Exception, e:
-                pass
-
-            """
-            (re)start supervisor workers
-            """
-            print green('reloading application server')
-            run('supervisorctl restart %s' % env.site_id)
-            run('supervisorctl restart services.%s:*' % env.site_id)
-            print green('status for: %s' % env.site_id)
-            run('supervisorctl status | grep %s' % env.site_id)
-            print green('*' * 72)
+            # try:
+            #     run('rm %s/%s.conf' % (env.supervisor, env.site_id))
+            #     run('ln -s %s/src/conf/%s.supervised.conf %s/%s.conf' % (env.path, env.site_id, env.supervisor, env.site_id))
+            # except Exception, e:
+            #     pass
+            #
+            # """
+            # (re)start supervisor workers
+            # """
+            # print green('reloading application server')
+            # run('supervisorctl restart %s' % env.site_id)
+            # run('supervisorctl restart services.%s:*' % env.site_id)
+            # print green('status for: %s' % env.site_id)
+            # run('supervisorctl status | grep %s' % env.site_id)
+            # print green('*' * 72)
 
             with cd(env.path):
                 try:
