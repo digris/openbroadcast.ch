@@ -166,8 +166,7 @@ logout_then_login = LogoutView.as_view(
 class PasswordChangeView(LoginRequiredMixin, AuthDecoratorsMixin, FormView):
     template_name = 'registration/password_change_form.html'
     form_class = PasswordChangeForm
-    #success_url = reverse_lazy('password_change_done')
-    success_url = reverse_lazy('bshop-contact-detail')
+    success_url = reverse_lazy('password_change_done')
 
     def get_form_kwargs(self):
         kwargs = super(PasswordChangeView, self).get_form_kwargs()

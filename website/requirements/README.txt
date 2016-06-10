@@ -5,7 +5,7 @@ modules/tools/libs not covered by pip
 
 ## debian
 
-aptitude install libxml2-dev libxslt1-dev python-dev
+aptitude install python-dev libpng-dev libjpeg-dev libmysqlclient-dev mysql-client libxml2-dev libxslt-dev supervisor build-essential python-setuptools
 
 
 

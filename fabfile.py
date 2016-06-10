@@ -37,7 +37,7 @@ def dev_openbroadcast_ch():
     env.ci_host = 'ci.lab.anorg.net'
     env.git_url = 'https://github.com/hzlf/openbroadcast.ch.git'
     env.git_branch = 'development'
-    env.path = '/var/www/openbroadcast.ch'
+    env.path = '/var/www/dev.openbroadcast.ch'
     env.storage = '/storage/dev.openbroadcast.ch'
     env.user = 'root'
 
