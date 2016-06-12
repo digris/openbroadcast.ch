@@ -19031,6 +19031,17 @@ ul.dropdown-menu {
       .program-plugin .program-list .item .credits a:hover {
         opacity: 0.5; }
 
+#hipchat_container {
+  position: fixed;
+  top: 50px;
+  width: 500px;
+  height: 500px;
+  z-index: 99999; }
+  #hipchat_container iframe {
+    width: 100%;
+    height: 100%;
+    border: none; }
+
 form.form-base small.error {
   display: block;
   font-size: 0.8rem;
@@ -19576,19 +19587,26 @@ body.fs-video .footer-wrapper {
   transform: translate(0px, 25%);
   display: inline-block; }
 
+html.turbolinks-progress-bar::before {
+  background-color: black !important;
+  height: 4px !important; }
+
+.cms-debug-bar {
+  height: 0 !important; }
+
+body #onair_container,
+body #achat_container {
+  display: none; }
+
+body.cms-home #onair_container,
+body.cms-home #achat_container {
+  display: block; }
+
 body, html {
   height: 100%;
   letter-spacing: 1px;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%; }
-
-html.cms-toolbar-expanded #onair_container,
-html.cms-toolbar-expanded #achat_container {
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  left: -10px; }
 
 body > .container {
   height: 100%; }

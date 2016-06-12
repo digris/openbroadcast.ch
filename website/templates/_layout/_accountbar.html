@@ -12,11 +12,11 @@
                 <li class="divider"></li>
 
                 {% if not cms_toolbar_disabled %}
-                    <li><a data-livefg href="?toolbar_off">{% trans 'Hide Toolbar' %}</a></li>
+                    <li><a data-no-turbolink data-livefg href="?toolbar_off">{% trans 'Hide Toolbar' %}</a></li>
                 {% else %}
-                    <li><a data-livefg href="?edit">{% trans 'Show Toolbar' %}</a></li>
+                    <li><a data-no-turbolink data-livefg href="?edit">{% trans 'Show Toolbar' %}</a></li>
                 {% endif %}
-                <li><a data-livefg target="_blank" href="/admin/">{% trans 'Administration' %}</a></li>
+                <li><a data-no-turbolink data-livefg target="_blank" href="/admin/">{% trans 'Administration' %}</a></li>
 
 
                 <li class="divider"></li>

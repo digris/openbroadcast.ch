@@ -1,5 +1,29 @@
 @charset "UTF-8"
 
+
+html.turbolinks-progress-bar::before
+  background-color: black !important
+  height: 4px !important
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+// show/hide elements on home screen
+//////////////////////////////////////////////////////////////////////////////////////
+
+.cms-debug-bar
+  height: 0 !important
+
+body
+  #onair_container,
+  #achat_container
+    display: none
+body.cms-home
+  #onair_container,
+  #achat_container
+    display: block
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////
 // global styles
 // only for generic styling! specific/detailed styles in own files please!
@@ -14,14 +38,14 @@ body, html
 ///////////////////////////////////////////////////////////////////////
 // cms in admin state, hide some parts
 ///////////////////////////////////////////////////////////////////////
-html.cms-toolbar-expanded
-  #onair_container,
-  #achat_container
-    width: 1px
-    height: 1px
-    overflow: hidden
-    position: absolute
-    left: -10px
+//html.cms-toolbar-expanded
+//  #onair_container,
+//  #achat_container
+//    width: 1px
+//    height: 1px
+//    overflow: hidden
+//    position: absolute
+//    left: -10px
 
 
 

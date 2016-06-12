@@ -59,21 +59,11 @@ var SiteUI = function () {
             self.layout();
         });
 
-
-        // handling urls on external sites
-        $('body__').on('click', 'a', function(e){
-            var url = $(this).attr('href');
-            if(url != '#' && util.is_external(url)) {
-                e.preventDefault();
-                self.remote_window = window.open(url);
-            }
-        });
-
-        $(document).on('ajax-loader', function(e, action) {
-            if(action == 'loaded') {
-                self.init_fd5();
-            }
-        });
+        // $(document).on('ajax-loader', function(e, action) {
+        //     if(action == 'loaded') {
+        //         self.init_fd5();
+        //     }
+        // });
 
 
 

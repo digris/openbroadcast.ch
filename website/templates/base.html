@@ -55,7 +55,11 @@
 
     <!--<script src="{{ STATIC_URL }}js/lib/fd5/foundation.min.js"></script>-->
 
-    <!--<script src="{{ STATIC_URL }}turbolinks/turbolinks.js"></script>-->
+
+    {% if not request.toolbar.edit_mode %}
+        <script src="{{ STATIC_URL }}turbolinks/turbolinks.js"></script>
+    {% endif %}
+
     <script src="{{ STATIC_URL }}js/lib/textcomplete-0.3.3/jquery.textcomplete.js"></script>
 
     {% if settings.DEBUG %}
@@ -74,6 +78,69 @@
 
     {% analytics %}
 
+
+    {% compress js %}
+    <script src="{{ STATIC_URL }}js/lib/jquery-ui-1.10.4.custom.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/featherlight.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/jquery.imageloader.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/jquery.hoverIntent-1.8.0.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/jquery.color-2.1.2.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/jquery.address.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/jquery.timeago-1.4.1.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/jquery.tipso-1.0.5.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/jquery.tipso-1.0.5.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/jquery.svg-1.5.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/jquery.svganim-1.5.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/jquery.nanoscroller-0.8.7.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/packery.pkgd.min-1.4.3.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/js.cookie.js"></script>
+
+
+    <!-- foundation [5.5.2] -->
+    <script src="{{ STATIC_URL }}js/lib/fd5/foundation.min.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/fd5/foundation.topbar.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/fd5/foundation.dropdown.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/fd5/foundation.tooltip.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/fd5/foundation.clearing.js"></script>
+
+    <!-- global scripts -->
+    <script src="{{ STATIC_URL }}js/lib/ba-debug.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/md5.js"></script>
+    <script src="{{ STATIC_URL }}js/site.js"></script>
+    <script src="{{ STATIC_URL }}js/util.base.js"></script>
+
+    <!-- app scripts -->
+    <script src="{{ STATIC_URL }}livecolor/js/base.js"></script>
+    <script src="{{ STATIC_URL }}achat/js/base.js"></script>
+    <script src="{{ STATIC_URL }}alogin/js/base.js"></script>
+    <script src="{{ STATIC_URL }}bplayer/js/base.js"></script>
+    <script src="{{ STATIC_URL }}bplayer/js/levelbridge.js"></script>
+    <script src="{{ STATIC_URL }}onair/js/base.js"></script>
+    <script src="{{ STATIC_URL }}stationtime/js/base.js"></script>
+    <script src="{{ STATIC_URL }}remotelink/js/base.js"></script>
+    <script src="{{ STATIC_URL }}ticker/js/base.js"></script>
+
+    {% endcompress %}
+
+
+
+
+
+    <!-- temporary & testing -->
+    <script src="{{ STATIC_URL }}temporary/smileys.js"></script>
+
+
+    <!-- scripts exposed by apps/templatetags -->
+    {% nunjucks_scripts %}
+    {% pushy_client_scripts %}
+
+    {% render_block "js_ext" %}
+    {% render_block "js" postprocessor "compressor.contrib.sekizai.compress" %}
+
+    {% render_block "js-post" %}
+
+
+
     <!--
     <script type="text/javascript" src="http://fast.fonts.net/jsapi/1ca04628-74f1-4059-8dd2-c91d0a2a63bc.js"></script>
     -->
@@ -84,7 +151,7 @@
 
 <div id="navigation_container">
 
-    <nav class="top-bar" data-topbar data-livebg>
+    <nav class="top-bar" data-topbar data-livebg  data-turbolinks-temporary id="top_bar">
 
         <ul class="title-area">
             <li class="name">
@@ -154,7 +221,16 @@
     {% include "onair/container.html" %}
     {% include "achat/container.html" %}
 
+
     {% block main_content %}{% endblock %}
+
+
+    <!--
+    <div data-turbolinks-permanent id="hipchat_container">
+        <iframe data-turbolinks-permanent src="https://www.hipchat.com/gZj0paISd?name=peter+klammer"></iframe>
+    </div>
+    -->
+
 
     {% bplayer_inline %}
 
@@ -180,60 +256,34 @@
 <div id="fb-root"></div>
 
 
-{% compress js %}
-<script src="{{ STATIC_URL }}js/lib/jquery-ui-1.10.4.custom.js"></script>
-<script src="{{ STATIC_URL }}js/lib/featherlight.js"></script>
-<script src="{{ STATIC_URL }}js/lib/jquery.imageloader.js"></script>
-<script src="{{ STATIC_URL }}js/lib/jquery.hoverIntent-1.8.0.js"></script>
-<script src="{{ STATIC_URL }}js/lib/jquery.color-2.1.2.js"></script>
-<script src="{{ STATIC_URL }}js/lib/jquery.address.js"></script>
-<script src="{{ STATIC_URL }}js/lib/jquery.timeago-1.4.1.js"></script>
-<script src="{{ STATIC_URL }}js/lib/jquery.tipso-1.0.5.js"></script>
-<script src="{{ STATIC_URL }}js/lib/jquery.tipso-1.0.5.js"></script>
-<script src="{{ STATIC_URL }}js/lib/jquery.svg-1.5.js"></script>
-<script src="{{ STATIC_URL }}js/lib/jquery.svganim-1.5.js"></script>
-<script src="{{ STATIC_URL }}js/lib/jquery.nanoscroller-0.8.7.js"></script>
-<script src="{{ STATIC_URL }}js/lib/packery.pkgd.min-1.4.3.js"></script>
-<script src="{{ STATIC_URL }}js/lib/js.cookie.js"></script>
+{% if not request.toolbar.edit_mode %}
+<script data-turbolinks-eval=false>
+
+    Turbolinks.pagesCached(100);
+    Turbolinks.enableTransitionCache();
+
+    Turbolinks.ProgressBar.enable();
 
 
-<!-- foundation [5.5.2] -->
-<script src="{{ STATIC_URL }}js/lib/fd5/foundation.min.js"></script>
-<script src="{{ STATIC_URL }}js/lib/fd5/foundation.topbar.js"></script>
-<script src="{{ STATIC_URL }}js/lib/fd5/foundation.dropdown.js"></script>
-<script src="{{ STATIC_URL }}js/lib/fd5/foundation.tooltip.js"></script>
-<script src="{{ STATIC_URL }}js/lib/fd5/foundation.clearing.js"></script>
+    $(document).on('page:before-change', function(event) {
+        $(document.body).addClass('tl-loading');
+        //Turbolinks.ProgressBar.start();
+        Turbolinks.ProgressBar.advanceTo(45);
+    });
 
-<!-- global scripts -->
-<script src="{{ STATIC_URL }}js/lib/ba-debug.js"></script>
-<script src="{{ STATIC_URL }}js/lib/md5.js"></script>
-<script src="{{ STATIC_URL }}js/site.js"></script>
-<script src="{{ STATIC_URL }}js/ajax-loader.js"></script>
-<script src="{{ STATIC_URL }}js/util.base.js"></script>
+    $(document).on('page:change', function(event) {
+        $(document.body).removeClass('tl-loading');
+        //Turbolinks.ProgressBar.done();
+        ui.layout();
+        ui.bindings();
+        bplayer.bindings();
+    });
 
-<!-- app scripts -->
-<script src="{{ STATIC_URL }}livecolor/js/base.js"></script>
-<script src="{{ STATIC_URL }}achat/js/base.js"></script>
-<script src="{{ STATIC_URL }}alogin/js/base.js"></script>
-<script src="{{ STATIC_URL }}bplayer/js/base.js"></script>
-<script src="{{ STATIC_URL }}bplayer/js/levelbridge.js"></script>
-<script src="{{ STATIC_URL }}onair/js/base.js"></script>
-<script src="{{ STATIC_URL }}stationtime/js/base.js"></script>
-<script src="{{ STATIC_URL }}remotelink/js/base.js"></script>
-<script src="{{ STATIC_URL }}ticker/js/base.js"></script>
-
-{% endcompress %}
+</script>
+{% endif %}
 
 
-<!-- temporary & testing -->
-<script src="{{ STATIC_URL }}temporary/smileys.js"></script>
-
-
-<!-- scripts exposed by apps/templatetags -->
-{% nunjucks_scripts %}
-{% pushy_client_scripts %}
-
-<script>
+<script data-turbolinks-eval=false>
 
 
     {% if not settings.DEBUG %}
@@ -244,12 +294,6 @@
         debug: function() {}
     };
     {% endif %}
-
-
-    //var nj = new nunjucks.Environment(new nunjucks.WebLoader('{{ STATIC_URL }}'));
-    //nj = nunjucks_register_filters(nj);
-
-
 
     {% if user.is_authenticated %}
         var current_user = {
@@ -284,7 +328,7 @@
         // AJAX Login App
         /////////////////////////////////////////////
         login_app = new AloginApp();
-        login_app.debug = true;
+        login_app.debug = false;
         login_app.login_url = "{% url 'alogin-login' %}";
         login_app.user = current_user;
         login_app.init();
@@ -293,16 +337,16 @@
         /////////////////////////////////////////////
         // AJAX Loader
         /////////////////////////////////////////////
-        var ajax_loader = new AJAXLoader();
-        ajax_loader.debug = true;
-        ajax_loader.init();
+        // var ajax_loader = new AJAXLoader();
+        // ajax_loader.debug = true;
+        // ajax_loader.init();
 
 
         /////////////////////////////////////////////
         // player
         /////////////////////////////////////////////
         bplayer = new BPlayerApp();
-        bplayer.debug = true;
+        bplayer.debug = false;
         bplayer.mode = 'inline';
         bplayer.stream_url = '{{ settings.STREAM_URL }}';
         bplayer.static_url = '{{ STATIC_URL }}';
@@ -336,7 +380,7 @@
         // on-air
         /////////////////////////////////////////////
         onair = new OnAirApp();
-        onair.debug = true;
+        onair.debug = false;
         onair.bplayer = bplayer;
         onair.base_url = '{{ settings.STATIC_BASE_URL }}';
         onair.use_history = {% if settings.ONAIR_LOAD_HISTORY %}true{% else %}false{% endif %};
@@ -349,7 +393,7 @@
         // station time
         /////////////////////////////////////////////
         stationtime = new StationTimeApp();
-        stationtime.debug = true;
+        stationtime.debug = false;
         stationtime.api_url = "{% url 'stationtime-current-time' %}";
         stationtime.container = $('#station_time');
         setTimeout(function () {
@@ -371,7 +415,7 @@
         /////////////////////////////////////////////
         {% current_colors as colors %}
         livecolor = new LiveColorApp();
-        livecolor.debug = true;
+        livecolor.debug = false;
         //livecolor.bg_color = '#00ffff';
         //livecolor.fg_color = '#ee3333';
         //livecolor.bg_color = '#882233';
@@ -392,31 +436,8 @@
 </script>
 
 
-{% render_block "js_ext" %}
-{% render_block "js" postprocessor "compressor.contrib.sekizai.compress" %}
-
-{% render_block "js-post" %}
-
-<!--[if lt IE 9]>
-<script src="{{ STATIC_URL }}js/browser_hacks/rem.js"></script>
-<![endif]-->
 
 
-    <script src="//cdn.ravenjs.com/1.1.15/jquery,native/raven.min.js"></script>
-    <script>
-
-        Raven.config('{% sentry_public_dsn %}', {
-            //whitelistUrls: []
-        }).install();
-
-        {% if user.is_authenticated %}
-            Raven.setUser({
-                email: '{{ user.email }}',
-                id: '{{ user.pk }}'
-            });
-        {% endif %}
-
-    </script>
 
 </body>
 </html>

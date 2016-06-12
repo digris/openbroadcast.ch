@@ -47,8 +47,7 @@ var RemotelinkApp = function () {
 
     };
 
-
-
+    
     this.hide_dialog = function() {
         self.reveal_container.foundation('reveal', 'close');
     };
@@ -68,11 +67,3 @@ var RemotelinkApp = function () {
     };
 
 };
-
-
-RemotelinkApp.prototype.init_waveform = function () {
-
-};
-
-
-

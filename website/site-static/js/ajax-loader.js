@@ -49,6 +49,7 @@ var AJAXLoader = function () {
         $(document).on('alogin', function(e, t){
             if(t == 'auth-state-change') {
                 self.reflect_uri_change($.address.path())
+                
             }
         });
 
