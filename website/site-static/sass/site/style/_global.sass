@@ -159,21 +159,21 @@ figure
     margin-top: 20px !important
 
 .button
-  @include button($bg:#fff)
+  @include button-style($background:#fff)
   border-color: #999999 !important
   //min-width: 120px
 
   &.disabled, &[disabled]
-    @include button-style($bg:$grey-light, $disabled:true)
+    @include button-style($background:$grey-light)
     cursor: wait
 
 .button.black
-  @include button($bg:#000)
+  @include button-style($background:#000)
   border-color: #999999 !important
   //min-width: 120px
 
 .button.dimmed
-  @include button($bg:#999999)
+  @include button-style($background:#999999)
   border-color: #CECDCD !important
   //min-width: 120px
 

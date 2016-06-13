@@ -31,7 +31,10 @@ class Command(BaseCommand):
     help = 'On-Air CLI'
 
     def add_arguments(self, parser):
-        parser.add_argument('action')
+        parser.add_argument(
+            'action',
+            help="update_schedule, reset_schedule"
+        )
 
     def handle(self, *args, **options):
 

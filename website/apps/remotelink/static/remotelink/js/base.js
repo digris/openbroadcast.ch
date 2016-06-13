@@ -17,7 +17,7 @@ var RemotelinkApp = function () {
 
     this.bindings = function() {
 
-        $('body').on('click', 'a[target="_blank"]', function(e){
+        $(document).on('click', 'a[target="_blank"]', function(e){
             e.preventDefault();
 
             self.current_url = $(this).attr('href');

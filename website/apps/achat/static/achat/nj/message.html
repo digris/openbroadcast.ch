@@ -1,4 +1,4 @@
-<li class="item message new{% if message.user.is_me %} me{% endif %} {% if message.attachments %} has-attachments{% endif %} {% if message.extra_classes %} {{ message.extra_classes }}{% endif %}">
+<div class="item message new_{% if message.user.is_me %} me{% endif %} {% if message.attachments %} has-attachments{% endif %} {% if message.extra_classes %} {{ message.extra_classes }}{% endif %}">
 
     <div class="bubble">
         <div class="body"
@@ -61,4 +61,4 @@
         <span class="timestamp" title="{{ message.created }}"></span>
     </div>
 
-</li>
+</div>

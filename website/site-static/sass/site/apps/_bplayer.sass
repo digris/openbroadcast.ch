@@ -172,6 +172,10 @@ body.paused #bplayer_container
   section.playlist.history
     &.compact
       display: block
+      .item:not(:first-child)
+        display: none !important
+
+
     &.expanded
       display: none
 
@@ -211,7 +215,7 @@ body.paused #bplayer_container
       position: absolute
       right: 0
       top: 0
-      display: block
+      display: block !important
       padding: 6px 6px 0 0
       a
         color: white
@@ -395,7 +399,7 @@ body.paused #bplayer_container
     // TODO: this is a hack! improve structure & handling
     .actions-expanded
       right: 43px
-      bottom: 0px
+      bottom: 0
 
       ul
         position: fixed

@@ -3,7 +3,7 @@
 {% addtoblock 'js-post' %}
 <script>
     $(function(){
-        $('body').on('click', '#site_messages a.mark-seen', function(e) {
+        $(document).on('click', '#site_messages a.mark-seen', function(e) {
             e.preventDefault();
             $(this).parents('li').fadeOut(500, function(){
                 $(this).remove();

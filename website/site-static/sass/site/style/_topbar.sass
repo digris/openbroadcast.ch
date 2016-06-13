@@ -1,0 +1,97 @@
+#topbar_container
+  position: fixed
+  width: 100%
+  z-index: 999
+  //position: fixed
+  //width: 100%
+  //top: 0
+  //left: 0
+  //
+
+  a, span
+    font-size: 16px !important
+    //white-space: nowrap
+
+
+  section.logo
+    //display: none
+    position: absolute
+    top: 0
+    left: 0
+    a
+      padding: 7px 0 0 20px
+      display: block
+      &:hover
+        text-decoration: underline
+
+  section.account
+    //display: none
+    position: absolute
+    top: 0
+    right: 0
+
+  section.desktop-menu,
+  section.account
+
+    ul.menu
+      top: 0
+      position: relative
+
+      > li
+        transition: background 0.55s
+        > a
+          padding-left: 20px
+          padding-right: 20px
+          transition: color 0.55s
+
+      li.hover,
+      li.ancestor,
+      li.active
+        transition: background 0.01s
+        background: black
+        color: white
+        > a
+          color: white
+          transition: color 0.01s
+
+      > li
+        position: relative
+        top: 0
+      > li > ul
+        max-height: 0
+        overflow: hidden
+        //display: none
+        transition: max-height 0.25s, background 1.0s
+
+
+      > li
+        > ul
+          position: absolute
+          top: 38px
+          margin-left: 0
+          list-style: none
+          li
+            padding: 7px 14px
+            text-align: left
+
+
+
+
+      //li.active,
+      //li.ancestor,
+      li.hover
+        > ul
+          transition: max-height 0.25s, background 0.01s
+          //display: block
+          max-height: 1000px
+          background: rgba(0, 0, 0, 0.70)
+          position: absolute
+          top: 38px
+          margin-left: 0
+          list-style: none
+          li
+            padding: 7px 14px
+            text-align: left
+            > a
+              color: white
+

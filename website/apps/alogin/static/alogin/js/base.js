@@ -5,7 +5,6 @@ var AloginApp = function () {
     this.debug = true;
     this.login_url;
     this.user = false;
-    this.reveal_container = $('#reveal_container');
 
     this.init = function () {
         self.bindings();
@@ -14,7 +13,7 @@ var AloginApp = function () {
     this.bindings = function () {
 
         // login actions
-        $('body').on('click', 'a[data-alogin-action]', function (e) {
+        $(document).on('click', 'a[data-alogin-action]', function (e) {
             e.preventDefault();
             e.stopPropagation();
             var action = $(this).data('alogin-action');
@@ -41,7 +40,7 @@ var AloginApp = function () {
         });
 
         // form handling
-        self.reveal_container.on('submit', 'form', function(e){
+        $(document).on('submit', '#reveal_container form', function(e){
             e.preventDefault();
 
             var form = $(this);
@@ -55,7 +54,7 @@ var AloginApp = function () {
 
         // auth-required elements
         // present login-dialog on click
-        $('body').on('click', '[data-login-required]', function(e){
+        $(document).on('click', '[data-login-required]', function(e){
 
             if(!self.user || self.user == undefined) {
                 e.preventDefault();
@@ -70,10 +69,13 @@ var AloginApp = function () {
 
 
     this.set_authentication_state = function (user) {
+        
+        user = typeof data != undefined ? user : false;
+        
+        if(self.debug) {
+            console.log('set_authentication_state', user);
+        }
 
-        console.log('set_authentication_state', user);
-
-        var user = typeof data != undefined ? user : false;
         self.user = user;
         if(self.debug) {
             console.debug('AloginApp - set_authentication_state', self.user)
@@ -90,7 +92,12 @@ var AloginApp = function () {
 
     this.dialog_response = function (uri, data) {
 
-        var data = typeof data !== 'undefined' ? data : false;
+        if(self.debug) {
+            console.debug('AloginApp - dialog_response', uri, data)
+        }
+
+
+        data = typeof data !== 'undefined' ? data : false;
         var request_type;
 
         if(data) {
@@ -99,29 +106,46 @@ var AloginApp = function () {
             request_type = 'GET';
         }
 
-        self.reveal_container.foundation('reveal', 'close');
-        self.reveal_container.foundation('reveal', 'open', {
-            url: uri,
+
+        $.ajax({
+          url: uri,
             type: request_type,
             data: data,
             success: function(data) {
-                // not soo nice. in case of successfull login/registration we get back a json object
-                // else html, to re-display the form with eventual errors.
                 if (data instanceof Object == true) {
                     if(data.success) {
                         self.set_authentication_state(data.user);
                         setTimeout(function(){
-                            self.reveal_container.foundation('reveal', 'close');
+                            try {
+                                $('#reveal_container').foundation('close');
+                            } catch(e) {
+
+                            }
                         }, 1)
                     }
+                } else {
+                    try {
+                        $('#reveal_container').foundation('close');
+                    } catch(e) {
+
+                    }
+                    $('#reveal_container').html(data).foundation('open');
                 }
+
             },
             error: function() {
                 alert('error processing request');
+                try {
+                    $('#reveal_container').foundation('close');
+                } catch(e) {
+
+                }
             }
         });
 
+
     };
+
 
     this.silent_response = function (uri, data) {
 
@@ -141,11 +165,11 @@ var AloginApp = function () {
             success: function(data) {
                 if(data.success) {
                     self.set_authentication_state(data.user);
-                    //$.address.value(next_url);
                 }
             },
             error: function() {
                 alert('error processing request');
+                $('#reveal_container').foundation('close');
             }
         });
 

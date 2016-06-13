@@ -7,6 +7,11 @@ var $ = require('gulp-load-plugins')();
 var browserSync = require('browser-sync').create();
 var sass = require('gulp-sass');
 
+var sassPaths = [
+  'website/site-static/sass/lib/fd-6.2',
+  'website/site-static/sass/lib/motion-ui'
+];
+
 var AUTOPREFIXER_BROWSERS = [
     'ie >= 10',
     'ie_mob >= 10',
@@ -43,16 +48,29 @@ gulp.task('styles', function () {
             'website/site-static/sass/screen.sass',
             'website/site-static/sass/print.sass'
         ])
-        //.pipe($.sourcemaps.init())
+        .pipe($.sourcemaps.init())
         .pipe($.sass({
-            precision: 10,
+            includePaths: sassPaths,
+            outputStyle: 'expanded',
+            precision: 10
             //onError: logSASSError
         }))
         .pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
-        //.pipe($.sourcemaps.write())
+        .pipe($.sourcemaps.write())
         .pipe(gulp.dest('website/site-static/css/'))
         .pipe(browserSync.stream({match: '**/*.css'}))
         .pipe($.size({title: 'styles'}));
+});
+
+gulp.task('babel', function () {
+    return gulp.src([
+            'website/site-static/js/lib/fd-6.2/*.js'
+        ])
+        .pipe($.babel({
+            presets: ['es2015']
+        }))
+        .pipe(gulp.dest('website/site-static/js/fd-6.2/'))
+        .pipe($.size({title: 'babel'}));
 });
 
 

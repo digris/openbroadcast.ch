@@ -1,5 +1,5 @@
 $(function () {
-    $('body').on('click', '.article-list .toggle a', function(e) {
+    $(document).on('click', '.article-list .toggle a', function(e) {
         e.preventDefault();
         e.stopPropagation();
         var container = $(this).parents('.article')

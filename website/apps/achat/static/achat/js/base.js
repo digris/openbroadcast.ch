@@ -25,13 +25,12 @@ AchatApp = function () {
         pushy_client.subscribe('achat', function(message){
             self.add_message(message);
         });
-
-
+        
         self.packery_container = $('.messages-container');
         self.packery_container.packery({
                 itemSelector: '.item.message',
                 gutter: 0,
-                //transitionDuration: 500
+                transitionDuration: 0
         });
 
     };

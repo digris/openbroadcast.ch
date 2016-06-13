@@ -63,6 +63,7 @@ var BPlayerApp = function () {
             self.sm2 = self.init_sm2();
         }
 
+        // triggered via TL
         self.bindings();
     };
 
@@ -215,8 +216,6 @@ var BPlayerApp = function () {
 
 
 
-
-
         /*****************************************************************************
          * generic actions
          *****************************************************************************/
@@ -226,7 +225,7 @@ var BPlayerApp = function () {
          * player controls. triggered by various apps.
          * ! moving controls triggered by 'on-air app' out of local bindings
          *****************************************************************************/
-        $('body').on('click', 'a[data-bplayer-controls]', function (e) {
+        $(document).on('click', 'a[data-bplayer-controls]', function (e) {
 
             e.preventDefault();
 
@@ -249,12 +248,13 @@ var BPlayerApp = function () {
         });
 
         // player display
-        $('body').on('click', 'a[data-bplayer-display]', function (e) {
+        $(document).on('click', 'a[data-bplayer-display]', function (e) {
             e.preventDefault();
             var action = $(this).data('bplayer-display');
 
+
             if(self.debug) {
-                //debug.debug('bplayer-display: ' + action);
+                debug.debug('bplayer-display: ' + action);
             }
 
             // player size
@@ -298,7 +298,7 @@ var BPlayerApp = function () {
 
 
         // progress actions / seek
-        $('body').on('click', '.playing .progress', function (e) {
+        $(document).on('click', '.playing .progress', function (e) {
 
             e.preventDefault();
 

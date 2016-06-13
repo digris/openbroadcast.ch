@@ -123,7 +123,7 @@ var OnAirApp = function () {
         /****************************************************************************
          * playback controls, forwarded to bplayer
          ****************************************************************************/
-        $('body').on('click', '[data-onair-controls]', function (e) {
+        $(document).on('click', '[data-onair-controls]', function (e) {
 
             e.preventDefault();
 

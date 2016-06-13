@@ -96,12 +96,28 @@
     <script src="{{ STATIC_URL }}js/lib/js.cookie.js"></script>
 
 
-    <!-- foundation [5.5.2] -->
+    <!-- foundation [5.5.2]
     <script src="{{ STATIC_URL }}js/lib/fd5/foundation.min.js"></script>
     <script src="{{ STATIC_URL }}js/lib/fd5/foundation.topbar.js"></script>
     <script src="{{ STATIC_URL }}js/lib/fd5/foundation.dropdown.js"></script>
     <script src="{{ STATIC_URL }}js/lib/fd5/foundation.tooltip.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/fd5/foundation.clearing.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/fd5/foundation.clearing.js"></script>-->
+
+
+    <!-- foundation [6.2] -->
+    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.core.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.dropdown.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.dropdownMenu.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.responsiveMenu.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.responsiveToggle.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.toggler.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.sticky.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.reveal.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.util.keyboard.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.util.box.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.util.nest.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.util.triggers.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.util.mediaQuery.js"></script>
 
     <!-- global scripts -->
     <script src="{{ STATIC_URL }}js/lib/ba-debug.js"></script>
@@ -149,60 +165,30 @@
 
 {% cms_toolbar %}
 
-<div id="navigation_container">
+<div id="topbar_container">
 
-    <nav class="top-bar" data-topbar data-livebg  data-turbolinks-temporary id="top_bar">
+    <nav class="row medium-collapse align-center" data-topbar_ data-livebg id="top_bar">
 
-        <ul class="title-area">
-            <li class="name">
-                <a href="/#">
-                    <div id="levelbridge_icon" class="logo-icon">
-                        <ul>
-                            <li><span style="height: 50%;"></span></li>
-                            <li><span style="height: 90%;"></span></li>
-                            <li><span style="height: 50%;"></span></li>
-                            <li><span style="height: 40%;"></span></li>
-                            <li><span style="height: 20%;"></span></li>
-                            <li><span style="height: 30%;"></span></li>
-                            <li><span style="height: 70%;"></span></li>
-                        </ul>
-                    </div>
-                    <div class="logo-text">
-                        <span data-livefg>Open Broadcast</span>
-                    </div>
-                </a>
-            </li>
-            <li class="toggle-topbar"><a data-no-turbolink href="#">Menu <i class="fa fa-bars"></i></a></li>
-        </ul>
-
-        <!-- start: mobile version -->
-        <section class="top-bar-section center hide-for-large-up">
-            <ul class="account">
-                {% include "_layout/_accountbar.html" %}
-            </ul>
-            <ul class="main">
-                {% show_menu 0 100 100 100 "_layout/_navigation.html" %}
-            </ul>
+        <section class="medium-2 column logo">
+            <a href="/"><span data-livefg>Open Broadcast</span></a>
         </section>
-        <!-- end: mobile version -->
 
-
-        <!-- start: desktop version -->
-        <section class="top-bar-section center show-for-large-up">
-            <ul class="desktop-navigation">
+        <section class="medium-8 column desktop-menu">
+            <ul class="menu menu-centered align-center">
                 {% show_menu 0 100 100 100 "_layout/_navigation.html" %}
             </ul>
         </section>
 
-        <section class="top-bar-section right show-for-large-up">
-            <ul class="accountbar">
+        <section class="medium-2 column account">
+            <ul class="menu menu-centered">
                 {% include "_layout/_accountbar.html" %}
             </ul>
         </section>
-        <!-- end: desktop version -->
+
 
     </nav>
 </div>
+
 <header>
     {% block teaser %}{% endblock %}
 </header>
@@ -239,7 +225,6 @@
     {% endif %}
 
 
-    {% include "_layout/_footer.html" %}
 
 
     {% include "_layout/_site_messages.html" %}
@@ -247,8 +232,10 @@
 
 </div>
 
+    {% include "_layout/_footer.html" %}
+
 <!-- dialog container -->
-<div id="reveal_container" class="reveal-modal" data-reveal></div>
+<div id="reveal_container" class="reveal" data-reveal></div>
 
 <!-- ? -->
 <div id="at_content"></div>
@@ -274,9 +261,8 @@
     $(document).on('page:change', function(event) {
         $(document.body).removeClass('tl-loading');
         //Turbolinks.ProgressBar.done();
-        ui.layout();
-        ui.bindings();
-        bplayer.bindings();
+        ui.init();
+        //bplayer.bindings();
     });
 
 </script>
@@ -307,6 +293,7 @@
 
     // define globally for debug purposes
     var ui;
+    var login_app;
     var livecolor;
     var onair;
     var bplayer;
@@ -328,7 +315,7 @@
         // AJAX Login App
         /////////////////////////////////////////////
         login_app = new AloginApp();
-        login_app.debug = false;
+        login_app.debug = true;
         login_app.login_url = "{% url 'alogin-login' %}";
         login_app.user = current_user;
         login_app.init();
@@ -346,7 +333,7 @@
         // player
         /////////////////////////////////////////////
         bplayer = new BPlayerApp();
-        bplayer.debug = false;
+        bplayer.debug = true;
         bplayer.mode = 'inline';
         bplayer.stream_url = '{{ settings.STREAM_URL }}';
         bplayer.static_url = '{{ STATIC_URL }}';
@@ -356,7 +343,7 @@
 
         setTimeout(function () {
             bplayer.init();
-            lb.init(); // TODO: disabled for now
+            //lb.init(); // TODO: disabled for now
         }, 200);
 
 
@@ -370,10 +357,10 @@
         achat.base_url = '{{ settings.STATIC_BASE_URL }}';
         achat.user = current_user;
 
-        setTimeout(function () {
-            achat.init();
-            achat.load();
-        }, 200);
+{#        setTimeout(function () {#}
+{#            achat.init();#}
+{#            achat.load();#}
+{#        }, 200);#}
 
 
         /////////////////////////////////////////////

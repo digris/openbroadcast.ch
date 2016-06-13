@@ -41,7 +41,7 @@
   #station_time
     display: none
   #back_onair
-    display: block
+    display: block !important
 
 // fa bug:
 .fa-circle-o-notch.fa-spin
@@ -142,8 +142,32 @@
 #onair_container
 
   background: $primary-color
-  padding: 48px 0
+  padding: 88px 0
   position: relative
+
+
+  .logo-container,
+  .info-container
+    height: 100%
+    .wrapper
+      height: 100%
+
+      .controls
+        z-index: 9999
+        width: 100%
+        height: 100%
+        //display: flex !important
+        align-items: center
+        justify-content: center
+
+        span
+          display: flex !important
+          align-items: center
+          justify-content: center
+          height: 100%
+          width: 100%
+
+
 
   // 'station-logo' - visible on load and when playing 'offline'
   .logo-container
@@ -265,6 +289,7 @@
       // show details, a.k.a. 'backside'
       &.details-visible
         .container > div.details
+          z-index: 1
           display: block
           opacity: 1.0
         .container > div.wrapper
@@ -284,6 +309,7 @@
         // swapable container - artist/label/etc
         > div.details
           //display: none
+          z-index: -1
           opacity: 0.0
           position: absolute
           top: 0
@@ -356,32 +382,27 @@
   .logo-container,
   .container
     .wrapper
-      +xy-center
 
       .controls
         cursor: pointer
         margin: auto
-        width: 260px
-        height: 260px
-        background-size: 250px
+        width: 100%
+        height: 100%
         background-position: center
         transition: background 0.05s
 
+
+
         span
-          +xy-center
+
           transition: color 0.1s
           background-position: 50% 50%
-          height: 200px
-          width: 200px
 
           > a
             color: #fff
             font-size: 30px
-            line-height: 195px
             font-weight: 300
             display: block
-            width: 100%
-            height: 100%
 
           &.listen
             background-image: url('/static/onair/img/bg.action.listen.png')
@@ -478,7 +499,7 @@
 body.playing #onair_container
   .logo-container .controls
     span.listen
-      display: none
+      display: none !important
     span.pause
       display: block
 
@@ -764,6 +785,7 @@ $vote-icon-size: 33px
 
 
     &.vote-up
+      float: left
       span
         right: $vote-icon-size + 8px
       svg
@@ -771,6 +793,7 @@ $vote-icon-size: 33px
         top: 5px
 
     &.vote-down
+      float: right
       span
         right: 0
       svg

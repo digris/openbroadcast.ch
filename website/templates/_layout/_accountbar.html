@@ -4,19 +4,19 @@
 
 {% if user.is_authenticated  %}
 
-    <li class="has-dropdown not-click"_>
+    <li class="has-dropdown hoverable">
         <a data-livefg href="#">{% firstof user.get_full_name user.username %}</a>
-        <ul class="dropdown" data-livefg>
+        <ul class="dropdown" data-livefg_>
             {% if user.is_staff %}
 
                 <li class="divider"></li>
 
                 {% if not cms_toolbar_disabled %}
-                    <li><a data-no-turbolink data-livefg href="?toolbar_off">{% trans 'Hide Toolbar' %}</a></li>
+                    <li class="hoverable"><a data-no-turbolink data-livefg_ href="?toolbar_off">{% trans 'Hide Toolbar' %}</a></li>
                 {% else %}
-                    <li><a data-no-turbolink data-livefg href="?edit">{% trans 'Show Toolbar' %}</a></li>
+                    <li class="hoverable"><a data-no-turbolink data-livefg_ href="?edit">{% trans 'Show Toolbar' %}</a></li>
                 {% endif %}
-                <li><a data-no-turbolink data-livefg target="_blank" href="/admin/">{% trans 'Administration' %}</a></li>
+                <li><a data-no-turbolink data-livefg_ target="_blank" href="/admin/">{% trans 'Administration' %}</a></li>
 
 
                 <li class="divider"></li>
@@ -24,24 +24,20 @@
 
 
 
-            <li>
-                <a data-livefg href="{% url 'alogin-profile' %}" data-alogin-action="profile">{% trans 'profile & settings'|capfirst %}</a>
+            <li class="hoverable">
+                <a data-no-turbolink data-livefg_ href="{% url 'alogin-profile' %}" data-alogin-action="profile">{% trans 'profile & settings'|capfirst %}</a>
             </li>
-            <li>
-                <a data-livefg href="{% url 'alogin-logout' %}" data-alogin-action="logout">{% trans 'logout'|capfirst %}</a>
+            <li class="hoverable">
+                <a data-no-turbolink data-livefg_ href="{% url 'alogin-logout' %}" data-alogin-action="logout">{% trans 'logout'|capfirst %}</a>
             </li>
         </ul>
     </li>
 
 {% else %}
 
-    <li>
+    <li class="hoverable">
 
-        <a data-livefg href="{% url 'alogin-login' %}" data-alogin-action="login">{% trans 'login'|capfirst %} / {% trans 'register'|capfirst %}</a>
-
-        <!--
-        <a href="{% url 'alogin-register' %}" data-alogin-action="register">{% trans 'register'|capfirst %}</a>
-        -->
+        <a data-no-turbolink data-livefg_ href="{% url 'alogin-login' %}" data-alogin-action="login">{% trans 'login'|capfirst %} / {% trans 'register'|capfirst %}</a>
 
     </li>
 

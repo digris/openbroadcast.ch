@@ -1,22 +1,34 @@
+body
+  height: auto !important
+  display: flex
+  min-height: 100vh
+  flex-direction: column
+
+  #content_base
+    flex: 1 0
+
+
+
+
 body footer
 
   padding: 24px 0 48px
-  background: #000
+
 
   p, span, a, ul, ol, dl
     font-size: rem-calc(13)
 
   p, span
-    color: $grey-darker
+    color: $dark-gray
     padding: 0
     line-height: rem-calc(19)
 
   a
-    color: $grey-darker
+    color: $dark-gray
     text-decoration: underline
-    //border-bottom: 1px solid $grey-darker
+    //border-bottom: 1px solid $dark-gray
     &:hover
-      color: #fff
+      color: $black
 
   .title
     text-transform: uppercase
@@ -35,12 +47,19 @@ body footer
     maring: 0
     line-height: rem-calc(19)
     dt, dd
-      color: $grey-darker
+      color: $dark-gray
       font-weight: 300
       padding: 0
       margin: 0
     dt
       opacity: 1.0
     dd
-      padding-left: 14px
+      padding-left: 0
 
+
+
+body.cms-base footer
+  background-color: white !important
+
+body.cms-home footer
+  background-color: $light-gray !important
