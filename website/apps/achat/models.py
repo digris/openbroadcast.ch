@@ -1,28 +1,15 @@
 # -*- coding: utf-8 -*-
-import os
-import re
-import sys
-import shutil
-import hashlib
-import magic
 import logging
-import gzip
-from random import randrange
-import datetime
-import requests
+import re
+
 import redis
-from django.utils.translation import ugettext_lazy as _
-from django.db import models
-from django.db.models.signals import post_delete, post_save, pre_save
-from django.dispatch.dispatcher import receiver
 from django.conf import settings
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
+from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch.dispatcher import receiver
 from jsonfield import JSONField
-from django.conf import settings
-from base.models import TimestampedModel
 
 log = logging.getLogger(__name__)
 

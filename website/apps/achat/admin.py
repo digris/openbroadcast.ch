@@ -1,6 +1,6 @@
 from django.contrib import admin
-from django.contrib.contenttypes.generic import GenericTabularInline
 from django.utils.text import Truncator
+
 from achat.models import Message, MentionedUser
 
 

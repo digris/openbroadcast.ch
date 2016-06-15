@@ -6,7 +6,6 @@ import redis
 import json
 import datetime
 from django.http import HttpResponse
-from django.core.servers.basehttp import FileWrapper
 from django.conf.urls import url
 from  django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
