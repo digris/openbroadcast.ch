@@ -3,42 +3,60 @@
 <div class="ticker-article-list-plugin">
     <div class="article-list">
         {% for object in object_list %}
-        <div
-                class="item article hoverable{% if forloop.first %} expanded{% endif %}"
-                data-permalink__="{{ object.get_absolute_url }}"
-                data-id="{{ object.pk }}"
-                >
 
-            <div class="toggle">
-                <a href="#" class="show-while-expanded">-</a>
-                <a href="#" class="hide-while-expanded">+</a>
+        <div class="item article hoverable{% if forloop.first %} expanded__{% endif %}"
+             id="{{ object.slug }}"
+             data-id="{{ object.pk }}">
+
+            <div class="toggle" >
+                <a href="#" data-toggle-item data-livebg-inverse data-livefg-inverse class="show-while-expanded">-</a>
+                <a href="#" data-toggle-item data-livebg-inverse data-livefg-inverse class="hide-while-expanded">+</a>
             </div>
 
-            <div class="row">
+            <div class="row preview">
 
                 <div class="small-12 columns">
 
-                    <h1 >
-                        <a href="{{ object.get_absolute_url }}">{{ object.name }}</a>
-                    </h1>
+                    <h2>
+                        {% if request.user.is_staff %}
+                            <a href="{{ object.get_absolute_url }}">{{ object.name }}</a>
+                        {% else %}
+                            <a data-toggle-item href="#{{ object.slug }}">{{ object.name }}</a>
+                        {% endif %}
+                    </h2>
 
-                    {% if object.subline %}
-                    <h2>{{ object.subline }}</h2>
-                    {% endif %}
 
-
-                    {% if object.created %}
                     <p class="published">
-                        <!--{% trans 'published'|title %}:-->
-                        {{ object.created|date:'SHORT_DATE_FORMAT' }}
+                        {% if object.public %}
+                            {{ object.publish|date:'SHORT_DATE_FORMAT' }}
+                        {% else %}
+                            {% trans 'Not published' %}
+                        {% endif %}
+
+                        {% if object.author %}
+                            | <span>{% trans 'Autor' %}: {{ object.author.get_display_name }}</span>
+                        {% endif %}
+
                     </p>
+
+
+                    {% if object.teaser %}
+                    <p class="teaser">{{ object.teaser|linebreaksbr }}</p>
                     {% endif %}
 
 
                 </div>
             </div>
             <div class="row content">
+
                 <div class="small-12 columns">
+
+                    {% if object.key_image %}
+                        <div class="key-image">
+                            <img src="{% thumbnail object.key_image 1600x840 crop bw upscale subject_location=object.key_imagesubject_location %}">
+                        </div>
+                    {% endif %}
+
                     {% render_placeholder object.content %}
                 </div>
             </div>

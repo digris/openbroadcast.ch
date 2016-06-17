@@ -1,4 +1,4 @@
-{% load menu_tags i18n %}
+{% load menu_tags i18n subscription_tags %}
 <footer id="footer" data-livebg_>
 
     <div class="row">
@@ -20,7 +20,7 @@
                     </p>
                 </div>
 
-                <div class="small-12 medium-8 columns">
+                <div class="small-12 medium-4 columns">
 
                     <p class="title">{% trans 'Quicklinks' %}</p>
 
@@ -33,6 +33,14 @@
                        <dd><a href="mailto:support@openbroadcast.ch">support@openbroadcast.ch</a></dd>
 
                     </dl>
+
+                </div>
+
+                <div class="small-12 medium-4 columns">
+
+                    <p class="title">{% trans 'Newsletter' %}</p>
+
+                    {% subscription_form %}
 
                 </div>
 

@@ -23,6 +23,7 @@ urlpatterns = solid_i18n_patterns('',
 urlpatterns += patterns('',
     url(r'^api/', include('project.urls_api')),
     url(r'^', include('contentproxy.urls')),
+    url(r'^subscription/', include('subscription.urls')),
 )
 
 urlpatterns += solid_i18n_patterns('',

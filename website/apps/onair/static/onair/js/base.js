@@ -43,21 +43,19 @@ var OnAirApp = function () {
 
         self.container.css('height', 'auto');
 
-
-
-        setTimeout(function(){
+        setTimeout(function () {
             self.load_schedule(true);
-        }, 1000);
+        }, 0);
 
 
-        pushy_client.subscribe('arating_vote', function(vote){
+        pushy_client.subscribe('arating_vote', function (vote) {
             self.update_vote(vote);
         });
 
     };
 
     this.bindings = function () {
-        if(self.debug) {
+        if (self.debug) {
             console.log('OnAirApp - bindings');
         }
 
@@ -77,17 +75,6 @@ var OnAirApp = function () {
             }, 200)
         });
 
-        // keep visible on info-hover
-        //self.info_container.on('mouseover', '.item', function (e) {
-        //    if (self.info_timeout) {
-        //        clearTimeout(self.info_timeout);
-        //    }
-        //}).on('mouseout', '.item', function (e) {
-        //    self.info_timeout = setTimeout(function () {
-        //        $('.current', self.info_container).removeClass('details-visible');
-        //    }, 400)
-        //});
-
         // pagination arrows
         self.prevnext_container.on('click', 'a', function (e) {
             e.preventDefault();
@@ -97,12 +84,11 @@ var OnAirApp = function () {
         });
 
         // explicit pagination/index jump
-        self.container.on('click', '.item.history:not(".current")', function(e){
+        self.container.on('click', '.item.history:not(".current")', function (e) {
             e.preventDefault();
             var index = $(this).data('index');
             self.handle_pagination(index);
         });
-
 
         // handle votes
         self.rating_container.on('click', 'a', function (e) {
@@ -114,7 +100,7 @@ var OnAirApp = function () {
         });
 
         // TODO: hackish implementation here, should be done more generic
-        self.container.on('click', '#back_onair .wrapper', function(e){
+        self.container.on('click', '#back_onair .wrapper', function (e) {
             e.preventDefault();
             self.handle_pagination(0)
         });
@@ -129,13 +115,11 @@ var OnAirApp = function () {
 
             var action = $(this).data('onair-controls');
 
-            console.debug(action + ' action through data-onair-controls');
-
             /*
              * actions are forwarded to the player app including the respective index.
              * the player 'decides' itself if we have a stream or on-demand situation.
              */
-            switch(action) {
+            switch (action) {
                 case 'play':
                     var index = $(this).parents('.item').data('index');
                     self.bplayer.controls({action: action, index: index});
@@ -149,12 +133,13 @@ var OnAirApp = function () {
     };
 
 
-    this.set_onair = function(onair_status) {
-        if(self.debug) {
+    this.set_onair = function (onair_status) {
+
+        if (self.debug) {
             console.debug('OnAirApp - set_onair:', onair_status);
         }
         self.is_onair = onair_status;
-        if(onair_status) {
+        if (onair_status) {
             self.container.removeClass('init offline').addClass('onair');
         } else {
             self.container.removeClass('init onair').addClass('offline');
@@ -165,7 +150,10 @@ var OnAirApp = function () {
     };
 
     this.set_mode = function (mode) {
-        if(self.debug) {
+
+        // mode: 'live' or 'history'
+
+        if (self.debug) {
             console.debug('OnAirApp - set_mode:', mode);
         }
         self.mode = mode;
@@ -176,56 +164,44 @@ var OnAirApp = function () {
     };
 
 
-
-
-
-
-
-
-
     this.load_schedule = function (initial, limit) {
 
-        var initial = typeof initial !== 'undefined' ? true : false;
-        var limit = typeof limit !== 'undefined' ? limit : self.initial_items;
+        initial = typeof initial !== 'undefined' ? true : false;
+        limit = typeof limit !== 'undefined' ? limit : self.initial_items;
         var url = '/api/v1/onair/schedule/?expand=item+emission&limit=' + limit;
 
         $.get(url, function (schedule) {
 
             // processing schedule meta
             var meta = schedule.meta;
-            if(meta.next_starts_in) {
-                if(self.load_schedule_timeout) {
+            if (meta.next_starts_in) {
+                if (self.load_schedule_timeout) {
                     clearTimeout(self.load_schedule_timeout);
                 }
-                self.load_schedule_timeout = setTimeout(function(){
-                    // we have to load the previos item as well to update our data
+                self.load_schedule_timeout = setTimeout(function () {
+                    // we have to load the previous item as well to update our data
                     // TODO: this could be handled better!
                     self.load_schedule(false, 2)
                 }, Number((meta.next_starts_in) * 1000 + self.stream_delay));
             } else {
 
-                console.debug('EMPTY SCHEDULE > OFFLINE')
-
-                if(self.load_schedule_timeout) {
+                if (self.load_schedule_timeout) {
                     clearTimeout(self.load_schedule_timeout);
                 }
 
-                console.debug('setting refresh timeout to', self.default_timeout)
-                self.load_schedule_timeout = setTimeout(function(){
-                    console.debug('call from timeout')
+                console.debug('setting refresh timeout to', self.default_timeout);
+                self.load_schedule_timeout = setTimeout(function () {
+                    console.debug('call from timeout');
                     self.load_schedule()
                 }, self.default_timeout);
             }
 
-            self.set_onair(meta.onair)
+            self.set_onair(meta.onair);
 
 
             // processing schedule items
             // we need reversed order for local schedule
             var objects = schedule.objects.reverse();
-            //var objects = schedule.objects;
-
-
 
             $.each(objects, function (i, item) {
 
@@ -233,17 +209,15 @@ var OnAirApp = function () {
 
                 var exists = -1;
                 $.each(self.local_data, function (j, local_item) {
-                    if(self.local_data[j].time_start == item.time_start) {
+                    if (self.local_data[j].time_start == item.time_start) {
                         exists = j;
                     }
                 });
 
-                if(exists >= 0) {
-                    //console.debug('item present. replacing in local_items', exists)
+                if (exists >= 0) {
                     self.local_data[exists] = item;
 
                 } else {
-                    //console.debug('item not present. adding to local_items', exists)
                     self.local_data.push(item);
                     self.load_rating(item);
                 }
@@ -253,13 +227,11 @@ var OnAirApp = function () {
             self.process_data();
 
 
-
             // TODO: this is an ugly hack!
+            if (initial) {
 
-            if(initial) {
-
-                setTimeout(function(){
-                    self.bplayer.state_change('paused')
+                setTimeout(function () {
+                    self.bplayer.state_change('paused');
                     //self.bplayer.controls({action: 'pause'})
                 }, 2000)
             }
@@ -270,12 +242,9 @@ var OnAirApp = function () {
     };
 
 
-
-
-
     this.process_data = function () {
 
-        if(self.debug) {
+        if (self.debug) {
             console.debug('OnAirApp - update_data', self.local_data);
         }
 
@@ -311,9 +280,7 @@ var OnAirApp = function () {
                 base_url: self.base_url
             }));
 
-            if(dom_el.length) {
-                //console.debug('got element in dom > replace it')
-                //dom_el.replaceWith(html);
+            if (dom_el.length) {
                 dom_el.removeClass('onair');
             } else {
                 //console.debug('element not in dom > append it')
@@ -323,24 +290,19 @@ var OnAirApp = function () {
             item.el = $('#' + dom_id);
             item.el.data('index', index);
 
-            self.local_data[i]  = item;
+            self.local_data[i] = item;
 
 
         });
 
 
         // map on-air history to player app
-        //setTimeout(function () {
-            self.bplayer.set_playlist(self.local_data);
-        //}, 2);
+        self.bplayer.set_playlist(self.local_data);
 
         // handle own timeline
-        //if(self.mode != 'history') {
-            setTimeout(function () {
-                self.handle_timeline(true);
-            }, 100);
-        //}
-
+        setTimeout(function () {
+            self.handle_timeline(true);
+        }, 100);
 
 
     };
@@ -351,9 +313,6 @@ var OnAirApp = function () {
      * @param item
      */
     this.update_meta_display = function (item, fast) {
-
-
-        // console.debug(item)
 
         // non-animated version
         var html = $(nj.render('onair/nj/meta.html', {
@@ -374,9 +333,6 @@ var OnAirApp = function () {
         $('div[data-ct]').fadeOut(50);
         $('div[data-ct="' + ct + '"]').fadeIn(250);
     };
-
-
-
 
 
     /**
@@ -404,51 +360,42 @@ var OnAirApp = function () {
         // not sure if this introduces other problems... but in case that nothing is "on air" we just add a dummy item
         var schedule = self.local_data;
 
-
         // reindex timeline offset
-        if(reindex !== undefined && self.mode == 'history') {
-            console.debug('reindex timeline offset');
-
-            console.debug('self.timeline_offset:', self.timeline_offset);
-            console.debug('self.local_data:', self.local_data);
+        if (reindex !== undefined && self.mode == 'history') {
 
             var current_uuid = self.current_item.item.uuid;
-            console.warn('current_uuid', current_uuid);
-            $.each(self.local_data, function(i, el){
-                console.debug(el.item.uuid)
 
-                if(el.item.uuid == current_uuid) {
-                    console.log('match:', i);
-                    var new_offset = (self.local_data.length - i -1) * -1;
-                    console.log('new_offset:', new_offset);
+            if(self.debug) {
+                console.debug('reindex timeline offset');
+                console.debug('self.timeline_offset:', self.timeline_offset);
+                console.debug('self.local_data:', self.local_data);
+                console.warn('current_uuid', current_uuid);
+            }
 
+            $.each(self.local_data, function (i, el) {
+                console.debug(el.item.uuid);
+
+                if (el.item.uuid == current_uuid) {
+                    var new_offset = (self.local_data.length - i - 1) * -1;
                     self.timeline_offset = new_offset;
-
                 }
-
             });
 
 
         }
 
 
-        onair_index = schedule.length -1;
+        onair_index = schedule.length - 1;
         var current_index = onair_index + self.timeline_offset;
 
 
         // apply classes based on offset
         $.each(schedule, function (i, item) {
 
-            //console.info('current_index', current_index)
-
             item.el.removeClass().addClass('item info');
             if (i < current_index) {
                 item.el.addClass('previous');
                 item.el.addClass('previous-' + Math.abs(current_index - i));
-
-                if(self.debug) {
-                    //console.debug('index / prev:', Math.abs(current_index - i));
-                }
 
                 if (Math.abs(current_index - i) > 3) {
                     item.el.addClass('previous-x');
@@ -469,7 +416,7 @@ var OnAirApp = function () {
                 }
             }
 
-            if(item.onair) {
+            if (item.onair) {
                 item.el.addClass('onair');
             } else {
                 item.el.addClass('history');
@@ -495,12 +442,18 @@ var OnAirApp = function () {
             $('.next', self.prevnext_container).addClass('disabled');
         }
 
-        setTimeout(function(){
+        setTimeout(function () {
             self.bplayer.update_player(true);
-        }, 1)
+        }, 1);
+
+
+        // temporary / p.o.c.
+        setTimeout(function () {
+            self.handle_color();
+        }, 100);
+
 
     };
-
 
 
     /**
@@ -508,7 +461,7 @@ var OnAirApp = function () {
      */
     this.handle_prevnext = function (direction) {
 
-        if(self.debug) {
+        if (self.debug) {
             console.debug('OnAirApp - handle_prevnext: ' + direction);
         }
 
@@ -528,7 +481,7 @@ var OnAirApp = function () {
      */
     this.handle_pagination = function (offset) {
 
-        if(self.debug) {
+        if (self.debug) {
             console.debug('OnAirApp - handle_pagination: ' + offset);
         }
 
@@ -541,23 +494,18 @@ var OnAirApp = function () {
     };
 
 
-
-
-
-
-
     /**
      * loads current rating values for item
      */
     this.load_rating = function (item) {
-        var url = '/api/v1/onair/vote/alibrary.media/' + item.item.id + '/'
-        $.get(url, function(data){
+        var url = '/api/v1/onair/vote/alibrary.media/' + item.item.id + '/';
+        $.get(url, function (data) {
             $.each(self.local_data, function (i, local_item) {
                 if (item.id == local_item.id) {
                     self.local_data[i].item.votes = data;
                 }
             });
-            setTimeout(function(){
+            setTimeout(function () {
                 self.update_rating_display();
             }, 1)
         });
@@ -567,12 +515,12 @@ var OnAirApp = function () {
 
     this.update_rating_display = function () {
         // set current values
-        if(!self.current_item) {
+        if (!self.current_item) {
             console.warn('no current item!');
             return;
         }
 
-        if(!self.is_onair) {
+        if (!self.is_onair) {
             $('.vote-up a > span', self.rating_container).html('-');
             $('.vote-down  a > span', self.rating_container).html('-');
             self.rating_container.addClass('disabled');
@@ -581,12 +529,11 @@ var OnAirApp = function () {
                 $('.vote-up a > span', self.rating_container).html(self.current_item.item.votes.up);
                 $('.vote-down  a > span', self.rating_container).html(self.current_item.item.votes.down);
                 self.rating_container.removeClass('disabled');
-            } catch(e) {
+            } catch (e) {
                 self.rating_container.addClass('disabled');
             }
         }
     };
-
 
 
     /**
@@ -595,7 +542,7 @@ var OnAirApp = function () {
      */
     this.handle_vote = function (vote) {
 
-        if(!self.current_item) {
+        if (!self.current_item) {
             console.warn('no current item!');
             return;
         }
@@ -623,15 +570,15 @@ var OnAirApp = function () {
      */
     this.update_vote = function (vote) {
 
-        if(self.debug) {
+        if (self.debug) {
             console.debug('OnAirApp - update_vote: ', vote);
         }
 
         $.each(self.local_data, function (i, el) {
-            console.log(i)
+            console.log(i);
 
             if (vote.uuid == self.local_data[i].item.uuid) {
-                if(self.debug) {
+                if (self.debug) {
                     console.debug('OnAirApp - uuid match for: ' + vote.uuid);
                 }
                 // apply vote data
@@ -645,6 +592,56 @@ var OnAirApp = function () {
     };
 
 
+    // temporary / p.o.c.
+    this.handle_color = function() {
+
+        var color_hex = '#d5d5d5';
+        var color_hex = '#333333';
+
+        if(self.is_onair) {
+            var image_url = $('.item.current .image-container img').attr('src');
+
+            if(image_url === undefined) {
+                return;
+            }
+
+            var src_img = new Image();
+            src_img.src = image_url;
+            src_img.onload = function(){
+                var ct = new ColorThief();
+                var color_rgb = ct.getColor(src_img);
+                //color_hex = rgbToHex(rgb_invert(color_rgb));
+                color_hex = rgbToHex(color_rgb);
+
+                color_hex = tinycolor(color_hex).saturate(50).toString();
+
+                livecolor.set_color(color_hex, false, 1000)
+            };
+        } else {
+            //livecolor.set_color(color_hex, false, 1000)
+        }
+
+
+    }
+
+
 };
 
-// moving to prototype based implementation
+function rgb_invert(rgb) {
+
+    n_rgb = [];
+
+    n_rgb[0] = 255 - rgb[0];
+    n_rgb[1] = 255 - rgb[1];
+    n_rgb[2] = 255 - rgb[2];
+    return n_rgb;
+
+}
+
+
+function rgbToHex(rgb) {
+    r = rgb[0];
+    g = rgb[1];
+    b = rgb[2];
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}

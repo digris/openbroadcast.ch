@@ -1,5 +1,4 @@
 {% set item = object.item.label %}
-
 {% if item %}
     <div data-ct="label" class="ct-panel">
 
@@ -39,7 +38,7 @@
             <div class="small-12 columns">
                 {% if item.description %}
                 <p>
-                    {{ item.description|truncate(240) }}
+                    {{ item.description|strip_markdown|truncate(240) }}
                 </p>
                 {% endif %}
             </div>

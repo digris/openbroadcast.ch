@@ -68,16 +68,17 @@ class RemoteUserBackend(ModelBackend):
 
         data = r.json()
 
-        print '///////////////////////////////////////'
-        print 'got user:     %s' % data['username']
-        print 'is_staff:     %s' % data['is_staff']
-        print 'is_superuser: %s' % data['is_superuser']
-        print 'is_active:    %s' % data['is_active']
-        print 'first_name:   %s' % data['first_name']
-        print 'last_name:    %s' % data['last_name']
-        print 'email:        %s' % data['email']
-        print 'groups:       %s' % data['groups']
-        print '///////////////////////////////////////'
+
+        # print '///////////////////////////////////////'
+        # print 'got user:     %s' % data['username']
+        # print 'is_staff:     %s' % data['is_staff']
+        # print 'is_superuser: %s' % data['is_superuser']
+        # print 'is_active:    %s' % data['is_active']
+        # print 'first_name:   %s' % data['first_name']
+        # print 'last_name:    %s' % data['last_name']
+        # print 'email:        %s' % data['email']
+        # print 'groups:       %s' % data['groups']
+        # print '///////////////////////////////////////'
 
         user, created = User.objects.get_or_create(username=data['username'], remote_id=data['id'])
         user.set_password(password)
@@ -89,6 +90,7 @@ class RemoteUserBackend(ModelBackend):
         user.email = data['email']
         user.remote_uri = data['resource_uri']
         user.profile_uri = data['profile']['resource_uri']
+        user.pseudonym = data['profile']['pseudonym']
 
         # dumb group assignment
         for group_name in data['groups'].split(','):

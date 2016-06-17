@@ -5,54 +5,45 @@
 
         <div class="small-12 columns">
 
-
             <div class="section-header">
                 <h2>Login</h2>
             </div>
 
-
-            <p>Melden Sie sich bei open broadcast an, um unser Radioprogramm zu kommentieren oder bei der Community mitzumachen.</p>
+            <p>
+                Melden Sie sich bei open broadcast an, um unser Radioprogramm zu kommentieren oder bei der
+                Community mitzumachen.
+            </p>
 
             <form method="post" action="{% url 'alogin-login' %}">
 
                 {% csrf_token %}
 
-
-                <!--
-                <label>Benutzername</label>
-                <input type="text" name="user">
-                <label>Password</label>
-                <input type="password" name="user">
-                <input type="submit" name="action" value="login">
-                <input type="hidden" name="action" value="login">
-                -->
-
                 {{ form }}
 
-                {% comment %}
-                {% fd5_form_item form.username "small-12" %}
-                {% fd5_form_item form.password "small-12" %}
-                {% endcomment %}
-
-                <button class="button simple small black expand" type="submit">{% trans "login" %}</button>
+                <button class="button simple black expanded" type="submit">{% trans "Login" %}</button>
 
             </form>
 
-
             <div>
-                <p>
-                    <a href="{% url 'alogin-register' %}" data-alogin-action="register">Neues Konto erstellen?</a><br>
-                    <a href="#">Passwort vergessen?</a>
+                <p class="secondary">
+                    <span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                        <a href="{% url 'alogin-register' %}" data-alogin-action="register">Neues Konto erstellen?</a>
+                    </span>
+                    <br>
+                    <span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                        <a href="#" data-alogin-action="register">Passwort vergessen?</a>
+                    </span>
                 </p>
             </div>
 
             {% include 'alogin/_social.html' %}
 
-
         </div>
-
     </div>
-
 </div>
 
-<a class="close-reveal-modal">Schliessen <span>&#215;</span></a>
+<button class="close-button" data-close aria-label="{% trans 'Schliessen' %}" type="button">
+    <span aria-hidden="true">&times;</span>
+</button>

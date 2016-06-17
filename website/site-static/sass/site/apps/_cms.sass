@@ -1,107 +1,27 @@
-// global cms container
-.content-container.cms
-  //background: #ffff00
-  // background handled through 'livebg'
 
-
-body.cms-base
+body.cms-base,
+body.app-base
   .content-container
     padding-top: 100px
+    padding-bottom: 100px
 
+body.cms-home
+  .content-container
+    display: none
 
 .cmsplugin_holder
-  max-width: 740px
-  margin: 16px auto
   font-weight: 300
 
-
-  // TODO: eventually move to separate "ticker" sheet
-  .article
-    padding: 4px 4px 16px
-    border-bottom-width: 2px
-    border-bottom-style: solid
-    position: relative
-    padding-top: 16px
-
-    &:first-child
-      border-top-width: 2px
-      border-top-style: solid
-      margin-top: 54px
-
-    p
-      text-indent: 30px
-      text-indent: 14px
-      img
-        margin-left: -30px
-        margin-left: -14px
-
-      a
-        //text-decoration: underline
-        border-bottom: 1px dotted black
-        &:hover
-          border-bottom: 1px solid black
-
-      &.published
-        font-size: rem-calc(12)
-        margin-bottom: 0
-
-
-    .content
-      display: none
-
-    .show-while-expanded
-      display: none !important
-    .hide-while-expanded
-      display: block
-
-    &.hover:not(.expanded)
-      cursor: pointer
-      background-color: rgba(0, 0, 0, 0.1)
-
-    &.expanded
-
-      .show-while-expanded
-        display: block !important
-      .hide-while-expanded
-        display: none
-
-      .content
-        display: block
-
-
-    .toggle
-      z-index: 999
-      position: absolute
-      right: 4px
-      top: 22px
-      > a
-        width: 30px
-        height: 30px
-        border-radius: 15px
-        color: white
-        background: black
-        display: block
-        text-align: center
-        line-height: 27px
-        font-size: 20px
-        padding-left: 2px
-
-
-
-
-
-  // text styling
 .main-content > .textplugin_holder
-  max-width: 740px
-  margin: 16px auto
+
   font-weight: 300
-
   padding: 4px 0 16px
-  //border-bottom-width: 2px
-  //border-bottom-style: solid
-
   border-top-width: 2px
   border-top-style: solid
+
+  h1, h2
+    &:first-child
+      padding: 12px 0 8px
 
   p
     text-indent: 30px
@@ -115,6 +35,9 @@ body.cms-base
     border-bottom: 1px dotted black
     &:hover
       border-bottom: 1px solid black
+
+
+
 
 
 @media #{$small-only}
@@ -142,15 +65,15 @@ body.cms-base
 // filer plugins
 ///////////////////////////////////////////////////////////////////////
 .filer-image
-  //border: 7px solid red
   figcaption
     opacity: 0.7
     font-size: 90%
-    //font-style: italic
 
-  &.inline
-    display: inline
+  img.left
     float: left
+
+  &.inline img
+    display: inline
     padding-top: 6px
     padding-right: 12px
     padding-bottom: 2px

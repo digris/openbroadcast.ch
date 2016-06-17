@@ -21,6 +21,7 @@ class ArticleDetailView(DetailView):
         context = self.get_context_data(object=self.object)
         menu = request.toolbar.get_or_create_menu('ticker-app', _('News'))
         menu.add_link_item(_('Edit Article'), url=reverse('admin:ticker_article_change', args=[self.object.pk]))
+        menu.add_modal_item(_('Artikel Quickedit'), url=reverse('admin:ticker_article_change', args=[self.object.pk]))
 
         return self.render_to_response(context)
 

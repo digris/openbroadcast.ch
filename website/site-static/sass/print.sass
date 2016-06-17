@@ -1,59 +1,21 @@
-// print styles
-
 
 @page
   size: auto
   margin: 10mm
 
 
-body
+body,
+footer
   background-color: #FFFFFF
-  margin: 0px
+  margin: 0
 
-// remove responsive duplicates
-.snippetplugin_holder
-  .show-for-medium-up
-    display: none
-
-  .show-for-small-only img
-    width: 25%
-
-
-
-// generic elements
-#minimal_nav
+#topbar_container,
+#onair_container,
+#achat_container,
+#bplayer_container,
+.newsletter-container
   display: none
-
-section.navigation
-  display: none
-
-section.header
-  padding-bottom: 20px
-  border-bottom: 4px solid #000000
-
-
-.columns.border-right
-  border-right: none
-
-// remove some nonesense elements
-.wrapper.youtube
-  display: none
-
-li.social
-  display: none
-
 
 a:after
   content: " (" attr(href) ") "
   display: none
-
-
-
-body.blog
-  .sidebar
-    display: none
-
-  row.relations
-    display: none
-
-

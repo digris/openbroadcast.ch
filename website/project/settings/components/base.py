@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     #'cmsplugin_filer_teaser',
     #'cmsplugin_filer_video',
     'cmsplugin_youtube',
+    'djangocms_column',
 
     'turbolinks',
     'nunjucks',
@@ -159,6 +160,7 @@ INSTALLED_APPS = (
     'program',
     'partnerlink',
     'social_auth',
+    'subscription',
 
 )
 
@@ -224,7 +226,7 @@ CELERYBEAT_SCHEDULE = {
 }
 
 
-
+TASTYPIE_DEFAULT_FORMATS = ['json', ]
 
 # auth
 AUTHENTICATION_BACKENDS = (

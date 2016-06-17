@@ -28,7 +28,6 @@ var RemotelinkApp = function () {
                 self.show_dialog(self.dialog_url);
             }
 
-
         });
 
         // action handling
@@ -49,21 +48,32 @@ var RemotelinkApp = function () {
 
     
     this.hide_dialog = function() {
-        self.reveal_container.foundation('reveal', 'close');
+        try {
+            $('#reveal_container').foundation('close');
+
+        } catch(e) {
+        }
+
     };
 
     this.show_dialog = function(uri) {
         self.hide_dialog();
-        self.reveal_container.foundation('reveal', 'open', {
-            url: uri,
-            type: 'GET',
+        
+        $.ajax({
+          url: uri,
+            type: 'get',
             success: function(data) {
-                // pass
+                $('#reveal_container').html(data).foundation('open');
             },
             error: function() {
-                alert('error processing request');
+                try {
+                    $('#reveal_container').foundation('close');
+                } catch(e) {
+
+                }
             }
         });
+
     };
 
 };

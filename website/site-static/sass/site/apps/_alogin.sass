@@ -2,11 +2,11 @@
 // registration / alogin
 /////////////////////////////////////////////////////////////////////////////////
 #dialog_container
+
   &.alogin-dialog
-    padding-bottom: 40px
+    padding-bottom: 0
     .section-header
       margin-bottom: 20px
-
 
     form
       ul.errorlist
@@ -14,14 +14,30 @@
         margin: 2px 0 4px 0
         padding: 0 0 0 0
         color: $alert-color
-        //font-style: italic
+
+      .button.expanded
+        text-transform: uppercase
+        &:hover
+          text-decoration: underline
+
+    .secondary
+      a
+        text-decoration: underline
+
 
 
   .social-auth
     .service
+      display: block
       padding: 6px
       margin: 0 0 12px
-      background: rgba(0,0,0,0.1)
+      background-color: rgba(0,0,0,0.1)
+      transition: background-color 0.4s
+
+      &.hover
+        transition: background-color 0.1s
+        background-color: $black
+        color: $white
 
 
 //////////////////////////////////////////////////////

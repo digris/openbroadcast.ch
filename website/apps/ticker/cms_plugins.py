@@ -15,9 +15,15 @@ class ArticlePlugin(CMSPluginBase):
 
     def render(self, context, instance, placeholder):
 
+        request = context['request']
+        if request.user.is_staff:
+            qs = Article.objects.all()
+        else:
+            qs = Article.objects.published()
+
         context.update({
             'instance': instance,
-            'object_list': Article.objects.published(),
+            'object_list': qs,
             'placeholder': placeholder,
         })
         return context

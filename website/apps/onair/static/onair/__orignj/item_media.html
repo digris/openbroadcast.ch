@@ -1,0 +1,57 @@
+{% set item = object.item %}
+
+<div data-ct="media" class="ct-panel">
+
+    <div class="row header">
+
+        {% if item.release and item.release.main_image %}
+        <div class="small-6 columns">
+            <img src="{{ base_url }}{{ item.release.main_image }}">
+        </div>
+        {% endif %}
+
+        <div class="{% if item.release and item.release.main_image %}small-6{% else %}small-12{% endif %} columns">
+            <div class="text-left">
+                <h1>{% if item.name %}{{ item.name|truncate(24) }}{% endif %}</h1>
+                <ul class="no-bullet">
+                    {% if item.mediatype or item.version %}
+                    <li>
+                        {% if item.mediatype %}
+                            {{ item.mediatype|capitalize }}
+                        {% endif %}
+                        {% if item.version %}
+                            ({{ item.version|capitalize }})
+                        {% endif %}
+                    </li>
+                    {% endif %}
+                    {% if item.duration %}
+                    <li>
+                        {{ item.duration|ms2time }}
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row body show-for-large-up">
+        <div class="small-12 columns">
+            {% if item.description %}
+            <p>
+                {{ item.description|truncate(240) }}
+            </p>
+            {% endif %}
+        </div>
+    </div>
+
+        {% if item.tags %}
+        <div class="row tags text-left">
+            <div class="small-12 columns">
+                {% for tag in item.tags %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+</div>

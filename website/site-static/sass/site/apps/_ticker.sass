@@ -1,0 +1,91 @@
+// article detail page
+// this page is only visible for editors. public detail views are displayed inline
+
+body.app-base
+  .article.detail
+    .header
+      margin: 16px 0
+    .key-image
+      margin: 16px 0
+    .content
+      margin: 16px 0
+
+
+// plugin styles
+.cmsplugin_holder
+
+  .article
+    padding: 4px 4px 16px
+    border-bottom-width: 2px
+    border-bottom-style: solid
+    position: relative
+    padding-top: 16px
+
+    &:first-child
+      border-top-width: 2px
+      border-top-style: solid
+      margin-top: 54px
+
+    p
+      text-indent: 0px
+      img
+        margin-left: 0px
+      a
+        border-bottom: 1px dotted black
+        &:hover
+          border-bottom: 1px solid black
+
+      &.published
+        font-size: rem-calc(12)
+        margin-bottom: 0
+
+    .preview
+      h1, h2, p
+        padding-left: 7px
+        margin-bottom: 4px
+
+    .content
+      padding-left: 7px
+      padding-top: 16px
+      max-height: 0
+      overflow: hidden
+      transition: max-height 0.5s
+
+    .show-while-expanded
+      display: none !important
+    .hide-while-expanded
+      display: block
+
+    &.hover:not(.expanded)
+      cursor: pointer
+      background-color: rgba(0, 0, 0, 0.1)
+
+    &.expanded
+
+      .show-while-expanded
+        display: block !important
+      .hide-while-expanded
+        display: none
+
+      .teaser
+        opacity: 0.75
+
+      .content
+        max-height: 10000px
+
+    .toggle
+      z-index: 999
+      position: absolute
+      right: 4px
+      top: 22px
+      > a
+        width: 30px
+        height: 30px
+        border-radius: 15px
+        color: white
+        background: black
+        display: block
+        text-align: center
+        line-height: 27px
+        font-size: 20px
+        padding-left: 2px

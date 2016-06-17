@@ -6,10 +6,21 @@ var gutil = require('gulp-util');
 var $ = require('gulp-load-plugins')();
 var browserSync = require('browser-sync').create();
 var sass = require('gulp-sass');
+var cleanCSS = require('gulp-clean-css');
+
 
 var sassPaths = [
   'website/site-static/sass/lib/fd-6.2',
   'website/site-static/sass/lib/motion-ui'
+];
+
+
+// not so elegant. apps added separately to have our common path schema
+var nunjucksPaths = [
+    'website/apps/achat/static/**/nj/*.html',
+    'website/apps/bplayer/static/**/nj/*.html',
+    'website/apps/onair/static/**/nj/*.html',
+    'website/apps/remotelink/static/**/nj/*.html'
 ];
 
 var AUTOPREFIXER_BROWSERS = [
@@ -41,6 +52,7 @@ gulp.task('proxy', ['styles'], function () {
     });
     gulp.watch("website/site-static/sass/**/*.sass", ['styles']);
     gulp.watch("website/site-static/js/**/*.coffee", ['scripts']);
+    gulp.watch(nunjucksPaths, ['templates']);
 });
 
 gulp.task('styles', function () {
@@ -82,6 +94,29 @@ gulp.task('scripts', function () {
         .pipe($.coffee({bare: true}).on('error', gutil.log))
         .pipe(gulp.dest('website/site-static/dist/js/'));
 });
+
+// precompile nunjucks templates
+gulp.task('templates', function () {
+    return gulp.src(nunjucksPaths)
+        .pipe($.nunjucks.precompile().on('error', gutil.log))
+        .pipe($.concat('templates.js'))
+        //.pipe($.minify())
+        .pipe($.size({title: 'templates'}))
+        .pipe(gulp.dest('website/site-static/dist/nj/'));
+});
+
+
+gulp.task('dist', ['styles'], function() {
+    return gulp.src('website/site-static/css/*.css')
+        // .pipe(cssShorthand())
+        // .pipe($.uncss({
+        //     html: ['website/**/*.html']
+        // }))
+        .pipe(cleanCSS({compatibility: 'ie10'}))
+        .pipe($.size({title: 'dist'}))
+        .pipe(gulp.dest('website/site-static/dist/css/'));
+});
+
 
 gulp.task('default', ['proxy']);
 gulp.task('watch', ['proxy']);

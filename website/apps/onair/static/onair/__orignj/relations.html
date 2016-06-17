@@ -1,0 +1,13 @@
+<div class="relations">
+    {% if relations %}
+    <ul class="no-bullet">
+        {% for relation in relations %}
+        <li>
+            <a target="_blank" data-livefg href="{{ relation.url }}">
+                {{ relation.name }}
+            </a>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+

@@ -4,7 +4,7 @@ var nunjucks_register_filters = function (nj) {
 
     nj.addFilter('shorten', function (str, count) {
 
-        if(str == undefined) {
+        if (str == undefined) {
             return '';
         }
 
@@ -43,7 +43,7 @@ var nunjucks_register_filters = function (nj) {
 
     nj.addFilter('format_timestamp', function (time) {
 
-        if(time == undefined) {
+        if (time == undefined) {
             return '';
         }
 
@@ -61,7 +61,7 @@ var nunjucks_register_filters = function (nj) {
 
     nj.addFilter('format_datetime', function (time, part) {
 
-        if(time == undefined) {
+        if (time == undefined) {
             return '';
         }
 
@@ -110,7 +110,7 @@ var nunjucks_register_filters = function (nj) {
 
     nj.addFilter('ms2time', function (time) {
 
-        if(time == undefined) {
+        if (time == undefined) {
             return '';
         }
 
@@ -157,15 +157,15 @@ var nunjucks_register_filters = function (nj) {
         }
 
         /*
-        if (millis && millis > 0) {
-            if (millis < 10) {
-                out += '0';
-            }
-            out += millis + '';
-        } else {
-            out += '000' + '';
-        }
-        */
+         if (millis && millis > 0) {
+         if (millis < 10) {
+         out += '0';
+         }
+         out += millis + '';
+         } else {
+         out += '000' + '';
+         }
+         */
 
         /*
          if(hours && hours > 0) out += hours + "" + ((hours == 1)?":":":") + "";
@@ -178,7 +178,7 @@ var nunjucks_register_filters = function (nj) {
 
     nj.addFilter('s2time', function (time) {
 
-        if(time == undefined) {
+        if (time == undefined) {
             return '';
         }
 
@@ -240,26 +240,37 @@ var nunjucks_register_filters = function (nj) {
     });
 
     /*
-    nj.addFilter('split', function (str, separator) {
+     nj.addFilter('split', function (str, separator) {
 
-        if(str == undefined) {
-            return '';
-        }
+     if(str == undefined) {
+     return '';
+     }
 
-        if(separator == undefined) {
-            separator = ',';
-        }
+     if(separator == undefined) {
+     separator = ',';
+     }
 
-        return ['first', 'second', 'third']
-    });
-    */
+     return ['first', 'second', 'third']
+     });
+     */
 
     nj.addFilter('urlize', function (str, target) {
-        if(str == undefined) {
+        if (str == undefined) {
             return '';
         }
         //return str
         return str.autolink()
+    });
+
+
+    nj.addFilter('strip_markdown', function (text) {
+
+        if (text == undefined) {
+            return '';
+        }
+
+        return strip_markdown(text);
+
     });
 
 
@@ -276,7 +287,7 @@ String.prototype.format = function () {
     return formatted;
 };
 
-String.prototype.autolink = function() {
+String.prototype.autolink = function () {
     var k, linkAttributes, option, options, pattern, v;
     options = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
 
@@ -285,25 +296,93 @@ String.prototype.autolink = function() {
 
         return this.replace(pattern, "$1<a href='$2' title='$2' target='_blank'> (link) </a>");
 
-      //return this.replace(pattern, "$1<a href='$2'>$2</a>");
+        //return this.replace(pattern, "$1<a href='$2'>$2</a>");
     }
     option = options[0];
-    linkAttributes = ((function() {
-      var _results;
-      _results = [];
-      for (k in option) {
-        v = option[k];
-        if (k !== 'callback') {
-          _results.push(" " + k + "='" + v + "'");
+    linkAttributes = ((function () {
+        var _results;
+        _results = [];
+        for (k in option) {
+            v = option[k];
+            if (k !== 'callback') {
+                _results.push(" " + k + "='" + v + "'");
+            }
         }
-      }
-      return _results;
+        return _results;
     })()).join('');
-    return this.replace(pattern, function(match, space, url) {
-      var link;
-      //link = (typeof option.callback === "function" ? option.callback(url) : void 0) || ("<a href='" + url + "'" + linkAttributes + ">" + url + "</a>");
-      link = (typeof option.callback === "function" ? option.callback(url) : void 0) || ("<a href='" + url + "'" + linkAttributes + ">" + url.slice(0, 5) + "</a>");
-      return "" + space + link;
+    return this.replace(pattern, function (match, space, url) {
+        var link;
+        //link = (typeof option.callback === "function" ? option.callback(url) : void 0) || ("<a href='" + url + "'" + linkAttributes + ">" + url + "</a>");
+        link = (typeof option.callback === "function" ? option.callback(url) : void 0) || ("<a href='" + url + "'" + linkAttributes + ">" + url.slice(0, 5) + "</a>");
+        return "" + space + link;
     });
-  };
+};
 
+// TODO: just a very hackish way to strip discogs style tags
+// https://github.com/stiang/remove-markdown/blob/master/index.js
+
+var strip_markdown = function (md, options) {
+
+    options = options || {};
+    options.stripListLeaders = options.hasOwnProperty('stripListLeaders') ? options.stripListLeaders : true;
+    options.gfm = options.hasOwnProperty('gfm') ? options.gfm : true;
+
+    var output = md;
+    try {
+        if (options.stripListLeaders) {
+            output = output.replace(/^([\s\t]*)([\*\-\+]|\d\.)\s+/gm, '$1');
+        }
+        if (options.gfm) {
+            output = output
+            // Header
+                .replace(/\n={2,}/g, '\n')
+                // Strikethrough
+                .replace(/~~/g, '')
+                // Fenced codeblocks
+                .replace(/`{3}.*\n/g, '');
+        }
+        output = output
+        // Remove HTML tags
+            .replace(/<(.*?)>/g, '$1')
+            // Remove setext-style headers
+            .replace(/^[=\-]{2,}\s*$/g, '')
+            // Remove footnotes?
+            .replace(/\[\^.+?\](\: .*?$)?/g, '')
+            .replace(/\s{0,2}\[.*?\]: .*?$/g, '')
+            // Remove images
+            .replace(/\!\[.*?\][\[\(].*?[\]\)]/g, '')
+            // Remove inline links
+            .replace(/\[(.*?)\][\[\(].*?[\]\)]/g, '$1')
+            // Remove Blockquotes
+            .replace(/>/g, '')
+            // Remove reference-style links?
+            .replace(/^\s{1,2}\[(.*?)\]: (\S+)( ".*?")?\s*$/g, '')
+            // Remove atx-style headers
+            .replace(/^\#{1,6}\s*([^#]*)\s*(\#{1,6})?/gm, '$1')
+            .replace(/([\*_]{1,3})(\S.*?\S)\1/g, '$2')
+            .replace(/(`{3,})(.*?)\1/gm, '$2')
+            .replace(/^-{3,}\s*$/g, '')
+            .replace(/`(.+?)`/g, '$1')
+            .replace(/\n{2,}/g, '\n\n')
+
+            // discogs markup
+            .replace(/\[(.*?)\]/g, function dediscogs(match) {
+                // strips markup in form of:
+                // [a=The Artist] and
+                // [The Artist]
+
+                var tr_start = 1;
+                if (match.indexOf("=")) {
+                    tr_start = 3;
+                }
+                var stripped = match.slice(tr_start, -1);
+                return stripped;
+            });
+
+    } catch (e) {
+        console.error(e);
+        return md;
+    }
+    return output;
+
+};

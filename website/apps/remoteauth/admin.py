@@ -14,6 +14,9 @@ class UserAdmin(UserAdmin):
     fieldsets =  UserAdmin.fieldsets + (
         ('Extras',  {'fields': [
             'remote_id',
+            'remote_uri',
+            'profile_uri',
+            'pseudonym',
             ]}
          ),
     )

@@ -1,6 +1,8 @@
 <!-- loaded dynamically to: #onair_container > .items -->
 
 
+
+
 <!-- item in this context: "track" - active or history -->
 <div
     class="item info {{ extra_classes }}"
@@ -11,21 +13,394 @@
     data-index="{{ index }}">
 
     <!-- base container - media -->
-    <div class="container"
-         {% if object.item and object.item.release and object.item.release.main_image %}
-         style="background: url({{ base_url }}{{ object.item.release.main_image }});">
-         {% else %}
-         style="background: #000;">
-         {% endif %}
+    <div class="container"style="background: #000;">
+
+
+        {% if object.item.release and object.item.release.main_image %}
+        <div class="image-container">
+            <img src="{{ base_url }}{{ object.item.release.main_image }}">
+        </div>
+        {% endif %}
 
         <!-- swapable container - artist/label/etc -->
         <div class="details">
-            {% include "onair/nj/item_playlist.html" %}
-            {% include "onair/nj/item_author.html" %}
-            {% include "onair/nj/item_media.html" %}
-            {% include "onair/nj/item_artist.html" %}
-            {% include "onair/nj/item_release.html" %}
-            {% include "onair/nj/item_label.html" %}
+
+            <!--
+            TODO: for some reason (pre-compile required?) includes don't work when compiling via gulp.
+            html moved inline insetad if include.
+            -->
+
+
+                <!-- item_playlist.html -->
+                {% set item = object.emission.content_object %}
+                {% if item %}
+                    <div data-ct="playlist" class="ct-panel">
+
+                        <div class="row header">
+
+                            {% if item.main_image %}
+                            <div class="small-6 columns">
+                                <img src="{{ base_url }}{{ item.main_image }}">
+                            </div>
+                            {% endif %}
+
+                            <div class="{% if item.main_image %}small-6{% else %}small-12{% endif %} columns">
+                                <div class="text-left">
+                                    <h1>{{ item.name|truncate(24) }}</h1>
+                                    <ul class="no-bullet">
+
+                                        <li>
+                                            {{ object.emission.time_start|datetime2hhmm }}
+                                            -
+                                            {{ object.emission.time_end|datetime2hhmm }}
+                                        </li>
+
+                                        {% if item.duration %}
+                                        <li>
+                                            {{ item.duration|ms2time }}
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row body  show-for-large-up">
+                            <div class="small-12 columns">
+                                {% if item.description %}
+                                <p>
+                                    {{ item.description|truncate(240) }}
+                                </p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        {% if item.tags %}
+                        <div class="row tags text-left">
+                            <div class="small-12 columns">
+                                {% for tag in item.tags %}
+                                <span class="tag">{{ tag }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                {% endif %}
+
+
+                <!-- item_author.html -->
+                {% set item = object.emission.user_co_profile %}
+                {% if item %}
+                    <div data-ct="author" class="ct-panel">
+
+                        <div class="row header">
+
+
+                            {% if item.image %}
+                            <div class="small-6 columns">
+                                <img src="{{ base_url }}{{ item.image }}">
+                            </div>
+                            {% endif %}
+
+
+                            <div class="{% if item.image %}small-6{% else %}small-12{% endif %} columns">
+                                <div class="text-left">
+                                    <h1>{{ item.display_name|truncate(24) }}</h1>
+                                    <ul class="no-bullet">
+
+                                        {% if item.pseudonym %}
+                                        <li>
+                                            {{ item.pseudonym }}
+                                        </li>
+                                        {% endif %}
+
+                                        {% if item.city or item.country %}
+                                        <li>
+                                            {% if item.city %}
+                                                {{ item.city|capitalize }}
+                                            {% endif %}
+                                            {% if item.city and item.country %}, {% endif %}
+                                            {% if item.country %}
+                                                {{ item.country|capitalize }}
+                                            {% endif %}
+                                        </li>
+                                        {% endif %}
+
+
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row body show-for-large-up">
+                            <div class="small-12 columns">
+                                {% if item.biography %}
+                                <p>
+                                    {{ item.biography|truncate(240) }}
+                                </p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        {% if item.tags %}
+                        <div class="row tags text-left">
+                            <div class="small-12 columns">
+                                {% for tag in item.tags %}
+                                <span class="tag">{{ tag }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                {% endif %}
+
+
+                <!-- item_media.html -->
+                {% set item = object.item %}
+                <div data-ct="media" class="ct-panel">
+
+                    <div class="row header">
+
+                        {% if item.release and item.release.main_image %}
+                        <div class="small-6 columns">
+                            <img src="{{ base_url }}{{ item.release.main_image }}">
+                        </div>
+                        {% endif %}
+
+                        <div class="{% if item.release and item.release.main_image %}small-6{% else %}small-12{% endif %} columns">
+                            <div class="text-left">
+                                <h1>{% if item.name %}{{ item.name|truncate(24) }}{% endif %}</h1>
+                                <ul class="no-bullet">
+                                    {% if item.mediatype or item.version %}
+                                    <li>
+                                        {% if item.mediatype %}
+                                            {{ item.mediatype|capitalize }}
+                                        {% endif %}
+                                        {% if item.version %}
+                                            ({{ item.version|capitalize }})
+                                        {% endif %}
+                                    </li>
+                                    {% endif %}
+                                    {% if item.duration %}
+                                    <li>
+                                        {{ item.duration|ms2time }}
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row body show-for-large-up">
+                        <div class="small-12 columns">
+                            {% if item.description %}
+                            <p>
+                                {{ item.description|truncate(240) }}
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                        {% if item.tags %}
+                        <div class="row tags text-left">
+                            <div class="small-12 columns">
+                                {% for tag in item.tags %}
+                                <span class="tag">{{ tag }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                </div>
+
+                <!-- item_artist.html -->
+                {% set item = object.item.artist %}
+                {% if item %}
+                    <div data-ct="artist" class="ct-panel">
+
+                        <div class="row header">
+
+                            {% if item.main_image %}
+                            <div class="small-6 columns">
+                                <img src="{{ base_url }}{{ item.main_image }}">
+                            </div>
+                            {% endif %}
+
+                            <div class="{% if item.main_image %}small-6{% else %}small-12{% endif %} columns">
+                                <div class="text-left">
+                                    <h1>{{ item.name|truncate(24) }}</h1>
+                                    <ul class="no-bullet">
+                                        {% if item.type or item.country %}
+                                        <li>
+                                            {% if item.country %}
+                                                ({{ item.country }})
+                                            {% endif %}
+                                            {% if item.type %}
+                                                {{ item.type|capitalize }}
+                                            {% endif %}
+                                        </li>
+                                        {% endif %}
+                                        {% if item.date_start or item.date_start %}
+                                        <li>
+                                            {{ item.date_start }}
+                                            {% if item.date_start or item.date_start %} - {% endif %}
+                                            {{ item.date_end }}
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row body show-for-large-up">
+                            <div class="small-12 columns">
+                                {% if item.biography %}
+                                <p>
+                                    {{ item.biography|strip_markdown|truncate(240) }}
+                                </p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        {% if item.tags %}
+                        <div class="row tags text-left">
+                            <div class="small-12 columns">
+                                {% for tag in item.tags %}
+                                <span class="tag">{{ tag }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                {% endif %}
+
+                <!-- item_release.html -->
+                {% set item = object.item.release %}
+                {% if item %}
+                    <div data-ct="release" class="ct-panel">
+
+                        <div class="row header">
+
+                            {% if item.main_image %}
+                            <div class="small-6 columns">
+                                <img src="{{ base_url }}{{ item.main_image }}">
+                            </div>
+                            {% endif %}
+
+                            <div class="{% if item.main_image %}small-6{% else %}small-12{% endif %} columns">
+                                <div class="text-left">
+                                    <h1>{{ item.name|truncate(32) }}</h1>
+                                    <ul class="no-bullet">
+                                        {% if item.releasetype or item.country %}
+                                        <li>
+                                            {% if item.country %}
+                                                {{ item.country }}
+                                            {% endif %}
+                                            {% if item.releasetype %}
+                                                {{ item.releasetype|capitalize }}
+                                            {% endif %}
+                                        </li>
+                                        {% endif %}
+                                        {% if item.releasedate_approx %}
+                                        <li>
+                                            {{ item.releasedate_approx }}
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row body show-for-large-up">
+                            <div class="small-12 columns">
+                                {% if item.description %}
+                                <p>
+                                    {{ item.description|truncate(240) }}
+                                </p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        {% if item.tags %}
+                        <div class="row tags text-left">
+                            <div class="small-12 columns">
+                                {% for tag in item.tags %}
+                                <span class="tag">{{ tag }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                {% endif %}
+
+                <!-- item_label.html -->
+                {% set item = object.item.label %}
+                {% if item %}
+                    <div data-ct="label" class="ct-panel">
+
+                        <div class="row header">
+
+                            {% if item.main_image %}
+                            <div class="small-6 columns">
+                                <img src="{{ base_url }}{{ item.main_image }}">
+                            </div>
+                            {% endif %}
+
+                            <div class="{% if item.main_image %}small-6{% else %}small-12{% endif %} columns">
+                                <div class="text-left">
+                                    <h1>{{ item.name|truncate(24) }}</h1>
+                                    <ul class="no-bullet">
+                                        {% if item.releasetype or item.country %}
+                                        <li>
+                                            {% if item.country %}
+                                                ({{ item.country }})
+                                            {% endif %}
+                                            {% if item.releasetype %}
+                                                {{ item.releasetype|capitalize }}
+                                            {% endif %}
+                                        </li>
+                                        {% endif %}
+                                        {% if item.releasedate_approx %}
+                                        <li>
+                                            {{ item.releasedate_approx }}
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row body show-for-large-up">
+                            <div class="small-12 columns">
+                                {% if item.description %}
+                                <p>
+                                    {{ item.description|strip_markdown|truncate(240) }}
+                                </p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        {% if item.tags %}
+                        <div class="row tags text-left">
+                            <div class="small-12 columns">
+                                {% for tag in item.tags %}
+                                <span class="tag">{{ tag }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                {% endif %}
+
+
+
         </div>
 
         <!-- action wrapper - play/pause/listen -->
@@ -53,20 +428,12 @@
 
             </div>
 
-
         </div>
-
-
-
 
         <!-- levelbridge live-data -->
         <div class="level-container">
             <ul class="level"></ul>
         </div>
-
-
-
-
 
         <div class="progress-container hoverable">
             <div class="progress">
@@ -74,11 +441,6 @@
               <span class="buffer" style="width: 0%"></span>
             </div>
         </div>
-
-
-
-
-
 
     </div>
 

@@ -57,7 +57,9 @@ LiveColorApp = function () {
         if(duration === undefined) {
             var duration = 100;
         }
-
+        if(fg_color === undefined || fg_color === false) {
+            var fg_color = self.get_contrast_color(bg_color);
+        }
 
         /////////////////////////////////////////////////////////////////
         // backgrounds
@@ -79,8 +81,15 @@ LiveColorApp = function () {
         style_bg += '[data-livebg] { background-color: ' + bg_color + '; }';
         style_bg += '[data-livefill] { fill: ' + bg_color + '; }';
 
+        // TODO: not so nice. these styles have to be added immediately, as no animations possible
+        var style_bg_immediate = '';
+        style_bg_immediate += '[data-livehover]:hover { background-color: ' + fg_color + ' !important; color: ' + bg_color + ';}';
+        style_bg_immediate += '[data-livehover]:hover polyline { stroke: ' + bg_color + ';}';
+
+        self.stylesheet_bg.text(style_bg_immediate);
+
         setTimeout(function(){
-            self.stylesheet_bg.text(style_bg);
+            self.stylesheet_bg.text(style_bg_immediate + style_bg);
         }, duration);
 
 
@@ -96,10 +105,6 @@ LiveColorApp = function () {
             delay = 0;
         }
 
-        if(fg_color === undefined || fg_color === false) {
-            var fg_color = self.get_contrast_color(bg_color);
-        }
-
         setTimeout(function(){
 
             $('html *[data-livefg]').animate({
@@ -107,28 +112,59 @@ LiveColorApp = function () {
                 borderColor: fg_color
             }, duration_fg );
 
+            $('html *[data-livefg] a').animate({
+                color: fg_color,
+                borderColor: fg_color
+            }, duration_fg );
+
+            $('html *[data-livefg-inverse]').animate({
+                color: bg_color,
+                borderColor: bg_color
+            }, duration_fg );
+
+            $('html *[data-livestroke]').animate({
+                svgStroke: fg_color
+            }, duration_fg);
+
+
+            $('html *[data-livebg-inverse]').animate({
+                backgroundColor: fg_color
+            }, duration );
+
+            $('html *[data-livefill-inverse]').animate({
+                svgFill: fg_color
+            }, duration);
+
             // we need to remove the stylesheet from the dom as it would override the animations
             self.stylesheet_fg.text('');
 
             // add colors and re-add styles after animation
             var style_fg = '';
             style_fg += '[data-livefg] { color: ' + fg_color + ' !important; border-color: ' + fg_color + '; }';
-            style_fg += '.active [data-livefg], nav li:hover [data-livefg] { color: ' + bg_color + ' !important; background-color: ' + fg_color + ' !important;}';
+            style_fg += '[data-livefg-inverse] { color: ' + bg_color + '; border-color: ' + bg_color + ';}';
+
+            style_fg += '[data-livefg] a { color: ' + fg_color + '; border-color: ' + fg_color + ';}';
+
+            style_fg += '[data-livefill-inverse] { fill: ' + fg_color + '; }';
+            style_fg += '[data-livebg-inverse] { background-color: ' + fg_color + ' !important; }';
+
+            // TODO: tl loading bar hack
+            style_fg += 'html.turbolinks-progress-bar::before { background-color: ' + fg_color + ' !important; }';
+
+            // TODO: not so nice - special styles for topbar
+            style_fg += '.menu .hover { background-color: ' + fg_color + ' !important; }';
+            style_fg += '.menu .hover > a { color: ' + bg_color + ' !important; }';
+            style_fg += '.menu > li > ul a { color: ' + bg_color + ' !important; }';
+            //style_fg += '.active [data-livefg], nav li:hover [data-livefg] { color: ' + bg_color + ' !important; background-color: ' + fg_color + ' !important;}';
+
+
+            // TODO: not so nice, styles 
 
             setTimeout(function(){
                 self.stylesheet_fg.text(style_fg);
             }, duration_fg);
 
         }, delay);
-
-
-
-
-
-
-
-
-
 
     };
 

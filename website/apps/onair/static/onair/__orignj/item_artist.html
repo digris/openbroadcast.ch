@@ -1,0 +1,61 @@
+{% set item = object.item.artist %}
+
+{% if item %}
+    <div data-ct="artist" class="ct-panel">
+
+        <div class="row header">
+
+            {% if item.main_image %}
+            <div class="small-6 columns">
+                <img src="{{ base_url }}{{ item.main_image }}">
+            </div>
+            {% endif %}
+
+            <div class="{% if item.main_image %}small-6{% else %}small-12{% endif %} columns">
+                <div class="text-left">
+                    <h1>{{ item.name|truncate(24) }}</h1>
+                    <ul class="no-bullet">
+                        {% if item.type or item.country %}
+                        <li>
+                            {% if item.country %}
+                                ({{ item.country }})
+                            {% endif %}
+                            {% if item.type %}
+                                {{ item.type|capitalize }}
+                            {% endif %}
+                        </li>
+                        {% endif %}
+                        {% if item.date_start or item.date_start %}
+                        <li>
+                            {{ item.date_start }}
+                            {% if item.date_start or item.date_start %} - {% endif %}
+                            {{ item.date_end }}
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row body show-for-large-up">
+            <div class="small-12 columns">
+                {% if item.biography %}
+                <p>
+                    {{ item.biography|strip_markdown|truncate(240) }}
+                </p>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if item.tags %}
+        <div class="row tags text-left">
+            <div class="small-12 columns">
+                {% for tag in item.tags %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+{% endif %}

@@ -5,6 +5,11 @@ $bplayer-bottom-compact: 0px
 $bplayer-bottom-expanded: 0px
 
 
+//body.no-scroll
+//  overflow: hidden
+
+
+
 #bplayer_container
 
   z-index: 100
@@ -12,34 +17,31 @@ $bplayer-bottom-expanded: 0px
   position: fixed
   width: 100%
 
-  // hidden on load
   bottom: $bplayer-bottom-hidden
 
-  // visible on load
-  // bottom: $bplayer-bottom-compact
-
-  //bottom: -140px
-  //bottom: -72px
-  //bottom: -122px
-
-
   padding-top: 4px
-  padding-bottom: 0px
+  padding-bottom: 0
 
   .actions
-    margin-bottom: 6px
-    padding-left: 12px
-    padding-right: 12px
+    margin: 0
     [data-bplayer-controls="pause"]
       display: none
-
     a
+      display: block
+      padding-top: 4px
       color: #fff
+      i
+        font-size: 20px
+
+    &.left
+      padding-left: 6px
+
+    &.right
+      padding-right: 2px
+      text-align: right
 
     .totals
       color: #fff
-
-
 
   .information ul
     margin-bottom: 0
@@ -104,18 +106,19 @@ $bplayer-bottom-expanded: 0px
     transition: bottom 0.2s
 
     // hide actions
-    ul.actions
+    .actions
       [data-bplayer-controls="resume"]
         display: none
       [data-bplayer-controls="pause"]
-        display: block
+        display: inline
 
     .playhead .background
       background-color: $primary-color
       transition: background-color 0.1s
 
   // playlist container
-  #bplayer_playlist_container
+  //#bplayer_playlist_container,
+  .playlist
     height: auto
     width: 664px
     float: left
@@ -123,7 +126,7 @@ $bplayer-bottom-expanded: 0px
   .controls-left
     width: 30px
     float: left
-    padding: 0px 0 0 7px
+    padding: 0 0 0 7px
 
   .controls-right
     width: 35px
@@ -160,29 +163,24 @@ body.paused #bplayer_container
 // history mode switch
 #bplayer_container
 
+  background-color: rgba(0, 0, 0, 0)
+  transition: background-color 0.5s
+
   .base
     background: #000
-    padding: 8px 0 2px
+    padding: 6px 10px 6px
     box-shadow: 0px -1px 3px 1px rgba(51, 51, 51, 0.16)
     width: 760px
 
   .wave
     background: #000
 
-  section.playlist.history
-    &.compact
-      display: block
-      .item:not(:first-child)
-        display: none !important
-
-
-    &.expanded
-      display: none
-
   &.show-history
     box-shadow: -2px -2px 3px 1px rgba(51, 51, 51, 0.16)
-    background: #000
-    #bplayer_playlist_container
+    background-color: rgba(0, 0, 0, 255)
+    transition: background-color 0.5s
+
+    .playlist
       height: auto
       max-height: 300px
       overflow-y: auto
@@ -215,9 +213,9 @@ body.paused #bplayer_container
       position: absolute
       right: 0
       top: 0
-      display: block !important
       padding: 6px 6px 0 0
       a
+        font-size: 36px
         color: white
 
 
@@ -227,15 +225,15 @@ body.paused #bplayer_container
 
   // history styles
   section.playlist.history.compact
+    max-height: 26px
     .item
       display: none
-      padding: 3px 0 0 10px
+      padding: 3px 0 0 0
       a, span
         color: white
       span
         opacity: 0.5
     .item
-      //&:first-child
       &.playing
         display: block
 
@@ -247,11 +245,10 @@ body.paused #bplayer_container
       color: #fff
     .item
       color: rgba(255, 255, 255, 0.5)
-      display: block
-      padding: 4px 0
+      //display: block
+      padding: 4px 0 1px
       margin: 4px 0
-      border-top: 1px solid rgba(255, 255, 255, 0.1)
-      padding: 3px 0
+      border-top: 2px solid rgba(255, 255, 255, 0.4)
 
       &.hover
         color: #fff
@@ -269,24 +266,22 @@ body.paused #bplayer_container
     margin: 0 auto 20px
 
     .col-airtime
-      width: 14%
+      flex: 0 1 90px
+
     .col-action
+      flex: 0 1 30px
       a
         color: rgba(255, 255, 255, 0.5)
-      width: 4%
+
+
     .col-name
-      width: 22%
-      // added 17% as long as buying is not available - see below
-      width: 39%
+
     .col-artist
-      width: 22%
-      // added 17% as long as buying is not available - see below
-      width: 39%
 
     // price & buy are not available yet - just here for the future
     // using 34% together
     .col-price
-      width: 24%
+      flex: 0 1 80px
       .price
         color: #ffffff
       .increase-step
@@ -296,121 +291,14 @@ body.paused #bplayer_container
         font-size: rem-calc(12)
         color: #F00
     .col-buy
+      flex: 0 1 80px
       a
+        display: block
+        background: orangered
         color: white
-      width: 10%
-
-
-
-
-
-//////////////////////////////////////////////////////
-// responsive overrides
-//////////////////////////////////////////////////////
-@media #{$small-only}
-  #bplayer_container
-    +clearfix()
-    background: #000
-    height: 60px
-    bottom: 0px !important // always visible on small display
-
-    &.init,
-    &.ready
-      .controls-left,
-      .controls-right
-
-        a
-          //color: #000
-
-    &.playing,
-    &.playing
-      bottom: 0px
-
-    .base
-      background: transparent
-      width: 100%
-
-
-    .controls-left
-      position: absolute
-      float: none
-      left: 0
-      width: 50px
-      padding-left: 14px
-      a
-        font-size: rem-calc(24)
-
-    .controls-right
-      position: absolute
-      right: 0
-      float: none
-      width: 50px
-      padding-left: 0
-      a
-        font-size: rem-calc(34)
-        line-height: 100%
-
-    // mid column, holds content from nj/***
-    #bplayer_playlist_container
-      position: absolute
-      float: none
-      left: 50px
-      .playlist
-        .item
-          font-size: rem-calc(13)
-          line-height: 140%
-          padding: 1px 0 0 10px
-          &.history.compact
-            top: 7px
-            position: relative
-
-
-// visible playlist
-@media #{$small-only}
-  #bplayer_container.show-history
-    // full height on mobile devives
-    height: 100vh
-    #bplayer_playlist_container
-      width: 100%
-      max-height: 100vh
-      left: 0
-      .playlist
-        padding-top: 84px
-        width: 100%
-        .col-action
-          width: 10%
-          a
-            font-size: rem-calc(20)
-        .col-airtime
-          width: 18%
-        .col-name
-          width: 70%
-
-
-        .item
-          font-size: rem-calc(13)
-          line-height: 140%
-          padding: 1px 0 0 10px
-          &.history.compact
-            top: 7px
-            position: relative
-
-
-    // TODO: this is a hack! improve structure & handling
-    .actions-expanded
-      right: 43px
-      bottom: 0
-
-      ul
-        position: fixed
-        bottom: 10px
-        margin: 0
-
-      a
-        font-size: rem-calc(34)
-        line-height: 100%
-
-
+        text-align: center
+        border: 1px solid white
+        border-radius: 2px
 
 
 

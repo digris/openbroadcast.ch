@@ -5,7 +5,6 @@
   height: 60px
   .wrapper
     display: inline
-    padding: 4px
     height: 60px
     border: 2px solid #000
     padding: 8px 20px 9px
@@ -118,7 +117,7 @@
       display: none
 
     .meta-container-offline
-      display: block
+      display: block !important
       p
         margin-bottom: 4px
       ul > li
@@ -151,17 +150,18 @@
     height: 100%
     .wrapper
       height: 100%
+      width: 100%
+      position: absolute
 
       .controls
         z-index: 9999
         width: 100%
         height: 100%
-        //display: flex !important
         align-items: center
         justify-content: center
 
         span
-          display: flex !important
+          display: flex
           align-items: center
           justify-content: center
           height: 100%
@@ -303,8 +303,16 @@
         box-shadow: 2px 2px 14px rgba(0, 0, 0, 0.5)
         background-size: 100% !important
 
-        // action wrapper - play/pause/listen
-        // moved to general section
+        > div.image-container
+          background: green !important
+          position: absolute
+          top: 0
+          width: 100%
+          height: 100%
+          img
+            width: 100%
+            height: 100%
+
 
         // swapable container - artist/label/etc
         > div.details
@@ -397,6 +405,7 @@
 
           transition: color 0.1s
           background-position: 50% 50%
+          background-repeat: no-repeat
 
           > a
             color: #fff
@@ -501,7 +510,7 @@ body.playing #onair_container
     span.listen
       display: none !important
     span.pause
-      display: block
+      display: flex
 
 body.loading #onair_container
   .logo-container .controls
@@ -510,7 +519,7 @@ body.loading #onair_container
     span.pause
       display: none
     span.loading
-      display: block
+      display: flex
 
 #onair_container
   // only show controls if item has "focus"
@@ -522,7 +531,7 @@ body.loading #onair_container
     span
       display: none
     span.play
-      display: block
+      display: flex
 
   .item
     &.current .container .controls
@@ -535,7 +544,7 @@ body.loading #onair_container
       span.play
         display: none !important
       span.listen
-        display: block
+        display: flex
 
     // is playing - so can only be 'paused'
     // problem: playing flag stays even if the actual player is paused...
@@ -545,20 +554,20 @@ body.loading #onair_container
       span.listen
         display: none
       span.pause
-        display: block
+        display: flex
 
 // kind of ugly overrides for 'paused' state
 body.paused #onair_container
   .item
     &.onair .container .controls
       span.listen
-        display: block
+        display: flex
       span.pause
         display: none
 
     &.playing .container .controls
       span.play
-        display: block
+        display: flex
       span.pause
         display: none
 
@@ -573,7 +582,7 @@ body.loading #onair_container
       span.pause
         display: none !important
       span.loading
-        display: block !important
+        display: flex !important
 
 
 
@@ -588,7 +597,6 @@ body.loading #onair_container
     overflow: hidden
 
     .progress-container
-      padding-top: 30px
       bottom: -20px
       position: absolute
       width: 100%
@@ -712,17 +720,10 @@ body.loading #onair_container
           border-radius: 50%
           line-hrigh: 50px
 
-          polyline
-            stroke: #000
-
-          &:hover
-            polyline
-              stroke: #fff
-
         &:hover
           .icon
-            transition: background 0.1s
-            background: rgba(0, 0, 0, 1.0)
+            //transition: background 0.1s
+            //background: rgba(0, 0, 0, 1.0)
 
 
       div.previous
@@ -758,7 +759,7 @@ $vote-icon-size: 33px
     left: 50%
     width: 2px
     height: 62px
-    background: #000
+    //background: #000
 
   div.vote
     padding-top: 8px
@@ -779,9 +780,15 @@ $vote-icon-size: 33px
       position: absolute
       //width: $vote-icon-size
       //height: $vote-icon-size
-      polyline, rect
-        transition: fill 0.5s
-        stroke: #000
+      //polyline, rect
+      //  transition: fill 0.5s
+      //  stroke: #000
+
+    &:hover
+      svg
+        polyline,
+        rect
+          fill-opacity: 0.4
 
 
     &.vote-up
@@ -804,9 +811,9 @@ $vote-icon-size: 33px
     &:hover, &:active
       a
         color: #000
-      polyline, rect
-        fill: #fff
-        transition: fill 0.2s
+      //polyline, rect
+      //  fill: #fff
+      //  transition: fill 0.2s
 
 
 

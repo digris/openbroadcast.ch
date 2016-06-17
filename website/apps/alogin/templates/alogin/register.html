@@ -6,7 +6,7 @@
         <div class="small-12 columns">
 
             <div class="section-header">
-                <h2>Anmelden</h2>
+                <h2>{% trans "Konto Erstellen" %}</h2>
             </div>
 
             <p>Melden Sie sich bei open broadcast an, um unser Radioprogramm zu kommentieren oder bei der Community mitzumachen.</p>
@@ -15,42 +15,29 @@
 
                 {% csrf_token %}
 
-
-                <!--
-                <label>Benutzername</label>
-                <input type="text" name="user">
-                <label>Password</label>
-                <input type="password" name="user">
-                <input type="submit" name="action" value="login">
-                <input type="hidden" name="action" value="login">
-                -->
-
                 {{ form }}
 
-                {% comment %}
-                {% fd5_form_item form.username "small-12" %}
-                {% fd5_form_item form.password "small-12" %}
-                {% endcomment %}
-
-                <button class="button simple small black expand" type="submit">{% trans "anmelden" %}</button>
+                <button class="button simple black expanded" type="submit">{% trans "Konto Erstellen" %}</button>
 
             </form>
 
-
             <div>
-                <p>
-                    <a href="{% url 'alogin-login' %}" data-alogin-action="login">Login</a>
+                <p class="secondary">
+                    <span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                        <a href="{% url 'alogin-login' %}" data-alogin-action="register">{% trans "Login" %}</a>
+                    </span>
                 </p>
+
             </div>
 
             {% include 'alogin/_social.html' %}
-
-
-
         </div>
 
     </div>
 
 </div>
 
-<a class="close-reveal-modal">Schliessen <span>&#215;</span></a>
+<button class="close-button" data-close aria-label="{% trans 'Schliessen' %}" type="button">
+    <span aria-hidden="true">&times;</span>
+</button>

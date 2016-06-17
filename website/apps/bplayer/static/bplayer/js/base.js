@@ -39,7 +39,7 @@ var BPlayerApp = function () {
 
         console.log('BPlayerApp - INIT');
 
-        if(self.debug) {
+        if (self.debug) {
             console.log('BPlayerApp - init');
         }
 
@@ -59,7 +59,7 @@ var BPlayerApp = function () {
         //soundManager.debugMode = self.debug;
         //soundManager.useConsole = self.debug;
 
-        if(self.mode == 'inline' || self.mode == 'popup') {
+        if (self.mode == 'inline' || self.mode == 'popup') {
             self.sm2 = self.init_sm2();
         }
 
@@ -67,17 +67,17 @@ var BPlayerApp = function () {
         self.bindings();
     };
 
-    this.ios_create_sound = function() {
+    this.ios_create_sound = function () {
 
         //alert('ios_create_sound')
 
         self.current_sound = soundManager.createSound({
-                autoLoad: true,
-                autoPlay: true,
-                volume: 80,
-                id: 'the_sound',
-                url: 'https://www.openbroadcast.org/stream/openbroadcast.mp3',
-            });
+            autoLoad: true,
+            autoPlay: true,
+            volume: 80,
+            id: 'the_sound',
+            url: 'https://www.openbroadcast.org/stream/openbroadcast.mp3'
+        });
 
 
         self.current_sound.pause();
@@ -89,13 +89,13 @@ var BPlayerApp = function () {
     };
 
 
-    this.init_sm2 = function() {
+    this.init_sm2 = function () {
 
-        if(self.debug) {
+        if (self.debug) {
             console.log('BPlayerApp - init_sm2');
         }
 
-         return soundManager.setup({
+        return soundManager.setup({
             url: self.static_url + 'bplayer/swf/lib/soundmanager2_flash9_debug.swf',
             flashVersion: 9,
             useHTML5Audio: true,
@@ -150,13 +150,13 @@ var BPlayerApp = function () {
             self.controls({action: 'next'});
         },
         whileloading: function () {
-            if(this.readyState == 1) {
+            if (this.readyState == 1) {
                 self.state_change('loading');
             }
             self.loading(this);
         },
         whileplaying: function () {
-            if(this.readyState == 3) {
+            if (this.readyState == 3) {
                 self.state_change('playing');
             }
             self.progress(this);
@@ -168,7 +168,7 @@ var BPlayerApp = function () {
 
     this.state_change = function (state) {
 
-        if(self.debug) {
+        if (self.debug) {
             console.log('BPlayerApp - state changed to: ' + state);
         }
 
@@ -181,17 +181,17 @@ var BPlayerApp = function () {
         $('body').addClass(state).removeClass(classes);
 
         // TODO: this is a hack!!! implement properly if wished to use!
-        if (state == 'paused' || state == 'stopped') {
-
-            var heights = [50, 90, 50, 40, 20, 30, 70];
-            $('#levelbridge_icon span').each(function (i, el) {
-                $(this).animate({
-                    height: heights[i] + '%'
-                }, {
-                    duration: 1500
-                })
-            });
-        }
+        // if (state == 'paused' || state == 'stopped') {
+        //
+        //     var heights = [50, 90, 50, 40, 20, 30, 70];
+        //     $('#levelbridge_icon span').each(function (i, el) {
+        //         $(this).animate({
+        //             height: heights[i] + '%'
+        //         }, {
+        //             duration: 1500
+        //         })
+        //     });
+        // }
 
     };
 
@@ -203,17 +203,15 @@ var BPlayerApp = function () {
     this.bindings = function () {
 
 
-
-        if(self.debug) {
+        if (self.debug) {
             console.log('BPlayerApp - bindings');
         }
 
 
         // just testing ios
-        $('#ios_sound').on('click', function() {
+        $('#ios_sound').on('click', function () {
             self.ios_create_sound()
         });
-
 
 
         /*****************************************************************************
@@ -230,18 +228,18 @@ var BPlayerApp = function () {
             e.preventDefault();
 
             var action = $(this).data('bplayer-controls');
-            var index = $(this).parents('.item').index() -1;
+            var index = $(this).parents('.item').index() - 1;
 
-            if(action == 'play') {
+            if (action == 'play') {
                 self.controls({action: 'play', index: index});
                 onair.handle_pagination(index);
             }
 
-            if(action == 'pause') {
+            if (action == 'pause') {
                 self.controls({action: 'pause'});
             }
 
-            if(action == 'resume') {
+            if (action == 'resume') {
                 self.controls({action: 'play'});
             }
 
@@ -253,7 +251,7 @@ var BPlayerApp = function () {
             var action = $(this).data('bplayer-display');
 
 
-            if(self.debug) {
+            if (self.debug) {
                 debug.debug('bplayer-display: ' + action);
             }
 
@@ -290,7 +288,7 @@ var BPlayerApp = function () {
                 action: 'seek',
                 position: position,
                 uuid: uuid
-            }
+            };
 
             //self.controls(control);
 
@@ -324,12 +322,11 @@ var BPlayerApp = function () {
 
         });
 
-
     };
 
     this.attach = function () {
 
-        if(self.debug) {
+        if (self.debug) {
             console.log('BPlayerApp - attach');
         }
 
@@ -345,48 +342,53 @@ var BPlayerApp = function () {
     };
 
     this.show_hide_history = function () {
-        //var container = $('#bplayer_playlist_container', self.container);
+
         if (self.history_expanded) {
-            //container.removeClass('hidden');
             self.container.addClass('show-history');
+            //$('body').addClass('no-scroll');
         } else {
-            //container.addClass('hidden');
             self.container.removeClass('show-history');
+            //$('body').removeClass('no-scroll');
         }
+
+        self.update_player(false)
 
     };
 
 
-    this.set_playlist = function (playlist) {
+    // TODO: called from 'onair' app. should be don differently
+    this.set_playlist = function (playlist, opts) {
 
         playlist = playlist.slice();
         playlist.reverse();
 
-        if(self.debug) {
-            console.debug('BPlayerApp - set_playlist', playlist);
+        if (self.debug) {
+            console.debug('BPlayerApp - set_playlist', playlist, opts);
         }
         self.playlist = playlist;
-        //self.update_player();
 
-        // playlist content
-        self.playlist_container.html(nj.render('bplayer/nj/playlist.html', {
-            objects: self.playlist
-        }));
+
+        // handled in update_player()
+        // // playlist content
+        // self.playlist_container.html(nj.render('bplayer/nj/playlist.html', {
+        //     objects: self.playlist,
+        //     opts: opts
+        // }));
 
 
     };
 
     this.controls = function (control) {
 
-        if(self.debug) {
+        if (self.debug) {
             console.info('BPlayerApp - control: ', control);
         }
 
         if (control.action == 'play') {
             // TODO: handle situation with not existing index [fallback mode]
-            if(control.index == undefined) {
+            if (control.index == undefined) {
                 // offline situation
-                console.debug('no item, assuming offline mode')
+                console.debug('no item, assuming offline mode');
                 url = self.stream_url;
             } else {
 
@@ -398,8 +400,8 @@ var BPlayerApp = function () {
 
                 var url;
 
-                if(item.onair) {
-                    console.debug('item on-air')
+                if (item.onair) {
+                    console.debug('item on-air');
                     url = self.stream_url;
                 } else {
                     console.debug('item on-demand');
@@ -418,21 +420,20 @@ var BPlayerApp = function () {
             var loaded = self.current_sound.duration * self.current_sound.bytesLoaded;
             var position = self.current_sound.duration * control.position;
 
-            console.log('loaded', loaded, 'position', position)
+            console.log('loaded', loaded, 'position', position);
 
-            if(position < loaded) {
+            if (position < loaded) {
                 self.current_sound.setPosition(self.current_sound.duration * control.position);
             }
 
 
-
             /*
-            if (self.current_sound.paused) {
-                self.current_sound.resume();
-            } else if (self.current_sound.playState == 0) {
-                self.current_sound.play();
-            }
-            */
+             if (self.current_sound.paused) {
+             self.current_sound.resume();
+             } else if (self.current_sound.playState == 0) {
+             self.current_sound.play();
+             }
+             */
         }
 
 
@@ -443,13 +444,13 @@ var BPlayerApp = function () {
             if (self.current_index >= 1) {
 
                 var index = self.current_index - 1;
-                self.controls({action: 'play', index: index})
+                self.controls({action: 'play', index: index});
 
                 // TODO: kind of hakish - hooking to pagination
                 onair.handle_pagination(index);
 
             } else {
-                if(self.debug) {
+                if (self.debug) {
                     console.log('no previous items');
                 }
             }
@@ -476,14 +477,14 @@ var BPlayerApp = function () {
      * wrapper around sm2
      * @param {string} url
      */
-    this.play_file = function(url) {
+    this.play_file = function (url) {
 
         console.debug('BPlayerApp - play_file: ', url);
 
         try {
             self.current_sound.destruct();
         } catch (e) {
-            if(self.debug) {
+            if (self.debug) {
                 console.debug('unable to destruct sound: ' + e.message);
             }
         }
@@ -492,7 +493,7 @@ var BPlayerApp = function () {
 
         if (self.current_sound == undefined) {
 
-            if(self.debug) {
+            if (self.debug) {
                 console.debug('BPlayerApp - no "current_sound" object -> create one');
             }
 
@@ -520,7 +521,7 @@ var BPlayerApp = function () {
 
         } else {
 
-            if(self.debug) {
+            if (self.debug) {
                 console.debug('BPlayerApp - re-using "current_sound" object');
             }
 
@@ -528,7 +529,6 @@ var BPlayerApp = function () {
         }
 
     };
-
 
 
     this.progress = function (data) {
@@ -557,11 +557,31 @@ var BPlayerApp = function () {
 
     this.update_player = function (reindex) {
 
-        if(reindex !== undefined && self.current_uuid !== undefined && self.current_index != 0) {
-            $.each(self.playlist, function(i, el){
-               if(i > 0 && el.item.uuid == self.current_uuid) {
-                   self.current_index = i;
-               }
+        if (self.debug) {
+            console.debug('BPlayerApp - update_player', reindex);
+        }
+
+
+        // TODO: improve handling of change detection!
+        // if(JSON.stringify(self.last_playlist + self.last_history_expanded) == JSON.stringify(self.playlist + self.history_expanded)) {
+        //     if (self.debug) {
+        //         console.debug('nothing to do - unchanged playlist');
+        //     }
+        //     return;
+        // } else {
+        //     if (self.debug) {
+        //         console.debug('update - changed playlist');
+        //     }
+        // }
+        // self.last_playlist = self.playlist;
+        // self.last_history_expanded = self.history_expanded;
+
+
+        if (reindex !== undefined && self.current_uuid !== undefined && self.current_index != 0) {
+            $.each(self.playlist, function (i, el) {
+                if (i > 0 && el.item.uuid == self.current_uuid) {
+                    self.current_index = i;
+                }
             });
         }
 
@@ -583,8 +603,19 @@ var BPlayerApp = function () {
 
             // playlist content
             // TODO: maybe refactor to only update if panel is enabled/visible
-            $('#bplayer_playlist_container', self.container).html(nj.render('bplayer/nj/playlist.html', {
-                objects: self.playlist
+
+            if(self.history_expanded) {
+                var playlist_template = 'bplayer/nj/playlist_expanded.html';
+            } else {
+                var playlist_template = 'bplayer/nj/playlist_compact.html';
+            }
+
+            $('#bplayer_playlist_container', self.container).html(nj.render(playlist_template, {
+                objects: self.playlist,
+                opts: {
+                    onair: onair.is_onair,
+                    mode: onair.mode
+                }
             }));
 
             // update summary
@@ -619,11 +650,10 @@ var BPlayerApp = function () {
             }
 
 
-
             // hack - mark 'onair' as playing
             // TODO: investigate! this breaks onair player
-            if(media.onair) {
-                setTimeout(function(){
+            if (media.onair) {
+                setTimeout(function () {
                     $('.item.onair').addClass('playing');
                     //$('.item.onair', self.container).addClass('playing');
                 }, 1)
@@ -632,9 +662,8 @@ var BPlayerApp = function () {
             self.mark_playing_by_uuid();
 
 
-
         } else {
-            if(self.debug) {
+            if (self.debug) {
                 console.debug('bplayer - no playlist available');
             }
         }
@@ -652,11 +681,6 @@ var BPlayerApp = function () {
         }, 100);
 
 
-
-
-
-
-
     };
 
 };
@@ -665,13 +689,13 @@ var BPlayerApp = function () {
 BPlayerApp.prototype.parse_release = function (data) {
     var playlist = [];
 
-    if(self.debug) {
+    if (self.debug) {
         console.log('release-data:', data);
     }
 
     playlist = data.media;
 
-    if(self.debug) {
+    if (self.debug) {
         console.log('playlist', playlist);
     }
 
@@ -680,17 +704,16 @@ BPlayerApp.prototype.parse_release = function (data) {
 };
 
 
-
 BPlayerApp.prototype.parse_playlist = function (data) {
     var playlist = [];
 
-    if(self.debug) {
+    if (self.debug) {
         console.log('playlist-data:', data);
     }
 
     media_ids = [];
 
-    $.each(data.items, function(i, item) {
+    $.each(data.items, function (i, item) {
         media_ids.push(item.item.content_object.id);
     });
 
@@ -699,11 +722,11 @@ BPlayerApp.prototype.parse_playlist = function (data) {
         type: "GET",
         url: '/api/v1/track/?id__in=' + media_ids.join(','),
         async: false
-    }).done(function(data) {
+    }).done(function (data) {
         playlist = data.objects;
     });
 
-    if(self.debug) {
+    if (self.debug) {
         console.log('playlist', playlist);
     }
 

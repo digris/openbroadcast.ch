@@ -5,26 +5,20 @@
 
         <div class="small-12 columns">
 
-
             <div class="section-header">
                 <h2>Hinweis</h2>
             </div>
-
 
             <p>
                 (( Hinweis und Erklärung zur Weiterleitung auf openbroacdast _PLATTFORM_ ))
             </p>
 
+            <div class="expanded button-group">
 
+                <a data-remotelink-cancel class="button simple dimmed" href="#">Abbrechen</a>
+                <a data-remotelink-ignore class="button simple black" href="#">OK - weiter</a>
 
-
-
-            <ul class="button-group even-2">
-              <li><a data-remotelink-cancel class="button simple small dimmed right" href="#">Abbrechen</a></li>
-              <li><a data-remotelink-ignore class="button simple small black right" href="#">OK - weiter</a></li>
-            </ul>
-
-            <!--<p>Oder Anmelden mit:</p>-->
+            </div>
 
         </div>
 
@@ -32,4 +26,6 @@
 
 </div>
 
-<a class="close-reveal-modal">Schliessen <span>&#215;</span></a>
+<button class="close-button" data-close aria-label="{% trans 'Schliessen' %}" type="button">
+    <span aria-hidden="true">&times;</span>
+</button>

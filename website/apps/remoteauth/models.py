@@ -30,11 +30,24 @@ class User(AbstractUser):
     remote_uri = models.CharField(max_length=256, null=True, blank=True)
     profile_uri = models.CharField(max_length=256, null=True, blank=True)
 
+    # provided by remote models 'Profile'
+    pseudonym = models.CharField(blank=True, null=True, max_length=250)
+
 
     class Meta(object):
         app_label = 'remoteauth'
         verbose_name = 'User'
         verbose_name_plural = 'Users'
+
+    def get_display_name(self):
+
+        if self.pseudonym:
+            return self.pseudonym
+
+        if self.get_full_name():
+            return self.get_full_name()
+
+        return self.username
 
 
 

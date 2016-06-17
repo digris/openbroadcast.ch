@@ -1,0 +1,1 @@
+#achat_container,#bplayer_container,#onair_container,#topbar_container,a:after{display:none}@page{size:auto;margin:10mm}body,footer{background-color:#FFF;margin:0}a:after{content:" (" attr(href) ") "}

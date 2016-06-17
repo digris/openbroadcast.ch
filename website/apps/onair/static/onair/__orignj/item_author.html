@@ -1,0 +1,67 @@
+{% set item = object.emission.user_co_profile %}
+
+{% if item %}
+    <div data-ct="author" class="ct-panel">
+
+        <div class="row header">
+
+
+            {% if item.image %}
+            <div class="small-6 columns">
+                <img src="{{ base_url }}{{ item.image }}">
+            </div>
+            {% endif %}
+
+
+            <div class="{% if item.image %}small-6{% else %}small-12{% endif %} columns">
+                <div class="text-left">
+                    <h1>{{ item.display_name|truncate(24) }}</h1>
+                    <ul class="no-bullet">
+
+                        {% if item.pseudonym %}
+                        <li>
+                            {{ item.pseudonym }}
+                        </li>
+                        {% endif %}
+
+                        {% if item.city or item.country %}
+                        <li>
+                            {% if item.city %}
+                                {{ item.city|capitalize }}
+                            {% endif %}
+                            {% if item.city and item.country %}, {% endif %}
+                            {% if item.country %}
+                                {{ item.country|capitalize }}
+                            {% endif %}
+                        </li>
+                        {% endif %}
+
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row body show-for-large-up">
+            <div class="small-12 columns">
+                {% if item.biography %}
+                <p>
+                    {{ item.biography|truncate(240) }}
+                </p>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if item.tags %}
+        <div class="row tags text-left">
+            <div class="small-12 columns">
+                {% for tag in item.tags %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+{% endif %}
