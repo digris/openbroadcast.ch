@@ -11,11 +11,34 @@
     position: absolute
     top: 0
     left: 0
-    a
+    > a
       padding: 7px 0 0 20px
       display: block
       &:hover
-        text-decoration: underline
+        //text-decoration: underline
+
+    .quick-contact
+      max-height: 0
+      overflow: hidden
+      transition: max-height 0.25s
+      margin-left: 20px
+
+      p
+        padding-top: 4px
+        margin-bottom: 2px
+
+    .address,
+    .network
+      a
+        font-size: $global-font-size !important
+        &:hover
+          text-decoration: underline
+
+
+    &.hover
+      .quick-contact
+        transition: max-height 0.10s
+        max-height: 500px
 
   section.account
     position: absolute
@@ -81,3 +104,13 @@
           li
             padding: 7px 14px
             text-align: left
+
+
+
+
+//////////////////////////////////////////////////////
+// responsive overrides
+//////////////////////////////////////////////////////
+@include breakpoint(small down)
+  #topbar_container
+    display: none

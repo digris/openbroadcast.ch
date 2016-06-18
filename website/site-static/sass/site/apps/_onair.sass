@@ -109,6 +109,10 @@
         display: none
 
   // alternative handling, see #905
+
+  .meta-container-offline
+    display: none
+
   &.offline:not(.history)
     .switch-panel.onair
       display: none
@@ -117,7 +121,7 @@
       display: none
 
     .meta-container-offline
-      display: block !important
+      display: block
       p
         margin-bottom: 4px
       ul > li
@@ -185,11 +189,14 @@
         pointer-events: none
         top: 10px
         left: 20px
-        color: #FFF
-        text-align: left
-        font-size: rem-calc(40)
-        line-height: rem-calc(48)
-        font-weight: normal
+        &.claim
+          color: #ffffff
+          text-align: left
+          font-size: rem-calc(40)
+          line-height: rem-calc(48)
+          font-weight: normal
+          p
+            margin-bottom: 0
 
       // dab logo
       .footer
@@ -426,17 +433,6 @@
             color: #fff
 
 
-      .controls
-        @media #{$small-only}
-          width: 170px
-          height: 170px
-          background-size: 160px
-          &.hover
-            background-size: 170px
-          span
-            font-size: 120%
-            line-height: 211%
-
   // 'button' backgrounds
   .logo-container
     .controls span
@@ -613,6 +609,8 @@ body.loading #onair_container
         background-color: rgba(255, 255, 255, 0.4)
       .meter
         background-color: #ffffff
+        display: block
+        height: 100%
       .buffer
         display: block
         height: 1px
@@ -672,11 +670,11 @@ body.loading #onair_container
         a
           border-radius: 2px
 
-    > div
-      opacity: 0.1
-      &.fade-in
-        transition: opacity 1.5s
-        opacity: 1.0
+    //> div
+    //  opacity: 0.1
+    //  &.fade-in
+    //    transition: opacity 1.5s
+    //    opacity: 1.0
 
   .meta-container,
   .meta-container-offline
@@ -692,49 +690,44 @@ body.loading #onair_container
       margin: 12px 0
 
 
-
-
-
-
   ///////////////////////////////////////////////////
   // right/left sided arrows/buttons
   ///////////////////////////////////////////////////
-  @media #{$medium-up}
-    #media_prev_next
-      div.next,
-      div.previous
-        z-index: 999
-        position: absolute
-        top: 45%
-        &.disabled
-          opacity: 0.3
-          &:hover .icon
-            cursor: not-allowed
-            background: transparent !important
+  #media_prev_next
+    div.next,
+    div.previous
+      z-index: 999
+      position: absolute
+      top: 45%
+      &.disabled
+        opacity: 0.3
+        &:hover .icon
+          cursor: not-allowed
+          background: transparent !important
 
+      .icon
+        transition: background 0.1s
+        background: rgba(0, 0, 0, 0.0)
+        width: 120px
+        height: 120px
+        border-radius: 50%
+        line-hrigh: 50px
+
+      &:hover
         .icon
-          transition: background 0.1s
-          background: rgba(0, 0, 0, 0.0)
-          width: 120px
-          height: 120px
-          border-radius: 50%
-          line-hrigh: 50px
-
-        &:hover
-          .icon
-            //transition: background 0.1s
-            //background: rgba(0, 0, 0, 1.0)
+          //transition: background 0.1s
+          //background: rgba(0, 0, 0, 1.0)
 
 
-      div.previous
-        left: 30px
-        .icon
-          padding: 24px 0 0 30px
+    div.previous
+      left: 30px
+      .icon
+        padding: 24px 0 0 30px
 
-      div.next
-        right: 30px
-        .icon
-          padding: 24px 0 0 44px
+    div.next
+      right: 30px
+      .icon
+        padding: 24px 0 0 44px
 
 
 
@@ -821,112 +814,32 @@ $vote-icon-size: 33px
 //////////////////////////////////////////////////////
 // responsive overrides
 //////////////////////////////////////////////////////
-@media #{$medium-only}
-  #onair_container
-    .meta-container
-      .separator
-        margin: 12px auto
+@include breakpoint(medium down)
+  #media_prev_next
+    display: none
 
+  .meta-container-offline
+    display: none !important
 
-@media #{$small-only}
-  #onair_container
-    padding: 24px 0
+  .meta-container
+    margin-top: 20px
 
-    .logo-container .inner .header
-      font-size: rem-calc(14)
-
-    .logo-container .inner .footer
-      font-size: rem-calc(14)
-      .text
-        padding-right: 2px
-        font-size: rem-calc(11)
-      img.logo
-        width: 40px
-
-    .logo-container .inner .action
-      font-size: rem-calc(11)
-
-    .logo-container .inner .wrapper:hover
-      background-size: 170px
-      width: 170px
-      height: 170px
-
-
-    .info-container
-      .item
-        width: 20px
-    .meta-container
-      //background: red
-      min-height: 48px
-      text-align: center
-      margin-left: 0
-      dt
-        display: none
-      .separator
-        margin: 12px auto
-
-
-
-      a:hover
-        background: transparent
-        color: #000
-        text-decoration: underline
-        padding: 0
-
-
-    // disable history display
-    .item
-      display: none
-      &.current
-        display: block
-
-
-    // meta display
-    .meta-container
-      .separator
-        //display: none
-
-  // small screen rating overrides
-  $small-vote-icon-size: 16px
   .rating-container
-    margin: 12px auto 12px
-    height: 51px
-    width: 130px
-
-    div.separator
+    margin-top: 4px
+    width: 190px
+    .separator
       display: none
-      position: absolute
-      left: 50%
-      width: 2px
-      height: 62px
-      background: #000
 
-    div.vote
-      padding-top: 8px
-      a
-        height: $small-vote-icon-size
-        width: $small-vote-icon-size * 2
 
-      span
-        font-size: rem-calc(14)
-        position: absolute
-        padding: 3px
-        top: 7px
+  .item.info.previous.history
+    display: none !important
 
-      svg
-        position: absolute
-        width: 24px
-        height: 24px
+@include breakpoint(small down)
+  #station_time_container
+    display: none
 
-      &.vote-up
-        span
-          right: $small-vote-icon-size + 8px
-        svg
-          right: 0
+  .logo-container
+    .claim
+      font-size: 18px !important
+      line-height: 24px !important
 
-      &.vote-down
-        span
-          right: 0
-        svg
-          top: 10px
-          right: $small-vote-icon-size

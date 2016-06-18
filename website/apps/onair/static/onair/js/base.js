@@ -130,6 +130,22 @@ var OnAirApp = function () {
 
         });
 
+        /****************************************************************************
+         * swipe navigation
+         ****************************************************************************/
+        $("#onair_container").swipe( {
+            swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+
+                if(direction == 'right') {
+                    self.handle_prevnext('previous');
+                }
+                if(direction == 'left') {
+                    self.handle_prevnext('next');
+                }
+
+            }
+        });
+
     };
 
 

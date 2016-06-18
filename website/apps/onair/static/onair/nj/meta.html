@@ -5,22 +5,16 @@
 <div class="show-for-small-only" data-livefg>
     <!-- track related -->
     <p class="text-center">
-        <a target="_blank" data-ct="artist"
-           href="{{ base_url }}{{ object.item.artist.absolute_url }}">
-            {{ object.item.artist.name|shorten(30) }}
-        </a>
+        {{ object.item.artist.name|shorten(30) }}
         <br>
-        <a target="_blank" data-ct="media"
-           href="{{ base_url }}{{ object.item.absolute_url }}">
-            {{ object.item.name|shorten(30) }}
-        </a>
+        {{ object.item.name|shorten(30) }}
     </p>
 
 </div>
 
 
 
-<div class="show-for-medium-up" data-livefg>
+<div class="show-for-large" data-livefg>
     <!-- playlist related -->
     <dl>
         <dt>Playlist</dt>

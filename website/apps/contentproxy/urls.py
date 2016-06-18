@@ -7,6 +7,5 @@ urlpatterns = [
     url(r'^media-asset/format/(?P<uuid>[-\w]+)/default.mp3$', MediaResourceView.as_view()),
     url(r'^media-asset/format/(?P<uuid>[-\w]+)/default.mp3/$', MediaResourceView.as_view()),
 
-
-    url(r'^static-proxy/(?P<uri>.*)$', StaticResourceView.as_view()),
+    url(r'^static-proxy/(?P<path>.*)$', StaticResourceView.as_view()),
 ]

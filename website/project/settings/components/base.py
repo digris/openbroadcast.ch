@@ -77,8 +77,9 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 INSTALLED_APPS = (
 
-    'djangocms_admin_style',
-    'admin_shortcuts',
+    #'djangocms_admin_style',
+    #'admin_shortcuts',
+    'django_slick_admin',
 
     # django base
     'django.contrib.admin',

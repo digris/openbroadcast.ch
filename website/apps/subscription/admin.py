@@ -21,9 +21,9 @@ class NewsletterAdmin(TranslatableAdmin):
             (None, {
                 'fields':
                     (
-                        'name',
-                        'title',
-                        'description',
+                        #'name',
+                        #'title',
+                        #'description',
                         #'site',
                     ),
             }),
