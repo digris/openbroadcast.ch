@@ -1,0 +1,32 @@
+session_name: openbroadcast_ch
+start_directory: ./
+windows:
+
+- window_name: dev window
+  layout: tiled
+  shell_command_before:
+    - 'source ~/srv/openbroadcast.ch/bin/activate'
+  panes:
+    - shell_command:
+        - cd website
+        - ./manage.py runserver 0.0.0.0:8081
+    - shell_command:
+        - cd website
+        - celery -A project worker --beat -c 1 -l DEBUG
+    - shell_command:
+        - cd services/pushy
+        - node pushy.js
+    - gulp watch
+    - cd website
+    - cd website
+
+#- window_name: django
+#  layout: main-horizontal
+#  options:
+#    main-pane-height: 35
+#  start_directory: website/
+#  shell_command_before:
+#    - 'source ~/srv/openbroadcast.ch/bin/activate'
+#  panes:
+#  - ./manage.py runserver 0.0.0.0:8081
+#  - pane

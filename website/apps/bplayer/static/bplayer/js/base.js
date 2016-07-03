@@ -12,8 +12,8 @@ var BPlayerApp = function () {
     this.current_index = 0;
     this.current_uuid;
     this.playing_uuids = [];
-    this.sm2;
-    this.current_sound;
+    this.current_sound = false;
+    this.last_sound_url = false;
     this.stream_url;
     this.base_url;
     //this.stream_url = 'http://stream.openbroadcast.ch:80/openbroadcast';
@@ -46,87 +46,10 @@ var BPlayerApp = function () {
         self.container = $('#bplayer_container');
         self.playlist_container = $('#bplayer_playlist_container', self.container);
 
-        // setup player backend
 
-        soundManager.defaultOptions = {
-            multiShot: false,
-            debugMode: self.debug,
-            debugFlash: self.debug,
-            useConsole: self.debug
-            //useConsole: false
-        };
-        //soundManager.debugFlash = self.debug;
-        //soundManager.debugMode = self.debug;
-        //soundManager.useConsole = self.debug;
-
-        if (self.mode == 'inline' || self.mode == 'popup') {
-            self.sm2 = self.init_sm2();
-        }
 
         // triggered via TL
         self.bindings();
-    };
-
-    this.ios_create_sound = function () {
-
-        //alert('ios_create_sound')
-
-        self.current_sound = soundManager.createSound({
-            autoLoad: true,
-            autoPlay: true,
-            volume: 80,
-            id: 'the_sound',
-            url: 'https://www.openbroadcast.org/stream/openbroadcast.mp3'
-        });
-
-
-        self.current_sound.pause();
-        self.current_sound.play();
-
-        $('#ios_sound').hide();
-
-
-    };
-
-
-    this.init_sm2 = function () {
-
-        if (self.debug) {
-            console.log('BPlayerApp - init_sm2');
-        }
-
-        return soundManager.setup({
-            url: self.static_url + 'bplayer/swf/lib/soundmanager2_flash9_debug.swf',
-            flashVersion: 9,
-            useHTML5Audio: true,
-            preferFlash: false,
-            debugMode: self.debug,
-            debugFlash: self.debug,
-            useConsole: self.debug,
-            //useConsole: true,
-
-
-            onready: function () {
-
-                self.current_sound = soundManager.createSound({
-                    autoLoad: true,
-                    autoPlay: false,
-                    stream: true,
-                    onplay: self.events.play,
-                    onstop: self.events.stop,
-                    onpause: self.events.pause,
-                    onresume: self.events.resume,
-                    onfinish: self.events.finish,
-                    whileloading: self.events.whileloading,
-                    whileplaying: self.events.whileplaying,
-                    onload: self.events.onload,
-                    volume: 80
-                });
-
-                self.state_change('ready');
-            }
-        });
-
     };
 
 
@@ -149,13 +72,19 @@ var BPlayerApp = function () {
             self.state_change('stopped');
             self.controls({action: 'next'});
         },
-        whileloading: function () {
-            if (this.readyState == 1) {
+        whileloading: function (e) {
+
+            //console.log('whileloading:', e);
+
+            //if (this.readyState == 1) {
                 self.state_change('loading');
-            }
+            //}
             self.loading(this);
         },
-        whileplaying: function () {
+        whileplaying: function (e) {
+
+            //console.log('whileplaying:', e)
+
             if (this.readyState == 3) {
                 self.state_change('playing');
             }
@@ -172,13 +101,13 @@ var BPlayerApp = function () {
             console.log('BPlayerApp - state changed to: ' + state);
         }
 
-        var classes = removeA(self.states.slice(0), state).join(' ');
-        self.container.addClass(state).removeClass(classes);
+        var classes_to_remove = removeA(self.states.slice(0), state).join(' ');
+        self.container.addClass(state).removeClass(classes_to_remove);
         self.state = state;
 
         // TODO: not so nice, add state as property to body
         $('body').data('bplayer_state', state);
-        $('body').addClass(state).removeClass(classes);
+        $('body').addClass(state).removeClass(classes_to_remove);
 
         // TODO: this is a hack!!! implement properly if wished to use!
         // if (state == 'paused' || state == 'stopped') {
@@ -193,6 +122,20 @@ var BPlayerApp = function () {
         //     });
         // }
 
+        // var uuids = [];
+        // try {
+        //     uuids.push(self.current_media.uuid);
+        // } catch (e) {
+        //     console.warn(e)
+        // }
+        //
+        // self.set_states_by_uuid(uuids, {
+        //     clear: removeA((removeA(self.states.slice(0), state), 'playing').join(' ')),
+        //     set: state
+        // });
+
+
+
     };
 
     this.style_change = function (style) {
@@ -206,13 +149,6 @@ var BPlayerApp = function () {
         if (self.debug) {
             console.log('BPlayerApp - bindings');
         }
-
-
-        // just testing ios
-        $('#ios_sound').on('click', function () {
-            self.ios_create_sound()
-        });
-
 
         /*****************************************************************************
          * generic actions
@@ -416,15 +352,26 @@ var BPlayerApp = function () {
         if (control.action == 'seek') {
 
             // check if already in buffer
+            var seekable = self.current_sound.getSeekable()
+            var abs_time = self.current_sound.getDuration() * control.position;
 
-            var loaded = self.current_sound.duration * self.current_sound.bytesLoaded;
-            var position = self.current_sound.duration * control.position;
+            console.debug('seek', seekable[0])
 
-            console.log('loaded', loaded, 'position', position);
-
-            if (position < loaded) {
-                self.current_sound.setPosition(self.current_sound.duration * control.position);
+            if(abs_time >= seekable[0].start && abs_time <= seekable[0].end) {
+                self.current_sound.setTime(abs_time)
             }
+
+
+
+
+            // var loaded = self.current_sound.duration * self.current_sound.bytesLoaded;
+            // var position = self.current_sound.duration * control.position;
+            //
+            // console.log('loaded', loaded, 'position', position);
+            //
+            // if (position < loaded) {
+            //     //self.current_sound.setPosition(self.current_sound.duration * control.position);
+            // }
 
 
             /*
@@ -474,10 +421,54 @@ var BPlayerApp = function () {
 
 
     /**
-     * wrapper around sm2
+     * wrapper around buzz
      * @param {string} url
      */
     this.play_file = function (url) {
+
+        console.debug('BPlayerApp - play_file: ', url);
+
+        if(self.last_sound_url && self.last_sound_url == url) {
+            self.current_sound.play()
+            return;
+        }
+
+        if(self.current_sound) {
+            self.current_sound.stop();
+            delete(self.current_sound);
+        }
+
+        self.current_sound = new buzz.sound(url, {
+              preload: true,
+              webAudioApi: false
+        });
+
+        // event bindings
+        self.current_sound.bind("waiting", self.events.whileloading);
+        self.current_sound.bind("timeupdate", self.events.whileplaying);
+        self.current_sound.bind("playing", self.events.play);
+        self.current_sound.bind("pause", self.events.pause);
+        self.current_sound.bind("play", self.events.resume);
+        self.current_sound.bind("play", self.events.play);
+        self.current_sound.bind("ended", self.events.finish);
+
+        self.current_sound.bind("waiting", function(e){
+            console.log('waiting:', e);
+        });
+
+        self.current_sound.play().fadeIn(500);
+
+        self.last_sound_url = url;
+
+
+    };
+
+
+    /**
+     * wrapper around sm2
+     * @param {string} url
+     */
+    this.__play_file = function (url) {
 
         console.debug('BPlayerApp - play_file: ', url);
 
@@ -531,9 +522,9 @@ var BPlayerApp = function () {
     };
 
 
-    this.progress = function (data) {
+    this.progress = function (sound) {
 
-        var pos = data.position / data.duration;
+        var pos = sound.getPercent() / 100.0;
         var width = $('.playhead', self.container).width();
 
         $('.playhead .indicator', self.container).css('background-position-x', (pos * width) + 'px');
@@ -633,7 +624,6 @@ var BPlayerApp = function () {
             // collect playing uuids
             // TODO: rework, not needed here
             var uuids = [];
-
             try {
                 uuids.push(media.item.uuid);
             } catch (e) {
@@ -659,7 +649,10 @@ var BPlayerApp = function () {
                 }, 1)
             }
 
-            self.mark_playing_by_uuid();
+            self.set_states_by_uuid(uuids, {
+                clear: 'playing',
+                set: 'playing'
+            });
 
 
         } else {
@@ -670,17 +663,18 @@ var BPlayerApp = function () {
 
     };
 
-    this.mark_playing_by_uuid = function () {
-
-        console.debug('mark_playing_by_uuid', self.playing_uuids);
-
-
-        setTimeout(function () {
-            $('[data-uuid]').removeClass('playing');
-            $('[data-uuid="' + self.current_uuid + '"]').addClass('playing');
-        }, 100);
-
-
-    };
-
 };
+
+
+
+BPlayerApp.prototype.set_states_by_uuid = function (uuids, options) {
+    if(options && options.clear !== undefined) {
+        $('[data-uuid]').removeClass(options.clear);
+    }
+    if(options && options.set !== undefined) {
+        $.each(uuids, function (i, el) {
+            $('[data-uuid="' + el + '"]').addClass(options.set);
+        });
+    }
+};
+

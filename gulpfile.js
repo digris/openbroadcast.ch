@@ -74,6 +74,27 @@ gulp.task('styles', function () {
         .pipe($.size({title: 'styles'}));
 });
 
+
+
+
+gulp.task('admin', function () {
+    return gulp.src([
+            'website/site-static/sass/slick-admin-styles.sass'
+        ])
+        .pipe($.sourcemaps.init())
+        .pipe($.sass({
+            includePaths: './node_modules/django-slick-admin-styles/sass/',
+            outputStyle: 'expanded',
+            precision: 10
+        }))
+        .pipe($.concat('django-slick-admin.css'))
+        .pipe(gulp.dest('website/site-static/django_slick_admin/css/'))
+        .pipe($.size({title: 'admin'}));
+});
+
+
+
+
 gulp.task('babel', function () {
     return gulp.src([
             'website/site-static/js/lib/fd-6.2/*.js'

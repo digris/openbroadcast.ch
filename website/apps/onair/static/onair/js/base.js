@@ -133,8 +133,17 @@ var OnAirApp = function () {
         /****************************************************************************
          * swipe navigation
          ****************************************************************************/
-        $("#onair_container").swipe( {
-            swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+        $("#___onair_container .switch-container").swipe( {
+
+
+            hold: function(event, direction, distance) {
+                console.log('hold distance:', distance);
+            },
+
+            swipe: function(event, direction, distance, duration, fingerCount, fingerData) {
+
+
+                console.log('distance:', distance);
 
                 if(direction == 'right') {
                     self.handle_prevnext('previous');
@@ -143,6 +152,46 @@ var OnAirApp = function () {
                     self.handle_prevnext('next');
                 }
 
+            },
+
+            swipeStatus: function (event, phase, direction, distance) {
+                //If we are moving before swipe, and we are going L or R in X mode, or U or D in Y mode then drag.
+                if (phase == "move" && (direction == "left" || direction == "right")) {
+                    var duration = 0;
+
+
+                    if (direction == "left") {
+                        distance *= -1;
+                    }
+
+                    console.debug('distance:', distance);
+
+
+                    $("#onair_container .switch-container").css('left', distance * 0.2)
+
+
+                    // if (direction == "left") {
+                    //     scrollImages((IMG_WIDTH * currentImg) + distance, duration);
+                    // } else if (direction == "right") {
+                    //     scrollImages((IMG_WIDTH * currentImg) - distance, duration);
+                    // }
+
+                } else if (phase == "cancel") {
+                    // scrollImages(IMG_WIDTH * currentImg, speed);
+                    $("#onair_container .switch-container").css('left', 0);
+                    $("#onair_container .switch-container").css('right', 0);
+
+
+                } else if (phase == "end") {
+                    if (direction == "right") {
+                       self.handle_prevnext('previous');
+                    } else if (direction == "left") {
+                        self.handle_prevnext('next');
+                    }
+                    // scrollImages(IMG_WIDTH * currentImg, speed);
+                    $("#onair_container .switch-container").css('left', 0);
+                    $("#onair_container .switch-container").css('right', 0);
+                }
             }
         });
 

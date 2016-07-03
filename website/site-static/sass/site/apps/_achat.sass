@@ -78,14 +78,15 @@ body
       transition: opacity 2.0s
       padding: 0 10px
 
-      width: 25%
+      width: 100%
+      @media #{breakpoint(medium)}
+        width: 25%
+        &.has-attachments
+          width: 50%
 
       &.new
         opacity: 0.0
         transition: opacity 1.0s
-
-      &.has-attachments
-        width: 50%
 
 
       .bubble

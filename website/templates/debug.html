@@ -2,42 +2,126 @@
 <html class="no-js{% if user.is_authenticated %} is-authenticated{% endif %}" lang="{{ LANGUAGE_CODE }}">
 <head>
     <script src="{{ STATIC_URL }}js/lib/jquery-2.1.0.js"></script>
-    <script src="{{ STATIC_URL }}bplayer/js/lib/sm2/soundmanager2.js"></script>
+
+    <script src="{{ STATIC_URL }}bplayer/js/player.js"></script>
+    <script src="{{ STATIC_URL }}bplayer/js/lib/buzz-1.2.0.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
-    <h1 style="font-size: 120px;" onclick="create_sound()">!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</h1>
+    <h1>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</h1>
 
+    <br>
+
+
+    <!--<a href="#" style="display: block; padding: 40px;">--- PLAY ---</a>-->
+
+
+
+
+
+    <div>
+
+        <button onclick="play_audio('play')">PLAY</button>
+    <button onclick="play_audio('pause')">PAUSE</button>
+    <button onclick="play_audio('stop')">STOP</button>
+
+    </div>
+
+    <p>askdjads</p>
+
+
+    <!--
+        <audio id="audio0" src="/media/test/file1.m4a" type="audio/aac"></audio>
+        <audio id="audio3" src="/stream/wuvt-hq.aac" type="audio/aac"></audio>
+
+        <audio controls>
+            <source id="audio1" src="/media/test/file1.m4a" type="audio/aac">
+            Your browser does not support the audio element.
+        </audio>
+
+        <audio controls>
+            <source id="audio1" src="/stream/wuvt-hq.aac" type="audio/aac">
+            Your browser does not support the audio element.
+        </audio>
+    -->
+
+    <audio id="audio_container" preload="none">
+        <source data-encoding="aac" src="/stream/wuvt-hq.aac" type="audio/aac">
+        <source data-encoding="ogg" src="/stream/wuvt-hq.ogg" type="audio/ogg">
+    </audio>
 
     <script>
 
-        var current_sound;
+        /*
 
-        soundManager.setup({
-            url: '{{ STATIC_URL }}bplayer/swf/lib/soundmanager2_flash9_debug.swf',
-            flashVersion: 9,
-            useHTML5Audio: true,
-            preferFlash: false,
-            debugMode: true,
-            debugFlash: true,
-            useConsole: true,
-            onready: function () {
-                console.log('ready');
-                console.log('created')
-            }
-        });
+        var mySound = new buzz.sound("/media/test/file1.m4a")
+        mySound.play()
+
+        mySound = new buzz.sound("/stream/wuvt-hq.aac")
 
 
-        var create_sound = function() {
-            current_sound = soundManager.createSound({
-                autoLoad: true,
-                autoPlay: true,
-                volume: 80,
-                id: 'the_sound',
-                url: 'https://www.openbroadcast.org/stream/openbroadcast.mp3',
-            });
-        };
 
+        mySound = new buzz.sound("/stream/openbroadcast.mp3")
+
+
+        mySound = new buzz.sound("/media-asset/format/c1972350-b7f0-49d1-ad4b-8d6d781fc551/default.mp3")
+
+
+
+
+         */
+
+
+        var mySound = false;
+
+        //var surl = "/stream/openbroadcast.mp3";
+        var surl = "/media-asset/format/c1972350-b7f0-49d1-ad4b-8d6d781fc551/default.mp3";
+        //var surl = "/media/test/file1.m4a"
+
+        //var surl = 'https://www.openbroadcast.ch/media-asset/format/baef51db-8f31-41bc-8046-b619a32a6aea/default.mp3'
+
+        $(function(){
+
+            play_audio = function(task) {
+
+                if(task == 'play'){
+
+                if(mySound) {
+                    mySound.stop();
+                    delete(mySound);
+                }
+
+                mySound = new buzz.sound(surl,{
+              preload: true,
+              webAudioApi: false
+        })
+
+
+                    mySound.play();
+
+              }
+              if(task == 'stop'){
+                   mySound.stop()
+              }
+              if(task == 'pause'){
+                   mySound.pause()
+              }
+         };
+
+
+
+//$(document).on('click', 'a', function(e){
+//    e.preventDefault()
+//
+//              var audio = document.getElementById('audio3');
+//            audio.play()
+//
+//          })
+
+
+        })
 
     </script>
 

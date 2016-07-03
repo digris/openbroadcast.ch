@@ -4,16 +4,16 @@
 
         <div class="row collapse">
 
-            <div class="columns">
+            <div class="columns small-1">
 
                 <div class="actions left">
-                    <a data-bplayer-controls="pause" href="#"><i class="fa fa-pause"></i></a>
                     <a data-bplayer-controls="resume" href="#"><i class="fa fa-play"></i></a>
+                    <a data-bplayer-controls="pause" href="#"><i class="fa fa-pause"></i></a>
                 </div>
 
             </div>
 
-            <div class="columns">
+            <div class="columns small-10">
                 <section class="playlist history compact">
 
                     {% if not opts.onair and opts.mode != 'history' %}
@@ -43,7 +43,7 @@
                 </section>
             </div>
 
-            <div class="columns">
+            <div class="columns small-1">
 
                 <div class="actions right">
                     <a data-bplayer-display="toggle-history" href="#"><i class="fa fa-angle-double-up"></i></a>

@@ -35,16 +35,20 @@ log = logging.getLogger(__name__)
 
 class MediaResourceView(LoginRequiredMixin, View):
 
-
     def get(self, *args, **kwargs):
 
         uuid = kwargs.get('uuid', None)
+
+        encoding = kwargs.get('encoding', 'mp3')
+
         log.debug(u'media request for %s by %s' % (self.request.user, uuid))
 
         requested_range = self.request.META.get('HTTP_RANGE', None)
         cached_media, created = CachedMedia.objects.get_or_create(uuid=uuid)
 
-        sf_response = sendfile(self.request, cached_media.path)
+        path = cached_media.path
+
+        sf_response = sendfile(self.request, path)
         sf_response['X-Accel-Buffering'] = 'yes'
 
         if requested_range:
@@ -54,12 +58,20 @@ class MediaResourceView(LoginRequiredMixin, View):
             if requested_range and requested_range[0] == '0':
                 log.info(u'initial play')
 
-                create_cached_event.delay(
-                    ct = 'alibrary.media',
-                    ct_uuid = uuid,
-                    user = self.request.user,
-                    action = 'stream'
+                event = CachedEvent(
+                    ct='alibrary.media',
+                    ct_uuid=uuid,
+                    user=self.request.user,
+                    action='stream'
                 )
+                event.save()
+
+                # create_cached_event.delay(
+                #     ct = 'alibrary.media',
+                #     ct_uuid = uuid,
+                #     user = self.request.user,
+                #     action = 'stream'
+                # )
 
             else:
                 log.debug(u'seek play')

@@ -1,4 +1,4 @@
-{% load cms_tags compress sekizai_tags i18n menu_tags bplayer_tags backfeed_tags pushy_client_tags nunjucks_tags analytics raven livecolor_tags %}<!doctype html>
+{% load cms_tags slick_admin_tags compress sekizai_tags i18n menu_tags bplayer_tags backfeed_tags pushy_client_tags nunjucks_tags analytics raven livecolor_tags %}<!DOCTYPE html>
 <html class="no-js{% if user.is_authenticated %} is-authenticated{% endif %}" lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="utf-8"/>
@@ -84,7 +84,13 @@
         <script src="{{ STATIC_URL }}bplayer/js/lib/sm2/soundmanager2-nodebug-jsmin.js"></script>
     {% endif %}
 
-    <script src="{{ STATIC_URL }}js/lib/jquery-ui-1.10.4.custom.js"></script>
+    <script src="{{ STATIC_URL }}bplayer/js/lib/howler-2.0/howler.core.js"></script>
+    <script src="{{ STATIC_URL }}bplayer/js/lib/soundjs-0.6.2.min.js"></script>
+
+
+    <script src="{{ STATIC_URL }}bplayer/js/lib/buzz-1.2.0.js"></script>
+
+    <!--<script src="{{ STATIC_URL }}js/lib/jquery-ui-1.10.4.custom.js"></script>-->
     <script src="{{ STATIC_URL }}js/lib/featherlight.js"></script>
     <script src="{{ STATIC_URL }}js/lib/jquery.imageloader.js"></script>
     <script src="{{ STATIC_URL }}js/lib/jquery.hoverIntent-1.8.0.js"></script>
@@ -175,6 +181,7 @@
 <body id="base" class="{% block body_extra_class %}{% endblock %}" data-livebg data-bplayer_state="init">
 
 {% cms_toolbar %}
+{% slick_admin_cms_style %}
 
 <div id="topbar_container" data-livebg>
 
@@ -391,8 +398,8 @@
         achat.user = current_user;
 
         setTimeout(function () {
-            //achat.init();
-            //achat.load();
+            achat.init();
+            achat.load();
         }, 3000);
 
 

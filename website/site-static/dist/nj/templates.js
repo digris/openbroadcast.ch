@@ -502,7 +502,7 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<div class=\"row base\">\n    <div class=\"small-12 columns\">\n\n\n        <div class=\"row collapse\">\n\n            <div class=\"columns\">\n\n                <div class=\"actions left\">\n                    <a data-bplayer-controls=\"pause\" href=\"#\"><i class=\"fa fa-pause\"></i></a>\n                    <a data-bplayer-controls=\"resume\" href=\"#\"><i class=\"fa fa-play\"></i></a>\n                </div>\n\n            </div>\n\n            <div class=\"columns\">\n                <section class=\"playlist history compact\">\n\n                    ";
+output += "<div class=\"row base\">\n    <div class=\"small-12 columns\">\n\n\n        <div class=\"row collapse\">\n\n            <div class=\"columns small-1\">\n\n                <div class=\"actions left\">\n                    <a data-bplayer-controls=\"resume\" href=\"#\"><i class=\"fa fa-play\"></i></a>\n                    <a data-bplayer-controls=\"pause\" href=\"#\"><i class=\"fa fa-pause\"></i></a>\n                </div>\n\n            </div>\n\n            <div class=\"columns small-10\">\n                <section class=\"playlist history compact\">\n\n                    ";
 if(!runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "opts")),"onair") && runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "opts")),"mode") != "history") {
 output += "\n\n                        <div class=\"item playing\">\n                            <span>Unbekannter Titel - \"Emergency Player\"</span>\n                        </div>\n\n                    ";
 ;
@@ -543,7 +543,7 @@ frame = frame.pop();
 output += "\n\n                    ";
 ;
 }
-output += "\n\n                </section>\n            </div>\n\n            <div class=\"columns\">\n\n                <div class=\"actions right\">\n                    <a data-bplayer-display=\"toggle-history\" href=\"#\"><i class=\"fa fa-angle-double-up\"></i></a>\n                </div>\n\n            </div>\n\n\n        </div>\n\n\n        <!--\n        <div class=\"controls-left\">\n            <ul class=\"actions inline-list no-bullet\">\n                <li><a data-bplayer-controls=\"pause\" href=\"#\"><i class=\"fa fa-pause\"></i></a></li>\n                <li><a data-bplayer-controls=\"resume\" href=\"#\"><i class=\"fa fa-play\"></i></a></li>\n            </ul>\n        </div>\n\n        <section class=\"playlist history compact\">\n\n            ";
+output += "\n\n                </section>\n            </div>\n\n            <div class=\"columns small-1\">\n\n                <div class=\"actions right\">\n                    <a data-bplayer-display=\"toggle-history\" href=\"#\"><i class=\"fa fa-angle-double-up\"></i></a>\n                </div>\n\n            </div>\n\n\n        </div>\n\n\n        <!--\n        <div class=\"controls-left\">\n            <ul class=\"actions inline-list no-bullet\">\n                <li><a data-bplayer-controls=\"pause\" href=\"#\"><i class=\"fa fa-pause\"></i></a></li>\n                <li><a data-bplayer-controls=\"resume\" href=\"#\"><i class=\"fa fa-play\"></i></a></li>\n            </ul>\n        </div>\n\n        <section class=\"playlist history compact\">\n\n            ";
 if(!runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "opts")),"onair") && runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "opts")),"mode") != "history") {
 output += "\n\n                <div class=\"item playing\">\n                    <span>Unbekannter Titel - \"Emergency Player\"</span>\n                </div>\n\n            ";
 ;
@@ -1331,7 +1331,7 @@ output += "\n                            </div>\n                        </div>\
 output += "\n\n                    </div>\n                ";
 ;
 }
-output += "\n\n\n\n        </div>\n\n        <!-- action wrapper - play/pause/listen -->\n        <div class=\"wrapper\">\n\n            <div class=\"controls hoverable\">\n\n                <span class=\"play\">\n                    <a href=\"#\" data-login-required data-onair-controls=\"play\">Play</a>\n                </span>\n\n                <span class=\"listen\">\n                    <a data-onair-controls=\"play\" href=\"#\">Listen</a>\n                </span>\n\n                <span class=\"pause\">\n                    <a data-onair-controls=\"pause\" href=\"#\"><i class=\"fa fa-pause\"></i></a>\n                </span>\n\n                <span class=\"loading\">\n                    <a href=\"#\">\n                        <i class=\"fa fa-circle-o-notch fa-spin fa-fw\"></i>\n                    </a>\n                </span>\n\n            </div>\n\n        </div>\n\n        <!-- levelbridge live-data -->\n        <div class=\"level-container\">\n            <ul class=\"level\"></ul>\n        </div>\n\n        <div class=\"progress-container hoverable\">\n            <div class=\"progress\">\n              <span class=\"meter\" style=\"width: 0%\"></span>\n              <span class=\"buffer\" style=\"width: 0%\"></span>\n            </div>\n        </div>\n\n    </div>\n\n</div>\n<!-- item end -->";
+output += "\n\n\n\n        </div>\n\n        <!-- action wrapper - play/pause/listen -->\n        <div class=\"wrapper\">\n\n            <div class=\"controls hoverable\">\n\n                <span class=\"play\">\n                    <a href=\"#\" data-login-required data-onair-controls=\"play\">Play</a>\n                </span>\n\n                <span class=\"listen\">\n                    <a data-onair-controls=\"play\" href=\"#\">Listen</a>\n                </span>\n\n                <span class=\"pause\">\n                    <a data-onair-controls=\"pause\" href=\"#\"><i class=\"fa fa-pause\"></i></a>\n                </span>\n\n                <span class=\"loading\">\n                    <a href=\"#\">\n\n                        <div class=\"la-ball-clip-rotate-pulse la-2x\">\n                            <div></div>\n                            <div></div>\n                        </div>\n\n                        <!--<i class=\"fa fa-circle-o-notch fa-spin fa-fw\"></i>-->\n                    </a>\n                </span>\n\n            </div>\n\n        </div>\n\n        <!-- levelbridge live-data -->\n        <div class=\"level-container\">\n            <ul class=\"level\"></ul>\n        </div>\n\n        <div class=\"progress-container hoverable\">\n            <div class=\"progress\">\n              <span class=\"meter\" style=\"width: 0%\"></span>\n              <span class=\"buffer\" style=\"width: 0%\"></span>\n            </div>\n        </div>\n\n    </div>\n\n</div>\n<!-- item end -->";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -2152,7 +2152,7 @@ frame = frame.pop();
 output += "\n        </ul>\n        ";
 ;
 }
-output += "\n    </div>\n\n\n\n</div>\n\n\n\n";
+output += "\n    </div>\n\n\n</div>\n\n\n\n";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {

@@ -28,10 +28,12 @@ $bplayer-bottom-expanded: 0px
       display: none
     a
       display: block
-      padding-top: 4px
+      padding-top: 3px
       color: #fff
       i
-        font-size: 20px
+        font-size: 18px
+        &.fa-angle-double-up
+          font-size: 22px
 
     &.left
       padding-left: 6px
@@ -110,7 +112,7 @@ $bplayer-bottom-expanded: 0px
       [data-bplayer-controls="resume"]
         display: none
       [data-bplayer-controls="pause"]
-        display: inline
+        display: block
 
     .playhead .background
       background-color: $primary-color
@@ -170,7 +172,9 @@ body.paused #bplayer_container
     background: #000
     padding: 6px 10px 6px
     box-shadow: 0px -1px 3px 1px rgba(51, 51, 51, 0.16)
-    width: 760px
+
+    @media #{breakpoint(medium)}
+      width: 760px
 
   .wave
     background: #000
@@ -262,7 +266,10 @@ body.paused #bplayer_container
           color: #fff
 
   section.playlist.history.expanded
-    width: 83%
+
+    @media #{breakpoint(medium)}
+      width: 83%
+
     margin: 0 auto 20px
 
     .col-airtime
