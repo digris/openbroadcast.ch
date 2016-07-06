@@ -165,7 +165,12 @@ AchatApp = function () {
         };
 
         // bind auto-complete / object linking
-        $('#chat_input', self.container).textcomplete(strategies, option);
+        try {
+            $('#chat_input', self.container).textcomplete(strategies, option);
+        } catch(e) {
+
+        }
+        
 
     };
 
