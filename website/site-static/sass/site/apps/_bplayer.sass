@@ -326,26 +326,26 @@ body.paused #bplayer_container
 ////////////////////////////////////////////////////////////////
 #bplayer_container
 
-  @include breakpoint(smal)
+  @include breakpoint(medium down)
 
-  .actions
-    a
-      padding-top: 8px
-      i
-        font-size: 32px
-        &.fa-angle-double-up
+    .actions
+      a
+        padding-top: 8px
+        i
           font-size: 32px
+          &.fa-angle-double-up
+            font-size: 32px
 
-    &.left
-      padding-left: 6px
+      &.left
+        padding-left: 6px
 
-    &.right
-      padding-right: 2px
+      &.right
+        padding-right: 2px
 
 
-  // history styles
-  section.playlist.history.compact
-    padding: 0 10px 0 20px
-    max-height: 48px
+    // history styles
+    section.playlist.history.compact
+      padding: 0 10px 0 20px
+      max-height: 48px
 
 
