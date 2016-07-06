@@ -75,8 +75,6 @@ gulp.task('styles', function () {
 });
 
 
-
-
 gulp.task('admin', function () {
     return gulp.src([
             'website/site-static/sass/slick-admin-styles.sass'
@@ -111,8 +109,10 @@ gulp.task('babel', function () {
 gulp.task('scripts', function () {
     return gulp.src([
             'website/site-static/js/**/*.coffee',
+            'website/**/*.coffee'
         ])
         .pipe($.coffee({bare: true}).on('error', gutil.log))
+        .pipe($.flatten({ includeParents: 2} ))
         .pipe(gulp.dest('website/site-static/dist/js/'));
 });
 

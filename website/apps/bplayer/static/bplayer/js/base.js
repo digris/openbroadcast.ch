@@ -4,9 +4,9 @@ var BPlayerApp = function () {
     var self = this;
     this.debug = false;
     this.state = 'init';
-    // dom containers
     this.container;
     this.playlist_container;
+
     this.static_url;
     this.playlist = [];
     this.current_index = 0;
@@ -16,28 +16,13 @@ var BPlayerApp = function () {
     this.last_sound_url = false;
     this.stream_url;
     this.base_url;
-    //this.stream_url = 'http://stream.openbroadcast.ch:80/openbroadcast';
-    //this.stream_url = 'http://pypo:8000/master.mp3';
-    this.r;
     this.style = 'large';
     this.states = ['init', 'ready', 'playing', 'stopped', 'paused', 'buffering', 'loading', 'error'];
     this.history_expanded = false;
 
     this.source; // 'live' or 'ondemand'
 
-    /*
-     * inline: complete html5-player, site needs to run entirely via ajax
-     * popup:  popup-mode, inidactes the 'remote' component of the player
-     * local:  popup-mode, inicates the local = calling = main-webiste part (connecting to the popup part)
-     */
-    this.mode = 'inline'; // available: 'inline', 'popup', 'local'
-    this.popup = false;
-    this.local = false;
-
-
     this.init = function () {
-
-        console.log('BPlayerApp - INIT');
 
         if (self.debug) {
             console.log('BPlayerApp - init');
@@ -46,9 +31,6 @@ var BPlayerApp = function () {
         self.container = $('#bplayer_container');
         self.playlist_container = $('#bplayer_playlist_container', self.container);
 
-
-
-        // triggered via TL
         self.bindings();
     };
 
@@ -73,18 +55,11 @@ var BPlayerApp = function () {
             self.controls({action: 'next'});
         },
         whileloading: function (e) {
-
-            //console.log('whileloading:', e);
-
-            //if (this.readyState == 1) {
-                self.state_change('loading');
-            //}
+            self.state_change('loading');
             self.loading(this);
         },
         whileplaying: function (e) {
-
-            //console.log('whileplaying:', e)
-
+            // TODO: readyState needed?
             if (this.readyState == 3) {
                 self.state_change('playing');
             }
@@ -93,54 +68,6 @@ var BPlayerApp = function () {
         onload: function () {
 
         }
-    };
-
-    this.state_change = function (state) {
-
-        if (self.debug) {
-            console.log('BPlayerApp - state changed to: ' + state);
-        }
-
-        var classes_to_remove = removeA(self.states.slice(0), state).join(' ');
-        self.container.addClass(state).removeClass(classes_to_remove);
-        self.state = state;
-
-        // TODO: not so nice, add state as property to body
-        $('body').data('bplayer_state', state);
-        $('body').addClass(state).removeClass(classes_to_remove);
-
-        // TODO: this is a hack!!! implement properly if wished to use!
-        // if (state == 'paused' || state == 'stopped') {
-        //
-        //     var heights = [50, 90, 50, 40, 20, 30, 70];
-        //     $('#levelbridge_icon span').each(function (i, el) {
-        //         $(this).animate({
-        //             height: heights[i] + '%'
-        //         }, {
-        //             duration: 1500
-        //         })
-        //     });
-        // }
-
-        // var uuids = [];
-        // try {
-        //     uuids.push(self.current_media.uuid);
-        // } catch (e) {
-        //     console.warn(e)
-        // }
-        //
-        // self.set_states_by_uuid(uuids, {
-        //     clear: removeA((removeA(self.states.slice(0), state), 'playing').join(' ')),
-        //     set: state
-        // });
-
-
-
-    };
-
-    this.style_change = function (style) {
-        self.style = style;
-        self.container.removeClass('style-large style-compact').addClass('style-' + style)
     };
 
     this.bindings = function () {
@@ -260,22 +187,25 @@ var BPlayerApp = function () {
 
     };
 
-    this.attach = function () {
+    this.state_change = function (state) {
 
         if (self.debug) {
-            console.log('BPlayerApp - attach');
+            console.log('BPlayerApp - state changed to: ' + state);
         }
 
-        self.container = $('#bplayer_container');
+        var classes_to_remove = removeA(self.states.slice(0), state).join(' ');
+        self.container.addClass(state).removeClass(classes_to_remove);
+        self.state = state;
 
-        // setup player backend
-        self.bindings();
-        self.update_player();
-
-        self.state_change(self.state);
-        self.style_change(self.style);
+        $('body').data('bplayer_state', state).addClass(state).removeClass(classes_to_remove);;
 
     };
+
+    this.style_change = function (style) {
+        self.style = style;
+        self.container.removeClass('style-large style-compact').addClass('style-' + style)
+    };
+
 
     this.show_hide_history = function () {
 
@@ -292,7 +222,7 @@ var BPlayerApp = function () {
     };
 
 
-    // TODO: called from 'onair' app. should be don differently
+    // TODO: called from 'onair' app. should eventually be done differently
     this.set_playlist = function (playlist, opts) {
 
         playlist = playlist.slice();
@@ -302,14 +232,6 @@ var BPlayerApp = function () {
             console.debug('BPlayerApp - set_playlist', playlist, opts);
         }
         self.playlist = playlist;
-
-
-        // handled in update_player()
-        // // playlist content
-        // self.playlist_container.html(nj.render('bplayer/nj/playlist.html', {
-        //     objects: self.playlist,
-        //     opts: opts
-        // }));
 
 
     };
@@ -324,7 +246,9 @@ var BPlayerApp = function () {
             // TODO: handle situation with not existing index [fallback mode]
             if (control.index == undefined) {
                 // offline situation
-                console.debug('no item, assuming offline mode');
+                if (self.debug) {
+                    console.debug('no item, assuming offline mode');
+                }
                 url = self.stream_url;
             } else {
 
@@ -337,12 +261,15 @@ var BPlayerApp = function () {
                 var url;
 
                 if (item.onair) {
-                    console.debug('item on-air');
+                    if (self.debug) {
+                        console.debug('item on-air');
+                    }
                     url = self.stream_url;
                 } else {
-                    console.debug('item on-demand');
+                    if (self.debug) {
+                        console.debug('item on-demand');
+                    }
                     url = media.stream.uri;
-                    //url = self.base_url + url;
                 }
             }
             self.play_file(url);
@@ -355,32 +282,15 @@ var BPlayerApp = function () {
             var seekable = self.current_sound.getSeekable()
             var abs_time = self.current_sound.getDuration() * control.position;
 
-            console.debug('seek', seekable[0])
+
+            if (self.debug) {
+                console.debug('seek', seekable[0]);
+            }
 
             if(abs_time >= seekable[0].start && abs_time <= seekable[0].end) {
                 self.current_sound.setTime(abs_time)
             }
 
-
-
-
-            // var loaded = self.current_sound.duration * self.current_sound.bytesLoaded;
-            // var position = self.current_sound.duration * control.position;
-            //
-            // console.log('loaded', loaded, 'position', position);
-            //
-            // if (position < loaded) {
-            //     //self.current_sound.setPosition(self.current_sound.duration * control.position);
-            // }
-
-
-            /*
-             if (self.current_sound.paused) {
-             self.current_sound.resume();
-             } else if (self.current_sound.playState == 0) {
-             self.current_sound.play();
-             }
-             */
         }
 
 
@@ -414,7 +324,6 @@ var BPlayerApp = function () {
             self.current_sound.resume();
         }
 
-
         self.update_player();
 
     };
@@ -429,7 +338,7 @@ var BPlayerApp = function () {
         console.debug('BPlayerApp - play_file: ', url);
 
         if(self.last_sound_url && self.last_sound_url == url) {
-            self.current_sound.play()
+            self.current_sound.play();
             return;
         }
 
@@ -464,63 +373,6 @@ var BPlayerApp = function () {
     };
 
 
-    /**
-     * wrapper around sm2
-     * @param {string} url
-     */
-    this.__play_file = function (url) {
-
-        console.debug('BPlayerApp - play_file: ', url);
-
-        try {
-            self.current_sound.destruct();
-        } catch (e) {
-            if (self.debug) {
-                console.debug('unable to destruct sound: ' + e.message);
-            }
-        }
-
-        //url = 'http://media.zhdk.sonicsquirrel.net/Soisloscerdos/Soisloscerdos/SLC08/Angel_Garcia-Happy_Jambo.mp3';
-
-        if (self.current_sound == undefined) {
-
-            if (self.debug) {
-                console.debug('BPlayerApp - no "current_sound" object -> create one');
-            }
-
-            // soundmanager complains with:
-            // "Unavailable - wait until onready() has fired"
-
-            // create sound object
-            self.current_sound = soundManager.createSound({
-                url: decodeURI(url),
-                autoLoad: true,
-                autoPlay: false,
-                stream: true,
-                onplay: self.events.play,
-                onstop: self.events.stop,
-                onpause: self.events.pause,
-                onresume: self.events.resume,
-                onfinish: self.events.finish,
-                whileloading: self.events.whileloading,
-                whileplaying: self.events.whileplaying,
-                onload: self.events.onload,
-                volume: 80
-            });
-
-            self.current_sound.play();
-
-        } else {
-
-            if (self.debug) {
-                console.debug('BPlayerApp - re-using "current_sound" object');
-            }
-
-            self.current_sound.load({url: url}).play();
-        }
-
-    };
-
 
     this.progress = function (sound) {
 
@@ -536,14 +388,11 @@ var BPlayerApp = function () {
 
     this.loading = function (data) {
 
-        //console.debug('loading', data.bytesLoaded, data.bytesTotal)
-
         var pos = data.bytesLoaded / data.bytesTotal;
         var width = $('.playhead', self.container).width();
 
         $('.playing .progress > .buffer').css('width', (pos * 100) + '%');
 
-        //$('.playhead .loading', self.container).css('background-position-x', pos * width + 'px');
     };
 
     this.update_player = function (reindex) {
@@ -552,23 +401,7 @@ var BPlayerApp = function () {
             console.debug('BPlayerApp - update_player', reindex);
         }
 
-
-        // TODO: improve handling of change detection!
-        // if(JSON.stringify(self.last_playlist + self.last_history_expanded) == JSON.stringify(self.playlist + self.history_expanded)) {
-        //     if (self.debug) {
-        //         console.debug('nothing to do - unchanged playlist');
-        //     }
-        //     return;
-        // } else {
-        //     if (self.debug) {
-        //         console.debug('update - changed playlist');
-        //     }
-        // }
-        // self.last_playlist = self.playlist;
-        // self.last_history_expanded = self.history_expanded;
-
-
-        if (reindex !== undefined && self.current_uuid !== undefined && self.current_index != 0) {
+        if (reindex != undefined && self.current_uuid != undefined && self.current_index != 0) {
             $.each(self.playlist, function (i, el) {
                 if (i > 0 && el.item.uuid == self.current_uuid) {
                     self.current_index = i;
@@ -579,8 +412,6 @@ var BPlayerApp = function () {
         var media = self.playlist[self.current_index];
 
         if (media != undefined) {
-
-            //debug.debug('update_player:', media);
 
             // waveform data
             $('#bplayer_waveform_container', self.container).html(nj.render('bplayer/nj/waveform.html', {
@@ -663,18 +494,16 @@ var BPlayerApp = function () {
 
     };
 
-};
+    this.set_states_by_uuid = function (uuids, options) {
+        if(options && options.clear !== undefined) {
+            $('[data-uuid]').removeClass(options.clear);
+        }
+        if(options && options.set !== undefined) {
+            $.each(uuids, function (i, el) {
+                $('[data-uuid="' + el + '"]').addClass(options.set);
+            });
+        }
+    };
 
-
-
-BPlayerApp.prototype.set_states_by_uuid = function (uuids, options) {
-    if(options && options.clear !== undefined) {
-        $('[data-uuid]').removeClass(options.clear);
-    }
-    if(options && options.set !== undefined) {
-        $.each(uuids, function (i, el) {
-            $('[data-uuid="' + el + '"]').addClass(options.set);
-        });
-    }
 };
 

@@ -78,15 +78,6 @@
 
 
     <script src="{{ STATIC_URL }}js/lib/textcomplete-0.3.3/jquery.textcomplete.js"></script>
-    {% if settings.DEBUG %}
-        <script src="{{ STATIC_URL }}bplayer/js/lib/sm2/soundmanager2.js"></script>
-    {% else %}
-        <script src="{{ STATIC_URL }}bplayer/js/lib/sm2/soundmanager2-nodebug-jsmin.js"></script>
-    {% endif %}
-
-    <script src="{{ STATIC_URL }}bplayer/js/lib/howler-2.0/howler.core.js"></script>
-    <script src="{{ STATIC_URL }}bplayer/js/lib/soundjs-0.6.2.min.js"></script>
-
 
     <script src="{{ STATIC_URL }}bplayer/js/lib/buzz-1.2.0.js"></script>
 
@@ -101,7 +92,7 @@
     <script src="{{ STATIC_URL }}js/lib/jquery.tipso-1.0.5.js"></script>
     <script src="{{ STATIC_URL }}js/lib/jquery.svg-1.5.js"></script>
     <script src="{{ STATIC_URL }}js/lib/jquery.svganim-1.5.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/jquery.nanoscroller-0.8.7.js"></script>
+    <!--<script src="{{ STATIC_URL }}js/lib/jquery.nanoscroller-0.8.7.js"></script>-->
     <script src="{{ STATIC_URL }}js/lib/packery.pkgd.min-1.4.3.js"></script>
     <script src="{{ STATIC_URL }}js/lib/js.cookie.js"></script>
     <script src="{{ STATIC_URL }}js/lib/color-thief-2.0.min.js"></script>
@@ -142,12 +133,16 @@
     <script src="{{ STATIC_URL }}livecolor/js/base.js"></script>
     <script src="{{ STATIC_URL }}achat/js/base.js"></script>
     <script src="{{ STATIC_URL }}alogin/js/base.js"></script>
-    <script src="{{ STATIC_URL }}bplayer/js/base.js"></script>
+
     <script src="{{ STATIC_URL }}bplayer/js/levelbridge.js"></script>
     <script src="{{ STATIC_URL }}onair/js/base.js"></script>
     <script src="{{ STATIC_URL }}stationtime/js/base.js"></script>
     <script src="{{ STATIC_URL }}remotelink/js/base.js"></script>
     <script src="{{ STATIC_URL }}ticker/js/base.js"></script>
+
+    <!-- app scripts refactored to coffeescript -->
+    <script src="{{ STATIC_URL }}bplayer/js/base.js"></script>
+    <!--<script src="{{ STATIC_URL }}dist/js/apps/bplayer/base.js"></script>-->
 
 
 

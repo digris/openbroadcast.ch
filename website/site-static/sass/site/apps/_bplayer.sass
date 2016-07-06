@@ -318,3 +318,34 @@ body.paused #bplayer_container
 
   ::-webkit-scrollbar-thumb
       background: #999
+
+
+
+////////////////////////////////////////////////////////////////
+// responsive styles & overrides
+////////////////////////////////////////////////////////////////
+#bplayer_container
+
+  @include breakpoint(smal)
+
+  .actions
+    a
+      padding-top: 8px
+      i
+        font-size: 32px
+        &.fa-angle-double-up
+          font-size: 32px
+
+    &.left
+      padding-left: 6px
+
+    &.right
+      padding-right: 2px
+
+
+  // history styles
+  section.playlist.history.compact
+    padding: 0 10px 0 20px
+    max-height: 48px
+
+
