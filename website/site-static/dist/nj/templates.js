@@ -93,26 +93,11 @@ output += "\n            << me >>\n            ";
 ;
 }
 else {
-output += "\n                ";
-if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"user")),"name")) {
-output += "\n                    <a  data-profile_uri=\"";
+output += "\n                <a  data-profile_uri=\"";
 output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"user")),"profile_uri"), env.opts.autoescape);
 output += "\" href=\"#\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"user")),"name"), env.opts.autoescape);
-output += "<!--(";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"user")),"username"), env.opts.autoescape);
-output += ")--></a>\n                ";
-;
-}
-else {
-output += "\n                    <a  data-profile_uri=\"";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"user")),"profile_uri"), env.opts.autoescape);
-output += "\" href=\"#\">";
-output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"user")),"username"), env.opts.autoescape);
-output += "</a>\n                ";
-;
-}
-output += "\n            ";
+output += runtime.suppressValue(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"user")),"display_name"), env.opts.autoescape);
+output += "</a>\n            ";
 ;
 }
 output += "\n        </span>\n        <span class=\"separator\">|</span>\n        <span class=\"timestamp\" title=\"";

@@ -105,6 +105,7 @@ INSTALLED_APPS = (
     #'relatedadminlink',
 
     'remoteauth',
+    'captcha',
 
     # cms
     'cms',
@@ -277,6 +278,18 @@ ACCOUNT_ACTIVATION_DAYS = 7
 PROJECT_APPS = (
     # 'my_app',
 )
+
+CAPTCHA_LETTER_ROTATION = (-10, 10)
+CAPTCHA_BACKGROUND_COLOR = '#fafafa'
+CAPTCHA_FOREGROUND_COLOR = '#000'
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge'
+CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_dots',)
+CAPTCHA_FILTER_FUNCTIONS = ()
+CAPTCHA_PUNCTUATION = '''_"',.;:-'''
+CAPTCHA_LENGTH = 6
+CAPTCHA_IMAGE_SIZE = (120, 30)
+CAPTCHA_FIELD_TEMPLATE = 'captcha/field.html'
+
 
 SETTINGS_EXPORT = [
     'DEBUG',

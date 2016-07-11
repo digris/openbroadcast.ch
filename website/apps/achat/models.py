@@ -76,9 +76,9 @@ class Message(models.Model):
                     # TODO: eventually this is not working!
                     #user = User.objects.get(username=username)
                     user = get_user_model().objects.get(username=username)
-                    rendered_bit = u"""<a data-ct="user" data-id="{id}" data-name="{name}" data-profile_uri="{profile_uri}">@{username}</a>""".format(
+                    rendered_bit = u"""<a data-ct="user" data-id="{id}" data-name="{username}" data-profile_uri="{profile_uri}">@{display_name}</a>""".format(
                         username=user.username,
-                        name=user.get_full_name(),
+                        display_name=user.get_display_name(),
                         id=user.id,
                         profile_uri=user.profile_uri or 'false',
                     )

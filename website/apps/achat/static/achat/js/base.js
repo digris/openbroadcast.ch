@@ -57,23 +57,15 @@ AchatApp = function () {
         });
 
         self.container.on('keydown', '.chat-message > p', function (e) {
-            e = e || event;
 
-
-            if (e.keyCode === 13 && !e.shiftKey) {
-
-                // check if autocomplete dropdown is active
-                var ac_visible = $('ul.dropdown-menu').is(":visible")
-
-                if(!ac_visible) {
-                    $('form', self.container).submit();
+            if(!$('ul.dropdown-menu').is(":visible")) {
+                if (e.keyCode === 13 && !e.shiftKey) {
+                        e.preventDefault();
+                        $('form', self.container).submit();
+                        return false;
                 }
-
-                e.preventDefault();
-                return false;
-
             }
-            return true;
+
         });
 
         // clean pasted in content-editable
@@ -89,8 +81,14 @@ AchatApp = function () {
         self.messages_container.on('click', 'a.show-full-text', function(e){
             e.preventDefault();
             var message_body = $(this).parents('.body');
-            $('.truncated', message_body).toggle();
-            $('.full', message_body).toggle();
+            $('.truncated', message_body).toggleClass('hide');
+            $('.full', message_body).toggleClass('hide');
+
+            // TODO: hakish - layout needs reflow
+
+            self.packery_container.packery('reloadItems');
+            self.packery_container.packery();
+
         });
 
         self.container.on('focus', '.chat-message > p', function (e) {
@@ -126,7 +124,7 @@ AchatApp = function () {
                     //callback(cache[term], true);
                     var data = {
                         q: term
-                    }
+                    };
                     $.getJSON('/api/v1/auth/user/', data)
                         .done(function (resp) {
                             callback(resp.objects);
@@ -137,21 +135,15 @@ AchatApp = function () {
                 },
                 template: function (value) {
 
-                    var html = '<span>' + value.username + '</span>';
-                    if(value.first_name || value.last_name) {
-                        html += ' - <em>"';
-                        if(value.first_name) {
-                            html += value.first_name + ' ';
-                        }
-                        if(value.last_name) {
-                            html += value.last_name;
-                        }
-                        html += '"</em>';
-                    }
+                    var html = '<div class="row collapse">';
+                    html += '<div class="column display-name">' + value.display_name + '</div>';
+                    html += '<div class="column username">' + value.username + '</div>';
+                    html += '</div>';
                     return html;
 
                 },
                 replace: function (value) {
+                    //return '$1' + '@' + value.username + ' ';
                     return '$1<span data-ct="user">' + '@' + value.username + '</span> ';
                 },
                 cache: true

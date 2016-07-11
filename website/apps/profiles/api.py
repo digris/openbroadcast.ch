@@ -10,20 +10,28 @@ class UserResource(ModelResource):
 
         queryset = User.objects.all()
         resource_name = 'auth/user'
-        #fields = ['username', 'email']
         fields = [
             'username',
             'first_name',
             'last_name',
+            'pseudonym',
             'remote_uri',
             'profile_uri',
         ]
         allowed_methods = ['get']
         filtering = {
-            'username': ['icontains', ],
+            'username': ['istartswith', ],
             'first_name': ['istartswith', ],
             'last_name': ['istartswith', ],
+            'pseudonym': ['istartswith', ],
         }
+
+    def dehydrate(self, bundle):
+
+        bundle.data['display_name'] = bundle.obj.get_display_name()
+
+        return bundle
+
 
     def build_filters(self, filters=None):
 
@@ -33,12 +41,12 @@ class UserResource(ModelResource):
         orm_filters = super(UserResource, self).build_filters(filters)
 
         if "q" in filters:
-            print filters['q']
             query = filters['q']
             qset = (
-                    Q(username__icontains=query) |
+                    Q(username__istartswith=query) |
                     Q(first_name__istartswith=query) |
-                    Q(last_name__istartswith=query)
+                    Q(last_name__istartswith=query) |
+                    Q(pseudonym__istartswith=query)
                     )
             orm_filters.update({'custom': qset})
 

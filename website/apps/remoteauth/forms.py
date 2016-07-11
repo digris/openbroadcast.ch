@@ -1,7 +1,7 @@
 from django.conf import settings
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-
+from captcha.fields import CaptchaField
 from remoteauth.models import validate_registration
 
 
@@ -18,6 +18,11 @@ class RegistrationForm(forms.Form):
                                 label=_("Password"))
     password2 = forms.CharField(widget=forms.PasswordInput,
                                 label=_("Password (again)"))
+
+    captcha = CaptchaField(label=_(u'Sicherheits code'),
+                           id_prefix='captcha',
+                           # help_text=_('Enter the 6 digit code in the field above'),
+                           error_messages={'required': _("Code empty or invalid")})
 
 
 

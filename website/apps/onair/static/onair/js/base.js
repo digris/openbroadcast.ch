@@ -6,6 +6,7 @@ var OnAirApp = function () {
     this.api_url = '/api/v1/abcast/channel/';
     this.channel_id = 1;
     this.base_url = '';
+    this.static_base_url = '';
     this.use_history = false;
     this.container;
     this.bplayer = false;
@@ -342,7 +343,7 @@ var OnAirApp = function () {
                 debug: self.debug,
                 object: item,
                 extra_classes: classes,
-                base_url: self.base_url
+                base_url: self.static_base_url
             }));
 
             if (dom_el.length) {

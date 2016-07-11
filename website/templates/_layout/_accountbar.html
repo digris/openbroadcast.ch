@@ -3,7 +3,7 @@
 {% if user.is_authenticated  %}
 
     <li class="hoverable">
-        <a data-livefg href="#">{% firstof user.get_full_name user.username %}</a>
+        <a data-livefg href="#">{% firstof user.get_display_name %}</a>
         <ul>
             {% if user.is_staff %}
 

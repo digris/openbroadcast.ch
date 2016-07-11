@@ -405,7 +405,8 @@
         onair.debug = false;
         onair.bplayer = bplayer;
         //onair.base_url = '{{ settings.STATIC_BASE_URL }}';
-        onair.base_url = '/static-proxy';
+        onair.static_base_url = '/static-proxy';
+        onair.base_url = '{{ settings.STATIC_BASE_URL }}';
         onair.use_history = {% if settings.ONAIR_LOAD_HISTORY %}true{% else %}false{% endif %};
         setTimeout(function () {
             onair.init();

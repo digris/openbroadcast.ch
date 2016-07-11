@@ -68,7 +68,7 @@ class MessageResource(ModelResource):
 
         bundle.data['user'] = {
             'username': bundle.obj.user.username,
-            'name': bundle.obj.user.get_full_name(),
+            'display_name': bundle.obj.user.get_display_name(),
             'profile_uri': bundle.obj.user.profile_uri,
             #'id': bundle.obj.user.pk,
         }
@@ -77,7 +77,7 @@ class MessageResource(ModelResource):
 
         mentions = [{
                         'username': mention.user.username,
-                        'name': mention.user.get_full_name(),
+                        'display_name': mention.user.get_display_name(),
                         'profile_uri': mention.user.profile_uri,
                     } for mention in bundle.obj.mentioned_users.all()]
 
