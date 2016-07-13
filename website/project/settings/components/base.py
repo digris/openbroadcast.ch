@@ -153,6 +153,7 @@ INSTALLED_APPS = (
     'onair',
     'backfeed',
     'stationtime',
+    'heartbeat',
     'remotelink',
     'livecolor',
     'contentproxy',

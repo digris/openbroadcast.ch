@@ -8,7 +8,7 @@ StationTimeApp = function () {
     this.current_time;
     this.interval = false;
     this.interval_duration = 1000;
-    this.resync_interval_duration = 120000;
+    this.resync_interval_duration = 120000; // every 2 minutes
 
     this.init = function () {
 

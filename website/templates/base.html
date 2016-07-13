@@ -421,7 +421,7 @@
         // station time
         /////////////////////////////////////////////
         stationtime = new StationTimeApp();
-        stationtime.debug = false;
+        stationtime.debug = true;
         stationtime.api_url = "{% url 'stationtime-current-time' %}";
         stationtime.container = $('#station_time');
         setTimeout(function () {
