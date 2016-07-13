@@ -232,8 +232,10 @@ var OnAirApp = function () {
 
     this.load_schedule = function (initial, limit) {
 
-        initial = typeof initial !== 'undefined' ? true : false;
-        limit = typeof limit !== 'undefined' ? limit : self.initial_items;
+
+        initial = (initial === undefined) ? false : initial;
+        limit = (limit === undefined) ? self.initial_items : limit;
+
         var url = '/api/v1/onair/schedule/?expand=item+emission&limit=' + limit;
 
         $.get(url, function (schedule) {
@@ -249,6 +251,12 @@ var OnAirApp = function () {
                     // TODO: this could be handled better!
                     self.load_schedule(false, 2)
                 }, Number((meta.next_starts_in) * 1000 + self.stream_delay));
+
+
+                if (self.debug) {
+                    console.debug('OnAirApp - next update in:', Number((meta.next_starts_in) * 1000 + self.stream_delay) / 1000 + 's');
+                }
+
             } else {
 
                 if (self.load_schedule_timeout) {
@@ -257,8 +265,7 @@ var OnAirApp = function () {
 
                 console.debug('setting refresh timeout to', self.default_timeout);
                 self.load_schedule_timeout = setTimeout(function () {
-                    console.debug('call from timeout');
-                    self.load_schedule()
+                    self.load_schedule(false)
                 }, self.default_timeout);
             }
 
@@ -295,6 +302,8 @@ var OnAirApp = function () {
 
             // TODO: this is an ugly hack!
             if (initial) {
+
+                console.debug('HACK - initial state > paused. initial:', initial);
 
                 setTimeout(function () {
                     self.bplayer.state_change('paused');
@@ -641,7 +650,6 @@ var OnAirApp = function () {
         }
 
         $.each(self.local_data, function (i, el) {
-            console.log(i);
 
             if (vote.uuid == self.local_data[i].item.uuid) {
                 if (self.debug) {

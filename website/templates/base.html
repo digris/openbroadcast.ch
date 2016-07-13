@@ -258,14 +258,16 @@
     {% endif %}
 
 
-
-
     {% include "_layout/_site_messages.html" %}
 
+    {% include "_layout/_chat_button.html" %}
 
 </div>
 
     {% include "_layout/_footer.html" %}
+
+
+
 
 <!-- dialog container -->
 <div id="reveal_container" class="reveal" data-reveal></div>
@@ -393,8 +395,8 @@
         achat.user = current_user;
 
         setTimeout(function () {
-            achat.init();
-            achat.load();
+            //achat.init();
+            //achat.load();
         }, 3000);
 
 
@@ -402,7 +404,7 @@
         // on-air
         /////////////////////////////////////////////
         onair = new OnAirApp();
-        onair.debug = false;
+        onair.debug = true;
         onair.bplayer = bplayer;
         //onair.base_url = '{{ settings.STATIC_BASE_URL }}';
         onair.static_base_url = '/static-proxy';
