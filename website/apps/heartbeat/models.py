@@ -6,6 +6,7 @@ import redis
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
+from django.utils import timezone
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch.dispatcher import receiver
@@ -27,6 +28,11 @@ class Beat(models.Model):
 
     def __unicode__(self):
         return '{0} {1}'.format(self.user.username, self.updated)
+
+    @property
+    def last_beat(self):
+        if self.updated:
+            return timezone.now() - self.updated
 
 
     def save(self, *args, **kwargs):

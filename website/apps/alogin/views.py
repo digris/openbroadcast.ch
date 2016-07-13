@@ -27,6 +27,12 @@ def alogin_login(request):
 
             log.debug('user "%s" logged in.' % user.username)
 
+            # TODO: this is just a quick'n'dirty way to catch users heartbeat
+            from heartbeat.models import Beat
+            beat, beat_created = Beat.objects.get_or_create(user=user)
+            if not beat_created:
+                beat.save()
+
 
             messages.add_message(
                 request, messages.INFO,
