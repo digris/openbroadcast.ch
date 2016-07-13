@@ -51,6 +51,10 @@ class ResourceView(View):
 
             cache.set(cache_key, r, CACHE_DURATION)
 
+        else:
+            log.debug('serving {0} from cache'.format(path))
+
+
         response = HttpResponse(r.text, content_type='application/json', status=r.status_code, charset='utf-8')
         response['Content-Length'] = r.headers.get('Content-Length')
 
