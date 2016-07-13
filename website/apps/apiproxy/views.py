@@ -56,6 +56,7 @@ class ResourceView(View):
 
 
         response = HttpResponse(r.text, content_type='application/json', status=r.status_code, charset='utf-8')
-        response['Content-Length'] = r.headers.get('Content-Length')
+        if r.headers and r.headers.get('Content-Length'):
+            response['Content-Length'] = r.headers.get('Content-Length')
 
         return response
