@@ -51,7 +51,8 @@ var BPlayerApp = function () {
             self.state_change('playing');
         },
         finish: function () {
-            self.state_change('stopped');
+            //self.state_change('stopped');
+            self.state_change('paused');
             self.controls({action: 'next'});
         },
         whileloading: function (e) {
@@ -243,6 +244,8 @@ var BPlayerApp = function () {
         }
 
         if (control.action == 'play') {
+
+
             // TODO: handle situation with not existing index [fallback mode]
             if (control.index == undefined) {
                 // offline situation
@@ -302,7 +305,7 @@ var BPlayerApp = function () {
                 var index = self.current_index - 1;
                 self.controls({action: 'play', index: index});
 
-                // TODO: kind of hakish - hooking to pagination
+                // TODO: kind of hackish - hooking to pagination
                 onair.handle_pagination(index);
 
             } else {
