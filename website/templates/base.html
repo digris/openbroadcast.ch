@@ -182,6 +182,14 @@
 
 <div id="topbar_container" data-livebg>
 
+    <div class="title-bar"  id="top_bar_toggle" data-responsive-toggle="top_bar" data-hide-for="medium">
+
+            <span data-toggle>
+                <i data-livefg class="fa fa-bars fa-2x" aria-hidden="true"></i>
+            </span>
+
+    </div>
+
     <nav class="row medium-collapse align-center" id="top_bar">
 
         <section class="medium-2 column logo hoverable">
@@ -208,13 +216,13 @@
             </div>
         </section>
 
-        <section class="medium-8 column desktop-menu">
+        <section class="small-12 medium-8 column main-menu" data-livefg>
             <ul class="menu menu-centered align-center">
                 {% show_menu 0 100 100 100 "_layout/_navigation.html" %}
             </ul>
         </section>
 
-        <section class="medium-2 column account">
+        <section class="small-12 medium-2 column account" data-livefg>
             <ul class="menu menu-centered">
                 {% include "_layout/_accountbar.html" %}
             </ul>
@@ -323,7 +331,7 @@
         var current_user = {
             id: {{ user.id }},
             username: '{{ user.username }}'
-        }
+        };
     {% else %}
         var current_user = false;
     {% endif %}

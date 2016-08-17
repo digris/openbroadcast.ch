@@ -57,19 +57,38 @@ var SiteUI = function () {
         $(window).on('resize', function(e){
             self.layout();
         });
-
-        // $(document).on('ajax-loader', function(e, action) {
-        //     if(action == 'loaded') {
-        //         self.init_fd5();
-        //     }
-        // });
-
-
+        
         $(document).on('alogin', function(e, t){
             if(t == 'auth-state-change') {
                 Turbolinks.visit($.address.path())
             }
         });
+
+
+        ////////////////////////////////////////////////////////////
+        // top-bar / menu
+        ////////////////////////////////////////////////////////////
+
+        // mobile navigation
+
+
+
+        $(document).on('click tap', '.menu .has-children-toggle', function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+
+            var container = $(this).parents('li');
+
+            $('.children-expanded').not(container).removeClass('children-expanded');
+            container.toggleClass('children-expanded');
+
+        });
+
+        $(window).on('changed.zf.mediaquery', function(event, newSize, oldSize) {
+            //console.debug(newSize)
+        });
+
 
 
     };
@@ -88,34 +107,19 @@ var SiteUI = function () {
             $(this).height($(this).width());
         });
 
+
+        // hacks for touch devices
+        if($('html').hasClass('touch')) {
+            $('.hoverable').removeClass('hoverable').addClass('hoverable_disabled')
+        }
+
     };
 
 
 
     this.init_fd5 = function() {
-        // var fd5_settings = {
-        //     reveal: {
-        //         animation: 'none',
-        //         animation_speed: 0
-        //     },
-        //     tooltip: {
-        //         disable_for_touch: true
-        //     },
-        //     topbar: {
-        //         custom_back_text: false,
-        //         is_hover: true,
-        //         mobile_show_parent_link: true,
-        //         scrolltop : false
-        //     }
-        // };
-        // $(document).foundation(fd5_settings);
-
-
         $(document).foundation();
-
     };
-
-
 
     this.init = function () {
         self.layout();

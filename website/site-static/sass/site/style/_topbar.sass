@@ -48,7 +48,7 @@
       right: 0
 
 
-  section.desktop-menu,
+  section.main-menu,
   section.account
 
     ul.menu
@@ -111,8 +111,76 @@
 
 
 //////////////////////////////////////////////////////
-// responsive overrides
+// responsive styles & overrides
+//////////////////////////////////////////////////////
+
+// toggle bar (hamburger)
+#top_bar_toggle.title-bar
+  background: transparent
+  position: fixed
+  right: 0
+  top: 0
+  z-index: 999
+
+
+//////////////////////////////////////////////////////
+// navigation styling
+// this is quite hackish. maybe improve at some
+// point of time...
 //////////////////////////////////////////////////////
 @include breakpoint(small down)
   #topbar_container
-    display: none
+    .logo
+      display: none
+
+    section.main-menu
+      padding-left: 0
+      padding-right: 0
+
+      border-bottom: 1px solid black
+
+    section.account
+      //display: none
+      position: relative
+      border-bottom: 2px solid black
+      ul > li > a
+        padding-left: 10px !important
+
+    ul.menu
+      //display: block
+      flex-direction: column
+      justify-content: flex-start
+      align-items: flex-start
+      //flex-flow: row wrap
+
+      > li
+        //border-bottom: 1px solid #999
+
+      li
+        width: 100%
+        padding: 14px 10px !important
+
+        span.has-children-toggle
+          padding: 17px 15px 15px 50px
+          position: absolute
+          top: 0
+          right: 0
+          z-index: 999
+          cursor: pointer
+
+
+      li.has-children
+        ul
+          overflow: hidden
+        &.children-expanded
+          ul
+            overflow: visible !important
+            position: relative
+            top: auto
+
+      li > ul > li
+        float: left
+        padding: 14px 20px !important
+
+
+

@@ -279,10 +279,9 @@ var BPlayerApp = function () {
         if (control.action == 'seek') {
 
             // check if already in buffer
-            var seekable = self.current_sound.getSeekable()
+            var seekable = self.current_sound.getSeekable();
             var abs_time = self.current_sound.getDuration() * control.position;
-
-
+            
             if (self.debug) {
                 console.debug('seek', seekable[0]);
             }
@@ -368,8 +367,7 @@ var BPlayerApp = function () {
         self.current_sound.play().fadeIn(500);
 
         self.last_sound_url = url;
-
-
+        
     };
 
 

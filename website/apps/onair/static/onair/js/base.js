@@ -21,7 +21,8 @@ var OnAirApp = function () {
     this.current_item = false;
     this.timestamps = [];
     this.load_schedule_timeout = false;
-    this.default_timeout = 30000;
+    this.default_timeout = 30000; // ms
+    //this.default_timeout = 300000; // ms
 
     this.stream_delay = 6500;
 

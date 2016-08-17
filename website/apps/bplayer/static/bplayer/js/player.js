@@ -7,7 +7,7 @@
 var playlist = [
     '/stream/wuvt-hq.aac',
     '/media/test/file1.m4a'
-]
+];
 
 var AudioPlayerApp = function () {
 

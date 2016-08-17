@@ -67,9 +67,6 @@ def alogin_register(request):
             return alogin_login(request)
 
 
-            #return HttpResponse(json.dumps({'success': True, 'mail_activation': True})
-            #    , content_type='application/json')
-
     return render(request, 'alogin/register.html', {'form': form})
 
 def alogin_logout(request):

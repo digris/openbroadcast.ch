@@ -1,8 +1,11 @@
 {% load menu_tags i18n  %}
 
+
+<p class="show-for-medium">
+
 {% if user.is_authenticated  %}
 
-    <li class="hoverable">
+    <li class="hoverable show-for-medium">
         <a data-livefg href="#">{% firstof user.get_display_name %}</a>
         <ul>
             {% if user.is_staff %}
@@ -31,6 +34,12 @@
             </li>
         </ul>
     </li>
+
+    <li class="show-for-small-only">
+        <a data-no-turbolink data-livefg href="{% url 'alogin-logout' %}" data-alogin-action="logout">{% trans 'logout'|capfirst %}</a>
+    </li>
+
+
 
 {% else %}
 

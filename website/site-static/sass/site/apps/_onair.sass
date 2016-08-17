@@ -670,11 +670,6 @@ body.loading #onair_container
         a
           border-radius: 2px
 
-    //> div
-    //  opacity: 0.1
-    //  &.fade-in
-    //    transition: opacity 1.5s
-    //    opacity: 1.0
 
   .meta-container,
   .meta-container-offline
@@ -752,7 +747,6 @@ $vote-icon-size: 33px
     left: 50%
     width: 2px
     height: 62px
-    //background: #000
 
   div.vote
     padding-top: 8px
@@ -771,11 +765,6 @@ $vote-icon-size: 33px
 
     svg
       position: absolute
-      //width: $vote-icon-size
-      //height: $vote-icon-size
-      //polyline, rect
-      //  transition: fill 0.5s
-      //  stroke: #000
 
     &:hover
       svg
@@ -837,6 +826,9 @@ $vote-icon-size: 33px
 @include breakpoint(small down)
   #station_time_container
     display: none
+
+  .meta-container
+    margin-top: 8px
 
   .logo-container
     .claim

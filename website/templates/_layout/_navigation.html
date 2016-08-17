@@ -2,11 +2,16 @@
 {% for child in children %}
 <li
         {% if child.selected or child.ancestor or child.parent_id %}data-livebg-inverse{% endif %}
-        class="hoverable{% if child.selected %} selected{% endif %}{% if child.ancestor %} ancestor{% endif %}">
+        class="hoverable{% if child.selected %} selected{% endif %}{% if child.ancestor %} ancestor{% endif %}{% if child.children %} has-children{% endif %}">
 	<a
         {% if child.selected or child.ancestor %} data-livefg-inverse data-livehover{% else %}data-livefg{% endif %}
         data-ajax-load
-        href="{{ child.attr.redirect_url|default:child.get_absolute_url }}">{{ child.get_menu_title }}</a>
+        href="{{ child.attr.redirect_url|default:child.get_absolute_url }}">
+        {{ child.get_menu_title }}
+    </a>
+    {% if child.children %}
+        <span {% if child.selected or child.ancestor %} data-livefg-inverse data-livehover{% else %}data-livefg{% endif %} class="hide-for-medium has-children-toggle text-right"><i class="fa fa-angle-double-down fa-2x" aria-hidden="true"></i></span>
+    {% endif %}
 	{% if child.children %}
     <ul>
         {% show_menu from_level to_level extra_inactive extra_active template "" "" child %}
