@@ -3,6 +3,7 @@ from django.conf.urls.i18n import i18n_patterns
 from solid_i18n.urls import solid_i18n_patterns
 from django.conf import settings
 from django.contrib import admin
+from django.conf.urls.static import static
 from django.views.static import serve
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
@@ -24,7 +25,6 @@ urlpatterns = solid_i18n_patterns('',
 urlpatterns += patterns('',
 
     url(r'^debug/', TemplateView.as_view(template_name='debug.html')),
-
     url(r'^api/', include('project.urls_api')),
     url(r'^', include('contentproxy.urls')),
     url(r'^subscription/', include('subscription.urls')),
@@ -36,7 +36,8 @@ urlpatterns += solid_i18n_patterns('',
 
 if settings.DEBUG:
     urlpatterns = patterns('',
-    url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
-        {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
-    url(r'', include('django.contrib.staticfiles.urls')),
-) + urlpatterns
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
+            {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+        url(r'', include('django.contrib.staticfiles.urls')),
+    ) + urlpatterns
+

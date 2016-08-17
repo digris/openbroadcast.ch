@@ -180,6 +180,8 @@
 {% cms_toolbar %}
 {% slick_admin_cms_style %}
 
+
+{% block top-bar %}
 <div id="topbar_container" data-livebg>
 
     <div class="title-bar"  id="top_bar_toggle" data-responsive-toggle="top_bar" data-hide-for="medium">
@@ -231,6 +233,7 @@
 
     </nav>
 </div>
+{% endblock %}
 
 <header>
     {% block teaser %}{% endblock %}
@@ -242,38 +245,37 @@
 ...
 </a>-->
 
+    {% block container %}
+    <div class="container" id="content_base">
 
-<div class="container" id="content_base">
+        {% block splash %}<!-- passed by: cms_base.html -->{% endblock %}
 
-    {% block splash %}<!-- passed by: cms_base.html -->{% endblock %}
-
-    {% include "onair/container.html" %}
-    {% include "achat/container.html" %}
-
-
-    {% block main_content %}{% endblock %}
+        {% include "onair/container.html" %}
+        {% include "achat/container.html" %}
 
 
-    <!--
-    <div data-turbolinks-permanent id="hipchat_container">
-        <iframe data-turbolinks-permanent src="https://www.hipchat.com/gZj0paISd?name=peter+klammer"></iframe>
+        {% block main_content %}{% endblock %}
+
+        <!--
+        <div data-turbolinks-permanent id="hipchat_container">
+            <iframe data-turbolinks-permanent src="https://www.hipchat.com/gZj0paISd?name=peter+klammer"></iframe>
+        </div>
+        -->
+
+
+        {% bplayer_inline %}
+
+        {% if user.is_authenticated %}
+        {# backfeed_inline #}
+        {% endif %}
+
+
+        {% include "_layout/_site_messages.html" %}
+
+        {% include "_layout/_chat_button.html" %}
+
     </div>
-    -->
-
-
-    {% bplayer_inline %}
-
-    {% if user.is_authenticated %}
-    {# backfeed_inline #}
-    {% endif %}
-
-
-    {% include "_layout/_site_messages.html" %}
-
-    {% include "_layout/_chat_button.html" %}
-
-</div>
-
+    {% endblock %}
     {% include "_layout/_footer.html" %}
 
 
@@ -313,7 +315,6 @@
 
 </script>
 {% endif %}
-
 
 <script data-turbolinks-eval=false>
 

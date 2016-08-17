@@ -343,7 +343,7 @@ var BPlayerApp = function () {
             self.current_sound.play();
             return;
         }
-
+        
         if(self.current_sound) {
             self.current_sound.stop();
             delete(self.current_sound);
