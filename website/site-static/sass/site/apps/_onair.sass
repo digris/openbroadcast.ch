@@ -194,8 +194,8 @@
         &.claim
           color: #ffffff
           text-align: left
-          font-size: rem-calc(40)
-          line-height: rem-calc(48)
+          font-size: rem-calc(32)
+          line-height: rem-calc(40)
           font-weight: normal
           p
             margin-bottom: 0
@@ -805,6 +805,11 @@ $vote-icon-size: 33px
 //////////////////////////////////////////////////////
 // responsive overrides
 //////////////////////////////////////////////////////
+
+@include breakpoint(medium down)
+
+
+
 @include breakpoint(medium down)
   #media_prev_next
     display: none

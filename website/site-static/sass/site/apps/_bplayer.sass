@@ -307,7 +307,23 @@ body.paused #bplayer_container
 ////////////////////////////////////////////////////////////////
 // responsive styles & overrides
 ////////////////////////////////////////////////////////////////
-// 100% height
+
+// compact player with
+
+#bplayer_container
+  @include breakpoint(medium)
+    .row.base
+      max-width: 591px
+  @include breakpoint(large)
+    .row.base
+      max-width: 800px
+  @include breakpoint(xlarge)
+    .row.base
+      max-width: 950px
+
+
+
+// 100% height on mobile
 @include breakpoint(small only)
   #bplayer_container
     &.show-history
@@ -315,7 +331,7 @@ body.paused #bplayer_container
 
 #bplayer_container
 
-  @include breakpoint(medium down)
+  @include breakpoint(small only)
 
     // play/pause & expand icons
     .actions

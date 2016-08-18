@@ -87,7 +87,7 @@ if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(cont
 output += "data-livefill";
 ;
 }
-output += "\n            >\n                <polygon points=\"0,0 5,5 10,0 \"/>\n            </svg>\n\n        </div>\n    </div>\n\n\n    <div class=\"author text-center\">\n        <span class=\"user\">\n            ";
+output += ">\n                <polygon points=\"0,0 5,5 10,0 \"/>\n            </svg>\n\n        </div>\n    </div>\n\n\n    <div class=\"author text-center\">\n        <span class=\"user\">\n            ";
 if(runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "message")),"user")),"is_me")) {
 output += "\n            << me >>\n            ";
 ;
@@ -487,7 +487,7 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<div class=\"row base small-collapse medium-collapse large-uncollapse\">\n    <div class=\"small-12 columns\">\n\n\n        <div class=\"row collapse\">\n\n            <div class=\"columns small-1\">\n\n                <div class=\"actions left\">\n                    <a data-bplayer-controls=\"resume\" href=\"#\"><i class=\"fa fa-play\"></i></a>\n                    <a data-bplayer-controls=\"pause\" href=\"#\"><i class=\"fa fa-pause\"></i></a>\n                </div>\n\n            </div>\n\n            <div class=\"columns small-10\">\n                <section class=\"playlist history compact\">\n\n                    ";
+output += "<div class=\"row base small-collapse medium-uncollapse\">\n    <div class=\"small-12 columns\">\n\n\n        <div class=\"row collapse\">\n\n            <div class=\"columns small-1\">\n\n                <div class=\"actions left\">\n                    <a data-bplayer-controls=\"resume\" href=\"#\"><i class=\"fa fa-play\"></i></a>\n                    <a data-bplayer-controls=\"pause\" href=\"#\"><i class=\"fa fa-pause\"></i></a>\n                </div>\n\n            </div>\n\n            <div class=\"columns small-10\">\n                <section class=\"playlist history compact\">\n\n                    ";
 if(!runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "opts")),"onair") && runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "opts")),"mode") != "history") {
 output += "\n\n                        <div class=\"item playing fallback-text\">\n                            <span>Unbekannter Titel - \"Emergency Player\"</span>\n                        </div>\n\n                    ";
 ;
@@ -2033,7 +2033,7 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<!-- TODO: implement better responsive/mobile handling -->\n\n\n\n<div class=\"show-for-small-only\" data-livefg>\n    <!-- track related -->\n    <p class=\"text-center\">\n        ";
+output += "<!-- TODO: implement better responsive/mobile handling -->\n\n\n\n<div class=\"hide-for-large\" data-livefg>\n    <!-- track related -->\n    <p class=\"text-center\">\n        ";
 output += runtime.suppressValue(env.getFilter("shorten").call(context, runtime.memberLookup((runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"item")),"artist")),"name"),30), env.opts.autoescape);
 output += "\n        <br>\n        ";
 output += runtime.suppressValue(env.getFilter("shorten").call(context, runtime.memberLookup((runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"item")),"name"),30), env.opts.autoescape);
