@@ -1,4 +1,4 @@
-{% load cms_tags slick_admin_tags compress sekizai_tags i18n menu_tags bplayer_tags backfeed_tags pushy_client_tags nunjucks_tags analytics raven livecolor_tags %}<!DOCTYPE html>
+{% load cms_tags staticfiles slick_admin_tags compress sekizai_tags i18n menu_tags bplayer_tags backfeed_tags pushy_client_tags nunjucks_tags analytics raven livecolor_tags %}<!DOCTYPE html>
 <html class="no-js{% if user.is_authenticated %} is-authenticated{% endif %}" lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="utf-8"/>
@@ -135,6 +135,7 @@
     <script src="{{ STATIC_URL }}livecolor/js/base.js"></script>
     <script src="{{ STATIC_URL }}achat/js/base.js"></script>
     <script src="{{ STATIC_URL }}alogin/js/base.js"></script>
+    <script src="{{ STATIC_URL }}coverage/js/base.js"></script>
 
     <script src="{{ STATIC_URL }}bplayer/js/levelbridge.js"></script>
     <script src="{{ STATIC_URL }}onair/js/base.js"></script>
@@ -146,7 +147,9 @@
     <script src="{{ STATIC_URL }}bplayer/js/base.js"></script>
     <!--<script src="{{ STATIC_URL }}dist/js/apps/bplayer/base.js"></script>-->
 
-
+    <!-- cms plugin moved js scripts (one-page compat.) -->
+    <script type="text/javascript" src="//maps-api-ssl.google.com/maps/api/js?v=3&amp;sensor=true"></script>
+    <script type="text/javascript" src="{% static "js/djangocms_gmaps/gmaps.js" %}"></script>
 
     <!-- temporary & testing -->
     <script src="{{ STATIC_URL }}temporary/smileys.js"></script>
@@ -347,6 +350,7 @@
     var achat;
     var stationtime;
     var remotelink;
+    var coverage;
 
     $(function() {
 
@@ -369,11 +373,10 @@
 
 
         /////////////////////////////////////////////
-        // AJAX Loader
+        // Coverage Map
         /////////////////////////////////////////////
-        // var ajax_loader = new AJAXLoader();
-        // ajax_loader.debug = true;
-        // ajax_loader.init();
+        coverage = new CoverageApp();
+        coverage.init();
 
 
         /////////////////////////////////////////////

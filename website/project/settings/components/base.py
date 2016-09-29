@@ -160,6 +160,7 @@ INSTALLED_APPS = (
     'profiles',
     'ticker',
     'team',
+    'coverage',
     'program',
     'partnerlink',
     'social_auth',
