@@ -18,12 +18,19 @@ var CoverageApp = function () {
                 container.addClass('fullscreen');
                 $('body').addClass('fullscreen-map');
 
+                // recalculate heights
+
+                var iframe_height = $(window).height() - $('.iframe-row').position().top;
+                $('.iframe-row').height(iframe_height);
+
+
+
             } else {
                 container.removeClass('fullscreen');
                 $('body').removeClass('fullscreen-map');
             }
         });
-        
+
     };
 
 };
