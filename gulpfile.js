@@ -129,10 +129,6 @@ gulp.task('templates', function () {
 
 gulp.task('dist', ['styles'], function() {
     return gulp.src('website/site-static/css/*.css')
-        // .pipe(cssShorthand())
-        // .pipe($.uncss({
-        //     html: ['website/**/*.html']
-        // }))
         .pipe(cleanCSS({compatibility: 'ie10'}))
         .pipe($.size({title: 'dist'}))
         .pipe(gulp.dest('website/site-static/dist/css/'));

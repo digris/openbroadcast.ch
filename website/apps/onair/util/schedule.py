@@ -36,23 +36,15 @@ def fetch_from_api(range_start=0, range_end=0, channel=None):
 
     remote_schedule = r.json()
 
-
-    #print remote_schedule['objects']
-
-
     # get local schedule
     qs = ScheduledItem.objects.filter(
         time_end__gte=now - datetime.timedelta(seconds=range_start),
         time_start__lte=now + datetime.timedelta(seconds=range_end)).order_by('-time_start')
 
-
     times = {
         'start': [item['time_start'] for item in remote_schedule['objects']],
         'end': [item['time_end'] for item in remote_schedule['objects']],
     }
-
-
-    #qs = qs.exclude(time_start__in=times['start'], time_end__in=times['end'])
 
     # delete vanished items
     if len(times['start']) + len(times['start']) > 0:
@@ -63,7 +55,6 @@ def fetch_from_api(range_start=0, range_end=0, channel=None):
 
     # map
     for remote_item in remote_schedule['objects']:
-        #print remote_item
         item, created = ScheduledItem.objects.get_or_create(
             time_start=remote_item['time_start'],
             time_end=remote_item['time_end'],
@@ -81,4 +72,8 @@ def cleanup_old_entries(max_age):
     )
     log.debug('%s sheduled items to delete' % old_entries.count())
     old_entries.delete()
+
+
+
+
 
