@@ -3,7 +3,7 @@ import os
 
 # reference to absolute paths for later use
 SITE_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-APP_ROOT = os.path.join(SITE_ROOT, 'website')
+APP_ROOT = os.path.join(SITE_ROOT, 'project')
 
 base_settings = [
     'components/base.py',

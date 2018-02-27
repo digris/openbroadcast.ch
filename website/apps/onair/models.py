@@ -62,8 +62,8 @@ class ScheduledItem(models.Model):
         verbose_name = _('Scheduled Item')
         verbose_name_plural = _('Scheduled Items')
         ordering = ('-time_start',)
-    
-    
+
+
     def __unicode__(self):
         return u'%s' % self.name
 
