@@ -1,22 +1,17 @@
 from split_settings.tools import optional, include
 import os
 
-try:
-    site_domain = os.environ['SITE']
-except:
-    site_domain = None
+base_settings = [
+    'components/base.py',
+    'components/media.py',
+    'components/template.py',
 
+    # optional local settings
+    optional(os.path.abspath(os.path.join(APP_ROOT, 'local_settings.py'))),
 
-if not site_domain:
+    # via server based settings in etc (placed by ansible deployment tasks)
+    optional('/etc/openbroadcast.ch/application-settings.py'),
+    optional('/etc/openbroadcast.ch/logging.py'),
+]
 
-    include(
-        'components/base.py',
-        'components/media.py',
-        'components/template_cms.py',
-
-        os.path.join(os.getcwd(), 'project/local_settings.py'),
-        scope=locals()
-    )
-
-
-
+include(*base_settings)
