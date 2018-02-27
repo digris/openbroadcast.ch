@@ -124,7 +124,7 @@ djangocms-video==1.0.0
 ################################################
 # custom repos
 ################################################
--e git+https://github.com/hzlf/graypy.git@master#egg=graypy
+#-e git+https://github.com/hzlf/graypy.git@master#egg=graypy
 -e git+https://github.com/palmbeach-interactive/django-slick-admin@master#egg=django-slick-admin
 
 ################################################

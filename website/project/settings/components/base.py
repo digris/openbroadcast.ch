@@ -94,14 +94,12 @@ INSTALLED_APPS = (
     'solid_i18n',
     'alogin',
 
-    # wip only
-    'django.contrib.webdesign',
 
     # life-savers
     'crispy_forms',
     'raven.contrib.django.raven_compat',
     'tastypie',
-    'kombu.transport.django',
+    #'kombu.transport.django',
     #'relatedadminlink',
 
     'remoteauth',
