@@ -23,7 +23,7 @@ cssutils==1.0.1
 easy-thumbnails==2.3
 html5lib==0.9999999
 jsonfield==1.0.3
-kombu==3.0.35
+#kombu==3.0.35
 nydus==0.11.0
 oauthlib==1.1.2
 openpyxl==2.3.5
