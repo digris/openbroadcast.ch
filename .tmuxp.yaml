@@ -16,17 +16,6 @@ windows:
     - shell_command:
         - cd services/pushy
         - node pushy.js
-    - gulp watch
+    - ./node_modules/gulp/bin/gulp.js watch
     - cd website
     - cd website
-
-#- window_name: django
-#  layout: main-horizontal
-#  options:
-#    main-pane-height: 35
-#  start_directory: website/
-#  shell_command_before:
-#    - 'source ~/srv/openbroadcast.ch/bin/activate'
-#  panes:
-#  - ./manage.py runserver 0.0.0.0:8081
-#  - pane
