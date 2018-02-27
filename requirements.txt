@@ -10,11 +10,11 @@ Django==1.9.7
 BeautifulSoup==3.2.1
 Markdown==2.6.6
 Pillow==3.2.0
-amqp==1.4.9
+#amqp==1.4.9
 analytics==0.6.5
 astral==1.2
 beautifulsoup4==4.4.1
-billiard==3.3.0.23
+#billiard==3.3.0.23
 #celery==3.1.23
 celery[redis]==4.0.2
 crispy-forms-foundation==0.5.4
