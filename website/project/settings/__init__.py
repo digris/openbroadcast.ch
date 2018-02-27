@@ -1,6 +1,10 @@
 from split_settings.tools import optional, include
 import os
 
+# reference to absolute paths for later use
+SITE_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+APP_ROOT = os.path.join(SITE_ROOT, 'website')
+
 base_settings = [
     'components/base.py',
     'components/media.py',
