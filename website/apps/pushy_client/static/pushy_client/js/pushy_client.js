@@ -4,7 +4,7 @@ PushyClientApp = function() {
 
 	this.socket_url;
 	this.socket;
-	this.debug = false;
+	this.debug = true;
 	this.subscriptions = [];
 
 	this.init = function() {
@@ -16,7 +16,7 @@ PushyClientApp = function() {
 			self.connect()
 		}, 100);
 	};
-	
+
 	this.connect = function() {
 
 		try {
@@ -34,7 +34,7 @@ PushyClientApp = function() {
 			console.warn(err.message);
 		}
 	};
-	
+
 	this.subscribe = function(channel, callback) {
 		if(self.debug){
 			console.debug('PushyClientApp - subscribe:', channel);
@@ -44,7 +44,7 @@ PushyClientApp = function() {
 			callback: callback
 		});
 	};
-	
+
 	this.trigger = function(channel, data) {
 		for(i in self.subscriptions) {
 			if(channel.endsWith(self.subscriptions[i].channel)) {
@@ -55,4 +55,4 @@ PushyClientApp = function() {
 			}
 		};
 	};
-}; 	
+};

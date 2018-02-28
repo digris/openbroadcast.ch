@@ -264,6 +264,7 @@ MIGRATION_MODULES = {
     'cmsplugin_youtube': 'cmsplugin_youtube.migrations_django',
 }
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 CAPTCHA_LETTER_ROTATION = (-10, 10)
 CAPTCHA_BACKGROUND_COLOR = '#fafafa'
