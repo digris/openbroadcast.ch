@@ -192,19 +192,14 @@ MIDDLEWARE_CLASSES = (
     'social_auth.middleware.SocialAuthExceptionMiddleware',
 )
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'data.sqlite3'),
-    }
-}
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+# SESSION_CACHE_ALIAS = 'default'
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
-# http://docs.celeryproject.org/en/latest/configuration.html#celeryd-prefetch-multiplier
-CELERYD_PREFETCH_MULTIPLIER = 1
 
-CELERYBEAT_SCHEDULE = {
+
+CELERY_BEAT_SCHEDULE = {
     'onair-update-schedule': {
         'task': 'onair.tasks.update_schedule',
         'schedule': timedelta(seconds=60),
@@ -226,7 +221,6 @@ CELERYBEAT_SCHEDULE = {
     #     #'kwargs': {'range_start': 600, 'range_end': 600}
     # },
 }
-
 
 TASTYPIE_DEFAULT_FORMATS = ['json', ]
 
@@ -271,14 +265,6 @@ MIGRATION_MODULES = {
 }
 
 
-# registration
-ACCOUNT_ACTIVATION_DAYS = 7
-
-# Apps to run ci-tests on
-PROJECT_APPS = (
-    # 'my_app',
-)
-
 CAPTCHA_LETTER_ROTATION = (-10, 10)
 CAPTCHA_BACKGROUND_COLOR = '#fafafa'
 CAPTCHA_FOREGROUND_COLOR = '#000'
@@ -290,41 +276,12 @@ CAPTCHA_LENGTH = 6
 CAPTCHA_IMAGE_SIZE = (120, 30)
 CAPTCHA_FIELD_TEMPLATE = 'captcha/field.html'
 
-
 SETTINGS_EXPORT = [
     'DEBUG',
     'API_BASE_URL',
     'STREAM_URL',
     'STATIC_BASE_URL',
     'ONAIR_LOAD_HISTORY',
-]
-
-ADMIN_SHORTCUTS = [
-    {
-        'title': _('Quick Links'),
-        'shortcuts': [
-            {
-                'url': '/',
-                'title': _('Public Site'),
-                'open_new_window': True,
-            },
-            {
-                'url': 'https://lab.hazelfire.com/projects/openbroadcast-ch/activity',
-                'title': _('Bug- & Issue Tracker'),
-                'open_new_window': True,
-                'class': 'tool',
-            },
-        ]
-    },
-    {
-        'title': _('Administration'),
-        'shortcuts': [
-            {
-                'url_name': 'admin:cms_page_changelist',
-                'title': _('CMS Pages'),
-            },
-        ]
-    },
 ]
 
 BADBROWSER_REQUIREMENTS = (
@@ -335,5 +292,4 @@ BADBROWSER_REQUIREMENTS = (
 )
 BADBROWSER_SUGGEST = ('chrome', 'safari', 'ie', 'firefox', )
 
-#LOGIN_REDIRECT_URL = '/accounts/contact/'
 LOGIN_REDIRECT_URL = '/'
