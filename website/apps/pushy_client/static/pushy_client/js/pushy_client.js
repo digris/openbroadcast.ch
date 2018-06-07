@@ -53,6 +53,6 @@ PushyClientApp = function() {
                 }
 				self.subscriptions[i].callback(data);
 			}
-		};
+		}
 	};
 };
