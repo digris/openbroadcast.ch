@@ -38,7 +38,7 @@ urlpatterns += i18n_patterns(
     url(r'^stationtime/', include('stationtime.urls')),
     url(r'^remotelink/', include('remotelink.urls')),
     url(r'^', include('cms.urls')),
-    # prefix_default_language=False
+    prefix_default_language=False
 )
 
 if settings.DEBUG:
