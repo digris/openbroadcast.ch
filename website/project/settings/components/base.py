@@ -524,12 +524,4 @@ SETTINGS_EXPORT = [
     'ONAIR_LOAD_HISTORY',
 ]
 
-BADBROWSER_REQUIREMENTS = (
-	("firefox", "22.0"),
-	("chrome", "22.0"),
-	("microsoft internet explorer", "11.0"),
-	("opera", None),
-)
-BADBROWSER_SUGGEST = ('chrome', 'safari', 'ie', 'firefox', )
-
 LOGIN_REDIRECT_URL = '/'
