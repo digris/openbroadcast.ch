@@ -126,10 +126,11 @@ class VoteResource(Resource):
 
         req = kwargs.get('pk', None)
 
-        print req
-
-        pk = req.split('/')[1]
-        bundle.data['pk'] = int(pk)
+        try:
+            pk = req.split('/')[1]
+            bundle.data['pk'] = int(pk)
+        except:
+            pass
 
         return bundle
 
