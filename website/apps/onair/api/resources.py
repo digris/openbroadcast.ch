@@ -53,7 +53,7 @@ class VoteObject(object):
             try:
                 log.debug('routing to: %s%s' % (REDIS_SITE_ID, 'arating.vote'))
                 rs.publish('%s%s' % (REDIS_SITE_ID, 'arating_vote'), json.dumps(vote))
-            except redis.ConnectionError, e:
+            except redis.ConnectionError as e:
                 log.warning('unable to route message %s' % e)
 
 
@@ -218,12 +218,18 @@ class ScheduledItemResource(ModelResource):
         expand = expand.split() if expand else []
 
         if 'emission' in expand:
-            emission = obj.emission_data
+            try:
+                emission = json.loads(obj.emission_data)
+            except:
+                emission = obj.emission_data
         else:
             emission = obj.emission_url
 
         if 'item' in expand:
-            item = obj.item_data
+            try:
+                item = json.loads(obj.item_data)
+            except:
+                item = obj.item_data
         else:
             item = obj.item_url
 
