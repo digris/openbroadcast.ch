@@ -25,7 +25,7 @@ AchatApp = function () {
         pushy_client.subscribe('achat', function(message){
             self.add_message(message);
         });
-        
+
         self.packery_container = $('.messages-container');
         self.packery_container.packery({
                 itemSelector: '.item.message',
@@ -41,13 +41,9 @@ AchatApp = function () {
             e.preventDefault();
             // don't act on 'span' click (used to toggle dropdown)
             if(! $(e.toElement).is('span')) {
-                var options = {
-                    extra: $(this).data('message_extra') || false
-                };
-                self.create_message($('.chat-message', self.container).html(), options)
+                self.create_message($('.chat-message', self.container).html())
             }
         });
-
 
         self.container.on('submit', 'form', function (e) {
 
@@ -162,7 +158,7 @@ AchatApp = function () {
         } catch(e) {
 
         }
-        
+
 
     };
 
@@ -193,10 +189,6 @@ AchatApp = function () {
         //message.created = message.created.substr(11, 8);
         if (self.user && message.user.username == self.user.username) {
             message.user.is_me = true;
-        }
-
-        if (message.options && message.options.extra ) {
-            message.extra_classes = message.options.extra
         }
 
         var html = $(nj.render('achat/nj/message.html', {message: message}));
@@ -268,13 +260,12 @@ AchatApp = function () {
     };
 
 
-    this.create_message = function (text, options) {
+    this.create_message = function (text) {
 
         if ($(text).html().length > 2) {
 
             var data = JSON.stringify({
-                "text": $(text).html(),
-                "options": options
+                "text": $(text).html()
             });
 
             $.ajax({
@@ -315,8 +306,7 @@ AchatApp = function () {
     this.create_dummy_message = function(){
 
         var data = JSON.stringify({
-            "text":"hallo <span data-ct=\"user\">@peter001</span>&nbsp;und 123<span></span><span></span><span></span>",
-            "options":{"extra":false}
+            "text":"hallo <span data-ct=\"user\">@peter001</span>&nbsp;und 123<span></span><span></span><span></span>"
         });
 
         $.ajax({

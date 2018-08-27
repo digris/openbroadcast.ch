@@ -58,11 +58,8 @@ class Article(TimestampedModel):
     def get_absolute_url(self):
         try:
             return reverse('ticker-article-detail', kwargs={'slug': self.slug})
-        except Exception, e:
-            return e
-
-        return e
-
+        except Exception as e:
+            return str(e)
 
     @property
     def public(self):

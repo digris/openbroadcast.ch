@@ -25,6 +25,7 @@ LOCALE_PATHS = ('%s/locale/' % BASE_DIR,)
 
 # Internationalization
 LANGUAGE_CODE = 'de-ch'
+
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
@@ -70,7 +71,7 @@ PARLER_LANGUAGES = {
     }
 }
 
-SOLID_I18N_USE_REDIRECTS = False
+#SOLID_I18N_USE_REDIRECTS = False
 
 ROOT_URLCONF = 'project.urls'
 WSGI_APPLICATION = 'project.wsgi.application'
@@ -91,7 +92,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'django.contrib.humanize',
-    'solid_i18n',
+    #'solid_i18n',
     'alogin',
 
 
@@ -135,7 +136,7 @@ INSTALLED_APPS = (
     'apiproxy',
     'pushy_client',
 
-    'django_extensions',
+    #'django_extensions',
     'compressor',
     'easy_thumbnails',
     'analytics',
@@ -180,7 +181,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'solid_i18n.middleware.SolidLocaleMiddleware',
+    #'solid_i18n.middleware.SolidLocaleMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.user.CurrentUserMiddleware',
@@ -258,12 +260,12 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': (
                 'django.contrib.auth.context_processors.auth',
-                'django.core.context_processors.i18n',
-                'django.core.context_processors.request',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.request',
                 'django.contrib.messages.context_processors.messages',
                 'absolute.context_processors.absolute',
-                'django.core.context_processors.media',
-                'django.core.context_processors.static',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
                 'cms.context_processors.cms_settings',
                 'sekizai.context_processors.sekizai',
                 'django_settings_export.settings_export',

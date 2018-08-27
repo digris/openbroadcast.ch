@@ -9,7 +9,6 @@ from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch.dispatcher import receiver
-from jsonfield import JSONField
 
 log = logging.getLogger(__name__)
 
@@ -32,7 +31,6 @@ class Message(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False)
     text = models.TextField()
     rendered_text = models.TextField(null=True, blank=True)
-    options = JSONField(null=True, blank=True)
 
     class Meta(object):
         app_label = 'achat'
@@ -50,7 +48,6 @@ class Message(models.Model):
         items = None
         has_youtube = re.findall(r'(https?://)?(www\.)?((youtube\.(com))/watch\?v=([-\w]+)|youtu\.be/([-\w]+))', self.text)
         if has_youtube:
-            print has_youtube
             video_id = [c for c in has_youtube[0] if c] # Get rid of empty list objects
             video_id = video_id[len(video_id)-1] # Return the last item in the list
             items = []

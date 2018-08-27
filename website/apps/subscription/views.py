@@ -70,7 +70,7 @@ class SubscribeView(CsrfExemptMixin, JsonRequestResponseMixin, View):
                     )
                     subscription.save()
                     subscription.update_subscription()
-                    message = u'You\'ve successfully signed-up for the newsletter. Soon you will receive an email to confirm your subscription.'
+                    message = u'You\'ve successfully signed-up for the newsletter.'
 
             if action == 'unsubscribe':
                 if subscription.exists():
