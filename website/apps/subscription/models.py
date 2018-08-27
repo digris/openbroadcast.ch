@@ -48,24 +48,46 @@ class Newsletter(TranslatableModel):
     def get_backend(self):
 
         backend = None
-        if self.backend == 'mailchimp':
-            if self.backend_api_key:
-                backend = MailchimpBackend(api_key=self.backend_api_key)
-            else:
-                backend = MailchimpBackend()
+
+        try:
+            if self.backend == 'mailchimp':
+                if self.backend_api_key:
+                    backend = MailchimpBackend(api_key=self.backend_api_key)
+                else:
+                    backend = MailchimpBackend()
+
+        except Exception as e:
+            return
+
         return backend
 
 
     def subscribe(self, email, name, language=None, channel=None):
         log.info(u'subscribe %s - %s [%s] %s on %s' % (email, name, language, channel, self.name))
         backend = self.get_backend()
-        backend.subscribe(list_id=self.backend_id, email=email, name=name, language=language, channel=channel)
+
+        if not backend:
+            log.warning('unable to get backend')
+            return
+
+        try:
+            backend.subscribe(list_id=self.backend_id, email=email, name=name, language=language, channel=channel)
+        except Exception as e:
+            log.warning('unable to subscribe: {}'.format(e))
 
 
     def unsubscribe(self, email):
         log.info(u'unsubscribe %s from %s' % (email, self.name))
         backend = self.get_backend()
-        backend.unsubscribe(list_id=self.backend_id, email=email)
+
+        if not backend:
+            log.warning('unable to get backend')
+            return
+
+        try:
+            backend.unsubscribe(list_id=self.backend_id, email=email)
+        except Exception as e:
+            log.warning('unable to unsubscribe: {}'.format(e))
 
     def save(self, *args, **kwargs):
         super(Newsletter, self).save(*args, **kwargs)

@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import django_extensions.db.fields.json
+import django.contrib.postgres.fields.jsonb
 
 
 class Migration(migrations.Migration):
@@ -20,8 +20,8 @@ class Migration(migrations.Migration):
                 ('time_end', models.DateTimeField()),
                 ('emission_url', models.CharField(max_length=255, null=True, blank=True)),
                 ('item_url', models.CharField(max_length=255, null=True, blank=True)),
-                ('emission_data', django_extensions.db.fields.json.JSONField()),
-                ('item_data', django_extensions.db.fields.json.JSONField()),
+                ('emission_data', django.contrib.postgres.fields.jsonb.JSONField()),
+                ('item_data', django.contrib.postgres.fields.jsonb.JSONField()),
                 ('status', models.PositiveIntegerField(default=0, max_length=2, choices=[(0, 'Initial'), (1, 'Done'), (2, 'Error')])),
             ],
             options={

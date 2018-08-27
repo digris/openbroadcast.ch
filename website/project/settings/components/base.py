@@ -25,6 +25,7 @@ LOCALE_PATHS = ('%s/locale/' % BASE_DIR,)
 
 # Internationalization
 LANGUAGE_CODE = 'de-ch'
+
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
@@ -70,7 +71,7 @@ PARLER_LANGUAGES = {
     }
 }
 
-SOLID_I18N_USE_REDIRECTS = False
+#SOLID_I18N_USE_REDIRECTS = False
 
 ROOT_URLCONF = 'project.urls'
 WSGI_APPLICATION = 'project.wsgi.application'
@@ -91,7 +92,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'django.contrib.humanize',
-    'solid_i18n',
+    #'solid_i18n',
     'alogin',
 
 
@@ -135,7 +136,7 @@ INSTALLED_APPS = (
     'apiproxy',
     'pushy_client',
 
-    'django_extensions',
+    #'django_extensions',
     'compressor',
     'easy_thumbnails',
     'analytics',
@@ -149,7 +150,6 @@ INSTALLED_APPS = (
     'bplayer',
     'achat',
     'onair',
-    'backfeed',
     'stationtime',
     'heartbeat',
     'remotelink',
@@ -181,7 +181,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'solid_i18n.middleware.SolidLocaleMiddleware',
+    #'solid_i18n.middleware.SolidLocaleMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.user.CurrentUserMiddleware',
@@ -196,6 +197,244 @@ MIDDLEWARE_CLASSES = (
 # SESSION_CACHE_ALIAS = 'default'
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
+
+
+##################################################################
+# media, static & co
+##################################################################
+# media deliver
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+# static files (application js/img etc)
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+
+
+ADMIN_MEDIA_PREFIX = '/static/admin/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'site-static'),
+)
+
+STATICFILES_FINDERS = (
+    'compressor.finders.CompressorFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+
+#STATICFILES_STORAGE = 'require.storage.OptimizedStaticFilesStorage'
+
+THUMBNAIL_PROCESSORS = (
+    'easy_thumbnails.processors.colorspace',
+    'easy_thumbnails.processors.autocrop',
+    #'easy_thumbnails.processors.scale_and_crop',
+    'filer.thumbnail_processors.scale_and_crop_with_subject_location',
+    'easy_thumbnails.processors.filters',
+)
+THUMBNAIL_QUALITY = 80
+THUMBNAIL_HIGH_RESOLUTION = True
+
+CMSPLUGIN_FILER_IMAGE_STYLE_CHOICES = (
+    ('default', 'Default'),
+    ('inline', 'Inline'),
+)
+CMSPLUGIN_FILER_IMAGE_DEFAULT_STYLE = 'inline'
+
+
+
+
+##################################################################
+# templates
+##################################################################
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+        ],
+        'APP_DIRS': False,
+        'OPTIONS': {
+            'context_processors': (
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.request',
+                'django.contrib.messages.context_processors.messages',
+                'absolute.context_processors.absolute',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'cms.context_processors.cms_settings',
+                'sekizai.context_processors.sekizai',
+                'django_settings_export.settings_export',
+
+                # authentication
+                'social_auth.context_processors.social_auth_backends',
+                'social_auth.context_processors.backends_data',
+                'social_auth.context_processors.social_auth_login_redirect',
+
+                # custom
+                'base.context_processors.cms_toolbar'
+            ),
+            'loaders': [
+                ('django.template.loaders.cached.Loader', [
+                    'django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader',
+                    'django.template.loaders.eggs.Loader',
+                ]),
+            ],
+        },
+    },
+]
+
+#######################################################################
+# cms
+#######################################################################
+CMS_REDIRECTS = True
+CMS_SEO_FIELDS = True
+CMS_CACHE_PREFIX = '__site__'
+CMS_SHOW_START_DATE = True
+CMS_SHOW_END_DATE = True
+
+CMS_TEMPLATES = (
+    ('_cms/single-column.html', '1 Column'),
+    ('_cms/two-columns.html', '2 Columns'),
+    ('_cms/home.html', 'Home'),
+    ('_cms/fs-video.html', 'Video (full-screen)'),
+    #('_templates/cms_construction.html', 'Under construction'),
+)
+
+CONTENT_PLUGINS = ['TextPlugin', 'LinkPlugin']
+CONTENT_PLUGINS.extend(['AppshotPlugin', 'BoxedPlugin', 'FAQMultiListPlugin', 'FilerFilePlugin', 'FilerImagePlugin', 'FilerSVGPlugin', 'MapPlugin', 'SingleProductPlugin', 'SnippetPlugin', 'TextPlugin', 'YouTubePlugin', ])
+
+
+
+DEFAULT_PLUGINS = [
+            {
+                'plugin_type': 'TextPlugin',
+                'values': {
+                    'body':'<h1>Lorem ipsum dolor sit amet... </h1><p>(Double-click me to edit!)</p>',
+                },
+            },
+        ]
+
+
+CMS_PLACEHOLDER_CONF = {
+    'content': {
+        #'plugins': ['TextPlugin', 'PicturePlugin'],
+        #'text_only_plugins': ['LinkPlugin'],
+        'extra_context': {"width": 640},
+        'name': _("Main Content"),
+        'default_plugins': DEFAULT_PLUGINS,
+    },
+    'sidebar': {
+        #"plugins": ['TextPlugin', 'LinkPlugin'],
+        "extra_context": {"width": 280},
+        'name': _("Sidebar"),
+        'limits': {
+            'global': 4,
+            'TeaserPlugin': 1,
+            'LinkPlugin': 10,
+        },
+        'default_plugins': DEFAULT_PLUGINS,
+    },
+    'ticker_article_content': {
+        #'plugins': ['TextPlugin', 'PicturePlugin'],
+        #'text_only_plugins': ['LinkPlugin'],
+        'extra_context': {"width": 640},
+        'name': _("Main Content"),
+        'default_plugins': [
+            {
+                'plugin_type': 'TextPlugin',
+                'values': {
+                    'body':'<p>(Double-click me to edit!)</p>',
+                },
+            },
+        ],
+    },
+}
+
+CMS_PLUGIN_PROCESSORS = (
+    'base.cms_plugin_processors.wrap_text',
+)
+
+CKEDITOR_SETTINGS = {
+    'language': '{{ language }}',
+    'uiColor': '#ffffff',
+    'contentsCss': STATIC_URL + 'css/cms/editor.css',
+    'toolbar_CMS': [
+        ['Undo', 'Redo'],
+        ['cmsplugins', 'ShowBlocks',],
+        #['Format', 'Styles'],
+        ['Styles',],
+        ['Cut','Copy','Paste','PasteText', '-', 'Find','Replace'],
+        ['NumberedList', 'BulletedList',],
+        ['Source',],
+        ['Bold', 'Italic', 'Underline', '-', 'Subscript', 'Superscript', '-', 'RemoveFormat'],
+    ],
+    'startupOutlineBlocks': True,
+    'skin': 'moono',
+    #'extraPlugins': 'blockquote',
+
+    'stylesSet': [
+
+        # alternative to 'format' selector
+        {'name': 'Paragraph', 'element': 'p',},
+        {'name': 'Heading 1 (only _one_ per page!)', 'element': 'h1',},
+        {'name': 'Heading 2', 'element': 'h2',},
+        {'name': 'Heading 3', 'element': 'h3',},
+        {'name': 'Heading 4', 'element': 'h4',},
+
+        {'name': 'Highlight', 'element': 'p', 'attributes': { 'class': 'highlight' }},
+
+        #{'name': 'BQ', 'element': 'blockquote', 'attributes': { 'class': 'bq' }},
+
+        {'name': 'Marked "info"', 'element': 'p', 'attributes': { 'class': 'marked-info' }},
+        {'name': 'Marked "hint"', 'element': 'p', 'attributes': { 'class': 'marked-hint' }},
+        {'name': 'Marked "warning"', 'element': 'p', 'attributes': { 'class': 'marked-warning' }},
+        {'name': 'Marked "alert"', 'element': 'p', 'attributes': { 'class': 'marked-alert' }},
+
+        {'name': 'Quote', 'element': 'p', 'attributes': { 'class': 'blockquote' }},
+
+        {'name': 'Dimmed', 'element': 'p', 'attributes': { 'class': 'dimmed' }},
+        #{'name': 'Address', 'element': 'address',},
+
+        {'name': 'Cited Work', 'element': 'cite',},
+        {'name': 'Inline Quotation', 'element': 'q',},
+
+        # custom elements
+        {'name': 'Italic Title',
+        'element': 'h2',
+        'styles': {
+            'font-style': 'italic'
+        }},
+
+    ]
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

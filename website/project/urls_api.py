@@ -1,4 +1,6 @@
-from django.conf.urls import patterns, include
+from __future__ import absolute_import, unicode_literals
+
+from django.conf.urls import url, include
 from tastypie.api import Api
 
 from profiles.api import UserResource
@@ -15,8 +17,8 @@ api.register(ScheduledItemResource())
 api.register(UserResource())
 api.register(MessageResource())
 
-urlpatterns = patterns('',
-    (r'^', include(api.urls)),
+urlpatterns = [
+    url(r'^', include(api.urls)),
     # pass all so far unmatched requests to the API proxy
-    (r'^', include('apiproxy.urls')),
-)
+    url(r'^', include('apiproxy.urls')),
+]

@@ -125,8 +125,12 @@ class VoteResource(Resource):
     def obj_get(self, bundle, **kwargs):
 
         req = kwargs.get('pk', None)
-        pk = req.split('/')[1]
-        bundle.data['pk'] = int(pk)
+
+        try:
+            pk = req.split('/')[1]
+            bundle.data['pk'] = int(pk)
+        except:
+            pass
 
         return bundle
 
@@ -211,12 +215,18 @@ class ScheduledItemResource(ModelResource):
         expand = expand.split() if expand else []
 
         if 'emission' in expand:
-            emission = obj.emission_data
+            try:
+                emission = json.loads(obj.emission_data)
+            except:
+                emission = obj.emission_data
         else:
             emission = obj.emission_url
 
         if 'item' in expand:
-            item = obj.item_data
+            try:
+                item = json.loads(obj.item_data)
+            except:
+                item = obj.item_data
         else:
             item = obj.item_url
 

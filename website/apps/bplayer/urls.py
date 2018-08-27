@@ -1,6 +1,9 @@
-from django.conf.urls import url, patterns
+from __future__ import absolute_import, unicode_literals
 
+from django.conf.urls import url
 
-urlpatterns = patterns('',
-    url(r'^base/$', 'bplayer.views.base'),
-)
+from . import views
+
+urlpatterns = [
+    url(r'^base/$', views.base),
+]

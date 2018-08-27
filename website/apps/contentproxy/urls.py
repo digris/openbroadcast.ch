@@ -1,12 +1,13 @@
-from django.conf.urls import patterns, include, url
+from __future__ import absolute_import, unicode_literals
 
-from contentproxy.views import MediaResourceView, StaticResourceView
+from django.conf.urls import url
+
+from . import views
 
 urlpatterns = [
-    #url(r'^content/library/tracks/(?P<uuid>[-\w]+)/stream.mp3$', MediaResourceView.as_view()),
-    url(r'^media-asset/format/(?P<uuid>[-\w]+)/default.(?P<encoding>\w+)$', MediaResourceView.as_view()),
-    url(r'^media-asset/format/(?P<uuid>[-\w]+)/default.(?P<encoding>\w+)$', MediaResourceView.as_view()),
-    url(r'^media-asset/format/(?P<uuid>[-\w]+)/default.(?P<encoding>\w+)/$', MediaResourceView.as_view()),
+    url(r'^media-asset/format/(?P<uuid>[-\w]+)/default.(?P<encoding>\w+)$', views.MediaResourceView.as_view()),
+    url(r'^media-asset/format/(?P<uuid>[-\w]+)/default.(?P<encoding>\w+)$', views.MediaResourceView.as_view()),
+    url(r'^media-asset/format/(?P<uuid>[-\w]+)/default.(?P<encoding>\w+)/$', views.MediaResourceView.as_view()),
 
-    url(r'^static-proxy/(?P<path>.*)$', StaticResourceView.as_view()),
+    url(r'^static-proxy/(?P<path>.*)$', views.StaticResourceView.as_view()),
 ]

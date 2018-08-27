@@ -12,7 +12,8 @@ from django.utils import timezone
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import reverse
-from django_extensions.db.fields.json import JSONField
+from django.contrib.postgres.fields import JSONField
+
 API_BASE_URL = getattr(settings, 'API_BASE_URL', None)
 API_BASE_AUTH = getattr(settings, 'API_BASE_AUTH', None)
 
@@ -28,10 +29,6 @@ if not API_BASE_AUTH:
 class ScheduledItemManager(models.Manager):
     def history(self):
         #return self.get_query_set().filter(time_start__lte=timezone.now())
-
-        print "history"
-        print 'now: %s' % datetime.datetime.now()
-
         return self.get_query_set().filter(time_start__lte=datetime.datetime.now())
 
 
@@ -45,8 +42,12 @@ class ScheduledItem(models.Model):
     emission_url = models.CharField(max_length=255, blank=True, null=True)
     item_url = models.CharField(max_length=255, blank=True, null=True)
 
-    emission_data = JSONField()
-    item_data = JSONField()
+    emission_data = JSONField(
+        null=True, blank=True
+    )
+    item_data = JSONField(
+        null=True, blank=True
+    )
 
     STATUS_CHOICES = (
         (0, _('Initial')),

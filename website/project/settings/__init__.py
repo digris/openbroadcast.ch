@@ -7,8 +7,6 @@ APP_ROOT = os.path.join(SITE_ROOT, 'project')
 
 base_settings = [
     'components/base.py',
-    'components/media.py',
-    'components/template.py',
 
     # optional local settings
     optional(os.path.abspath(os.path.join(APP_ROOT, 'local_settings.py'))),

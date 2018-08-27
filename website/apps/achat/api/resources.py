@@ -61,8 +61,6 @@ class MessageResource(ModelResource):
 
     def dehydrate(self, bundle):
 
-        bundle.data['options'] = bundle.obj.options if bundle.obj.options else {}
-
         bundle.data['text'] = bundle.obj.html
         bundle.data['attachments'] = bundle.obj.attachments
 
@@ -74,7 +72,6 @@ class MessageResource(ModelResource):
         }
 
         # temporary, dehydrate mentions
-
         mentions = [{
                         'username': mention.user.username,
                         'display_name': mention.user.get_display_name(),

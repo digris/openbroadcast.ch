@@ -1,6 +1,9 @@
-from django.conf.urls import url, patterns
+from __future__ import absolute_import, unicode_literals
 
+from django.conf.urls import url
 
-urlpatterns = patterns('',
-    url(r'^dialog/$', 'remotelink.views.dialog', name='remotelink-dialog'),
-)
+from . import views
+
+urlpatterns = [
+    url(r'^dialog/$', views.dialog, name='remotelink-dialog'),
+]
