@@ -149,7 +149,6 @@ INSTALLED_APPS = (
     'bplayer',
     'achat',
     'onair',
-    'backfeed',
     'stationtime',
     'heartbeat',
     'remotelink',

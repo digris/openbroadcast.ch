@@ -1,4 +1,4 @@
-{% load cms_tags staticfiles slick_admin_tags compress sekizai_tags i18n menu_tags bplayer_tags backfeed_tags pushy_client_tags nunjucks_tags analytics raven livecolor_tags %}<!DOCTYPE html>
+{% load cms_tags staticfiles slick_admin_tags compress sekizai_tags i18n menu_tags bplayer_tags pushy_client_tags nunjucks_tags analytics raven livecolor_tags %}<!DOCTYPE html>
 <html class="no-js{% if user.is_authenticated %} is-authenticated{% endif %}" lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="utf-8"/>
@@ -229,16 +229,11 @@
     {% include "onair/container.html" %}
     {% include "achat/container.html" %}
 
-
     {% block main_content %}{% endblock %}
 
     {% bplayer_inline %}
 
-    {% if user.is_authenticated %}
-    {# backfeed_inline #}
-    {% endif %}
-
-    {% include "_layout/_site_messages.html" %}
+    {# include "_layout/_site_messages.html" #}
 
     {# include "_layout/_chat_button.html" #}
 
@@ -419,14 +414,6 @@
         {% current_colors as colors %}
         livecolor = new LiveColorApp();
         livecolor.debug = false;
-        //livecolor.bg_color = '#00ffff';
-        //livecolor.fg_color = '#ee3333';
-        //livecolor.bg_color = '#882233';
-        //livecolor.fg_color = '#FFEF00';
-        //livecolor.bg_color = '#222222';
-        //livecolor.fg_color = '#00ffff';
-        //livecolor.bg_color = '#efefef';
-        //livecolor.fg_color = '#000000';
         livecolor.bg_color = '{{ colors.bg }}';
         livecolor.fg_color = '{{ colors.fg }}';
         livecolor.init();

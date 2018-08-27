@@ -1,10 +1,13 @@
-from django.conf.urls import url, patterns
+from __future__ import absolute_import, unicode_literals
 
+from django.conf.urls import url
 
-urlpatterns = patterns('',
-    url(r'^login/$', 'alogin.views.alogin_login', name='alogin-login'),
-    url(r'^register/$', 'alogin.views.alogin_register', name='alogin-register'),
-    url(r'^logout/$', 'alogin.views.alogin_logout', name='alogin-logout'),
+from . import views
+
+urlpatterns = [
+    url(r'^login/$', views.alogin_login, name='alogin-login'),
+    url(r'^register/$', views.alogin_register, name='alogin-register'),
+    url(r'^logout/$', views.alogin_logout, name='alogin-logout'),
     #
-    url(r'^profile/$', 'alogin.views.alogin_profile', name='alogin-profile'),
-)
+    url(r'^profile/$', views.alogin_profile, name='alogin-profile'),
+]

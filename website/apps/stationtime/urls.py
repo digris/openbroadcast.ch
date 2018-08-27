@@ -1,6 +1,9 @@
-from django.conf.urls import patterns, url
+from __future__ import absolute_import, unicode_literals
 
-urlpatterns = patterns('',
-    url(r'^time/$', 'stationtime.views.current_time', name='stationtime-current-time'),
-)
+from django.conf.urls import url
 
+from . import views
+
+urlpatterns = [
+    url(r'^time/$', views.current_time, name='stationtime-current-time'),
+]
