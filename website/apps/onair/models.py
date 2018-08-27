@@ -42,8 +42,12 @@ class ScheduledItem(models.Model):
     emission_url = models.CharField(max_length=255, blank=True, null=True)
     item_url = models.CharField(max_length=255, blank=True, null=True)
 
-    emission_data = JSONField()
-    item_data = JSONField()
+    emission_data = JSONField(
+        null=True, blank=True
+    )
+    item_data = JSONField(
+        null=True, blank=True
+    )
 
     STATUS_CHOICES = (
         (0, _('Initial')),
