@@ -53,7 +53,7 @@ class VoteObject(object):
             try:
                 log.debug('routing to: %s%s' % (REDIS_SITE_ID, 'arating.vote'))
                 rs.publish('%s%s' % (REDIS_SITE_ID, 'arating_vote'), json.dumps(vote))
-            except redis.ConnectionError, e:
+            except redis.ConnectionError as e:
                 log.warning('unable to route message %s' % e)
 
 
@@ -125,9 +125,6 @@ class VoteResource(Resource):
     def obj_get(self, bundle, **kwargs):
 
         req = kwargs.get('pk', None)
-
-        print req
-
         pk = req.split('/')[1]
         bundle.data['pk'] = int(pk)
 
@@ -183,16 +180,13 @@ curl api calls:
 class ScheduledItemResource(ModelResource):
 
     class Meta:
-        #queryset = ScheduledItem.objects.history().order_by('-time_start')
         queryset = ScheduledItem.objects.all().order_by('-time_start')
-        #queryset = ScheduledItem.objects.filter(time_start__lte=datetime.datetime.now()).order_by('-time_start')
         resource_name = 'onair/schedule'
         detail_allowed_methods = ['get',]
         list_allowed_methods = ['get',]
         include_resource_uri = True
         authentication = MultiAuthentication(SessionAuthentication(), Authentication())
         authorization = Authorization()
-        #excludes = ['id',]
         excludes = []
 
 
