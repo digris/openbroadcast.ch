@@ -75,7 +75,7 @@ class YammerOAuth2(BaseOAuth2):
 
         try:
             return simplejson.load(dsa_urlopen(url))
-        except Exception, e:
+        except Exception as e:
             logging.exception(e)
         return None
 

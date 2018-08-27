@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 from django.conf.urls.i18n import i18n_patterns
-from solid_i18n.urls import solid_i18n_patterns
+#from solid_i18n.urls import solid_i18n_patterns
 from django.conf import settings
 from django.contrib import admin
 from django.conf.urls.static import static
@@ -10,7 +10,18 @@ from django.contrib.auth.decorators import login_required
 
 admin.autodiscover()
 
-urlpatterns = solid_i18n_patterns('',
+# urlpatterns = i18n_patterns('',
+#     url(r'^admin/', include(admin.site.urls)),
+#     url(r'^alogin/', include('alogin.urls')),
+#     url(r'^sa/', include('social_auth.urls')),
+#     url(r'^captcha/', include('captcha.urls')),
+#     #url(r'^feedback/', include('backfeed.urls')),
+#     url(r'^stationtime/', include('stationtime.urls')),
+#     url(r'^remotelink/', include('remotelink.urls')),
+# )
+
+
+urlpatterns = i18n_patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^alogin/', include('alogin.urls')),
     url(r'^sa/', include('social_auth.urls')),
@@ -18,7 +29,10 @@ urlpatterns = solid_i18n_patterns('',
     #url(r'^feedback/', include('backfeed.urls')),
     url(r'^stationtime/', include('stationtime.urls')),
     url(r'^remotelink/', include('remotelink.urls')),
+    # prefix_default_language=False
 )
+
+
 
 urlpatterns += [
 
@@ -28,7 +42,7 @@ urlpatterns += [
     url(r'^subscription/', include('subscription.urls')),
 ]
 
-urlpatterns += solid_i18n_patterns('',
+urlpatterns += i18n_patterns(
     url(r'^', include('cms.urls')),
 )
 
