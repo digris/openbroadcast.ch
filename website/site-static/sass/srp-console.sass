@@ -1,0 +1,103 @@
+@charset "UTF-8"
+
+@import foundation
+@import site/settings
+
++foundation-global-styles
++foundation-typography
+
+$font-family: "Helvetica Neue", "Source Sans Pro", sans-serif
+
+@mixin playlist-item
+
+  background: white
+  display: flex
+  padding: 7px
+
+  border: 1px solid black
+  border-bottom: none
+
+  .visual
+    figure
+      margin: 0
+      padding: 0
+
+  .meta
+    flex-grow: 1
+
+@mixin media-item
+
+  background: black
+  color: white
+  display: flex
+  padding: 7px
+
+  .visual
+    figure
+      margin: 0
+      padding: 0
+
+  .meta
+    flex-grow: 1
+
+  a
+    color: white
+    text-decoration: underline
+
+
+
+body
+  font-family: $font-family
+  font-weight: 300
+  font-size: 14px
+  background: grey
+
+
+.console-app-container
+  width: 360px
+  height: 517px
+  overflow: hidden
+  background: #6633CC
+
+
+.onair-container
+
+  padding: 30px 0
+
+  .visual
+
+    figure
+      margin: 0 auto
+      padding: 0
+      background: black
+      width: 200px
+      height: 200px
+
+  .meta
+    padding: 30px 0
+    text-align: center
+
+    p
+      margin-bottom: 2px
+      color: white
+
+      a
+        color: white
+        padding: 0 4px
+        //text-decoration: underline
+        &:hover
+          // text-decoration: underline
+          color: #6633CC
+          background: white
+
+      .label
+        opacity: 0.5
+
+
+.history-container
+
+  .playlist-info
+    @include playlist-item
+
+  .media-container
+    @include media-item

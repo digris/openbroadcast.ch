@@ -163,6 +163,7 @@ INSTALLED_APPS = (
     'partnerlink',
     'social_auth',
     'subscription',
+    'swissradioplayer',
 
 )
 

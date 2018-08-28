@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+from __future__ import absolute_import, unicode_literals
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+
+from . import views
 
 app_name = 'swissradioplayer'
 urlpatterns = [
-    url(r'^console/$', 'stationtime.views.current_time', name='stationtime-current-time'),
+    url(r'^console/$', views.ConsoleIndexView.as_view(), name='console-index'),
 ]
 

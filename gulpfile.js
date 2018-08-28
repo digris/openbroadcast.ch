@@ -34,7 +34,7 @@ var AUTOPREFIXER_BROWSERS = [
     'android >= 4.4'
 ];
 
-gulp.task('proxy', ['styles'], function () {
+gulp.task('proxy', ['styles', 'srp:styles'], function () {
     browserSync.init({
         notify: false,
         port: config.local_port,
@@ -50,7 +50,7 @@ gulp.task('proxy', ['styles'], function () {
             }
         }
     });
-    gulp.watch("website/site-static/sass/**/*.sass", ['styles']);
+    gulp.watch("website/site-static/sass/**/*.sass", ['styles', 'srp:styles']);
     gulp.watch("website/site-static/js/**/*.coffee", ['scripts']);
     gulp.watch(nunjucksPaths, ['templates']);
 });
@@ -59,6 +59,24 @@ gulp.task('styles', function () {
     return gulp.src([
             'website/site-static/sass/screen.sass',
             'website/site-static/sass/print.sass'
+        ])
+        .pipe($.sourcemaps.init())
+        .pipe($.sass({
+            includePaths: sassPaths,
+            outputStyle: 'expanded',
+            precision: 10
+            //onError: logSASSError
+        }))
+        .pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
+        .pipe($.sourcemaps.write())
+        .pipe(gulp.dest('website/site-static/css/'))
+        .pipe(browserSync.stream({match: '**/*.css'}))
+        .pipe($.size({title: 'styles'}));
+});
+
+gulp.task('srp:styles', function () {
+    return gulp.src([
+            'website/site-static/sass/srp-console.sass'
         ])
         .pipe($.sourcemaps.init())
         .pipe($.sass({

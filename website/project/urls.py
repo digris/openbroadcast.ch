@@ -37,6 +37,7 @@ urlpatterns += i18n_patterns(
     # url(r'^feedback/', include('backfeed.urls')),
     url(r'^stationtime/', include('stationtime.urls')),
     url(r'^remotelink/', include('remotelink.urls')),
+    url(r'^srp/', include('swissradioplayer.urls')),
     url(r'^', include('cms.urls')),
     prefix_default_language=False
 )
