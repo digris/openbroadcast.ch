@@ -59,7 +59,7 @@ redis==2.10.5
 django-absolute==0.3
 django-admin-shortcuts==1.2.7
 django-appconf==1.0.2
-django-authtools==1.5.0§
+django-authtools==1.5.0
 django-click==2.1.0
 django-celery==3.1.17
 django-celery-beat==1.1.0
