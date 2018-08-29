@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Radioplayer</title>
+
+<!-- Standard Radioplayer Pre-Roll Framework CSS -->
+<link type="text/css" rel="stylesheet" href="http://your-console-domain.com/console-path/preroll-framework/framework.css" />
+
+<!-- Page Configuration -->
+<script type="text/javascript">
+var prerollConfig = {
+	proxyUrl: 'http://your-console-domain.com/console-path/preroll-framework/xdomainproxy.html',
+	showButton: true//,
+	//buttonText: 'Skip' // uncomment if you wish to customise the default button text. By default, it is 'Skip' for interstitials and 'Close' for overlays.
+};
+</script>
+
+<!-- End of Standard Radioplayer Framework - your CSS/JS starts here -->
+<!-- You can manually perform a skip, for example at the end of a video pre-roll, by calling rpPre.skip(); -->
+
+<style type="text/css">
+body { background: #c4d3e8; color:#fff; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin: 0; }
+p { text-align:center; }
+</style>
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="http://releases.flowplayer.org/5.4.2/flowplayer.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://releases.flowplayer.org/5.4.2/skin/minimalist.css">
+
+</head>
+<body>
+
+<p style="margin-left: 5px; margin-right: 90px; text-shadow: 0px 1px 1px #000;">
+    <strong>Big Buck Bunny! Coming very soon.</strong>
+</p>
+
+<div class="flowplayer" data-engine="flash">
+    <video autoplay>
+        <source type="video/mp4" src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.mp4">
+        <source type="video/webm" src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.webm">
+    </video>
+</div>
+
+<a href="http://www.bigbuckbunny.org/index.php" target="_blank" style="border: none;">
+    <img src="http://peach.blender.org/wp-content/uploads/title_anouncement.jpg" alt="Poster" class="moreInfo" style="width:100%; position: absolute; bottom: 0; left: 0; border: none;"/>
+</a>
+
+<script type="text/javascript">
+flowplayer(function (api, root) {
+	api.bind("finish", function(e, api) {
+		rpPre.skip();
+	});
+});
+</script>
+
+<!-- DO NOT REMOVE: Standard Radioplayer Pre-Roll Framework JS -->
+<script type="text/javascript" src="http://your-console-domain.com/console-path/preroll-framework/framework.js"></script>
+
+</body>
+</html>

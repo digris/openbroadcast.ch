@@ -1,0 +1,191 @@
+.radioplayer .video-js .vjs-tech {
+  position: relative;
+  width: 90%;
+  max-width: 640px;
+  margin: 0 5%;
+  height: auto; }
+
+#ima-video-container {
+  position: absolute;
+  top: -10000px;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 100; }
+
+#ima-ad-container {
+  z-index: 100; }
+
+#ima-ad-container iframe {
+  margin: 0 auto !important;
+  top: 0;
+  left: 0;
+  position: absolute !important; }
+
+#ima-ad-container video {
+  margin: 0 auto !important; }
+
+.radioplayer .video-js {
+  margin: 20px auto; }
+
+.radioplayer .vast-container .companion-container {
+  width: 100%;
+  text-align: center;
+  position: relative; }
+
+#ima-play-button {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  -moz-border-radius: 20px;
+       border-radius: 20px;
+  top: 100px;
+  text-align: center; }
+
+#ima-play-icon {
+  border: 3px solid #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  padding: 0;
+  -moz-border-radius: 50%;
+       border-radius: 50%; }
+
+#ima-play-icon-triangle {
+  width: 0;
+  height: 0;
+  border-top: 24px solid transparent;
+  border-bottom: 24px solid transparent;
+  border-left: 38px solid #fff;
+  left: 50%;
+  position: relative;
+  margin-left: -16px;
+  margin-top: 24px; }
+
+#ima-play-text {
+  color: #eee;
+  margin-top: 20px;
+  font-size: 14px;
+  display: none; }
+
+#ima-play-button:hover {
+  cursor: pointer; }
+
+#ima-play-icon:hover {
+  background-color: rgba(255, 255, 255, 0.2); }
+
+#ima-skip-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  border: 3px solid #fff;
+  padding: 12px;
+  color: #fff;
+  font-size: 14px;
+  display: none;
+  z-index: 1000; }
+
+#ima-skip-button:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.2); }
+
+.radioplayer .vast-container video {
+  position: static !important; }
+
+.radioplayer .vast-container .close-vast-btn-container {
+  display: block;
+  height: 44px;
+  position: absolute;
+  right: 0;
+  top: 0; }
+  .radioplayer .vast-container .close-vast-btn-container .close-vast-btn {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: relative;
+    display: block;
+    margin: 5px 10px 0;
+    clear: both;
+    float: right;
+    width: 40px;
+    height: 40px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    border: 2px solid #ffffff;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    color: #fff; }
+    .radioplayer .vast-container .close-vast-btn-container .close-vast-btn span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 36px;
+      font-size: 24px;
+      text-align: center;
+      line-height: 36px; }
+    .radioplayer .vast-container .close-vast-btn-container .close-vast-btn .close-vast-btn-label {
+      overflow: hidden;
+      text-indent: -9999px; }
+  .radioplayer .vast-container .close-vast-btn-container .close-vast-btn:hover {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.2); }
+
+.vast-skip-button {
+  display: block;
+  position: absolute;
+  top: 5px;
+  right: 0;
+  width: auto;
+  background-color: #000;
+  color: #AAA;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 12px;
+  padding: 10px;
+  z-index: 2; }
+
+.vast-skip-button.enabled {
+  cursor: pointer;
+  color: #fff; }
+
+.vast-skip-button.enabled:hover {
+  cursor: pointer;
+  background: #333; }
+
+.vast-blocker {
+  display: block;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background-image: url(about:blank); }
+
+#vast-controls-overlay {
+  display: block;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background-image: url(about:blank);
+  background-color: rgba(0, 0, 0, 0.8); }
+
+#vast-controls-overlay #ima-play-button {
+  top: 50%;
+  margin-top: -58px; }
+
+.radioplayer .vast-container .video-with-companion .vjs-big-play-button {
+  margin-top: 100px; }
+
+/*# sourceMappingURL=vast.css.map */

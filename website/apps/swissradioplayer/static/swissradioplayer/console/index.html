@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="ie ie6 lte9 lte8 lte7" lang="de"> <![endif]-->
+<!--[if IE 7]>
+<html class="ie ie7 lte9 lte8 lte7" lang="de"> <![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8 lte9 lte8" lang="de"> <![endif]-->
+<!--[if IE 9]>
+<html class="ie ie9 lte9 lte10 lte11" lang="de"> <![endif]-->
+<!--[if gt IE 9]>
+<html lang="de"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="de"> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--
+    All intellectual property rights in this Software throughout the world belong to UK Radioplayer,
+    rights in the Software are licensed (not sold) to subscriber stations, and subscriber stations
+    have no rights in, or to, the Software other than the right to use it in accordance with the
+    Terms and Conditions at www.radioplayer.co.uk/terms. You shall not produce any derivate works
+    based on whole or part of the Software, including the source code, for any other purpose other
+    than for usage associated with connecting to the UK Radioplayer Service in accordance with these
+    Terms and Conditions, and you shall not convey nor sublicense the Software, including the source
+    code, for any other purpose or to any third party, without the prior written consent of UK Radioplayer.
+    -->
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="DCTERMS.created" content=""/>
+    <meta name="DCTERMS.modified" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=device-width">
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/"/>
+
+    <title>Radioplayer</title>
+
+    <!-- build:css style/radioplayer.min.css -->
+   <link type="text/css" rel="stylesheet" media="screen" href="style/radioplayer.min.css" />
+    <!-- /build -->
+    <link type="text/css" rel="stylesheet" media="screen" href="style/theme.css"/>
+
+    <!--[if IE 8]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="libs/ie8.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="js/ads.js"></script>
+
+    <script type="text/javascript">
+        /**
+         * Console Settings
+         */
+        var currentStationID = "155";
+        var langCode = "de";
+        var currentStationName = "Open Broadcast";
+        var domainName = "swissradioplayer.ch";
+        // Do you want to run the console in responsive mode? If the plugin content has not been designed
+        // responsively leave this as false
+        var isResponsive = false;
+
+        // If you have static assets on a different path (eg a CDN), specify the base URL here. Most stations will leave this is null.
+        // NOTE: if you add a base URL, it must end with a slash
+        var assetBaseUrl = null;
+        // If you want the assetBaseUrl to be used when accessing you flash file, set the following to true.
+        // If you are using an assetBaseUrl, chances are you will want to set this to true, but the default should
+        // remain false for stations that currently use assetBaseUrl but don't serve their swf from this domain
+        var flashToUseAssetBaseUrl = false;
+
+        // If true, the cookie notification will NOT show if seen on another station's radio player
+        // If false, the cookie notification will show/not show based on whether the user has seen it on this domain
+        var useGlobalCookieSettings = false;
+
+        // -- nowPlayingSource can be changed from 'default' to one of: 'default-no-stream', 'stream', 'SI', 'PI'
+        var nowPlayingSource = 'default';
+
+        // -- xDomainProxyUrl should be the full URL to the xdomainproxy.html file, which by default is found in the preroll-framework directory
+        var xDomainProxyUrl = "http://your-console-domain.com/console-path/preroll-framework/xdomainproxy.html";
+
+        // -- initOptions can be populated with settings for actions when the console starts. See integration guide for details.
+        var initOptions = {
+            interstitial: {
+                enabled: false,
+                url: 'preroll-framework/'
+            },
+            songaction: {
+                enabled: false,
+                type: 'Buy',
+                baseurl: 'http://www.your-affiliate-url.com/'
+            },
+            overlay: {
+                enabled: false,
+                url: 'preroll-framework/',
+                mute: true
+            }
+        };
+
+        // WEBVIEW SETTINGS
+        // If you would like the promo area/body to show our default live feed of social/programme/track information,
+        // set the enabled property below to true. If not, set it to false.
+        var webview = {
+            enabled: false, // Enables the live feed to show in your console's plugin area.
+            hideAlbums: false // If you don't want to display album art/track info in your feeds, change this to true
+        };
+
+        /**
+         * AdsWizz Settings
+         */
+        var adsWizz = {
+            enabled: false,
+            domain: 'ADSWIZZ_DOMAIN',
+            prerollZoneId: 'PREROLL_ID', // should be a number WITHOUT quotation marks
+            midrollZoneId: 'MIDROLL_ID', // should be a number WITHOUT quotation marks
+            playerId: 'UKRP'
+        };
+
+        /**
+         * VAST Settings
+         */
+        var vastAds = {
+            enabled: false,
+            disableSkipButton: false, // determines whether a skip button should show if ad hangs. NOT recommended to change this
+            skipButtonBuffer: 3, // aforementioned skip button would show aftr ad duration + n seconds. This is n.
+            vastTag: 'VAST_TAG_URL'
+        };
+
+        /**
+         * Triton Settings
+         * -- experimental support --
+         */
+        var tritonAds = {
+            enabled: false,
+            tritonBase: 'TRITON_BASE_URL', // eg 'http://cmod.live.streamtheworld.com'
+            stationId: 'TRITON_STATION_ID', // eg '125013'
+            stationName: 'TRITON_STATION_NAME' // eg 'WEB_SDK_TEST_S5'
+        };
+
+        /**
+         * Audio Settings (V3 API)
+         */
+
+            // -- Set audioLive to true for live streaming, or false for on demand
+        var audioLive = true;
+
+        // All stream URLs go in this array: the console determines which streams are suitable for flash/html
+        // Your preferred player will take precedence, and if none of the streams work with that player, we will
+        // try playing them with the secondary player
+        var audioArray = [
+                    {
+        audioType: 'http',
+                      audioUrl: 'http://stream.openbroadcast.org/openbroadcast.mp3'
+                  },                {
+        audioType: 'http',
+                      audioUrl: 'http://stream.openbroadcast.org/openbroadcast-48.mp3'
+                  }                ];
+
+        // -- Specify the preferred playback method (either 'html' or 'flash').
+        //      If preferred playback method is not available, the alternative will be tried.
+        var preferredPlaybackMethod = 'html';
+
+        // -- bufferTime may need to be adjusted in rare circumstances to facilitate faster loading
+        var bufferTime = 5;
+
+        // If we cannot load ads.js, we cannot support adswizz or vast ads, so manually disable them
+        // (this is a basic check for an ad blocker)
+        if (window.canRunAds === undefined) {
+            adsWizz.enabled = false;
+            vastAds.enabled = false;
+            tritonAds.enabled = false;
+        }
+
+        // If the webview is enabled, we want to turn on responsive mode. This should not be changed
+        if (webview.enabled) {
+            isResponsive = true;
+        }
+
+        //  Custom Handler that will overwrite the xhr.get call
+        var customVastURLHandler = null;
+    </script>
+</head>
+<body>
+<!--
+In the following line starting <div class="radioplayer
+dark-theme may be swapped for light-theme
+
+'dark-theme' should be used to display a dark set of buttons, when you have chosen a light background
+'light-theme' should be used to display a white set of buttons, when you have chosen a dark background
+-->
+  <div  class="radioplayer light-theme" >
+  
+    <h1 class="access">Open Broadcast</h1>
+
+    <div class="cookie-demo">
+        <div class="cookie-menu-icon">
+            <button class="cookie-menu-icon-container">
+                <span class="icon-hamburger"></span>
+            </button>
+            <span class="icon-redo"></span>
+            <div class="cookie-menu-text">
+                View your favourites here
+            </div>
+
+            <div class="menu-btn-notification">
+          <span class="icon-heart">
+            <span class="path4"></span>
+          </span>
+            </div>
+        </div>
+
+        <div class="cookie-heart-icon">
+            <button class="cookie-heart-icon-container">
+                <span class="heart-container-ie8"></span>
+                <span class="icon-heart">
+    			    <span class="path1"></span><span class="path2"></span><span class="path3"></span><span
+                        class="path4"></span><span class="path5"></span><span class="path6"></span><span
+                        class="path7"></span><span class="path8"></span>
+    			</span>
+            </button>
+
+            <span class="icon-undo"></span>
+            <div class="cookie-heart-text">
+                Add this station to your favourites
+            </div>
+        </div>
+
+        <div class="cookie-demo-message">
+            <a class="cookie-demo-message-link" target="_blank" href="#">
+                These features, and others, are powered by cookies
+            </a>
+        </div>
+
+        <div class="cookie-close-label cookie-close-js">OK</div>
+    </div>
+
+    <div class="radioplayer-globalnav-wrapper">
+        <div class="radioplayer-globalnav">
+            <button type="button" class="menu-btn" rel="toggle" role="button" aria-haspopup="true"
+                    aria-owns="overlay-container">
+                <span class="menu-btn-icon icon-hamburger"></span>
+                <span class="menu-btn-icon-ie7"></span>
+                <span class="menu-btn-accessible accessibility-text">Toggle Radioplayer Menu</span>
+                <div class="menu-btn-notification" tabindex="-1">
+            <span class="icon-heart">
+              <span class="path4"></span><span class="path5"></span>
+            </span>
+                </div>
+            </button>
+
+            <div class="search-box">
+                <fieldset>
+                    <h2 class="access">Search</h2>
+                    <input type="text" name="searchq" id="search-input" value="" maxlength="27" autocomplete="off"/>
+                    <button type="button" id="search-button" title="Search">
+                        <span class="search-btn-accessible">Search</span>
+                        <span class="icon-search"></span>
+                        <span class="search-btn-ie7"></span>
+                    </button>
+                    <button type="button" id="search-clear" title="Clear search terms">
+                        <span class="search-btn-accessible">Clear search terms</span>
+                        <span class="icon-cross"></span>
+                    </button>
+                    <span class="mirrored-input"></span>
+                </fieldset>
+            </div>
+
+            <span class="rp-logo-container">
+          <img class="rp-logo" src="img/radioplayer-logo-bw.png"/>
+          <span class="accessibility-text">Powered by Radioplayer</span>
+	      </span>
+        </div>
+    </div>
+
+    <div id="overlay-container" class="overlay-container">
+        <div class="search-container">
+
+            <div class="tabs">
+                <ul>
+                    <li class="first" data-content="searchall">
+                        <a href="#" role="button" aria-owns="search-all-cont"><span>All</span></a>
+                    </li>
+                    <li data-content="searchlive">
+                        <a href="#" role="button" aria-owns="search-live-cont"><span>Live</span></a>
+                    </li>
+                    <li data-content="searchod">
+                        <a href="#" role="button" aria-owns="search-od-cont"><span>Catch Up</span></a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="tabs-wrapper">
+                <div class="tab-container scrollable-wrapper" id="search-all-cont"></div>
+                <div class="tab-container scrollable-wrapper" id="search-live-cont"></div>
+                <div class="tab-container scrollable-wrapper" id="search-od-cont"></div>
+                <span class="spinner"><img src="img/spinner.gif" alt=""/></span>
+            </div>
+        </div>
+
+        <div class="suggest-container" data-results="0">
+            <div class="scrollable-wrapper">
+                <div id="suggest-results"></div>
+                <div class="suggest-item show-all"><a href="#"></a></div>
+            </div>
+        </div>
+
+        <div class="menu-container">
+            <div class="tabs">
+                <ul>
+                    <li class="first" data-color="#ff4539" data-content="mystations">
+                        <a href="#" role="button" aria-owns="mystations-container"><span>My Stations</span></a>
+                    </li>
+                    <li data-color="#9b2d77" data-content="history">
+                        <a href="#" role="button" aria-owns="history-container"><span>Recent</span></a>
+                    </li>
+                    <li data-color="#03303d" data-content="recommended">
+                        <a href="#" role="button" aria-owns="recom-container"><span>Recommended</span></a>
+                    </li>
+                    <li data-color="#f6b220" data-content="azlist">
+                        <a href="#" role="button" aria-owns="az-container"><span>A-Z List</span></a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="tabs-wrapper">
+                <div class="tab-container scrollable-wrapper" id="mystations-container"></div>
+                <div class="tab-container scrollable-wrapper" id="history-container"></div>
+                <div class="tab-container scrollable-wrapper" id="recom-container"></div>
+                <div class="tab-container" id="az-container">
+                    <div class="alphabet">
+                        <ul class="alphabet--regular"></ul>
+                        <ul class="alphabet--minimised"></ul>
+                    </div>
+
+                    <div class="sticky-divide-wrapper">
+                        <div class="sticky-divide">#</div>
+                        <div class="scrollable-wrapper azlist-container" id="azlist-container"></div>
+                    </div>
+                </div>
+                <span class="spinner"><img src="img/spinner.gif" alt=""/></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="radioplayer-emp-container">
+        <div id="empv3"></div>
+    </div>
+
+    <div class="radioplayer-localwrapper">
+
+        <div class="radioplayer-head">
+            <div class="responsive-container">
+                <div class="responsive-container-inner">
+                    <a class="stn-logo" href="https://www.openbroadcast.ch/" target="_blank"   id="station-logo-link" tabindex="0">
+                      Open Broadcast
+                      </a>
+
+                    <div id="controls">
+                        <h2 class="access">Player Controls</h2>
+
+                        <div id="mystations-toggle">
+                            <button type="button" id="toggle-mystations" class="heart-container" tabindex="0">
+                                <span class="accessibility-text">Toggle this station in My Stations</span>
+                                <span class="heart-container-ie8"></span>
+                                <span class="icon-heart">
+                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span
+                                        class="path4"></span><span class="path5"></span><span class="path6"></span><span
+                                        class="path7"></span><span class="path8"></span>
+                          </span>
+                            </button>
+                        </div>
+
+                        <div id="play-controls">
+                            <button id="play" title="Play" href="#" tabindex="0">
+                          <span class="icon-play">
+                          </span>
+                                <span class="play-icon-ie8"></span>
+                                <span class="accessibility-text">Play</span>
+                            </button>
+                            <button id="pause" title="Pause" href="#" tabindex="0">
+                          <span class="icon-pause">
+                              <span class="path1"></span><span class="path2"></span><span class="path3"></span>
+                          </span>
+                                <span class="pause-icon-ie8"></span>
+                                <span class="accessibility-text">Pause</span>
+                            </button>
+                            <button id="stop" title="Stop" href="#" tabindex="0">
+                          <span class="icon-stop">
+                              <span class="path1"></span><span class="path2"></span><span class="path3"></span>
+                          </span>
+                                <span class="stop-icon-ie8"></span>
+                                <span class="accessibility-text">Stop</span>
+                            </button>
+                        </div>
+
+                        <div id="volume-controls">
+                      <span id="volume-control" class="p100">
+                          <span class="icon-volume">
+                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span
+                                  class="path4"></span><span class="path5"></span><span class="path6"></span><span
+                                  class="path7"></span><span class="path8"></span>
+                          </span>
+                          <span class="volume-control-ie8"></span>
+                      </span>
+                            <button type="button" id="volume-mute" class="accessibility-text" tabindex="0"><span>Mute or unmute volume</span>
+                            </button>
+                            <button type="button" id="volume-1" class="accessibility-text" tabindex="0"><span>Set volume to 20%</span>
+                            </button>
+                            <button type="button" id="volume-2" class="accessibility-text" tabindex="0"><span>Set volume to 40%</span>
+                            </button>
+                            <button type="button" id="volume-3" class="accessibility-text" tabindex="0"><span>Set volume to 60%</span>
+                            </button>
+                            <button type="button" id="volume-4" class="accessibility-text" tabindex="0"><span>Set volume to 80%</span>
+                            </button>
+                            <button type="button" id="volume-5" class="accessibility-text" tabindex="0"><span>Set volume to 100%</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="now-playing-strip">
+                <div class="responsive-container">
+                    <div class="responsive-container-inner">
+                        <div id="live-strip" class="loading">
+                            <div class="loading-indicator">
+                            </div>
+                            <div class="play-prompt-indicator">
+                            </div>
+                            <div class="live-info">
+                                <span id="live" class="live-indicator" tabindex="0"></span>
+                                <div class="scrolling-container" tabindex="0">
+                                    <div class="scrolling-text">
+                                        <div class="scrolling-text-now"><span class="song-text"></span></div>
+                                        <div class="scrolling-text-next"><span class="song-text"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="od-strip">
+                            <div id="duration">Loading...</div>
+                            <div id="progress-scrubber-container">
+                                <div id="progress-scrubber-handle"></div>
+
+                                <div id="progress-scrubber-background">
+                                    <div id="progress-scrubber-playback-bar"></div>
+                                    <div id="progress-scrubber-load-bar"></div>
+                                    <div id="od-title"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="radioplayer-body">
+            <div class="radioplayer-plugin">
+                <!--
+                *
+                * Plugin Space Starts here
+                *
+                -->
+
+                                                                                    <span id="player-insertion-fixed" class="radioplayer-plugin-placeholder--fixed">
+                                                      <iframe class="plugin-iframe" src="https://www.openbroadcast.ch/srp/console/">plugin</iframe>
+                                                    </span>
+                                  <span id="player-insertion-responsive" class="radioplayer-plugin-placeholder--responsive">
+                                                      <iframe class="plugin-iframe" src="https://www.openbroadcast.ch/srp/console/">plugin</iframe>
+                                                  </span>
+                                
+                <!--
+                *
+                * Plugin Space Ends here
+                *
+                -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery UI with only: core, widget, mouse, position, draggable and droppable -->
+<script type="text/javascript" src="libs/jquery-1.10.0.min.js"></script>
+<script type="text/javascript" src="libs/jquery-ui-1.10.3.custom.min.js"></script>
+<script type="text/javascript" src="libs/swfobject-2-2.js"></script>
+<script type="text/javascript" src="libs/plugins.js"></script>
+
+<!-- build:js js/radioplayer.min.js -->
+<script type="text/javascript" src="js/radioplayer.min.js"></script>
+<script type="text/javascript" src="js/lang/CH/lang-de.js"></script>
+<!-- /build -->
+
+<script type="text/javascript">
+    // Shim/sham for IE8
+    if (!Object.create) {
+        Object.create = function (o, properties) {
+            if (typeof o !== 'object' && typeof o !== 'function') throw new TypeError('Object prototype may only be an Object: ' + o);
+            else if (o === null) throw new Error("This browser's implementation of Object.create is a shim and doesn't support 'null' as the first argument.");
+
+            if (typeof properties != 'undefined') throw new Error("This browser's implementation of Object.create is a shim and doesn't support a second argument.");
+
+            function F() {
+            }
+
+            F.prototype = o;
+
+            return new F();
+        };
+    }
+    //	DYNAMICALLY LOADS VAST/ADSWIZZ/LIVE FEED LIBRARIES DEPENDING ON
+    //  WHETHER THEY ARE ENABLED AND WHETHER THERE IS AN ADBLOCKER
+    var file_list = [
+        {
+            "url": "//cdn.adswizz.com/adswizz/js/SynchroClient2.js",
+            "dataType": "script",
+            "functionality": "adsWizz"
+        },
+        {
+            "url": "//synchrobox.adswizz.com/register2.php",
+            "dataType": "script",
+            "functionality": "adsWizz"
+        },
+        {
+            "url": "libs/videojs/vast/es5.js",
+            "dataType": "script",
+            "functionality": "vastAds"
+        },
+        {
+            "url": "libs/videojs/vast/vast-client.js",
+            "dataType": "script",
+            "functionality": "vastAds"
+        },
+        {
+            "url": "//imasdk.googleapis.com/js/sdkloader/ima3.js",
+            "dataType": "script",
+            "functionality": "vastAds"
+        },
+        {
+            "url": "feed/es5-shim.min.js",
+            "dataType": "script",
+            "functionality": "webview",
+            "flag": "ie8"
+        },
+        {
+            "url": "feed/q.min.js",
+            "dataType": "script",
+            "functionality": "webview"
+        },
+        {
+            "url": "feed/timeago.js",
+            "dataType": "script",
+            "functionality": "webview"
+        },
+        {
+            "url": "feed/packery.min.js",
+            "dataType": "script",
+            "functionality": "webview"
+        },
+        {
+            "url": "feed/feed.css",
+            "dataType": "style",
+            "functionality": "webview"
+        },
+        {
+            "url": "feed/webview-fonts.css",
+            "dataType": "style",
+            "functionality": "webview"
+        },
+        {
+            "url": "feed/feed.js",
+            "dataType": "script",
+            "functionality": "webview"
+        }
+    ]
+
+
+    var loadFor = {
+        "adsWizz": adsWizz.enabled,
+        "vastAds": vastAds.enabled || tritonAds.enabled,
+        "webview": webview.enabled
+    }
+
+    var com_adswizz_synchro_listenerid = "";
+    var adswizzListenerId = "";
+    var loadedAllFiles = false;
+    var loadingFilesTimeout = null;
+
+    function loadNewFileControl() {
+        if (loadingFilesTimeout) {
+            clearTimeout(loadingFilesTimeout);
+        }
+
+        loadingFilesTimeout = setTimeout(function () {
+            loadNewFileControl();
+        }, 2000);
+
+        i++;
+        if (file_list[i]) {
+            // Check if this script is needed accoring to the config enabled flags
+            if (loadFor[file_list[i].functionality]) {
+                // If there is a flag, we need to check if the browser version requires this file
+                if (file_list[i].flag) {
+                    if ($('html').hasClass(file_list[i].flag)) {
+                        getScript(file_list[i].url, file_list[i].dataType);
+                    }
+                    else {
+                        loadNewFileControl();
+                    }
+                }
+                else {
+                    getScript(file_list[i].url, file_list[i].dataType);
+                }
+            }
+            else {
+                loadNewFileControl();
+            }
+        }
+        else {
+            loadedAllFiles = true;
+            if (loadingFilesTimeout) {
+                clearTimeout(loadingFilesTimeout);
+            }
+            radioplayer.init();
+        }
+    }
+
+    // Fix to avoid cors issues in ie8/ie9
+    if ('XDomainRequest' in window && window.XDomainRequest !== null) {
+        jQuery.ajaxSettings.xhr = function () {
+            try {
+                return new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            catch (e) {
+            }
+
+            jQuery.support.cors = true;
+        }
+    }
+
+    function getScript(url, dataType) {
+        var dataType = dataType || 'script';
+        if (dataType === 'script') {
+            jQuery.ajax({
+                            url: url,
+                            dataType: dataType,
+                            async: true,
+                            cache: false,
+                            crossDomain: true,
+                            success: function () {
+                                loadNewFileControl();
+                            }
+                        });
+        }
+        else if (dataType === 'style') {
+            // Dynamic CSS file loading compatible with IE 8
+            // see https://stackoverflow.com/questions/805384/how-to-apply-inline-and-or-external-css-loaded-dynamically-with-jquery
+            if (document.createStyleSheet) {
+                try {
+                    document.createStyleSheet(url);
+                } catch (e) {
+                }
+            }
+            else {
+                var css;
+                css = document.createElement('link');
+                css.rel = 'stylesheet';
+                css.type = 'text/css';
+                css.media = "all";
+                css.href = url;
+                document.getElementsByTagName("head")[0].appendChild(css);
+            }
+            loadNewFileControl();
+        }
+    }
+
+    var i = -1;
+    loadNewFileControl();
+</script>
+
+</body>
+</html>
