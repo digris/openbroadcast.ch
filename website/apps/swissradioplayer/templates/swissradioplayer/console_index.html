@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0"/>
-
     {% compress css %}
         {% if settings.DEBUG %}
             <link rel="stylesheet" href="{% static 'css/srp-console.css' %}"/>
@@ -11,199 +10,123 @@
             <link rel="stylesheet" href="{% static 'css/srp-console.css' %}"/>
         {% endif %}
     {% endcompress %}
-
-
     {% if settings.DEBUG %}
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     {% else %}
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     {% endif %}
-
     <script src="{% static 'js/lib/jquery-2.1.0.js' %}"></script>
-
-    {% compress js %}
-
-    {% endcompress %}
-
-
+    {% compress js %}{% endcompress %}
 </head>
 <body id="console" data-livebg>
-
-
-{% verbatim %}
-
 <div class="console-app-container">
-
-<div id="console_app">
-
-    <div class="onair-container">
-
-        <div v-if="onair" class="visual">
-            <figure class="onair">
-                <img v-bind:src="('/static-proxy' + onair.item.release.main_image)" />
-            </figure>
-        </div>
-        <div v-else class="visual">
-            <figure class="onffline">
-                <p class="claim">
-                    Open Broadcast Radio
-                </p>
-            </figure>
-        </div>
-
-        <div v-if="onair" class="meta">
-
-            <div v-if="onair.item" class="meta-media">
-
-                <p>
-                    <span class="label">
-                        Song
-                    </span>
-                    <a href="#" v-on:click="visit(onair.item.absolute_url, $event)">
-                        {{ onair.item.name }}
-                    </a>
-                </p>
-
-                <p v-if="onair.item.artist">
-                    <span class="label">
-                        by
-                    </span>
-                    <a href="#" v-on:click="visit(onair.item.artist.absolute_url, $event)">
-                        {{ onair.item.artist.name }}
-                    </a>
-                </p>
-
-                <p v-if="onair.item.release">
-                    <span class="label">
-                        Release
-                    </span>
-                    <a href="#" v-on:click="visit(onair.item.release.absolute_url, $event)">
-                        {{ onair.item.release.name }}
-                    </a>
-                </p>
-
-                <p v-if="onair.item.label">
-                    <span class="label">
-                        Label
-                    </span>
-                    <a href="#" v-on:click="visit(onair.item.label.absolute_url, $event)">
-                        {{ onair.item.label.name }}
-                    </a>
-                </p>
-
+    {% verbatim %}
+    <div id="console_app">
+        <div class="onair-container">
+            <div v-if="onair" class="visual">
+                <figure class="onair">
+                    <img v-bind:src="('/static-proxy' + onair.item.release.main_image)" />
+                </figure>
             </div>
-
-            <div v-if="onair.emission" class="meta-playlist">
-                <p>
-
-                </p>
+            <div v-else class="visual">
+                <figure class="onffline">
+                    <p class="claim">
+                        Open Broadcast Radio
+                    </p>
+                </figure>
             </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="history-container" v-if="(1 === 2)">
-
-        <h3>History</h3>
-        <div v-for="(emission, index) in emissions" :key="emission.id" v-bind:data-id="emission.id"
-             class="emission-container">
-
-            <div v-if="emission.content_object" class="playlist-info">
-                <div class="visual">
-                    (( image ))
-
-                    <figure>
-                        <img v-bind:src="emission.content_object.main_image">
-                    </figure>
-
-                </div>
-
-                <div class="meta">
-                    <span>
-                        {{ emission.time_start|time_m }}
-                        &mdash;
-                        {{ emission.time_end|time_m }}
-                    </span>
-                    <br>
-                    <span>{{ emission.content_object.name }}</span>
-                    <br>
-                    <span>{{ emission.content_object.series }}</span>
-                    <!--<br>
-                    <span>{{ emission.content_object.d_tags }}</span>-->
-                </div>
-
-            </div>
-
-
-            <div v-for="(obj, index) in emission.objects" :key="obj.id" v-bind:data-id="obj.id" class="media-container">
-
-
-                <div v-if="obj.item" class="meta">
-
-                    <span v-if="obj.item">
-                        <a href="#">
-                            {{ obj.item.name }}
+            <div v-if="onair" class="meta">
+                <div v-if="onair.item" class="meta-media">
+                    <p>
+                        <span class="label">Song</span>
+                        <a href="#" v-on:click="visit(onair.item.absolute_url, $event)">
+                            {{ onair.item.name }}
                         </a>
-                    </span>
-                    <br>
-                    <span v-if="obj.item.artist">
-                        <span>{{ obj.item.artist.name }}</span>
-                    </span>
-                    <!--
-                    <br>
-
-                    <span v-if="obj.item.release">
-                        <a>{{ obj.item.release.name }}</a>
-
-                        <span v-if="obj.item.release.releasedate">
-                            <span>{{ obj.item.release.releasedate|date_y }}</span>
-                        </span>
-
-                        <span v-if="obj.item.label">
-                            <span>{{ obj.item.label.name }}</span>
-                        </span>
-
-                    </span>
-                    -->
-
-
+                    </p>
+                    <p v-if="onair.item.artist">
+                        <span class="label">by</span>
+                        <a href="#" v-on:click="visit(onair.item.artist.absolute_url, $event)">
+                            {{ onair.item.artist.name }}
+                        </a>
+                    </p>
+                    <p v-if="onair.item.release">
+                        <span class="label">Release</span>
+                        <a href="#" v-on:click="visit(onair.item.release.absolute_url, $event)">
+                            {{ onair.item.release.name }}
+                        </a>
+                    </p>
+                    <p v-if="onair.item.label">
+                        <span class="label">Label</span>
+                        <a href="#" v-on:click="visit(onair.item.label.absolute_url, $event)">
+                            {{ onair.item.label.name }}
+                        </a>
+                    </p>
                 </div>
-
-                <div class="actions">
-                    <span>{{ obj.time_start|time_s }}</span>
+                <div v-if="onair.emission" class="meta-playlist">
+                    <p></p>
                 </div>
-
-
-
-
             </div>
         </div>
+        <div class="history-container" v-if="(1 === 2)">
+
+            <h3>History</h3>
+            <div v-for="(emission, index) in emissions" :key="emission.id" v-bind:data-id="emission.id"
+                 class="emission-container">
+
+                <div v-if="emission.content_object" class="playlist-info">
+                    <div class="visual">
+                        (( image ))
+
+                        <figure>
+                            <img v-bind:src="emission.content_object.main_image">
+                        </figure>
+
+                    </div>
+
+                    <div class="meta">
+                        <span>
+                            {{ emission.time_start|time_m }}
+                            &mdash;
+                            {{ emission.time_end|time_m }}
+                        </span>
+                        <br>
+                        <span>{{ emission.content_object.name }}</span>
+                        <br>
+                        <span>{{ emission.content_object.series }}</span>
+                        <!--<br>
+                        <span>{{ emission.content_object.d_tags }}</span>-->
+                    </div>
+
+                </div>
 
 
+                <div v-for="(obj, index) in emission.objects" :key="obj.id" v-bind:data-id="obj.id" class="media-container">
+
+
+                    <div v-if="obj.item" class="meta">
+
+                        <span v-if="obj.item">
+                            <a href="#">
+                                {{ obj.item.name }}
+                            </a>
+                        </span>
+                        <br>
+                        <span v-if="obj.item.artist">
+                            <span>{{ obj.item.artist.name }}</span>
+                        </span>
+
+                    </div>
+
+                    <div class="actions">
+                        <span>{{ obj.time_start|time_s }}</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
-
-
+    {% endverbatim %}
 </div>
-{% endverbatim %}
-</div>
-{% block app_content %}
-
-
-{% endblock %}
-
 <script src="{% static 'swissradioplayer/js/console.js' %}"></script>
-<script>
-
-  //var srp_console;
-  //$(function() {
-  //    srp_console = new SRPApp();
-  //    srp_console.init();
-  //});
-
-</script>
-
-
 </body>
 </html>
