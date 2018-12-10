@@ -48,11 +48,5 @@ class AJAXLoaderRedireckMiddleware(object):
                     if 'cms_toolbar_disabled' in request.session and request.session['cms_toolbar_disabled']:
                         redirect_required = True
 
-
-                    print 'redirect_required: %s' % redirect_required
-
                     if redirect_required:
                         return http.HttpResponseRedirect(new_path)
-
-
-

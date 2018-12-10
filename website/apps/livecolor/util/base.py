@@ -40,7 +40,7 @@ class Livecolor(object):
         try:
             log.debug('routing to: %s%s' % (REDIS_SITE_ID, 'livecolor'))
             rs.publish('%s%s' % (REDIS_SITE_ID, 'livecolor'), json.dumps(message))
-        except redis.ConnectionError, e:
+        except redis.ConnectionError as e:
             log.warning('unable to route message %s' % e)
 
 

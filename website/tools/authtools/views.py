@@ -351,7 +351,7 @@ class ClaimTokenAndLoginView(AuthDecoratorsMixin, FormView):
 
     def get_user(self):
         token = self.kwargs.get('token')
-        print 'token: %s' % token
+        print('token: %s' % token)
 
         try:
             return self.get_queryset().get(pk=41)

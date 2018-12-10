@@ -1,0 +1,163 @@
+{% extends "account/user_base.html" %}
+
+{% load i18n cms_tags image_placeholder_tags spurl html_extra_tags ctype_tags %}
+{% block title %}{% trans "User" %}{% endblock %}
+{% block body_extra_class %}detail-view account user user-detail{% endblock %}
+
+{% block app_content %}
+    <section class="detail user-detail">
+
+        <div class="header"
+            {% if object.color_palette %}
+                style="background: #333 radial-gradient(circle at left, #000 0, rgba({{ object.color_palette.primary|join:', ' }}, 0.9) 70%, rgba({{ object.color_palette.primary|join:', ' }}, 0.9) 50%)"
+            {% endif %}
+            >
+            <div class="row medium-uncollapse large-collapse">
+                <div class="columns small-8 medium-9 large-10">
+
+                    <div class="title">
+
+                        <div class="row collapse">
+                            <div class="column small-12">
+                                <h1>
+                                    {{ object.get_full_name }}
+                                    {% if object.country or object.city %}
+                                        <small class="country">
+                                            {{ object.city }}{% if object.country and object.city %}, {% endif %}
+                                            {% if object.country %}
+                                                {{ object.get_country_display }}
+                                            {% endif %}
+                                        </small>
+                                    {% endif %}
+                                </h1>
+                            </div>
+                        </div>
+
+
+                        <div class="subline">
+                            <span>{% trans 'Joined' %}:</span>
+                            <span>
+                                {{ object.date_joined|date:'SHORT_DATE_FORMAT'|default:'*' }}
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="essentials">
+
+
+                        {% if object.email %}
+                            <dl>
+                                <dt>{% trans 'E-Mail' %}</dt>
+                                <dd><a href="mailto:{{ object.email }}">{{ object.email }}</a></dd>
+                            </dl>
+                        {% endif %}
+
+                        {% if object.username %}
+                            <dl>
+                                <dt>{% trans 'Username' %}</dt>
+                                <dd>{{ object.username }}</dd>
+                            </dl>
+                        {% endif %}
+
+                        {% if object.owned_labels.exists %}
+                            <dl>
+                                <dt>{% trans 'Managing' %}</dt>
+                                <dd>
+                                    <ul>
+                                        {% for label in object.owned_labels.all %}
+                                            <li>
+                                                <a href="{{ label.get_absolute_url }}">{{ label.name }}</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </dd>
+                            </dl>
+                        {% endif %}
+
+                        {% if object.username %}
+                            <dl>
+                                <dt>{% trans 'Username' %}</dt>
+                                <dd>{{ object.username }}</dd>
+                            </dl>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+                <div class="columns small-4 medium-3 large-2">
+                    {% include '_components/_slideshow/_preview_inline.html' with objects=object.images.all %}
+                    {% include 'rating/_rating_inline.html' with include_summary=False %}
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="menu">
+            <div class="row">
+                <div class="columns small-12">
+                    <nav class="menu">
+                        <div class="item {% if section == 'top-labels' %}selected{% endif %}">
+                            <a href="{% url 'account:user-detail-top-labels' uuid=object.uuid %}">
+                                {% trans 'favorite labels'|title %}
+                            </a>
+                        </div>
+                        <div class="item {% if section == 'top-releases' %}selected{% endif %}">
+                            <a href="{% url 'account:user-detail-top-releases' uuid=object.uuid %}">
+                                {% trans 'favorite releases'|title %}
+                            </a>
+                        </div>
+                        <div class="item {% if section == 'top-artists' %}selected{% endif %}">
+                            <a href="{% url 'account:user-detail-top-artists' uuid=object.uuid %}">
+                                {% trans 'favorite artists'|title %}
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="pullout listing cards">
+            {% if object_list.exists %}
+                <div class="row small-up-1 medium-up-3 large-up-4 xlarge-up-5 xxlarge-up-6">
+                    {% include page_template %}
+                </div>
+            {% endif %}
+        </div>
+
+        {% if section == 'overview' %}{% endif %}
+        {% if object.service_relations or object.generic_relations or object.description %}
+            <div class="secondary-content">
+                <!-- relation block -->
+                {% if object.service_relations or object.generic_relations %}
+                    <div class="secondary-content-block">
+                        <div class="row collapse">
+                            <div class="columns small-12">
+                                <!--<span class="block-title">{% trans 'See also' %}</span>-->
+                                <dl class="relations text-center">
+                                    {% include 'relation/_relations_inline_dd.html' %}
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if object.description %}
+                    <div class="secondary-content-block">
+                        <div class="row collapse">
+                            <div class="columns small-12">
+                                <div class="description">
+                                    {% html_expandable_block object.description 1000 %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+
+
+
+    </section>
+{% endblock %}

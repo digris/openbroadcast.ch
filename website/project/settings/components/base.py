@@ -93,6 +93,10 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.humanize',
     #'solid_i18n',
+
+    'account',
+    'social_django',
+
     'alogin',
 
 
@@ -161,7 +165,7 @@ INSTALLED_APPS = (
     'coverage',
     'program',
     'partnerlink',
-    'social_auth',
+    #'social_auth',
     'subscription',
     'swissradioplayer',
 
@@ -174,10 +178,9 @@ REGISTRATION_DJANGO_AUTH_URL_NAMES_PREFIX = 'auth_'
 REGISTRATION_DEFAULT_PASSWORD_LENGTH = 14
 
 MIDDLEWARE_CLASSES = (
-
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'webpack.middleware.WebpackDevserverMiddleware',
     'turbolinks.middleware.TurbolinksMiddleware',
-
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -185,13 +188,13 @@ MIDDLEWARE_CLASSES = (
     #'solid_i18n.middleware.SolidLocaleMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
     #'base.middleware.AJAXLoaderRedireckMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'social_auth.middleware.SocialAuthExceptionMiddleware',
 )
 
 # SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
@@ -208,16 +211,23 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-# static files (application js/img etc)
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
-
-
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
+# static files (application js/img etc)
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'site-static'),
+# )
+
+# refactoring to webpack
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'site-static'),
+    os.path.join(BASE_DIR, 'static-src'),
 )
+
+
 
 STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
@@ -261,6 +271,11 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': (
                 'django.contrib.auth.context_processors.auth',
+                # social auth
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
+
+                'webpack.context_processors.webpack_devserver',
                 'django.template.context_processors.i18n',
                 'django.template.context_processors.request',
                 'django.contrib.messages.context_processors.messages',
@@ -270,11 +285,6 @@ TEMPLATES = [
                 'cms.context_processors.cms_settings',
                 'sekizai.context_processors.sekizai',
                 'django_settings_export.settings_export',
-
-                # authentication
-                'social_auth.context_processors.social_auth_backends',
-                'social_auth.context_processors.backends_data',
-                'social_auth.context_processors.social_auth_login_redirect',
 
                 # custom
                 'base.context_processors.cms_toolbar'
@@ -418,27 +428,6 @@ CKEDITOR_SETTINGS = {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 CELERY_BEAT_SCHEDULE = {
     'onair-update-schedule': {
         'task': 'onair.tasks.update_schedule',
@@ -467,14 +456,60 @@ TASTYPIE_DEFAULT_FORMATS = ['json', ]
 # auth
 AUTHENTICATION_BACKENDS = (
     # social-auth
-    'social_auth.backends.twitter.TwitterBackend',
-    'social_auth.backends.facebook.FacebookBackend',
-    'social_auth.backends.google.GoogleOAuth2Backend',
-    'social_auth.backends.contrib.dropbox.DropboxBackend',
-    'social_auth.backends.contrib.soundcloud.SoundcloudBackend',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
     # remote api auth
     'remoteauth.backends.RemoteUserBackend',
 )
+
+
+
+
+
+##################################################################
+# social auth
+##################################################################
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.social_auth.associate_by_email',
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+    # 'social_core.pipeline.social_auth.associate_by_email',
+    #'account.social_auth_pipeline.user_details.get_details',
+)
+
+
+
+SOCIAL_AUTH_USER_MODEL = 'remoteauth.User'
+SOCIAL_AUTH_EMAIL_FORM_URL = 'account:login'
+
+
+# facebook
+SOCIAL_AUTH_FACEBOOK_KEY = '**'
+SOCIAL_AUTH_FACEBOOK_SECRET = '**'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'public_profile',]
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'id,name,email',
+}
+
+# google oauth2
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '**'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '**'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    # 'https://www.googleapis.com/auth/plus.me',
+    # 'https://www.googleapis.com/auth/plus.login',
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+]
+
 
 LOGIN_ERROR_URL = '/'
 
@@ -485,12 +520,6 @@ ACCOUNT_ACTIVATION_DAYS = 7
 CMS_GIT_FILE = os.path.join(BASE_DIR, 'changelog.txt')
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-JENKINS_TASKS = (
-    'django_jenkins.tasks.run_pylint',
-    'django_jenkins.tasks.with_coverage',
-    'django_jenkins.tasks.run_pep8',
-    'django_jenkins.tasks.run_pyflakes',
-)
 
 MIGRATION_MODULES = {
     # filer plugins

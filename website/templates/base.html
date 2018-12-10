@@ -28,6 +28,7 @@
 
     <link rel="icon" type="image/png" href="{{ STATIC_URL }}img/base/icon.png"/>
 
+    {% comment %}
     {% compress css %}
         {% if settings.DEBUG %}
             <link rel="stylesheet" href="{{ STATIC_URL }}css/print.css" media="print"/>
@@ -36,18 +37,27 @@
             <link rel="stylesheet" href="{{ STATIC_URL }}dist/css/screen.css" id="style_light"/>
         {% endif %}
     {% endcompress %}
+    {% endcomment %}
 
-    <!--[if lt IE 9]>
-    <script src="{{ STATIC_URL }}js/browser_hacks/html5shiv.js"></script>
-    <script src="{{ STATIC_URL }}js/browser_hacks/nwmatcher-1.2.5-min.js"></script>
-    <script src="{{ STATIC_URL }}js/browser_hacks/selectivizr-1.0.3b.js"></script>
-    <script src="{{ STATIC_URL }}js/browser_hacks/respond.min.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" />
+
+
+
+    <!-- start: bundled js -->
+    {% if webpack_devserver %}
+        <script src="{% static 'js/bundle.js' %}"></script>
+    {% else %}
+        <link rel="stylesheet" href="{% static 'dist/css/bundle.css' %}"/>
+        <script src="{% static 'dist/js/bundle.js' %}"></script>
+    {% endif %}
+    <!-- end: bundled js -->
 
     {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
 
+    {% comment %}
     <script src="{{ STATIC_URL }}js/lib/modernizr.js"></script>
     <script src="{{ STATIC_URL }}js/lib/jquery-2.1.0.js"></script>
+    {% endcomment %}
 
     {% if not request.toolbar.edit_mode %}
         <script src="{{ STATIC_URL }}turbolinks/turbolinks.js"></script>
@@ -55,15 +65,11 @@
 
     {% block link %}{% endblock link %}
 
-    {% comment %}
-    {% block script %}{% endblock script %}
-    {% endcomment %}
-
     {% render_block "css" %}
 
     {% analytics %}
 
-
+    {% comment %}
     {% compress js %}
 
 
@@ -138,6 +144,7 @@
     {% nunjucks_scripts %}
 
     {% endcompress %}
+    {% endcomment %}
 
 
 
@@ -159,33 +166,36 @@
 </head>
 <body id="base" class="{% block body_extra_class %}{% endblock %}" data-livebg data-bplayer_state="init">
 
+
+
+{% if user.is_authenticated %}
+<script>
+    document.user = {
+        'uuid': '{{ user.pk }}',
+        'is_staff': '{{ user.is_staff|yesno:"true,false" }}',
+    }
+</script>
+{% else %}
+<script>
+    document.user = null
+</script>
+{% endif %}
+
 {% cms_toolbar %}
 {% slick_admin_cms_style %}
 
 
 {% block top-bar %}
 <div id="topbar_container" data-livebg>
-
-    <div class="title-bar"  id="top_bar_toggle" data-responsive-toggle="top_bar" data-hide-for="medium">
-
-            <span data-toggle>
-                <i data-livefg class="fa fa-bars fa-2x" aria-hidden="true"></i>
-            </span>
-
-    </div>
-
     <nav class="row medium-collapse align-center" id="top_bar">
-
         <section class="medium-2 column logo hoverable">
             <a href="/"><span data-livefg>Open Broadcast</span></a>
             <div class="quick-contact">
-
                 <p class="address" data-livefg>
                     Renggerstrasse 31<br>
                     8038 Zürich<br>
                     <a href="mailto:info@openbroadcast.ch">info@openbroadcast.ch</a>
                 </p>
-
                 <p class="network"  data-livefg>
                     <span data-livefg>
                         <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -199,20 +209,16 @@
                 </p>
             </div>
         </section>
-
         <section class="small-12 medium-8 column main-menu" data-livefg>
             <ul class="menu menu-centered align-center">
                 {% show_menu 0 100 100 100 "_layout/_navigation.html" %}
             </ul>
         </section>
-
         <section class="small-12 medium-2 column account" data-livefg>
             <ul class="menu menu-centered">
                 {% include "_layout/_accountbar.html" %}
             </ul>
         </section>
-
-
     </nav>
 </div>
 {% endblock %}
@@ -251,6 +257,16 @@
 <div id="fb-root"></div>
 
 
+
+<div id="account_container" data-turbolinks-permanent>
+    <div
+        id="account_app"
+        data-login-url="{% url 'account:login-partial' %}"
+        data-register-url="{% url 'account:register-partial' %}"
+    ></div>
+</div>
+
+
 {% if not request.toolbar.edit_mode %}
 <script data-turbolinks-eval=false>
 
@@ -259,7 +275,7 @@
 
     Turbolinks.ProgressBar.enable();
 
-
+    /*
     $(document).on('page:before-change', function(event) {
         $(document.body).addClass('tl-loading');
         $('#topbar_container .menu li').removeClass('selected hover ancestor');
@@ -273,6 +289,7 @@
         ui.init();
         //bplayer.bindings();
     });
+    */
 
 </script>
 {% endif %}
@@ -292,7 +309,8 @@
     {% if user.is_authenticated %}
         var current_user = {
             id: {{ user.id }},
-            username: '{{ user.username }}'
+            username: '{{ user.username }}',
+            is_staff: '{{ user.is_staff|yesno:'true,false' }}'
         };
     {% else %}
         var current_user = false;
@@ -310,6 +328,7 @@
     var remotelink;
     var coverage;
 
+    /*
     $(function() {
 
         /////////////////////////////////////////////
@@ -421,6 +440,7 @@
 
 
     });
+    */
 
 
 </script>

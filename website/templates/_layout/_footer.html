@@ -1,17 +1,10 @@
 {% load menu_tags i18n subscription_tags %}
 <footer id="footer" data-livebg_>
-
     <div class="row">
-
         <div class="small-12 medium-10 medium-offset-1 columns">
-
-
             <div class="row">
-
                 <div class="small-12 medium-4 columns">
-
                     <p class="title">{% trans 'Address' %}</p>
-
                     <p class="address">
                         openbroadcast.ch ©{% now "Y" %}<br>
                         Renggerstrasse 31<br>
@@ -19,40 +12,20 @@
                         A plattform by <a href="http://www.digris.ch/">Digris AG</a>
                     </p>
                 </div>
-
                 <div class="small-12 medium-4 columns">
-
                     <p class="title">{% trans 'Quicklinks' %}</p>
-
                     <dl class="contact">
-
-                       <dt>{% trans 'General contact' %}</dt>
+                       <dt>{% trans 'Contact' %}</dt>
                        <dd><a href="mailto:info@openbroadcast.ch">info@openbroadcast.ch</a></dd>
-
-                       <dt>{% trans 'Support' %}</dt>
-                       <dd><a href="mailto:support@openbroadcast.ch">support@openbroadcast.ch</a></dd>
-
                     </dl>
-
                 </div>
-
                 <div class="small-12 medium-4 columns">
-
+                    {% comment %}
                     <p class="title">{% trans 'Newsletter' %}</p>
-
                     {% subscription_form %}
-
+                    {% endcomment %}
                 </div>
-
-
             </div>
-
-
-
         </div>
-
     </div>
-
-
-
 </footer>

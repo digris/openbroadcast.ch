@@ -48,13 +48,13 @@ class MailchimpBackend():
 
 
             return self.api.lists.subscribe(list_id, email={'email': email}, merge_vars=merge_vars)
-        except Exception, e:
+        except Exception as e:
             log.warning(u'unable to subscribe: %s' % e)
 
     def unsubscribe(self, list_id, email):
         try:
             return self.api.lists.unsubscribe(list_id, {'email': email})
-        except Exception, e:
+        except Exception as e:
             log.warning(u'unable to unsubscribe: %s' % e)
 
         return

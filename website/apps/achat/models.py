@@ -113,7 +113,7 @@ class Message(models.Model):
         try:
             log.debug('routing to: %s%s' % (REDIS_SITE_ID, 'achat'))
             rs.publish('%s%s' % (REDIS_SITE_ID, 'achat'), message)
-        except redis.ConnectionError, e:
+        except redis.ConnectionError as e:
             log.warning('unable to route message %s' % e)
 
 

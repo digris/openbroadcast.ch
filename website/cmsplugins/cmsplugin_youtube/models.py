@@ -8,7 +8,7 @@ from cmsplugin_youtube import settings
 
 
 class YouTube(CMSPlugin):
-    
+
     video_url = models.URLField(max_length=512)
     name = models.CharField(max_length=200, blank=True, null=True, verbose_name='Optional title to display')
 
@@ -41,8 +41,7 @@ class YouTube(CMSPlugin):
         m = re.search(r"youtube\.com/.*v=([^&]*)", video_url)
         try:
             video_id = m.group(1)
-        except Exception, e:
-            print e
+        except Exception as e:
             video_id  = None
 
         return video_id

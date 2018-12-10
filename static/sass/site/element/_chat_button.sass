@@ -1,0 +1,32 @@
+#chat_button_container
+
+  position: fixed
+  right: 10px
+  bottom: 0
+  z-index: 999
+
+  .chat-button
+    display: block
+    padding: 2px 1px 1px
+    .help-text
+      transition: width 0.2s
+      width: 0
+      overflow-x: hidden
+      display: block
+      float: left
+      white-space: nowrap
+      font-style: normal
+      padding-top: 7px
+      line-height: 14px
+      font-size: 12px
+      p
+        margin-bottom: 0
+
+    i
+      font-size: 32px
+
+    &.hover
+      .help-text
+        padding-left: 4px
+        transition: width 0.1s
+        width: 200px

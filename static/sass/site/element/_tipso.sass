@@ -1,0 +1,60 @@
+/* Tipso Bubble Styles
+
+.tipso_bubble
+  box-sizing: border-box
+  > .tipso_arrow
+    box-sizing: border-box
+  position: absolute
+  //text-align: center
+  z-index: 9999
+  padding: 10px
+
+  border-radius: 3px
+  filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.15))
+  background-color: rgba(0, 0, 0, 0.8) !important
+
+.tipso_style
+  cursor: help
+  border-bottom: 1px dotted
+
+/* Tipso Bubble Div
+
+.tipso_bubble
+  > .tipso_arrow
+    position: absolute
+    width: 0
+    height: 0
+    border: 8px solid
+    pointer-events: none
+  &.top > .tipso_arrow
+    border-top-color: rgba(0, 0, 0, 0.8) !important
+    border-right-color: transparent
+    border-left-color: transparent
+    border-bottom-color: transparent
+    top: 100%
+    left: 50%
+    margin-left: -8px
+  &.bottom > .tipso_arrow
+    border-bottom-color: rgba(0, 0, 0, 0.8) !important
+    border-right-color: transparent
+    border-left-color: transparent
+    border-top-color: transparent
+    bottom: 100%
+    left: 50%
+    margin-left: -8px
+  &.left > .tipso_arrow
+    border-left-color: rgba(0, 0, 0, 0.8) !important
+    border-top-color: transparent
+    border-bottom-color: transparent
+    border-right-color: transparent
+    top: 50%
+    left: 100%
+    margin-top: -8px
+  &.right > .tipso_arrow
+    border-right-color: rgba(0, 0, 0, 0.8) !important
+    border-top-color: transparent
+    border-bottom-color: transparent
+    border-left-color: transparent
+    top: 50%
+    right: 100%
+    margin-top: -8px

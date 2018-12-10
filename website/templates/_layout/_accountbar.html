@@ -30,13 +30,13 @@
                 <a data-no-turbolink data-livefg href="{% url 'alogin-profile' %}" data-alogin-action="profile">{% trans 'profile & settings'|capfirst %}</a>
             </li>
             <li data-livebg-inverse class="hoverable">
-                <a data-no-turbolink data-livefg href="{% url 'alogin-logout' %}" data-alogin-action="logout">{% trans 'logout'|capfirst %}</a>
+                <a data-livefg href="{% url 'account:logout' %}" data-alogin-action="logout">{% trans 'logout'|capfirst %}</a>
             </li>
         </ul>
     </li>
 
     <li class="show-for-small-only">
-        <a data-no-turbolink data-livefg href="{% url 'alogin-logout' %}" data-alogin-action="logout">{% trans 'logout'|capfirst %}</a>
+        <a data-livefg href="{% url 'account:logout' %}" data-alogin-action="logout">{% trans 'logout'|capfirst %}</a>
     </li>
 
 
@@ -44,7 +44,7 @@
 {% else %}
 
     <li class="hoverable">
-        <a data-no-turbolink data-livefg href="{% url 'alogin-login' %}" data-alogin-action="login">{% trans 'login'|capfirst %} / {% trans 'register'|capfirst %}</a>
+        <a data-login-required data-livefg href="#" data-login-action="login">{% trans 'login'|capfirst %} / {% trans 'register'|capfirst %}</a>
     </li>
 
 {% endif %}

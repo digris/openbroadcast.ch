@@ -1,0 +1,185 @@
+body
+  overflow-y: scroll
+  overflow-x: hidden
+
+#achat_container
+  background: #fff
+  min-height: 600px
+  form
+    margin: 20px 0
+    &.focus
+
+    // this is a contenteditable, treat as form input
+    div.chat-message
+      p
+        border: 1px solid #999
+        padding: 2px 4px
+        margin: 0
+        min-height: 30px
+
+        border-radius: 2px 0 0 2px
+
+        &:focus
+          border: 1px solid #000
+          padding: 2px 4px
+          outline-color: transparent
+          outline-style: none
+
+        a, span
+          &[data-ct]
+            background: rgba(0, 0, 0, 0.07)
+            //font-style: italic
+          padding: 2px 4px
+
+    .button
+      margin: 0
+      background: #999
+      height: 30px
+      color: #FFF
+      padding-left: 7px
+      line-height: 10px
+      width: 100%
+
+      border-radius: 0 2px 2px 0
+
+      > span
+        border-left: none
+
+    ul.f-dropdown
+      border: none
+      background-color: #fff
+      box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.40)
+      li > a
+        padding: 6px 12px
+        color: #000
+        &:hover
+          color: #000
+          border-right: 4px solid #000
+
+    &.focus .button
+      background: #000
+      border-color: #000 !important
+
+
+  .messages
+
+    padding: 5px 0
+    font-weight: $body-font-weight
+    p
+      font-weight: $body-font-weight
+      margin-bottom: 0
+      word-wrap: break-word
+    
+    
+    .item.message
+      display: block
+      //padding: 0 10px 20px
+      margin-bottom: 14px
+      transition: opacity 2.0s
+      padding: 0 10px
+
+      width: 100%
+      @media #{breakpoint(medium)}
+        width: 25%
+        &.has-attachments
+          width: 50%
+
+      &.new
+        opacity: 0.0
+        transition: opacity 1.0s
+
+
+      .bubble
+        //filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.15))
+
+      .body
+        padding: 10px
+        color: #000
+
+        //font-style: italic
+        position: relative
+        border-radius: 3px
+
+      .triangle
+        height: 10px
+        line-height: 0
+        text-align: center
+        svg
+          width: 20px
+        svg:not([data-livefill])
+          fill: #efefef
+
+        //
+        //&:after
+        //  content: ''
+        //  position: absolute
+        //  top: 100%
+        //  left: 0
+        //  right: 0
+        //  margin: 0 auto
+        //  width: 0
+        //  height: 0
+        //  border-top-width: 9px
+        //  border-top-style: solid
+        //  border-left: solid 9px transparent
+        //  border-right: solid 9px transparent
+        //
+        //&:not([data-livebg]):after
+        //  border-top-color: #efefef
+
+
+        a[data-ct="user"]
+          cursor: pointer
+
+      .author
+        margin-top: 8px
+        font-size: 80%
+        opacity: 0.5
+
+
+    .item.message
+      .body:not([data-livebg])
+        background: #efefef
+
+    // type dependant styles
+    .item.message
+      &.__disabled__.me
+        .body
+          background: #CCC
+          color: #000
+          &:after
+            border-top: solid 9px #CCC
+
+      &.__disabled__mentioned
+        .body
+          background: #000
+          color: #fff
+          a
+            color: #fff
+          &:after
+            border-top: solid 9px #000
+
+
+
+
+
+
+
+
+// profile (tooltip)
+.profile
+  .image
+    //border: 2px solid green
+  .name
+  .pseudonym
+    font-size: 90%
+  .location
+    font-size: 90%
+  .roles
+    padding-top: 20px
+    width: 100%
+    text-align: center
+    .role
+      opacity: 0.7
+      font-size: 80%
+      padding-right: 10px

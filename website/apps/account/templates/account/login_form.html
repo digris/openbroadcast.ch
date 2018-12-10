@@ -1,0 +1,42 @@
+{% extends "account/base.html" %}
+{% load i18n account_tags crispy_forms_tags %}
+
+{% block title %}{% trans "Login" %}{% endblock %}
+
+{% block body_extra_class %}form-view auth auth-login{% endblock %}
+
+{% block app_content %}
+    <div class="auth-inner">
+        <div class="auth-card">
+            <div class="row small-up-1">
+                <div class="column">
+                    <h1 class="headline">{% trans "Sign in"|title %}</h1>
+                    <div class="social-login-container">
+                        {% for backend in backends.backends %}
+                            <div class="auth-social auth-social-{{ backend }}" data-turbolinks="false">
+                                {% backend_detail backend %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="form-separator">{% trans "or use your e-mail address" %}</div>
+                </div>
+                <div class="column">
+                    <form method="post" class="form-base">
+                        {% csrf_token %}
+                        {% crispy form %}
+                        <div class="login-alt">
+                            <ul>
+                                <li>
+                                    <a href="{% url 'account:register' %}">{% trans 'sign up'|capfirst %}</a>
+                                    <span>{% trans "if you don\'t have an account yet" %}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

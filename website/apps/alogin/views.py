@@ -44,8 +44,8 @@ def alogin_login(request):
                     'id': user.id,
                     'username': user.username,
                 }
-            })
-            , content_type='application/json')
+            }), content_type='application/json')
+
     return render(request, 'alogin/login.html', {'form': form})
 
 
@@ -82,10 +82,3 @@ def alogin_logout(request):
 
 def alogin_profile(request):
     return render(request, 'alogin/profile.html', {})
-
-
-
-
-def socialauth_success(request):
-    return render(request, 'ajaxlogin/socialauth_success.html', {})
-

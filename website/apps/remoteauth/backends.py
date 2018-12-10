@@ -23,9 +23,7 @@ class RemoteUserBackend(ModelBackend):
     Authenticates against remote API
     """
     def authenticate(self, username=None, password=None):
-
         log.info('remote login: %s | %s' % (username, '*******************'))
-
         return self.remote_auth(username, password)
 
 
@@ -42,6 +40,7 @@ class RemoteUserBackend(ModelBackend):
             user_obj._group_perm_cache = permissions
         return user_obj._group_perm_cache
 
+
     def get_user(self, user_id):
         try:
             return User.objects.get(pk=user_id)
@@ -49,11 +48,7 @@ class RemoteUserBackend(ModelBackend):
             return None
 
 
-
-
-
     def remote_auth(self, username=None, password=None):
-
 
         url = AUTH_ENDPOINT + 'login/'
         payload = {
@@ -63,22 +58,28 @@ class RemoteUserBackend(ModelBackend):
 
         r = requests.post(url , payload)
 
+        print(payload)
+        print(r.status_code)
+        print(r.text)
+
         if not r.status_code == 200:
             return None
+
+        print(r.text)
 
         data = r.json()
 
 
-        # print '///////////////////////////////////////'
-        # print 'got user:     %s' % data['username']
-        # print 'is_staff:     %s' % data['is_staff']
-        # print 'is_superuser: %s' % data['is_superuser']
-        # print 'is_active:    %s' % data['is_active']
-        # print 'first_name:   %s' % data['first_name']
-        # print 'last_name:    %s' % data['last_name']
-        # print 'email:        %s' % data['email']
-        # print 'groups:       %s' % data['groups']
-        # print '///////////////////////////////////////'
+        print '///////////////////////////////////////'
+        print 'got user:     %s' % data['username']
+        print 'is_staff:     %s' % data['is_staff']
+        print 'is_superuser: %s' % data['is_superuser']
+        print 'is_active:    %s' % data['is_active']
+        print 'first_name:   %s' % data['first_name']
+        print 'last_name:    %s' % data['last_name']
+        print 'email:        %s' % data['email']
+        print 'groups:       %s' % data['groups']
+        print '///////////////////////////////////////'
 
         user, created = User.objects.get_or_create(username=data['username'], remote_id=data['id'])
         user.set_password(password)

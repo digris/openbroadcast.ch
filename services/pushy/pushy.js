@@ -53,7 +53,7 @@ io.on('connection', function (socket) {
         //console.log(data);
         //debug('channel', channel);
         //debug('data', data);
-        //logger.info('channel', channel);
+        logger.info('channel', channel);
         //logger.info('data', data);
 
         socket.emit('push', channel, data);

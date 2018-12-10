@@ -2,16 +2,12 @@
 import logging
 import requests
 import json
-import re
+
 from django.db import models
 from django.conf import settings
-from django.utils import timezone
-from django.core import validators
-from django.contrib.contenttypes.models import ContentType
-from django.db.models.signals import post_delete, post_save, pre_save
+from django.db.models.signals import post_save
 from django.dispatch.dispatcher import receiver
-from django.contrib.auth.models import Permission, User, Group, UserManager, AbstractBaseUser, BaseUserManager, UserManager, AbstractUser
-from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.models import BaseUserManager, AbstractUser
 from django.core.exceptions import ImproperlyConfigured
 
 log = logging.getLogger(__name__)
@@ -66,7 +62,7 @@ def user_post_save(sender, instance, created, **kwargs):
 
         if remote_user:
             remote_id = remote_user['user']['id']
-            print 'remote id: %s' % remote_user['id']
+            print('remote id: %s' % remote_user['id'])
             if remote_id:
                 instance.remote_id = remote_id
                 instance.save()
@@ -176,7 +172,7 @@ def get_or_create_social_user(user):
 
     if not r.status_code == 200:
         log.warning('Unable to communicate with the remoteauth API. status: %s' % r.status_code)
-        print r.text
+        print(r.text)
 
         return
 

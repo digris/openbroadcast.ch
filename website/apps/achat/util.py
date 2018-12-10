@@ -64,7 +64,7 @@ def is_spam(text, request=None):
 
         if not ct_result['allow']:
             return True, ct_result['comment'].replace('***', '')
-    except Exception, e:
+    except Exception as e:
         log.warning('unable to access cleantalk api: %s' % e)
 
     if 'spam3000' in text:

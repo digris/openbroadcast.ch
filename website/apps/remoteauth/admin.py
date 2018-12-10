@@ -1,11 +1,15 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals, absolute_import
+
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.conf import settings
+#from django.conf import settings
 
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+@admin.register(User)
 class UserAdmin(UserAdmin):
 
     list_display = UserAdmin.list_display + ('remote_id', )
@@ -20,9 +24,3 @@ class UserAdmin(UserAdmin):
             ]}
          ),
     )
-
-    #inlines = (EmployeeInline, )
-
-# Re-register UserAdmin
-#admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
