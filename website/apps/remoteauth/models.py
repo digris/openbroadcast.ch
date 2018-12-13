@@ -172,8 +172,6 @@ def get_or_create_social_user(user):
 
     if not r.status_code == 200:
         log.warning('Unable to communicate with the remoteauth API. status: %s' % r.status_code)
-        print(r.text)
-
         return
 
     try:

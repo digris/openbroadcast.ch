@@ -44,6 +44,16 @@ class RegistrationForm(UserCreationForm):
         }
     )
 
+    field_order = [
+        'email',
+        'username',
+        'password1',
+        'password2',
+        'captcha',
+        'tos',
+    ]
+
+
     class Meta:
         model = User
         fields = ('email',)

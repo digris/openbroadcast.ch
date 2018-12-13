@@ -36,7 +36,17 @@ class UserLoginView(AnonymousRequiredMixin, FormView):
         login(self.request, user)
 
         if self.request.is_ajax():
-            return JsonResponse({'location': self.get_success_url()})
+
+            _response = {
+                'location':self.get_success_url(),
+                'user': {
+                    'username': user.username,
+                    'id': user.pk,
+                    'is_staff': user.is_staff
+                }
+            }
+
+            return JsonResponse(_response)
 
         return response
 
@@ -76,8 +86,20 @@ class UserRegisterView(RegistrationView, AnonymousRequiredMixin):
     def form_valid(self, form):
         response = super(UserRegisterView, self).form_valid(form)
 
-        # if self.request.is_ajax():
-        #     return JsonResponse({'location': self.get_success_url()})
+        if self.request.is_ajax():
+
+            user = self.request.user
+
+            _response = {
+                'location':self.get_success_url(user),
+                'user': {
+                    'username': user.username,
+                    'id': user.pk,
+                    'is_staff': user.is_staff
+                }
+            }
+
+            return JsonResponse(_response)
 
         return response
 

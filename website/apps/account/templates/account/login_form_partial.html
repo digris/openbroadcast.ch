@@ -1,37 +1,70 @@
 {% load i18n account_tags %}
 
 {% block app_content %}
+
+
     <div class="auth-inner">
         <div class="auth-card">
-            <div class="row small-up-1">
-                <div class="column">
-                    <h1 class="headline">{% trans "Sign in"|title %}</h1>
-                    <div class="social-login-container">
-                        {% for backend in backends.backends %}
-                            <div class="auth-social auth-social-{{ backend }}" data-turbolinks="false">
-                                {% backend_detail backend %}
-                            </div>
-                        {% endfor %}
+
+            <span class="title">{% trans "Sign in"|title %}</span>
+            <div class="social-login-container">
+                {% for backend in backends.backends %}
+                    <div class="auth-social auth-social-{{ backend }}" data-turbolinks="false">
+                        {% backend_detail backend %}
                     </div>
-                </div>
-                <div class="column">
-                    <div class="form-separator">{% trans "or use your e-mail address" %}</div>
-                </div>
-                <div class="column">
-                    <form method="post" class="form-base account-partial" data-xhr-exclude action="{% url 'account:login-partial' %}">
-                        {% csrf_token %}
-                        {{ form }}
-                        <button class="button simple black expanded" type="submit">{% trans "Login" %}</button>
-                        <div class="login-alt">
-                            <ul>
-                                <li>
-                                    <a href="{% url 'account:register-partial' %}">{% trans 'sign up'|capfirst %}</a>
-                                    <span>{% trans "if you don\'t have an account yet" %}</span>
-                                </li>
-                            </ul>
+                {% endfor %}
+            </div>
+
+            <div class="form-separator">
+                {% trans "or use your e-mail address" %}
+            </div>
+
+            <div class="form-container">
+                <form method="post" class="form-base account-partial" data-xhr-exclude action="{% url 'account:login-partial' %}">
+                    {% csrf_token %}
+
+                    {{ form.non_field_errors }}
+
+                    {% for field in form %}
+                        <div class="input-container{% if field.errors %} input-container--has-errors{% endif %}" id="input_{{ field.id_for_label }}">
+                            <div class="input-container__field">
+                                <div class="input-container__field__label">
+                                    {{ field.label_tag }}
+                                </div>
+                                <div class="input-container__field__input">
+                                    {{ field }}
+                                </div>
+                            </div>
+                            <div class="input-container__appendix">
+                                {% if field.help_text and not field.errors %}
+                                <div class="input-container__field-help">
+                                    <span>{{ field.help_text|safe }}</span>
+                                </div>
+                                {% endif %}
+                                {% if field.errors %}
+                                    <div class="input-container__field-errors">
+                                     {% for error in field.errors %}
+                                        <span>{{ error|escape }}</span>
+                                    {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
-                    </form>
-                </div>
+                    {% endfor %}
+
+                    <div class="actions">
+                        <button class="actions__action button" type="submit">{% trans "Login" %}</button>
+                    </div>
+                </form>
+            </div>
+            <div class="form-appendix">
+
+                <span>
+                    <a @click.prevent="$emit('show', 'register')"
+                       href="#">{% trans 'sign up'|capfirst %}</a>
+                    <span>{% trans "if you don\'t have an account yet" %}</span>
+                </span>
+
             </div>
         </div>
     </div>
