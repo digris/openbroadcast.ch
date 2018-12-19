@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('updated', models.DateTimeField(auto_now=True)),
                 ('slug', django_extensions.db.fields.AutoSlugField(populate_from=b'name', editable=False, blank=True)),
                 ('publish', models.DateTimeField(null=True, blank=True)),
-                ('content', cms.models.fields.PlaceholderField(slotname=b'ticker_article_content', editable=False, to='cms.Placeholder', null=True)),
+                ('content', cms.models.fields.PlaceholderField(slotname='ticker_article_content', editable=False, to='cms.Placeholder', null=True)),
             ],
             options={
                 'ordering': ('-publish',),

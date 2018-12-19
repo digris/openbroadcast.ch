@@ -5,7 +5,12 @@ import json
 import requests
 from requests.exceptions import ConnectionError
 import urllib
-from cStringIO import StringIO
+
+try:
+    from StringIO import StringIO as BytesIO
+except ImportError:
+    from io import BytesIO
+
 from wsgiref.util import FileWrapper
 import logging
 from sendfile import sendfile
@@ -15,8 +20,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse, StreamingHttpResponse
 from django.views.generic import View
 from braces.views import LoginRequiredMixin
-from models import CachedMedia, CachedEvent
-from tasks import create_cached_event
+from .models import CachedMedia, CachedEvent
 
 API_BASE_URL = getattr(settings, 'API_BASE_URL', None)
 STATIC_BASE_URL = getattr(settings, 'STATIC_BASE_URL', None)
@@ -96,7 +100,7 @@ class StaticResourceView(View):
             log.debug('remote request: {}'.format(url))
 
             try:
-                r = requests.get(url, verify=False)
+                r = requests.get(url, verify=True)
             except ConnectionError as e:
                 return HttpResponse('{}'.format(e), status=503)
 
@@ -105,7 +109,8 @@ class StaticResourceView(View):
 
             cache.set(cache_key, r, STATIC_CACHE_DURATION)
 
-        wrapper = FileWrapper(StringIO(r.content))
+        wrapper = FileWrapper(BytesIO(r.content))
+
         response = StreamingHttpResponse(wrapper, content_type=r.headers.get('Content-Type'))
         response['Content-Length'] = r.headers.get('Content-Length')
 

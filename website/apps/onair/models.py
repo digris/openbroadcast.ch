@@ -112,14 +112,14 @@ class ScheduledItem(models.Model):
 
         url = API_BASE_URL + self.emission_url.replace('/api/', '') # sorry!
         log.debug('calling API with %s' % url)
-        r = requests.get(url, headers=headers, verify=False)
+        r = requests.get(url, headers=headers, verify=True)
         if r.status_code == 200:
             self.emission_data = r.json()
 
         url = API_BASE_URL + self.item_url.replace('/api/', '') # sorry!
         url += '?includes=label'
         log.debug('calling API with %s' % url)
-        r = requests.get(url, headers=headers, verify=False)
+        r = requests.get(url, headers=headers, verify=True)
         if r.status_code == 200:
             self.item_data = r.json()
 

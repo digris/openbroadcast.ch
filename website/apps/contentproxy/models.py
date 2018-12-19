@@ -66,7 +66,7 @@ class CachedMedia(models.Model):
 
         url = API_BASE_URL + 'v1/library/track/{0}/stream.mp3'.format(self.uuid)
         log.debug('calling API with %s' % url)
-        r = requests.get(url, headers=headers, stream=True, verify=False)
+        r = requests.get(url, headers=headers, stream=True, verify=True)
 
         directory = os.path.join(MEDIA_ROOT, 'private', 'media', self.uuid)
         filename = 'default.mp3'
@@ -141,7 +141,7 @@ class CachedEvent(models.Model):
 
         log.debug('calling API with %s' % url)
 
-        r = requests.get(url, headers=headers, verify=False)
+        r = requests.get(url, headers=headers, verify=True)
 
         # return r.json()
 

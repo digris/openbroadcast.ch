@@ -2,9 +2,8 @@
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 from django.utils.translation import ugettext as _
-from django.contrib.sites.models import Site
 
-from models import Article
+from .models import Article
 
 @plugin_pool.register_plugin
 class ArticlePlugin(CMSPluginBase):

@@ -4,7 +4,7 @@ from hvad.admin import TranslatableAdmin
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.db.models.fields import TextField
-from models import Subscription, Newsletter
+from .models import Subscription, Newsletter
 
 class NewsletterAdmin(TranslatableAdmin):
 

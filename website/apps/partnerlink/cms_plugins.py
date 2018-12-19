@@ -3,13 +3,13 @@ from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 from django.utils.translation import ugettext as _
 
-from models import PartnerlinkListPlugin as PartnerlinkListPluginModel
-from models import Partnerlink
-    
-    
+from .models import PartnerlinkListPlugin as PartnerlinkListPluginModel
+from .models import Partnerlink
+
+
 @plugin_pool.register_plugin
 class PartnerlinkListPlugin(CMSPluginBase):
-    
+
     model = PartnerlinkListPluginModel
     name = _("Partnerlink List")
     render_template = "partnerlink/cmsplugin/partnerlink_list.html"
@@ -23,5 +23,5 @@ class PartnerlinkListPlugin(CMSPluginBase):
             'objects': objects,
             'placeholder': placeholder,
         })
-        
+
         return context

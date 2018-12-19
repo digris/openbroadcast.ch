@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.files import get_thumbnailer
 from hvad.admin import TranslatableAdmin
-from models import Profile
+from .models import Profile
 
 THUMBNAIL_OPT = dict(size=(120, 120), crop=True, bw=False, quality=80)
 

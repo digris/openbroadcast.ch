@@ -2,10 +2,10 @@ session_name: openbroadcast_ch
 start_directory: ./
 windows:
 
-- window_name: dev window
+- window_name: obp
   layout: tiled
   shell_command_before:
-    - 'source ~/srv/openbroadcast.ch/bin/activate'
+    - 'source ~/srv/openbroadcast.ch3/bin/activate'
   panes:
     - shell_command:
         - cd website

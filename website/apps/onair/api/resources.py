@@ -72,7 +72,7 @@ class VoteObject(object):
 
         log.debug('calling API with %s' % url)
 
-        r = requests.get(url, headers=headers, verify=False)
+        r = requests.get(url, headers=headers, verify=True)
 
         return r.json()
 
@@ -150,7 +150,7 @@ class VoteResource(Resource):
 
             log.debug('calling API with %s' % url)
 
-            r = requests.get(url, headers=headers, verify=False)
+            r = requests.get(url, headers=headers, verify=True)
 
             bundle.data = r.json()
 

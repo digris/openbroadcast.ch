@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.views.generic import DetailView, ListView
 from django.core.urlresolvers import reverse
 
-from models import Article
+from .models import Article
 
 class ArticleDetailView(DetailView):
 

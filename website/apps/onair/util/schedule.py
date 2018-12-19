@@ -29,7 +29,7 @@ def fetch_from_api(range_start=0, range_end=0, channel=None):
     headers = {'Authorization': 'ApiKey %s:%s' % (API_BASE_AUTH['username'], API_BASE_AUTH['api_key'])}
     log.debug('calling API with %s' % url)
 
-    r = requests.get(url, headers=headers, verify=False)
+    r = requests.get(url, headers=headers, verify=True)
     if not r.status_code == 200:
         log.warning('unable to communicate with API. status code: %s' % r.status_code)
         return False

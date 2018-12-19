@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 from django.contrib import admin
 from django.utils.translation import ugettext as _
-from models import ScheduledItem
+from .models import ScheduledItem
 
 class ScheduledItemAdmin(admin.ModelAdmin):
 

@@ -76,7 +76,7 @@ PARLER_LANGUAGES = {
 ROOT_URLCONF = 'project.urls'
 WSGI_APPLICATION = 'project.wsgi.application'
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
 
     #'djangocms_admin_style',
     #'admin_shortcuts',
@@ -140,7 +140,6 @@ INSTALLED_APPS = (
     'apiproxy',
     'pushy_client',
 
-    #'django_extensions',
     'compressor',
     'easy_thumbnails',
     'analytics',
@@ -164,12 +163,17 @@ INSTALLED_APPS = (
     'team',
     'coverage',
     'program',
-    'partnerlink',
-    #'social_auth',
     'subscription',
     'swissradioplayer',
 
-)
+]
+
+TO_BE_UNINSTALLED_APPS = [
+    'partnerlink',
+]
+
+INSTALLED_APPS += TO_BE_UNINSTALLED_APPS
+
 
 AUTH_USER_MODEL = 'remoteauth.User'
 

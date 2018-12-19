@@ -42,7 +42,7 @@ class ResourceView(View):
             log.debug('remote request: {}'.format(url))
 
             try:
-                r = requests.get(url, verify=False)
+                r = requests.get(url, verify=True)
             except ConnectionError as e:
                 return HttpResponse('{}'.format(e), status=503)
 

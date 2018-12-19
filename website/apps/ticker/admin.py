@@ -2,12 +2,10 @@
 from django.contrib import admin
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from pagedown.widgets import AdminPagedownWidget
-from base.fields.extra import MarkdownTextField
 from django.db.models.fields import TextField
 from cms.admin.placeholderadmin import PlaceholderAdminMixin
 
-from models import Article
+from .models import Article
 
 
 class ArticleAdmin(PlaceholderAdminMixin, admin.ModelAdmin):

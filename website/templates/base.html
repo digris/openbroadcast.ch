@@ -296,16 +296,6 @@
 
 <script data-turbolinks-eval=false>
 
-
-    {% if not settings.DEBUG %}
-    window.console = {
-        log: function() {},
-        info: function() {},
-        warn: function() {},
-        debug: function() {}
-    };
-    {% endif %}
-
     {% if user.is_authenticated %}
         var current_user = {
             id: {{ user.id }},

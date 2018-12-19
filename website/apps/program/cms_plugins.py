@@ -23,7 +23,7 @@ class ProgramPlugin(CMSPluginBase):
         #print API_BASE_URL
         #print uri
 
-        r = requests.get(API_BASE_URL + uri, verify=False)
+        r = requests.get(API_BASE_URL + uri, verify=True)
 
         objects = r.json().get('objects', [])
 
