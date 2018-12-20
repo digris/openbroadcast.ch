@@ -1,19 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import datetime
-import re
-import itertools
+
 from django.db import models
-from django.db.models import Q
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils import timezone
-from django.contrib.sites.models import Site
-from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
-from django.utils.text import slugify
 from django_extensions.db.fields import AutoSlugField
-from filer.fields.file import FilerFileField
 from filer.fields.image import FilerImageField
 from cms.models.fields import PlaceholderField
 

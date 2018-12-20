@@ -71,10 +71,9 @@ PARLER_LANGUAGES = {
     }
 }
 
-#SOLID_I18N_USE_REDIRECTS = False
-
 ROOT_URLCONF = 'project.urls'
 WSGI_APPLICATION = 'project.wsgi.application'
+ASGI_APPLICATION = 'project.routing.application'
 
 INSTALLED_APPS = [
 
@@ -92,87 +91,87 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'django.contrib.humanize',
-    #'solid_i18n',
+
+    'channels',
 
     'account',
     'social_django',
 
-    'alogin',
+    #'alogin',
 
-
-    # life-savers
-    'crispy_forms',
     'raven.contrib.django.raven_compat',
     'tastypie',
-    #'kombu.transport.django',
-    #'relatedadminlink',
 
     'remoteauth',
     'captcha',
 
+    'filer',
+    'easy_thumbnails',
+
     # cms
     'cms',
-    'mptt',
-    'treebeard', # mptt replacement for cms
+    'treebeard',
     'menus',
     'sekizai',
 
     'djangocms_picture',
     'djangocms_link',
-
-    'djangocms_gmaps',
     'djangocms_snippet',
-
-
-    'filer',
-    'cmsplugin_filer_file',
-    #'cmsplugin_filer_folder',
-    'cmsplugin_filer_image',
-    #'cmsplugin_filer_teaser',
-    #'cmsplugin_filer_video',
     'cmsplugin_youtube',
-    'djangocms_column',
+    'djangocms_text_ckeditor',
+
+    # api
+    'rest_framework',
 
     'turbolinks',
     'nunjucks',
 
-    'djangocms_text_ckeditor',
-    'apiproxy',
-    'pushy_client',
-
     'compressor',
-    'easy_thumbnails',
     'analytics',
     'absolute',
-    'emailit',
-    'hvad',
-    'colorfield',
-    'geoposition',
 
     'base',
+    'apiproxy',
+    'contentproxy',
+    'pushy_client',
     'bplayer',
-    'achat',
+    'chat',
     'onair',
     'stationtime',
     'heartbeat',
     'remotelink',
     'livecolor',
-    'contentproxy',
     'profiles',
-    'ticker',
-    'team',
     'coverage',
     'program',
-    'subscription',
+    #'subscription',
     'swissradioplayer',
 
 ]
 
 TO_BE_UNINSTALLED_APPS = [
     'partnerlink',
+    'team',
+    'ticker',
+    'achat',
+    # plugins
+    'djangocms_gmaps',
+    'cmsplugin_filer_file',
+    'cmsplugin_filer_image',
+    'djangocms_column',
 ]
 
-INSTALLED_APPS += TO_BE_UNINSTALLED_APPS
+# ./manage.py migrate partnerlink zero
+# ./manage.py migrate team zero
+# ./manage.py migrate ticker zero
+# ./manage.py migrate achat zero
+# ./manage.py migrate djangocms_gmaps zero
+# ./manage.py migrate cmsplugin_filer_file zero
+# ./manage.py migrate cmsplugin_filer_image zero
+# ./manage.py migrate djangocms_column zero
+
+
+# INSTALLED_APPS += TO_BE_UNINSTALLED_APPS
 
 
 AUTH_USER_MODEL = 'remoteauth.User'
@@ -189,7 +188,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    #'solid_i18n.middleware.SolidLocaleMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
@@ -231,25 +229,11 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static-src'),
 )
 
-
-
 STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
-
-#STATICFILES_STORAGE = 'require.storage.OptimizedStaticFilesStorage'
-
-THUMBNAIL_PROCESSORS = (
-    'easy_thumbnails.processors.colorspace',
-    'easy_thumbnails.processors.autocrop',
-    #'easy_thumbnails.processors.scale_and_crop',
-    'filer.thumbnail_processors.scale_and_crop_with_subject_location',
-    'easy_thumbnails.processors.filters',
-)
-THUMBNAIL_QUALITY = 80
-THUMBNAIL_HIGH_RESOLUTION = True
 
 CMSPLUGIN_FILER_IMAGE_STYLE_CHOICES = (
     ('default', 'Default'),
@@ -258,12 +242,36 @@ CMSPLUGIN_FILER_IMAGE_STYLE_CHOICES = (
 CMSPLUGIN_FILER_IMAGE_DEFAULT_STYLE = 'inline'
 
 
+##################################################################
+# REST API (DRF)
+##################################################################
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 20
+}
 
+# CSRF / axios
+# https://stackoverflow.com/questions/39254562/csrf-with-django-reactredux-using-axios/44479078#44479078
+CSRF_COOKIE_NAME = "csrftoken"
+
+
+##################################################################
+# channels
+##################################################################
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [
+                'redis://localhost:6379/3',
+            ],
+        },
+    },
+}
 
 ##################################################################
 # templates
 ##################################################################
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 TEMPLATES = [
     {
@@ -315,10 +323,7 @@ CMS_SHOW_END_DATE = True
 
 CMS_TEMPLATES = (
     ('_cms/single-column.html', '1 Column'),
-    ('_cms/two-columns.html', '2 Columns'),
     ('_cms/home.html', 'Home'),
-    ('_cms/fs-video.html', 'Video (full-screen)'),
-    #('_templates/cms_construction.html', 'Under construction'),
 )
 
 CONTENT_PLUGINS = ['TextPlugin', 'LinkPlugin']

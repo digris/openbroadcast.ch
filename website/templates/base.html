@@ -1,4 +1,4 @@
-{% load cms_tags staticfiles slick_admin_tags compress sekizai_tags i18n menu_tags bplayer_tags pushy_client_tags nunjucks_tags analytics raven livecolor_tags %}<!DOCTYPE html>
+{% load cms_tags staticfiles slick_admin_tags compress sekizai_tags i18n menu_tags bplayer_tags pushy_client_tags nunjucks_tags analytics raven %}<!DOCTYPE html>
 <html class="no-js{% if user.is_authenticated %} is-authenticated{% endif %}" lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="utf-8"/>
@@ -9,7 +9,7 @@
     <meta name="description"
           content="{% block meta_description %}{% page_attribute 'meta_description' %}{% endblock %}{% block meta_description_page %}{% endblock %}"/>
     <meta name="keywords" content="{% block meta_keywords %}{% endblock %}"/>
-    <meta name="author" content="palmbeach interactive"/>
+    <meta name="author" content="digris AG"/>
 
     <meta http-equiv="last-modified" content="{% page_attribute 'changed_date' %} UTC"/>
 
@@ -28,20 +28,7 @@
 
     <link rel="icon" type="image/png" href="{{ STATIC_URL }}img/base/icon.png"/>
 
-    {% comment %}
-    {% compress css %}
-        {% if settings.DEBUG %}
-            <link rel="stylesheet" href="{{ STATIC_URL }}css/print.css" media="print"/>
-            <link rel="stylesheet" href="{{ STATIC_URL }}css/screen.css" id="style_light"/>
-        {% else %}
-            <link rel="stylesheet" href="{{ STATIC_URL }}dist/css/screen.css" id="style_light"/>
-        {% endif %}
-    {% endcompress %}
-    {% endcomment %}
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" />
-
-
 
     <!-- start: bundled js -->
     {% if webpack_devserver %}
@@ -55,101 +42,16 @@
     {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
 
     {% comment %}
-    <script src="{{ STATIC_URL }}js/lib/modernizr.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/jquery-2.1.0.js"></script>
-    {% endcomment %}
-
     {% if not request.toolbar.edit_mode %}
         <script src="{{ STATIC_URL }}turbolinks/turbolinks.js"></script>
     {% endif %}
+    {% endcomment %}
 
     {% block link %}{% endblock link %}
 
     {% render_block "css" %}
 
     {% analytics %}
-
-    {% comment %}
-    {% compress js %}
-
-
-    <script src="{{ STATIC_URL }}js/lib/textcomplete-0.3.3/jquery.textcomplete.js"></script>
-
-    <script src="{{ STATIC_URL }}bplayer/js/lib/buzz-1.2.0.js"></script>
-
-    <!--<script src="{{ STATIC_URL }}js/lib/jquery-ui-1.10.4.custom.js"></script>-->
-    <script src="{{ STATIC_URL }}js/lib/featherlight.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/jquery.imageloader.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/jquery.hoverIntent-1.8.0.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/jquery.color-2.1.2.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/jquery.address.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/jquery.timeago-1.4.1.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/jquery.scrollTo-1.4.13.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/jquery.tipso-1.0.5.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/jquery.svg-1.5.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/jquery.svganim-1.5.js"></script>
-    <!--<script src="{{ STATIC_URL }}js/lib/jquery.nanoscroller-0.8.7.js"></script>-->
-    <script src="{{ STATIC_URL }}js/lib/packery.pkgd.min-1.4.3.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/js.cookie.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/color-thief-2.0.min.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/tinycolor-1.3.0.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/jquery.touchSwipe-1.6.18.js"></script>
-
-    <!-- foundation [6.2] -->
-    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.core.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.dropdown.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.dropdownMenu.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.responsiveMenu.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.responsiveToggle.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.toggler.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.sticky.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.reveal.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.util.keyboard.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.util.box.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.util.nest.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.util.triggers.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/fd-6.2/foundation.util.mediaQuery.js"></script>
-
-    <!-- global scripts -->
-    <script src="{{ STATIC_URL }}js/lib/ba-debug.js"></script>
-    <script src="{{ STATIC_URL }}js/lib/md5.js"></script>
-    <script src="{{ STATIC_URL }}js/site.js"></script>
-    <script src="{{ STATIC_URL }}js/util.base.js"></script>
-
-    <!-- app scripts -->
-    <script src="{{ STATIC_URL }}livecolor/js/base.js"></script>
-    <script src="{{ STATIC_URL }}achat/js/base.js"></script>
-    <script src="{{ STATIC_URL }}alogin/js/base.js"></script>
-    <script src="{{ STATIC_URL }}coverage/js/base.js"></script>
-
-    <script src="{{ STATIC_URL }}bplayer/js/levelbridge.js"></script>
-    <script src="{{ STATIC_URL }}onair/js/base.js"></script>
-    <script src="{{ STATIC_URL }}stationtime/js/base.js"></script>
-    <script src="{{ STATIC_URL }}remotelink/js/base.js"></script>
-    <script src="{{ STATIC_URL }}ticker/js/base.js"></script>
-
-    <!-- app scripts refactored to coffeescript -->
-    <script src="{{ STATIC_URL }}bplayer/js/base.js"></script>
-    <!--<script src="{{ STATIC_URL }}dist/js/apps/bplayer/base.js"></script>-->
-
-    <!-- cms plugin moved js scripts (one-page compat.) -->
-    <script type="text/javascript" src="//maps-api-ssl.google.com/maps/api/js?v=3&amp;sensor=true"></script>
-    <script type="text/javascript" src="{% static "js/djangocms_gmaps/gmaps.js" %}"></script>
-
-    <!-- temporary & testing -->
-    <script src="{{ STATIC_URL }}temporary/smileys.js"></script>
-
-
-    <!-- scripts exposed by apps/templatetags -->
-    {% nunjucks_scripts %}
-
-    {% endcompress %}
-    {% endcomment %}
-
-
-
-
-
 
     {% pushy_client_scripts %}
 
@@ -158,11 +60,6 @@
 
     {% render_block "js-post" %}
 
-
-
-    <!--
-    <script type="text/javascript" src="http://fast.fonts.net/jsapi/1ca04628-74f1-4059-8dd2-c91d0a2a63bc.js"></script>
-    -->
 </head>
 <body id="base" class="{% block body_extra_class %}{% endblock %}" data-livebg data-bplayer_state="init">
 
@@ -233,30 +130,23 @@
     {% block splash %}<!-- passed by: cms_base.html -->{% endblock %}
 
     {% include "onair/container.html" %}
-    {% include "achat/container.html" %}
+    {# include "achat/container.html" #}
+    <div data-turbolinks-permanent id="chat_app_container">
+        <div id="chat_app" data-api-url="{% url 'api:chat-message-list' %}"></div>
+    </div>
 
     {% block main_content %}{% endblock %}
 
     {% bplayer_inline %}
 
-    {# include "_layout/_site_messages.html" #}
-
-    {# include "_layout/_chat_button.html" #}
-
 </div>
 {% endblock %}
 {% include "_layout/_footer.html" %}
 
-
 <!-- dialog container -->
 <div id="reveal_container" class="reveal" data-reveal></div>
 
-<!-- ? -->
-<div id="at_content"></div>
-
 <div id="fb-root"></div>
-
-
 
 <div id="account_container" data-turbolinks-permanent>
     <div
@@ -266,36 +156,7 @@
     ></div>
 </div>
 
-
-{% if not request.toolbar.edit_mode %}
 <script data-turbolinks-eval=false>
-
-    Turbolinks.pagesCached(100);
-    Turbolinks.enableTransitionCache();
-
-    Turbolinks.ProgressBar.enable();
-
-    /*
-    $(document).on('page:before-change', function(event) {
-        $(document.body).addClass('tl-loading');
-        $('#topbar_container .menu li').removeClass('selected hover ancestor');
-        //Turbolinks.ProgressBar.start();
-        Turbolinks.ProgressBar.advanceTo(45);
-    });
-
-    $(document).on('page:change', function(event) {
-        $(document.body).removeClass('tl-loading');
-        //Turbolinks.ProgressBar.done();
-        ui.init();
-        //bplayer.bindings();
-    });
-    */
-
-</script>
-{% endif %}
-
-<script data-turbolinks-eval=false>
-
     {% if user.is_authenticated %}
         var current_user = {
             id: {{ user.id }},
@@ -305,139 +166,6 @@
     {% else %}
         var current_user = false;
     {% endif %}
-
-
-    // define globally for debug purposes
-    var ui;
-    var login_app;
-    var livecolor;
-    var onair;
-    var bplayer;
-    var achat;
-    var stationtime;
-    var remotelink;
-    var coverage;
-
-    /*
-    $(function() {
-
-        /////////////////////////////////////////////
-        // site
-        /////////////////////////////////////////////
-        ui = new SiteUI();
-        ui.debug = false;
-        ui.init();
-
-
-        /////////////////////////////////////////////
-        // AJAX Login App
-        /////////////////////////////////////////////
-        login_app = new AloginApp();
-        login_app.debug = true;
-        login_app.login_url = "{% url 'alogin-login' %}";
-        login_app.user = current_user;
-        login_app.init();
-
-
-        /////////////////////////////////////////////
-        // Coverage Map
-        /////////////////////////////////////////////
-        coverage = new CoverageApp();
-        coverage.init();
-
-
-        /////////////////////////////////////////////
-        // player
-        /////////////////////////////////////////////
-        bplayer = new BPlayerApp();
-        bplayer.debug = true;
-        bplayer.mode = 'inline';
-        bplayer.stream_url = '{{ settings.STREAM_URL }}';
-        bplayer.static_url = '{{ STATIC_URL }}';
-        bplayer.base_url = '{{ settings.STATIC_BASE_URL }}';
-        //bplayer.base_url = '/static-proxy';
-
-        var lb = new LevelBridge();
-
-        setTimeout(function () {
-            bplayer.init();
-            //lb.init(); // TODO: disabled for now
-        }, 200);
-
-
-        /////////////////////////////////////////////
-        // chat
-        /////////////////////////////////////////////
-        achat = new AchatApp();
-        achat.debug = false;
-        achat.container = $('#achat_container');
-        achat.static_url = '{{ STATIC_URL }}';
-        achat.base_url = '{{ settings.STATIC_BASE_URL }}';
-        achat.user = current_user;
-
-        setTimeout(function () {
-            achat.init();
-            achat.load();
-        }, 3000);
-
-
-        /////////////////////////////////////////////
-        // on-air
-        /////////////////////////////////////////////
-        onair = new OnAirApp();
-        onair.debug = true;
-        onair.bplayer = bplayer;
-        //onair.base_url = '{{ settings.STATIC_BASE_URL }}';
-        onair.static_base_url = '/static-proxy';
-        onair.base_url = '{{ settings.STATIC_BASE_URL }}';
-        onair.use_history = {% if settings.ONAIR_LOAD_HISTORY %}true{% else %}false{% endif %};
-        setTimeout(function () {
-            onair.init();
-        }, 100);
-
-
-        /////////////////////////////////////////////
-        // station time
-        /////////////////////////////////////////////
-        stationtime = new StationTimeApp();
-        stationtime.debug = true;
-        stationtime.api_url = "{% url 'stationtime-current-time' %}";
-        stationtime.container = $('#station_time');
-        setTimeout(function () {
-            stationtime.init();
-        }, 1000);
-
-
-        /////////////////////////////////////////////
-        // remote links
-        /////////////////////////////////////////////
-        remotelink = new RemotelinkApp();
-        remotelink.debug = false;
-        remotelink.dialog_url = "{% url 'remotelink-dialog' %}";
-        remotelink.user = current_user;
-        remotelink.init();
-
-        /////////////////////////////////////////////
-        // live-bg
-        /////////////////////////////////////////////
-        {% current_colors as colors %}
-        livecolor = new LiveColorApp();
-        livecolor.debug = false;
-        livecolor.bg_color = '{{ colors.bg }}';
-        livecolor.fg_color = '{{ colors.fg }}';
-        livecolor.init();
-
-
-
-    });
-    */
-
-
 </script>
-
-
-
-
-
 </body>
 </html>

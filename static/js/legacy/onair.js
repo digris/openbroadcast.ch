@@ -22,7 +22,7 @@ var OnAirApp = function () {
     this.container;
     this.bplayer = false;
     this.max_items = 16;
-    this.initial_items = 8;
+    this.initial_items = 6;
     this.info_container;
     this.meta_container;
     this.meta_rating;
@@ -266,12 +266,15 @@ var OnAirApp = function () {
         initial = (initial === undefined) ? false : initial;
         limit = (limit === undefined) ? self.initial_items : limit;
 
-        var url = '/api/v1/onair/schedule/?expand=item+emission&limit=' + limit;
+        //var url = '/api/v1/onair/schedule/?expand=item+emission&limit=' + limit;
+
+        var url = `/api/v2/onair/schedule/?limit=${limit}`;
 
         $.get(url, function (schedule) {
 
             // processing schedule meta
-            var meta = schedule.meta;
+            // var meta = schedule.meta;
+            var meta = schedule;
             if (meta.next_starts_in) {
                 if (self.load_schedule_timeout) {
                     clearTimeout(self.load_schedule_timeout);
@@ -304,7 +307,8 @@ var OnAirApp = function () {
 
             // processing schedule items
             // we need reversed order for local schedule
-            var objects = schedule.objects.reverse();
+            //var objects = schedule.objects.reverse();
+            var objects = schedule.results.reverse();
 
             $.each(objects, function (i, item) {
 

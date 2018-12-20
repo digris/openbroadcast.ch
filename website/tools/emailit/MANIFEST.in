@@ -1,5 +1,0 @@
-include AUTHORS
-include LICENSE
-include README.rst
-recursive-include emailit/templates *
-recursive-include emailit/locale *

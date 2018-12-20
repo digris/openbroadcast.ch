@@ -162,7 +162,7 @@
             } else {
               this.body = response.data;
             }
-            this.content_bindings();
+            //this.content_bindings();
           }, (error) => {
             console.warn(error)
           })

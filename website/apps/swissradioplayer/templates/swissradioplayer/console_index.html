@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0"/>
     {% compress css %}
         {% if settings.DEBUG %}
-            <link rel="stylesheet" href="{% static 'css/srp-console.css' %}"/>
+            <link rel="stylesheet" href="{% static 'swissradioplayer/css/srp-console.css' %}"/>
         {% else %}
-            <link rel="stylesheet" href="{% static 'css/srp-console.css' %}"/>
+            <link rel="stylesheet" href="{% static 'swissradioplayer/css/srp-console.css' %}"/>
         {% endif %}
     {% endcompress %}
     {% if settings.DEBUG %}
@@ -15,7 +15,7 @@
     {% else %}
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     {% endif %}
-    <script src="{% static 'js/lib/jquery-2.1.0.js' %}"></script>
+    <script src="{% static 'swissradioplayer/js/lib/jquery-2.1.0.js' %}"></script>
     {% compress js %}{% endcompress %}
 </head>
 <body id="console" data-livebg>

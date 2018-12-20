@@ -1,7 +1,7 @@
 import $ from "jquery";
 import _c from 'jquery-color';
 
-const DEBUG = true;
+const DEBUG = false;
 
 class LiveColor {
 

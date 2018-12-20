@@ -2,16 +2,14 @@ from django.conf.urls import include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.conf import settings
 from django.contrib import admin
-from django.views.generic import TemplateView
 
 admin.autodiscover()
 
-
 urlpatterns = [
-    url(r'^debug/', TemplateView.as_view(template_name='debug.html')),
+    # api v2 patterns
+    url(r'^api/v2/', include('project.urls_apiv2', namespace='api')),
     url(r'^api/', include('project.urls_api')),
     url(r'^', include('contentproxy.urls')),
-    url(r'^subscription/', include('subscription.urls')),
 ]
 
 urlpatterns += i18n_patterns(
@@ -21,7 +19,7 @@ urlpatterns += i18n_patterns(
     url('^account/', include('account.urls')),
     url('^account/', include('django.contrib.auth.urls')),
 
-    url(r'^alogin/', include('alogin.urls')),
+    #url(r'^alogin/', include('alogin.urls')),
     url(r'^captcha/', include('captcha.urls')),
     url(r'^stationtime/', include('stationtime.urls')),
     url(r'^remotelink/', include('remotelink.urls')),

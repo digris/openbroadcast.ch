@@ -1,9 +1,0 @@
-{% if object.file.url %}
-<span class="file">
-
-<i class="fa fa-fw fa-file-o fa-file-{{ object.file.extension }}-o{% if object.file.file_type == 'Image' %} fa-file-image-o{% endif %}"></i>
-
-<a href="{{ object.file.url }}"{% if object.target_blank %} target="_blank"{% endif %}>
-{% if object.title %}{{ object.title }}{% else %}{{ object.get_file_name }}{% endif %} {% if object.file_exists %}<span class="filesize">({{ object.file.size|filesizeformat }})</span>{% else %}(file missing!){% endif %}</a>
-</span>
-{% endif %}

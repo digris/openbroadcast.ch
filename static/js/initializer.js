@@ -1,5 +1,6 @@
 import hotEmitter from 'webpack/hot/emitter'
 
+import store from './store';
 
 import SiteUI from './apps/site';
 import LiveColor from './apps/live-color';
@@ -10,6 +11,7 @@ import PlayerApp from './apps/player/player-app';
 
 import Vue from 'vue';
 import AccountApp from './apps/account-app.vue';
+import ChatApp from './apps/chat/chat-app.vue';
 
 
 // legacy apps & modules
@@ -79,6 +81,21 @@ class AppInitializer {
             });
         }
 
+        /**************************************************************
+         * Chat App
+         **************************************************************/
+        const chat_app_container = document.getElementById('chat_app');
+        if (chat_app_container) {
+
+            const ChatComponent = Vue.extend(ChatApp);
+
+            this.apps['AccountApp'] = new ChatComponent({
+                el: chat_app_container,
+                store,
+                propsData: chat_app_container.dataset
+            });
+        }
+
 
     };
 
@@ -110,10 +127,10 @@ class AppInitializer {
         let achat = new AchatApp();
         achat.base_url = 'https://www.openbroadcast.org';
 
-        setTimeout(function () {
-            achat.init();
-            achat.load();
-        }, 3000);
+        // setTimeout(function () {
+        //     achat.init();
+        //     achat.load();
+        // }, 3000);
 
 
     };

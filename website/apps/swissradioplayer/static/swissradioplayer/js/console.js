@@ -1,4 +1,4 @@
-const DEBUG = false;
+const DEBUG = true;
 const REMOTE_BASE_URL = 'https://www.openbroadcast.org';
 
 const console_app = new Vue({
@@ -22,7 +22,8 @@ const console_app = new Vue({
   },
   methods: {
     load_from_api: function () {
-      const url = this.api_url + '?expand=item+emission&limit=12';
+      //const url = this.api_url + '?expand=item+emission&limit=12';
+      const url = '/api/v2/onair/schedule/?limit=8';
       if (DEBUG) console.debug('ConsoleApp - load_from_api', url);
       $.ajax(url, {
         type: 'GET',
@@ -30,11 +31,11 @@ const console_app = new Vue({
         success: (response) => {
           if (DEBUG) console.debug('ConsoleApp - API response:', response);
 
-          this.schedule = response.objects;
-          this.emissions = this.annotate_emissions(response.objects)
+          this.schedule = response.results;
+          this.emissions = this.annotate_emissions(response.results)
           let reload_in = 60000;
-          if (response.meta.next_starts_in && (Math.floor(response.meta.next_starts_in) * 1000) < reload_in) {
-            reload_in = Math.floor(response.meta.next_starts_in) * 1000;
+          if (response.next_starts_in && (Math.floor(response.next_starts_in) * 1000) < reload_in) {
+            reload_in = Math.floor(response.next_starts_in) * 1000;
           }
           this.set_reload(reload_in);
         },

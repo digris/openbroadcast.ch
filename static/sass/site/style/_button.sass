@@ -1,0 +1,61 @@
+@charset "utf-8"
+
+
+
+$c-button-default-bg: $black
+$c-button-default-color: $white
+$c-button-default-hover-bg: green
+$c-button-default-hover-color: pink
+
+@mixin button
+
+  background-color: $c-button-default-bg
+  //border: 1px solid $c-button-default-color
+  color: $c-button-default-color
+  cursor: pointer
+  display: inline-block
+  padding: 4px
+  text-decoration: none
+  vertical-align: middle
+
+  //overflow strip
+  max-width: 100%
+  overflow: hidden
+  text-overflow: ellipsis
+  white-space: nowrap
+  width: auto
+
+  transition: all 150ms
+  transition-property: color, background-color
+
+  &:hover
+    background-color: $c-button-default-hover-bg
+    color: $c-button-default-bg
+
+  @media (hover: none)
+    &:hover
+      background-color: $c-button-default-bg
+      color: $c-button-default-color
+
+
+
+
+
+.input[type=submit],
+input[type="button"],
+.button
+  @include button
+
+
+// TODO: quick'n'dirty additional styles. please refactor when time..
+.button
+  $self: &
+  text-transform: uppercase
+
+  //&--cta
+  //  background-color: $c-button-cta-bg
+  //  border: 0
+  //  color: $c-button-cta-color
+  //
+  //  &:hover
+  //    background-color: darken($c-button-cta-bg, 10%)
