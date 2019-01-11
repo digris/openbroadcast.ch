@@ -61,6 +61,7 @@ class ScheduledItemSerializer(serializers.ModelSerializer):
         model = ScheduledItem
         fields = [
             'id',
+            'uuid',
             'time_end',
             'time_start',
             'verbose_name',

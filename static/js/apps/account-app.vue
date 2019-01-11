@@ -4,7 +4,7 @@
   import ClickOutside from 'vue-click-outside';
   import Modal from '../components/modal.vue'
 
-  const DEBUG = true;
+  const DEBUG = false;
 
   export default {
     name: 'AccountApp',
@@ -24,25 +24,32 @@
     },
     mounted() {
 
-      $(document).on('click', '[data-login-required]', (e) => {
-        const user = this.get_user();
-        if (!user) {
+      this.$store.dispatch('account/update_user', document.user);
+
+      // // TODO: find a better way to update login/registration/logout
+      // window.addEventListener('content:changed', (e) => {
+      //   this.$store.dispatch('account/update_user');
+      // }, false);
+
+      $(document).on('click', '[data-account-login-required]', (e) => {
+        if (!this.user) {
           e.preventDefault();
           e.stopPropagation();
           e.stopImmediatePropagation();
 
           const action = e.currentTarget.dataset.loginAction || 'login';
-          this.set_pickup();
-          //this.show('login');
           this.show(action);
         }
       });
 
-      $(document).on('click', '[data-login-logout]', (e) => {
+      $(document).on('click', '[data-account-logout]', (e) => {
 
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
+
+        const url = e.currentTarget.getAttribute('href');
+        this.logout(url);
 
       });
 
@@ -55,7 +62,9 @@
       ClickOutside
     },
     computed: {
-      //user: this.get_user()
+      user() {
+        return this.$store.getters['account/user'];
+      },
       /*
        * https://stackoverflow.com/a/47203778/469111
        */
@@ -66,26 +75,6 @@
       },
     },
     methods: {
-
-      get_user: function () {
-        return document.user;
-      },
-
-      set_pickup: function (location) {
-
-        let auth_pickup = {
-          location: location || document.location.pathname
-        };
-
-        console.debug(auth_pickup)
-
-        // cookie.set('auth-pickup', auth_pickup, {
-        //     expires: 1,
-        //     path: '/'
-        // });
-
-        console.log('AccountApp - set_pickup', auth_pickup);
-      },
 
       show: function (scope = 'login') {
         this.show_modal = true;
@@ -120,7 +109,6 @@
 
         const _form = $(form);
         const url = _form.attr('action');
-
         const form_data = new FormData();
 
         for (const x of _form.serializeArray()) {
@@ -135,34 +123,35 @@
 
         APIClient.post(url, form_data, config)
           .then((response) => {
-            console.debug(response.data)
+            console.info('response', response.data);
+
+            if (response.data.user !== undefined) {
+              this.$store.dispatch('account/update_user', response.data.user);
+            }
+
             if (response.data.location !== undefined) {
               this.hide();
-              //Turbolinks.clearCache();
-              //Turbolinks.visit('/?toolbar_off');
-
               let location = response.data.location;
-
               if (response.data.user && response.data.user.is_staff) {
                 location += '?toolbar_off'
               }
-
               Turbolinks.visit(location);
-
-              // TODO: implement propperly
-              const _e = new CustomEvent('account:state-change');
-              window.dispatchEvent(_e);
-
-              // if(response.data.location.includes('/pick-up/')) {
-              //     document.location.href = response.data.location;
-              // } else {
-              //     Turbolinks.visit(document.location.pathname);
-              // }
 
             } else {
               this.body = response.data;
             }
             //this.content_bindings();
+          }, (error) => {
+            console.warn(error)
+          })
+      },
+      logout(url) {
+        if (DEBUG) console.debug('logout', url);
+        APIClient.post(url)
+          .then((response) => {
+            this.$store.dispatch('account/update_user', response.data.user);
+            const location = (response.data.location) ? response.data.location : document.location.href;
+            Turbolinks.visit(location);
           }, (error) => {
             console.warn(error)
           })

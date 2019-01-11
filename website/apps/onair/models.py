@@ -11,8 +11,9 @@ from django.utils.translation import ugettext as _
 from django.utils import timezone
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.core.urlresolvers import reverse
 from django.contrib.postgres.fields import JSONField
+
+from base.models.mixins import UUIDModelMixin
 
 API_BASE_URL = getattr(settings, 'API_BASE_URL', None)
 API_BASE_AUTH = getattr(settings, 'API_BASE_AUTH', None)
@@ -32,15 +33,22 @@ class ScheduledItemManager(models.Manager):
         return self.get_query_set().filter(time_start__lte=datetime.datetime.now())
 
 
-class ScheduledItem(models.Model):
+class ScheduledItem(UUIDModelMixin, models.Model):
 
-    name = models.CharField(max_length=255)
+    name = models.CharField(
+        max_length=255
+    )
 
     time_start = models.DateTimeField()
     time_end = models.DateTimeField()
 
-    emission_url = models.CharField(max_length=255, blank=True, null=True)
-    item_url = models.CharField(max_length=255, blank=True, null=True)
+    emission_url = models.CharField(
+        max_length=255,
+        blank=True, null=True
+    )
+    item_url = models.CharField(
+        max_length=255, blank=True, null=True
+    )
 
     emission_data = JSONField(
         null=True, blank=True

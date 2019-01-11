@@ -2,13 +2,13 @@ from __future__ import unicode_literals
 
 import json
 import logging
-from braces.views import AnonymousRequiredMixin
+from braces.views import AnonymousRequiredMixin, LoginRequiredMixin
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import View, DetailView, TemplateView, FormView
+from django.views.generic import View, DetailView, TemplateView, FormView, RedirectView
 
 from password_reset.views import Recover, RecoverDone, Reset, ResetDone
 from registration.views import RegistrationView
@@ -22,7 +22,6 @@ log = logging.getLogger(__name__)
 #######################################################################
 # login/logout views
 # using: https://github.com/stefanfoulis/django-class-based-auth-views
-# logout uses django's from django.contrib.auth.logout
 #######################################################################
 class UserLoginView(AnonymousRequiredMixin, FormView):
     form_class = AuthenticationForm
@@ -40,7 +39,7 @@ class UserLoginView(AnonymousRequiredMixin, FormView):
             _response = {
                 'location':self.get_success_url(),
                 'user': {
-                    'username': user.username,
+                    # 'username': user.username,
                     'id': user.pk,
                     'is_staff': user.is_staff
                 }
@@ -49,6 +48,26 @@ class UserLoginView(AnonymousRequiredMixin, FormView):
             return JsonResponse(_response)
 
         return response
+
+
+class UserLogoutView(LoginRequiredMixin, RedirectView):
+
+    def get(self, request, *args, **kwargs):
+        next_page = kwargs.get('next_page', '/')
+
+        logout(request)
+
+        if self.request.is_ajax():
+            _response = {
+                'location': next_page,
+                'user': None
+            }
+            return JsonResponse(_response)
+
+        return redirect(next_page)
+
+    def post(self, request, *args, **kwargs):
+        return self.get(request, *args, **kwargs)
 
 
 class UserRegisterView(RegistrationView, AnonymousRequiredMixin):

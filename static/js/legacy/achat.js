@@ -126,10 +126,7 @@ var AchatApp = function () {
         //     }
         // });
         //
-        window.addEventListener('account:state-change', (e) => {
-            self.messages_container.html('')
-            self.load();
-        }, false);
+
 
 
 

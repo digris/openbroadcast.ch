@@ -29,5 +29,8 @@ def update_schedule():
     """
     reset locally cached schedule data
     """
-    result = schedule.fetch_from_api(range_start=DEFAULT_RANGE, range_end=DEFAULT_RANGE)
+    result = schedule.fetch_from_api(
+        range_start=DEFAULT_RANGE,
+        range_end=DEFAULT_RANGE
+    )
     click.echo('Processed {0} items'.format(len(result)))

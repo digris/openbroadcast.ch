@@ -12,7 +12,7 @@ class LiveColor {
     this.fg_color = '#000000';
 
     // this.bg_color = '#000000';
-    // this.fg_color = '#ff00ff';
+    // this.fg_color = '#ffffff';
 
 
     $("head").append("<style id='livecolor_stylesheet_bg'></style>");

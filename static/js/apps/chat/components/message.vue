@@ -1,7 +1,7 @@
 <script>
   import Vue from 'vue';
   import VueTimeago from 'vue-timeago';
-  // import {template_filters} from '../../../utils/template-filters';
+  import {template_filters} from '../../../utils/template-filters';
 
   let loc = require('date-fns/locale/de');
 
@@ -12,7 +12,6 @@
     }
   });
 
-
   export default {
     props: {
       message: Object
@@ -22,7 +21,15 @@
         timestamp: new Date(this.message.created)
       }
     },
-    // filters: template_filters,
+    computed: {
+      user() {
+        return this.$store.getters['account/user'];
+      },
+      is_own() {
+        return (this.user && this.message && (this.user.uuid == this.message.sender.id))
+      }
+    },
+    filters: template_filters
   }
 </script>
 
@@ -42,20 +49,18 @@
             }
 
             .content {
-                PADDING: 0 10px 0 0;
+                padding: 0 10px 0 0;
                 max-height: 300px;
                 overflow-x: hidden;
                 overflow-y: auto;
 
+                // TODO: create scrollbar mixin
                 &::-webkit-scrollbar {
                     width: 4px;
                 }
-
                 &::-webkit-scrollbar-track {
                     background-color: transparent;
-
                 }
-
                 &::-webkit-scrollbar-thumb {
                     background-color: $black;
                 }
@@ -86,6 +91,11 @@
             font-size: 80%;
             opacity: .7;
             text-align: center;
+
+            .user {
+                border-bottom: 1px dotted #000;
+            }
+
         }
     }
 </style>
@@ -93,27 +103,18 @@
 <template>
     <div :key="message.uuid"
          class="message"
-         v-bind:class="{ 'message--own': message.me }">
-        <div class="message__bubble" :data-livebg="message.me">
-            <div class="content" v-html="message.html"></div>
+         v-bind:class="{ 'message--own': is_own }">
+        <div class="message__bubble" :data-livebg="is_own">
+            <div class="content" v-html="$options.filters.linebreaksbr(message.html)"></div>
         </div>
         <div class="message__separator">
-            <div class="triangle" :data-livefg-inverse="message.me"></div>
-
-            <!--
-            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                 x="0px" y="0px"
-                 viewBox="0 0 10 5"
-                 enable-background="new 0 0 10 5"
-                 xml:space="preserve"
-                 data-livefill
-                 preserveAspectRatio="none">
-                <polygon points="0,0 5,5 10,0"/>
-            </svg>
-            -->
+            <div class="triangle" :data-livefg-inverse="is_own"></div>
         </div>
         <div class="message__appendix">
-            {{ message.sender.display_name }}
+            <span class="user">
+                <span v-if="is_own">me</span>
+                <span v-else>{{ message.sender.display_name }}</span>
+            </span>
             |
             <timeago :datetime="timestamp" :auto-update="60"></timeago>
         </div>

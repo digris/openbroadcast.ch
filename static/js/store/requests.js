@@ -20,6 +20,7 @@ const handleError = error => {
   console.log('handleError', error)
   const errorStatus = error ? error.status : error;
   const errorMessage = errorStatus;
-  console.error('ERROR:', errorMessage)
+  console.error('Request Error:', errorMessage)
   // store.dispatch('populateErrors', errorMessage);
+  return error;
 };

@@ -137,6 +137,7 @@ INSTALLED_APPS = [
     'bplayer',
     'chat',
     'onair',
+    'rating',
     'stationtime',
     'heartbeat',
     'remotelink',

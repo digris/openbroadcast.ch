@@ -54,7 +54,7 @@ var AloginApp = function () {
 
         // auth-required elements
         // present login-dialog on click
-        $(document).on('click', '[data-login-required]', function(e){
+        $(document).on('click', '[data-account-login-required]', function(e){
 
             if(!self.user || self.user == undefined) {
                 e.preventDefault();
@@ -69,9 +69,9 @@ var AloginApp = function () {
 
 
     this.set_authentication_state = function (user) {
-        
+
         user = typeof data != undefined ? user : false;
-        
+
         if(self.debug) {
             console.log('set_authentication_state', user);
         }

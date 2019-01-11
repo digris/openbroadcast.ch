@@ -8,11 +8,13 @@ from channels.auth import AuthMiddlewareStack
 from channels.staticfiles import StaticFilesWrapper, StaticFilesHandler
 
 from chat.consumers import ChatJSONConsumer
+from rating.consumers import RatingJSONConsumer
 
 application = StaticFilesWrapper(ProtocolTypeRouter({
     'websocket': AuthMiddlewareStack(
         URLRouter([
             url('^ws/chat/$', ChatJSONConsumer),
+            url('^ws/rating/$', RatingJSONConsumer),
         ])
     ),
 }))

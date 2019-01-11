@@ -2,7 +2,7 @@ import $ from "jquery";
 import soundmanager from 'soundmanager2/script/soundmanager2-html5';
 import APIClient from '../../api/client';
 
-const DEBUG = true;
+const DEBUG = false;
 
 class PlayerApp {
 
@@ -20,39 +20,6 @@ class PlayerApp {
 
   bindings() {
     if (DEBUG) console.log('PlayerApp: - bindings');
-
-    // $(document).on('click', 'a[data-bplayer-controls]', (e) => {
-    //   e.preventDefault();
-    //
-    //   const el = $(e.currentTarget);
-    //
-    //   const action = el.data('bplayer-controls');
-    //   const index = el.parents('.item').index() - 1;
-    //
-    //
-    //   if (DEBUG) console.log('PlayerApp: - bindings', action, index);
-    //
-    //   if (action === 'play') {
-    //     this.controls({
-    //       action: 'play',
-    //       index: index
-    //     });
-    //     // self.onair.handle_pagination(index);
-    //   }
-    //
-    //   if (action === 'pause') {
-    //     this.controls({
-    //       action: 'pause'
-    //     });
-    //   }
-    //
-    //   if (action === 'resume') {
-    //     this.controls({
-    //       action: 'play'
-    //     });
-    //   }
-    //
-    // });
 
     window.addEventListener('player:controls', (e) => {
       if (DEBUG) console.debug('player:controls', e.detail);

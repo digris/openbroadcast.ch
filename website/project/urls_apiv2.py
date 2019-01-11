@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^$', api_root),
     url('^chat/', include('chat.api.urls')),
     url('^onair/', include('onair.api.urls')),
+    url('^rating/', include('rating.api.urls')),
 ]

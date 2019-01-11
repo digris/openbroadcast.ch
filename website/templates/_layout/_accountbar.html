@@ -27,24 +27,19 @@
             {% endif %}
 
             <li data-livebg-inverse class="hoverable">
-                <a data-no-turbolink data-livefg href="#" data-alogin-action="profile">{% trans 'profile & settings'|capfirst %}</a>
+                <a data-no-turbolink data-livefg href="#" data-account-profile>{% trans 'profile & settings'|capfirst %}</a>
             </li>
             <li data-livebg-inverse class="hoverable">
-                <a data-livefg href="{% url 'account:logout' %}" data-alogin-action="logout">{% trans 'logout'|capfirst %}</a>
+                <a data-livefg href="{% url 'account:logout' %}" data-account-logout>{% trans 'logout'|capfirst %}</a>
             </li>
         </ul>
     </li>
 
-    <li class="show-for-small-only">
-        <a data-livefg href="{% url 'account:logout' %}" data-alogin-action="logout">{% trans 'logout'|capfirst %}</a>
-    </li>
-
-
-
 {% else %}
-
     <li class="hoverable">
-        <a data-login-required data-livefg href="#" data-login-action="login">{% trans 'login'|capfirst %} / {% trans 'register'|capfirst %}</a>
+        <a data-account-login-required data-livefg href="#" data-login-action="login">{% trans 'login'|capfirst %}</a>
     </li>
-
+    <li class="hoverable">
+        <a data-account-login-required data-livefg href="#" data-login-action="register">{% trans 'register'|capfirst %}</a>
+    </li>
 {% endif %}

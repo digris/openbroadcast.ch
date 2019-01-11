@@ -3,7 +3,7 @@ import { WebSocketBridge } from 'django-channels';
 import APIClient from "../api/client";
 import store from '../store';
 
-const DEBUG = true;
+const DEBUG = false;
 
 const CHAT_ENDPOINT = '/api/v2/chat/message/';
 
@@ -33,8 +33,8 @@ const actions = {
 
       // back channel (sending posted message back to browser)
       // is handled via websockets
-      // context.commit('add_chat_message', data);
 
+      // context.commit('add_chat_message', data);
       // wsb.send(payload);
 
     },
@@ -50,7 +50,6 @@ const actions = {
       // });
 
       if(data.next !== null) {
-        console.info('next', data.next);
         context.dispatch('get_chat_messages', data.next);
       }
 
@@ -75,11 +74,6 @@ wsb.connect(ws_url);
 wsb.listen((data, stream) => {
     console.log('ws chat listen:', data, stream);
     store.commit('add_chat_message', data);
-    // if(data.num_unseen !== undefined) {
-    //     store.dispatch('set_num_unseen_notifications', data.num_unseen)
-    // } else {
-    //     store.dispatch('add_notification', data)
-    // }
 });
 
 

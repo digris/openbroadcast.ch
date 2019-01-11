@@ -53,7 +53,7 @@
 
     {% analytics %}
 
-    {% pushy_client_scripts %}
+    {# pushy_client_scripts #}
 
     {% render_block "js_ext" %}
     {% render_block "js" postprocessor "compressor.contrib.sekizai.compress" %}
@@ -129,15 +129,23 @@
 
     {% block splash %}<!-- passed by: cms_base.html -->{% endblock %}
 
-    {% include "onair/container.html" %}
+    {#include "onair/container.html" #}
     {# include "achat/container.html" #}
+
+
+    <div data-turbolinks-permanent id="onair_app_container" style="overflow: hidden;">
+        <div id="onair_app"></div>
+    </div>
+
     <div data-turbolinks-permanent id="chat_app_container">
-        <div id="chat_app" data-api-url="{% url 'api:chat-message-list' %}"></div>
+        <div id="chat_app"></div>
     </div>
 
     {% block main_content %}{% endblock %}
 
-    {% bplayer_inline %}
+    <div data-turbolinks-permanent id="player_app_container">
+        <div id="player_app"></div>
+    </div>
 
 </div>
 {% endblock %}

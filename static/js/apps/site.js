@@ -1,6 +1,6 @@
 import $ from "jquery";
 
-const DEBUG = true;
+const DEBUG = false;
 
 
 class SiteUI {

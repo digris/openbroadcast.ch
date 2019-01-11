@@ -5,7 +5,7 @@
   import APIClient from '../../api/client';
   import store from '../../store';
 
-  const DEBUG = true;
+  const DEBUG = false;
 
   export default {
     name: 'ChatApp',
@@ -13,12 +13,9 @@
       Editable,
       Message
     },
-    props: [
-      'apiUrl',
-    ],
+    props: [],
     data() {
       return {
-        body: '<h1></h1>',
         visible: false,
         input_focus: false,
         message: ''
@@ -26,42 +23,33 @@
     },
     mounted() {
 
-      // TODO: maybe there is a nicer alternative to show/hide
-      this.visible = document.getElementsByTagName('body')[0].classList.contains('cms-home');
-      document.addEventListener("content:changed", (e) => {
-        this.visible = document.getElementsByTagName('body')[0].classList.contains('cms-home');
-        console.warn('v', this.visible)
-      }, false);
-
-      console.debug(this.$store);
-
+      // // TODO: maybe there is a nicer alternative to show/hide
+      // this.visible = document.getElementsByTagName('body')[0].classList.contains('cms-home');
+      // window.addEventListener("content:changed", (e) => {
+      //   this.visible = document.getElementsByTagName('body')[0].classList.contains('cms-home');
+      // }, false);
 
       this.$store.dispatch('get_chat_messages');
 
+
     },
     computed: {
-      /*
-       * https://stackoverflow.com/a/47203778/469111
-       */
-      compiled_body() {
-        return {
-          template: `${this.body}`
-        }
+      user() {
+        return this.$store.getters['account/user'];
       },
       messages() {
         //return []
         return this.$store.getters.messages;
       },
-
     },
 
     methods: {
 
-      get_user: function () {
-        return document.user;
-      },
-
       submit_message() {
+
+        if (!this.message || this.message.length < 1) {
+          return;
+        }
 
         const payload = {
           text: this.message
@@ -77,7 +65,6 @@
       },
 
 
-
     }
   }
 </script>
@@ -91,6 +78,7 @@
 </style>
 <style lang="scss" scoped>
     @import '../../../sass/site/settings';
+    @import '~foundation-sites/scss/foundation';
 
     .chat-app {
         background: $white;
@@ -138,6 +126,7 @@
     }
 
     .message-list-container {
+        @include xy-grid-container;
         max-width: 80rem;
         margin: 0 auto;
     }
@@ -147,16 +136,23 @@
         flex-wrap: wrap;
 
         .message {
-            width: 20%;
+            @include xy-cell(12);
+            @include breakpoint(medium) {
+                @include xy-cell(6);
+            }
+            @include breakpoint(large) {
+                @include xy-cell(3);
+            }
         }
     }
+
 
 </style>
 
 <template>
     <div class="chat-app" v-if="visible">
         <div class="chat-input-container">
-            <form data-login-required
+            <form data-account-login-required
                   id="chat_input_form"
                   class="chat-input form-base"
                   v-bind:class="{ 'chat-input--has-focus': input_focus }"
@@ -174,8 +170,11 @@
                 </div>
             </form>
         </div>
+        <!--
+        <div>{{ user }}</div>
+        -->
         <div class="message-list-container">
-            <div class="message-list">
+            <div class="message-list" id="chat_message_list">
                 <message v-for="message in messages"
                          :key="message.uuid"
                          v-bind:message="message"></message>

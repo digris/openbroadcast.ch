@@ -11,7 +11,7 @@ const nj = nunjucks_register_filters(env);
 import { removeA } from './utils'
 
 
-const DEBUG = true;
+const DEBUG = false;
 
 var BPlayerApp = function () {
 

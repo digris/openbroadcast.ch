@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
+from django.utils import timezone
 import json
 import requests
 import logging
@@ -22,7 +23,8 @@ if not API_BASE_AUTH:
 
 def fetch_from_api(range_start=0, range_end=0, channel=None):
 
-    now = datetime.datetime.now()
+    #now = datetime.datetime.now()
+    now = timezone.now()
 
     # get schedule from API
     url = API_BASE_URL + 'v1/abcast/channel/%s/schedule/?range_start=%s&range_end=%s' % (CHANNEL_ID, range_start, range_end)
@@ -36,6 +38,8 @@ def fetch_from_api(range_start=0, range_end=0, channel=None):
 
     remote_schedule = r.json()
 
+    print('---1')
+
     # get local schedule
     qs = ScheduledItem.objects.filter(
         time_end__gte=now - datetime.timedelta(seconds=range_start),
@@ -46,11 +50,25 @@ def fetch_from_api(range_start=0, range_end=0, channel=None):
         'end': [item['time_end'] for item in remote_schedule['objects']],
     }
 
+    print('---2')
+
     # delete vanished items
     if len(times['start']) + len(times['start']) > 0:
-        qs.exclude(time_start__in=times['start'], time_end__in=times['end']).delete()
+        print(times['start'])
+        print(times['end'])
+
+        # _start = [datetime.datetime.strptime(timezone.localtime(t)) for t in times['start']]
+        # _end = [datetime.datetime.strptime(timezone.localtime(t)) for t in times['end']]
+
+        qs.exclude(
+            time_start__in=times['start'],
+            time_end__in=times['end']
+        ).delete()
     else:
         qs.delete()
+
+    print('---3')
+
 
 
     # map

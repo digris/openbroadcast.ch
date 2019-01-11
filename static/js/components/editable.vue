@@ -1,5 +1,5 @@
 <script>
-  const DEBUG = true;
+  const DEBUG = false;
   export default {
     name: 'Editable',
     props: [
@@ -7,11 +7,6 @@
     ],
     mounted: function () {
       this.$el.innerText = this.content;
-    },
-    watch: {
-      // content: function (new_value, old_value) {
-      //   this.$el.innerText = new_value;
-      // }
     },
     methods: {
       update: function (event) {
@@ -28,7 +23,6 @@
       },
       commit: function () {
         this.update();
-        console.debug('commit')
         this.$emit('commit', this.$el.innerText);
       },
     }
@@ -36,15 +30,12 @@
 </script>
 <style lang="scss" scoped>
     @import '../../sass/site/settings';
-
     [contenteditable] {
         text-rendering: optimizeSpeed;
         margin: 0;
         outline: none;
     }
-
 </style>
-
 <template>
     <div contenteditable="true"
          @input="update"

@@ -54,7 +54,7 @@ var AloginApp = function () {
 
         // auth-required elements
         // present login-dialog on click
-        $(document).on('click', '[data-login-required]', function(e){
+        $(document).on('click', '[data-account-login-required]', function(e){
 
             if(!self.user || self.user == undefined) {
                 e.preventDefault();
