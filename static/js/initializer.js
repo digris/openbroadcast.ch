@@ -1,38 +1,20 @@
+import Vue from 'vue';
+import store from './store';
 import hotEmitter from 'webpack/hot/emitter'
 
-import store from './store';
-
-import SiteUI from './apps/site';
 import LiveColor from './apps/live-color';
-// import StationTime from './apps/station-time';
-// import PlayerApp from './apps/player/player-app';
-
-
-import Vue from 'vue';
-
 import AccountApp from './apps/account-app.vue';
 import OnairApp from './apps/onair/onair-app.vue';
 import ChatApp from './apps/chat/chat-app.vue';
 import PlayerApp from './apps/player/player-app.vue';
 
 
-// legacy apps & modules
-// import BPlayerApp from './legacy/bplayer';
-// import OnAirApp from './legacy/onair';
-// import AchatApp from './legacy/achat';
-// import AloginApp from './legacy/alogin';
-
-// import VueTranslate from 'vue-translate-plugin';
-// Vue.use(VueTranslate);
-
 const DEBUG = false;
-
 
 
 hotEmitter.on("webpackHotUpdate", (currentHash) => {
     if (DEBUG) console.debug('webpackHotUpdate', currentHash);
 });
-
 
 
 class AppInitializer {
@@ -51,22 +33,13 @@ class AppInitializer {
 
     setup_apps() {
 
-        // components (one time setup)
-        if(this.apps['SiteUI'] === undefined) {
-            this.apps['SiteUI'] = new SiteUI();
-        }
+
         if(this.apps['LiveColor'] === undefined) {
             this.apps['LiveColor'] = new LiveColor();
         }
-        // if(this.apps['StationTime'] === undefined) {
-        //     this.apps['StationTime'] = new StationTime();
-        // }
-        // if(this.apps['PlayerApp'] === undefined) {
-        //     this.apps['PlayerApp'] = new PlayerApp();
-        // }
 
         /**************************************************************
-         * Vue Apps
+         * Vue Components
          **************************************************************/
 
         /**************************************************************
@@ -127,7 +100,6 @@ class AppInitializer {
                 propsData: chat_app_container.dataset
             });
         }
-
 
     };
 

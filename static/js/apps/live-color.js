@@ -239,10 +239,10 @@ const get_fg_stylesheet = (fg_color, bg_color) => {
     html.turbolinks-progress-bar::before {
       background-color: ${fg_color} !important;
     }
-    .menu .hover {
+    .menu :hover {
       background-color: ${fg_color} !important;
     }
-    .menu .hover a,
+    .menu :hover a,
     .menu > li > ul a{
       color: ${bg_color} !important;
     }

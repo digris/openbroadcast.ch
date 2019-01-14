@@ -73,7 +73,7 @@
             padding-right: 20px
             transition: color 0.15s
 
-        li.hover,
+        li:hover,
         li.ancestor,
         li.selected
           transition: background-color 0.01s
@@ -102,12 +102,12 @@
               text-align: left
               opacity: 0.95
               transition: opacity 0.25s
-              &.hover,
+              &:hover,
               &.selected
                 transition: opacity 0.05s
                 opacity: 1.0
 
-        li.hover
+        li:hover
           > ul
             transition: max-height 0.25s, background 0.01s
             max-height: 1000px

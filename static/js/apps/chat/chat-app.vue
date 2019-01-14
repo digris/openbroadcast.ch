@@ -29,6 +29,10 @@
 
       this.$store.dispatch('get_chat_messages');
 
+      if (localStorage.chat_enabled) {
+        this.visible = localStorage.chat_enabled;
+      }
+
 
     },
     computed: {
@@ -61,6 +65,11 @@
           console.warn(error);
         });
       },
+
+      enable() {
+        this.visible = true;
+        localStorage.chat_enabled = true;
+      }
 
 
     }
@@ -106,6 +115,7 @@
         text-align: center;
         cursor: pointer;
         padding: 10px 0 60px;
+
         .chat-icon {
             margin: 0 auto;
             width: 34px;
@@ -176,7 +186,7 @@
 
 <template>
     <div class="chat-app" v-bind:class="{ 'chat-app--enabled': visible }">
-        <div v-if="(! visible)" @click="visible = true" data-account-login-required class="chat-info">
+        <div v-if="(! visible)" @click="enable" data-account-login-required class="chat-info">
 
             <div class="chat-icon">
 

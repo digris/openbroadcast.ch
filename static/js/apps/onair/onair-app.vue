@@ -110,7 +110,7 @@
         }
 
         // TODO: implement other conditions
-        if (!this.$store.getters['onair/onair']) {
+        if (! this.onair) {
           return true;
         }
       },
@@ -417,7 +417,7 @@
 
             </div>
 
-            <div class="schedule-container__metadata">
+            <div v-if="onair" class="schedule-container__metadata">
                 <schedule-item-metadata
                         v-if="presented_item"
                         @select_scope="selected_metadata_scope = $event"
@@ -440,10 +440,10 @@
         <div class="rating-container">
             <thumb-rating v-if="presented_item" v-bind:media="presented_item.item"></thumb-rating>
         </div>
-        <div v-if="sm2" class="debug">
-            {{ sm2.playState }}<br>
-            {{ sm2.readyState }}<br>
-            {{ sm2.position }}<br>
+        <!--
+        <div class="debug">
+            onair: {{ onair }}<br>
         </div>
+        -->
     </div>
 </template>
