@@ -120,6 +120,9 @@ INSTALLED_APPS = [
     'cmsplugin_youtube',
     'djangocms_text_ckeditor',
 
+    # cms custom plugins
+    'media_embed',
+
     # api
     'rest_framework',
 
