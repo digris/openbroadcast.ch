@@ -165,6 +165,11 @@
     @import '../../sass/site/element/form';
     @import '~foundation-sites/scss/foundation';
 
+    .account-app {
+        height: 100%;
+    }
+
+
     .auth-card {
 
         padding: 10px 20px;
@@ -172,9 +177,15 @@
         display: flex;
         flex-direction: column;
 
+        height: 100%;
+
         .title {
             margin-bottom: 24px;
             font-weight: normal;
+        }
+
+        .text {
+            margin-bottom: 24px;
         }
 
         .form-separator {
@@ -218,17 +229,18 @@
                     align-items: center;
                     align-content: center;
                     flex-direction: column;
-                    margin-top: 36px;
+                    margin: 24px 0;
 
                     .button {
-                        width: 33%;
+                        width: 100%;
                         background: $primary-color;
                         color: $white;
-                        text-transform: uppercase;
-                        font-weight: 400;
+                        padding: 12px 24px;
+                        // text-transform: uppercase;
+                        // font-weight: 400;
 
                         &:hover {
-                            box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.1);
+                            // box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.1);
                         }
                     }
                 }
@@ -247,6 +259,16 @@
 
         display: flex;
 
+        @include breakpoint(small only) {
+            flex-direction: column;
+            .auth-social {
+                padding: 0 !important;
+                margin-bottom: 10px;
+            }
+        }
+
+
+
         .auth-social {
             flex-grow: 1;
 
@@ -261,7 +283,7 @@
             .auth-social-button {
                 display: block;
                 color: $black;
-                padding: 4px 6px;
+                padding: 6px 6px;
                 border: 1px solid black;
                 width: 100%;
                 transition: background 0.2s;
@@ -290,16 +312,6 @@
                     padding-top: 2px;
                 }
             }
-
-            //@include breakpoint(large up) {
-            //  .auth-social-button {
-            //    margin-bottom: 4%;
-            //  }
-            //  &:nth-child(even) .auth-social-button {
-            //    width: 96%;
-            //    margin-left: 4%;
-            //  }
-            //}
 
             // provider styles
             .auth-social-button-google {

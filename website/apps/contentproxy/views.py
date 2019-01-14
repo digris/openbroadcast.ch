@@ -39,6 +39,8 @@ log = logging.getLogger(__name__)
 
 class MediaResourceView(LoginRequiredMixin, View):
 
+    raise_exception = True
+
     def get(self, *args, **kwargs):
 
         uuid = kwargs.get('uuid', None)

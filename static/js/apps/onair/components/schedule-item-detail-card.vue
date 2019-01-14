@@ -108,6 +108,7 @@
 </script>
 <style lang="scss" scoped>
     @import '../../../../sass/site/settings';
+    @import '~foundation-sites/scss/foundation';
 
     .card {
         height: 100%;
@@ -119,6 +120,7 @@
             display: flex;
             margin-bottom: 10px;
             min-height: 96px;
+
 
             &__visual {
                 width: 30%;
@@ -143,13 +145,14 @@
             margin-top: 20px;
             .tag {
                 color: #000;
-                font-size: 84%;
-                background: #fff;
+                font-size: 90%;
+                background: #999999;
                 display: inline-block;
                 padding: 0 4px;
                 margin: 0 4px 4px 0;
                 border-radius: 2px;
-                text-transform: uppercase;
+                // text-transform: uppercase;
+                text-transform: capitalize;
             }
         }
     }

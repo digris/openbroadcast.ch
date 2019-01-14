@@ -41,10 +41,13 @@
         player: null,
         // mode: 'live',
         visible: true,
-        is_compact: false,
+        is_compact: true,
       }
     },
     computed: {
+      user() {
+        return this.$store.getters['account/user'];
+      },
       schedule() {
         return this.$store.getters['onair/schedule'];
       },
@@ -68,6 +71,15 @@
         if (this.mode === 'live') {
           return this.schedule[0];
         }
+
+        if (this.mode === 'on-demand') {
+          if (!this.current_uuid) {
+            return this.schedule[0];
+          }
+          const current_index = this.schedule.map(({uuid}) => uuid).indexOf(this.current_uuid);
+          return this.schedule[current_index];
+        }
+
       },
 
       stream() {
@@ -90,15 +102,26 @@
       set_player_state: function (state) {
         this.$store.dispatch('player/set_player_state', state);
       },
+      set_position: function (position) {
+        this.$store.dispatch('player/set_position', position);
+      },
       set_current_uuid: function (uuid) {
         this.$store.dispatch('player/set_current_uuid', uuid);
       },
 
+      // not very elegant. emit uuid (consumed by onair app)
+      select_item: function (uuid) {
+        const _e = new CustomEvent('onair:force_item', {detail: uuid});
+        window.dispatchEvent(_e);
+      },
 
       controls: function (action) {
         if (DEBUG) console.debug('controls - action', action);
 
         if (action.do === 'play') {
+
+          // TODO: not so nice... resetting position.
+          this.set_position(0);
 
           let opts = {
             url: null,
@@ -108,14 +131,18 @@
 
               if (this.player.position > 0 && this.player.playState === 1) {
                 this.set_player_state('playing');
+
+                const position = this.player.position / (this.player.duration || this.player.durationEstimate);
+                this.set_position(position.toPrecision(4));
+
+
               } else if (this.player.playState === 1 && this.player.readyState === 1) {
                 this.set_player_state('buffering');
               }
 
             },
             onfinish: () => {
-              console.debug('finished media -> play next');
-
+              // console.debug('finished media -> play next');
 
 
               if (this.current_uuid) {
@@ -150,28 +177,37 @@
             opts.url = this.stream.url;
             opts.type = this.stream.type;
             this.set_current_uuid(null);
-
-            // not very elegant. emit uuid (consumed by onair app)
-            const _e = new CustomEvent('onair:force_item', {detail: null});
-            window.dispatchEvent(_e);
+            this.select_item(null)
 
           } else {
+
+            // TODO: check for better way to handle unauthenticated user
+            if (!this.user) {
+              if (DEBUG) console.debug('unauthenticated user');
+              return;
+            }
 
             this.set_mode('on-demand');
             opts.url = 'http://local.openbroadcast.ch:8000' + action.item.item.stream.uri;
             this.set_current_uuid(action.item.uuid);
-
-            // not very elegant. emit uuid (consumed by onair app)
-            const _e = new CustomEvent('onair:force_item', {detail: action.item.uuid});
-            window.dispatchEvent(_e);
+            this.select_item(action.item.uuid);
 
           }
 
           this.player.stop();
           this.player.play(opts);
 
-
         }
+
+        // TODO: implement in a more DRY way... and handle player callbacks
+        if (action.do === 'play_fallback') {
+          this.player.stop();
+          this.player.play({
+            url: this.stream.url,
+            type: this.stream.type
+          });
+        }
+
         if (action.do === 'stop') {
           this.player.unload();
           this.player.stop();
@@ -179,6 +215,13 @@
 
           this.set_player_state('stopped');
         }
+        if (action.do === 'seek') {
+
+          const position = (this.player.duration || this.player.durationEstimate) * (action.position / 100.0);
+
+          this.player.setPosition(position);
+        }
+
         // TODO: pause not implemented/needed
         if (action.do === 'pause') {
           this.player.pause();
@@ -188,6 +231,7 @@
 
       },
 
+
       /**********************************************************
        * initialize player backend
        **********************************************************/
@@ -195,7 +239,7 @@
         if (DEBUG) console.debug('PlayerApp: - initialize_player');
         soundManager.setup({
           forceUseGlobalHTML5Audio: true,
-          html5PollingInterval: 100,
+          html5PollingInterval: 50,
           debugMode: DEBUG,
           onready: () => {
             if (DEBUG) console.debug('PlayerApp: - soundManager ready');
@@ -214,7 +258,7 @@
     @import '../../../sass/site/settings';
     @import '~foundation-sites/scss/foundation';
 
-    $player-max-height: 420px;
+    $player-max-height: 431px;
 
     .player-app {
         position: fixed;
@@ -230,9 +274,7 @@
             }
         }
 
-
-
-
+        text-rendering: auto;
         transition: background 0ms;
         transition-delay: 0ms;
 
@@ -240,6 +282,19 @@
             background: #000;
             transition: background 0ms;
             transition-delay: 0ms;
+        }
+
+        &.is-compact {
+            max-height: 38px;
+            min-height: 38px;
+            overflow: hidden;
+
+
+            @include breakpoint(small only) {
+                max-height: 60px;
+                min-height: 60px;
+            }
+
         }
     }
 
@@ -259,7 +314,7 @@
             align-items: center;
             border-bottom: 1px solid rgba(#fff, 0.4);
 
-            @include breakpoint(small) {
+            @include breakpoint(small only) {
                 display: none;
             }
 
@@ -287,6 +342,11 @@
             min-height: 40px;
             align-items: center;
             border-top: 1px solid rgba(#fff, 0.4);
+
+            @include breakpoint(small only) {
+                min-height: 60px;
+            }
+
         }
 
         &__toggle {
@@ -294,6 +354,45 @@
             right: 0;
             bottom: 0;
             color: #fff;
+
+            .action {
+                cursor: pointer;
+                display: flex;
+                width: 38px;
+                height: 38px;
+                align-items: center;
+                justify-content: center;
+
+                font-size: 32px;
+                line-height: 0;
+
+                opacity: 0.7;
+
+                &:hover {
+                    opacity: 1;
+                }
+
+                transition: transform 100ms, opacity 200ms;
+            }
+
+            @include breakpoint(small only) {
+                .action {
+                    width: 60px;
+                    height: 60px;
+                    font-size: 48px;
+                }
+            }
+
+
+            &.is-expanded {
+
+                .action {
+                    transform: scaleY(-1);
+                }
+
+
+            }
+
         }
 
         &__media {
@@ -306,7 +405,7 @@
             }
 
             @include breakpoint(small) {
-                max-height: calc(100vh - 80px);
+                max-height: calc(100vh - 60px);
             }
 
 
@@ -330,7 +429,7 @@
 
 <template>
     <div class="player-app" v-if="visible" v-bind:class="{ 'is-compact': is_compact,  'is-expanded': (! is_compact) }">
-        <div class="player-container">
+        <div class="player-container" v-if="(schedule && schedule.length > 0)">
 
             <div div class="playlist">
 
@@ -342,14 +441,11 @@
                     </div>
                 </div>
 
-                <div v-if="(! schedule || schedule.length < 1)">
-                    NO SCHEDULE
-                </div>
-
                 <div class="playlist__media">
                     <media
                             v-for="(schedule_item, index) in schedule"
                             @controls="controls($event)"
+                            @select="select_item($event)"
                             v-bind:key="schedule_item.uuid"
                             v-bind:index="index"
                             v-bind:is_compact="is_compact"
@@ -358,18 +454,17 @@
                             v-bind:schedule_item="schedule_item"></media>
                 </div>
 
-
                 <div v-if="(! is_compact)" class="playlist__footer">
-                    (( foo ))
+                    <!--(( Settings ))-->
                 </div>
 
-
-                <div class="playlist__toggle">
-                    <span v-on:click='is_compact = !is_compact'>
-                        <i class="fa fa-angle-double-up"></i>
-                    </span>
+                <div class="playlist__toggle" v-bind:class="{'is-expanded': (! is_compact) }">
+                    <div class="action">
+                        <span v-on:click='is_compact = !is_compact'>
+                            <i class="fa fa-angle-up"></i>
+                        </span>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>

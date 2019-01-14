@@ -4,6 +4,8 @@
   import Loader from '../../../components/loader.vue';
   import {static_proxy_prefix} from '../../../api/utils';
 
+  import Playhead from './playhead.vue';
+
   const DEBUG = false;
 
 
@@ -17,6 +19,7 @@
     },
     components: {
       Loader,
+      Playhead,
     },
     data() {
       return {
@@ -122,6 +125,12 @@
       player_player_state() {
         return this.$store.getters['player/player_state'];
       },
+      player_position() {
+        if (this.player_current_uuid === this.schedule_item.uuid) {
+          return this.$store.getters['player/position'];
+        }
+        return null;
+      },
       player_current_uuid() {
         return this.$store.getters['player/current_uuid'];
       },
@@ -180,6 +189,14 @@
         };
         const _e = new CustomEvent('player:controls', {detail: _c});
         window.dispatchEvent(_e);
+      },
+      seek: function (p) {
+        const _c = {
+          do: 'seek',
+          position: p
+        };
+        const _e = new CustomEvent('player:controls', {detail: _c});
+        window.dispatchEvent(_e);
       }
     }
   }
@@ -197,6 +214,9 @@
         z-index: 5;
         display: flex;
         transition: transform 500ms, filter 500ms, opacity 500ms;
+
+        filter: drop-shadow(4px 4px 30px rgba(0, 0, 0, 0.3));
+
 
         &__visual {
             width: 100%;
@@ -261,6 +281,22 @@
                 background: #000;
                 left: 0;
                 bottom: 0;
+            }
+        }
+
+        &__playhead {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 50px;
+            z-index: 100;
+
+            padding: 30px 10px 10px;
+
+            transition: padding 200ms;
+
+            &:hover {
+                padding: 0 0 0 0;
             }
         }
 
@@ -329,6 +365,7 @@
                         </div>
 
                         <div v-if="(! is_onair && player_state === 'stopped')" @click.prevent="play"
+                             data-account-login-required
                              class="action action--play">
                             <div class="action__text">Play</div>
                         </div>
@@ -348,10 +385,18 @@
 
                     </div>
                 </transition>
-                <!---->
+
+
+                <div v-if="player_position" class="schedule-item__playhead">
+                    <playhead :position="player_position" @seek="seek($event)"></playhead>
+                </div>
+
+                <!--
                 <div class="panel">
+                    player_position: {{ player_position }}<br>
                     player_state: {{ player_state }}<br>
                 </div>
+                -->
             </div>
         </div>
     </transition>

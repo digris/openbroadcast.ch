@@ -1,5 +1,6 @@
 <script>
 
+  import Vue from 'vue';
   import debounce from 'debounce';
 
   import StationTime from './components/station-time.vue';
@@ -46,10 +47,21 @@
       });
       this.update_container_size();
 
+
+      // hide logo after a while...
+      setTimeout(() => {
+        this.carousel_visible = true;
+      }, 1500);
+      setTimeout(() => {
+        this.logo_visible = false;
+      }, 4000);
+
     },
     data() {
       return {
         visible: true,
+        logo_visible: true,
+        carousel_visible: false,
         locked_item_uuid: null,
         mode: 'live',
         selected_metadata_scope: null,
@@ -91,7 +103,12 @@
         return this.schedule[this.offset];
       },
 
-      placeholder_visible() {
+      show_logo() {
+
+        if (this.logo_visible) {
+          return true;
+        }
+
         // TODO: implement other conditions
         if (!this.$store.getters['onair/onair']) {
           return true;
@@ -102,7 +119,31 @@
       },
       has_previous() {
         return this.offset < this.schedule.length - 1;
-      }
+      },
+
+    },
+
+    watch: {
+      presented_item: function (val) {
+        // TODO: implement better. watch for changed item. needed to trigger live-color update
+
+        Vue.nextTick(function () {
+          const img = $('.schedule-item.is-current img');
+          if (img.length > 0) {
+            // console.log('presented_item changed', img.attr('src'));
+
+            const _e = new CustomEvent('livecolor:from_src', {
+              detail: {
+                src: img.attr('src'),
+                duration: 1000
+              }
+            });
+            window.dispatchEvent(_e);
+          }
+
+        })
+
+      },
     },
 
     methods: {
@@ -136,12 +177,28 @@
           }
         }
       },
-      select_by_uuid: function(uuid) {
+      select_by_uuid: function (uuid) {
         this.locked_item_uuid = uuid;
       },
       reset_offset: function () {
         this.locked_item_uuid = null;
       },
+
+      play_fallback: function () {
+        const _c = {
+          do: 'play_fallback'
+        };
+        const _e = new CustomEvent('player:controls', {detail: _c});
+        window.dispatchEvent(_e);
+      },
+      stop: function () {
+        const _c = {
+          do: 'stop'
+        };
+        const _e = new CustomEvent('player:controls', {detail: _c});
+        window.dispatchEvent(_e);
+      },
+
       update_container_size: debounce(function () {
 
         this.container_size = {
@@ -210,8 +267,17 @@
                 @include xy-cell-offset(0);
             }
 
-
             position: relative;
+
+            .carousel {
+                opacity: 0;
+                transition: opacity 500ms;
+
+                &.is-visible {
+                    opacity: 1;
+                }
+            }
+
         }
 
         &__metadata {
@@ -224,6 +290,7 @@
             @include breakpoint(small only) {
                 @include xy-cell(12);
             }
+
         }
 
 
@@ -245,6 +312,9 @@
                 max-width: 460px;
                 max-height: 460px;
             }
+
+            z-index: 105;
+            pointer-events: none;
 
             &.is-visible {
                 opacity: 1;
@@ -303,11 +373,12 @@
                     v-bind:mode="mode"
                     v-bind:locked_item_uuid="locked_item_uuid"></station-time>
         </div>
-        <div class="schedule-container">
+        <div class="schedule-container" @mouseover="logo_visible = false, carousel_visible = true">
 
             <div class="schedule-container__items">
 
-                <div class="schedule-container__placeholder" ref="schedule_item_placeholder" v-bind:class="{ 'is-visible': placeholder_visible }">
+                <div class="schedule-container__placeholder" ref="schedule_item_placeholder"
+                     v-bind:class="{ 'is-visible': show_logo }">
                     <p class="logo">
                         Open<br>
                         Broadcast<br>
@@ -316,23 +387,32 @@
                     <span class="dab">
                         DAB+
                     </span>
+
+                    <div v-if="(!schedule || schedule.length < 1)">
+                        <div @click="play_fallback">** PLAY **</div>
+                        <div @click="stop">** STOP **</div>
+                    </div>
+
                 </div>
 
-                <schedule-item-detail
-                        v-if="presented_item"
-                        v-bind:scope="selected_metadata_scope"
-                        v-bind:key="presented_item.uuid"
-                        v-bind:schedule_item="presented_item"></schedule-item-detail>
 
-                <div v-if="onair">
-                    <schedule-item
-                            v-for="(schedule_item, index) in schedule"
-                            @select="select"
-                            v-bind:key="schedule_item.uuid"
-                            v-bind:index="index"
-                            v-bind:offset="offset"
-                            v-bind:onair="onair"
-                            v-bind:schedule_item="schedule_item"></schedule-item>
+                <div class="carousel" v-bind:class="{ 'is-visible': carousel_visible }">
+                    <schedule-item-detail
+                            v-if="presented_item"
+                            v-bind:scope="selected_metadata_scope"
+                            v-bind:key="presented_item.uuid"
+                            v-bind:schedule_item="presented_item"></schedule-item-detail>
+
+                    <div v-if="onair">
+                        <schedule-item
+                                v-for="(schedule_item, index) in schedule"
+                                @select="select"
+                                v-bind:key="schedule_item.uuid"
+                                v-bind:index="index"
+                                v-bind:offset="offset"
+                                v-bind:onair="onair"
+                                v-bind:schedule_item="schedule_item"></schedule-item>
+                    </div>
                 </div>
 
             </div>

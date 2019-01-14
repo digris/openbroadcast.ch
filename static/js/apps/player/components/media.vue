@@ -14,12 +14,7 @@
       'index',
     ],
     components: {
-      Loader,
-    },
-    data() {
-      return {
-        is_hover: false
-      }
+      Loader
     },
     computed: {
 
@@ -46,6 +41,9 @@
       player_player_state() {
         return this.$store.getters['player/player_state'];
       },
+      // player_position() {
+      //   return this.$store.getters['player/position'];
+      // },
       player_current_uuid() {
         return this.$store.getters['player/current_uuid'];
       },
@@ -87,6 +85,9 @@
         };
         this.$emit('controls', _c);
       },
+      select: function (uuid) {
+        this.$emit('select', uuid);
+      },
     },
     filters: template_filters,
   }
@@ -103,41 +104,72 @@
         min-height: 38px;
         align-items: center;
 
-        color: rgba(#fff, .6);
+        color: rgba(#fff, .5);
 
         @include breakpoint(small only) {
-            min-height: 58px;
-        }
+            min-height: 60px;
 
-
-        &__airtime {
-            min-width: 70px;
-
-            @include breakpoint(small only) {
-                display: none;
+            &__airtime {
+                order: 4;
             }
 
+            &.is-compact & {
+                &__airtime {
+                    display: none;
+                }
+            }
+
+
+            &.is-expanded & {
+                &__meta {
+                    &__title {
+                        width: auto !important;
+                    }
+                    &__artist {
+                        .by {
+                            padding: 0 6px 0 0;
+                            opacity: .5;
+                        }
+                    }
+                }
+            }
         }
+
+        @include breakpoint(medium) {
+            &.is-expanded & {
+                &__meta {
+                    &__artist {
+                        .by {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+
 
         &__controls {
-            .action {
+            .action,
+            .status {
                 cursor: pointer;
+                display: flex;
+                width: 38px;
+                height: 38px;
+                align-items: center;
+                justify-content: center;
             }
-            min-width: 30px;
         }
 
         &__meta {
             flex-grow: 1;
             display: flex;
             &__title {
-
-            }
-            &__by {
-                padding: 0 6px;
-                opacity: .5;
+                padding-right: 6px;
             }
             &__artist {
-
+                .by {
+                    opacity: 0.5;
+                }
             }
         }
 
@@ -166,6 +198,26 @@
             }
         }
 
+
+        @include breakpoint(small only) {
+
+            color: #fff;
+            &__controls {
+                font-size: 28px;
+                padding-right: 10px;
+            }
+            &__meta {
+                flex-direction: column;
+                &__artist {
+                    .by {
+                        padding: 0 6px 0 0;
+                    }
+                }
+            }
+        }
+
+
+
     }
 
 </style>
@@ -174,8 +226,7 @@
     <transition name="fade" mode="out-in">
         <div class="media"
              v-if="is_visible"
-             @mouseover="is_hover=true"
-             @mouseleave="is_hover=false"
+            @click="select(schedule_item.uuid)"
              v-bind:class="{ 'is-playing': (player_state === 'playing' || player_state === 'buffering'),  'is-compact': is_compact,  'is-expanded': (! is_compact) ,  'no-border': (index === 0) }">
 
             <div class="media__airtime">
@@ -203,10 +254,8 @@
                 <div class="media__meta__title">
                     <span>{{ item.name }}</span>
                 </div>
-                <div v-if="is_compact" class="media__meta__by">
-                    by
-                </div>
                 <div class="media__meta__artist">
+                    <span class="by">by</span>
                     <span>{{ item.artist.name }}</span>
                 </div>
             </div>

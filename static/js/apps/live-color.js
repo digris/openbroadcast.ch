@@ -1,4 +1,7 @@
 import $ from "jquery";
+
+import debounce from 'debounce';
+import ColorThief from '@mariotacke/color-thief';
 import _c from 'jquery-color';
 
 const DEBUG = false;
@@ -8,11 +11,11 @@ class LiveColor {
   constructor(opts) {
     if (DEBUG) console.log('LiveColor: - constructor');
 
-    this.bg_color = '#efefef';
-    this.fg_color = '#000000';
+    // this.bg_color = '#efefef';
+    // this.fg_color = '#000000';
 
-    // this.bg_color = '#000000';
-    // this.fg_color = '#ffffff';
+    this.bg_color = '#ffffff';
+    this.fg_color = '#000000';
 
 
     $("head").append("<style id='livecolor_stylesheet_bg'></style>");
@@ -29,17 +32,50 @@ class LiveColor {
 
     this.bindings();
 
+
+    this.set_color_from_src = debounce(this._set_color_from_src, 200);
+
+
   };
 
   bindings() {
     if (DEBUG) console.log('LiveColor: - bindings');
 
-    window.addEventListener('livecolor:changed', (e) => {
-      if (DEBUG) console.info('livecolor:changed', e);
-      this.set_color(e.detail.bg, e.detail.fg, e.detail.duration);
+    // window.addEventListener('livecolor:changed', (e) => {
+    //   if (DEBUG) console.info('livecolor:changed', e);
+    //   this.set_color(e.detail.bg, e.detail.fg, e.detail.duration);
+    // }, false);
+
+    window.addEventListener('livecolor:from_src', (e) => {
+      if (DEBUG) console.info('livecolor:from_src', e);
+      // this.set_color(e.detail.bg, e.detail.fg, e.detail.duration);
+
+
+      this.set_color_from_src(e.detail.src, e.detail.duration || 1000)
+
+
+      //this.set_color_from_src(e.detail.src, e.detail.duration || 1000)
+
     }, false);
 
 
+  };
+
+  _set_color_from_src(src, duration) {
+
+    if (DEBUG) console.debug('set_color_from_src', src, duration);
+
+    const src_img = new Image();
+    src_img.src = src;
+    src_img.onload = () => {
+
+      const ct = new ColorThief();
+      const color_rgb = ct.getColor(src_img);
+      const color_hex = rgb_to_hex(color_rgb);
+
+      this.set_color(color_hex, null, duration);
+
+    }
   };
 
 
@@ -139,7 +175,6 @@ class LiveColor {
       }, duration)
 
 
-
       // we need to remove the stylesheet from the dom as it would override the animations
       this.stylesheet_fg.text('');
       if (DEBUG) console.debug('emptied fg stylesheet');
@@ -155,7 +190,6 @@ class LiveColor {
       }, duration_fg);
 
     }, delay);
-
 
 
     setTimeout(() => {
@@ -229,3 +263,10 @@ const get_contrast_color = (color) => {
 
   return ((255 - bg_delta) < n_threshold) ? "#000000" : "#ffffff";
 };
+
+function rgb_to_hex(rgb) {
+  let r = rgb[0];
+  let g = rgb[1];
+  let b = rgb[2];
+  return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}

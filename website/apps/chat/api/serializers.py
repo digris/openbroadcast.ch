@@ -53,6 +53,7 @@ class MessageSerializer(serializers.ModelSerializer):
 
     html = serializers.SerializerMethodField()
     def get_html(self, obj):
+        #return obj.text
         return linker.linkify(obj.text)
 
 

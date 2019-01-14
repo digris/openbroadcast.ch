@@ -3,10 +3,15 @@
 {% block app_content %}
 
 
-    <div class="auth-inner">
+
         <div class="auth-card">
 
             <span class="title">{% trans "Sign in"|title %}</span>
+
+            <p class="text">
+                Melden Sie sich bei open broadcast an, um unser Radioprogramm  zu kommentieren oder bei der Community mitzumachen.
+            </p>
+
             <div class="social-login-container">
                 {% for backend in backends.backends %}
                     <div class="auth-social auth-social-{{ backend }}" data-turbolinks="false">
@@ -67,5 +72,5 @@
 
             </div>
         </div>
-    </div>
+
 {% endblock %}

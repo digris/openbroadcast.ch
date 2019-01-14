@@ -21,10 +21,11 @@
 <!---->
 <style lang="scss" scoped>
     @import '../../sass/site/settings';
+    @import '~foundation-sites/scss/foundation';
 
     .modal-mask {
         position: fixed;
-        z-index: 99;
+        z-index: 1000;
         top: 0;
         left: 0;
         width: 100vw;
@@ -41,6 +42,15 @@
             min-height: 400px;
             display: flex;
             flex-direction: column;
+
+
+
+            @include breakpoint(small only) {
+                width: 100vw;
+                height: 100vh;
+            }
+
+
 
             .modal-header {
                 .modal-topbar {
@@ -79,11 +89,11 @@
 
     // transitions
     .modal-enter-active {
-        transition: all .1s;
+        transition: opacity 500ms;
     }
 
     .modal-leave-active {
-        transition: all .2s;
+        transition: opacity 200ms;
     }
 
     .modal-enter, .modal-leave-to {

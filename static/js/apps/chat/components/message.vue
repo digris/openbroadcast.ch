@@ -50,7 +50,7 @@
 
             .content {
                 padding: 0 10px 0 0;
-                max-height: 300px;
+                max-height: 180px;
                 overflow-x: hidden;
                 overflow-y: auto;
 
@@ -97,6 +97,25 @@
             }
 
         }
+
+
+        &--own & {
+            &__bubble {
+                background: #000;
+                .content {
+                    color: #fff;
+                    &::-webkit-scrollbar-thumb {
+                        background-color: #fff;
+                    }
+                }
+            }
+
+            &__separator {
+                .triangle {
+                    border-top-color: #000;
+                }
+            }
+        }
     }
 </style>
 
@@ -104,11 +123,11 @@
     <div :key="message.uuid"
          class="message"
          v-bind:class="{ 'message--own': is_own }">
-        <div class="message__bubble" :data-livebg="is_own">
+        <div class="message__bubble" :data-livebg__="is_own" :data-livefg__="is_own">
             <div class="content" v-html="$options.filters.linebreaksbr(message.html)"></div>
         </div>
         <div class="message__separator">
-            <div class="triangle" :data-livefg-inverse="is_own"></div>
+            <div class="triangle" :data-livefg-inverse__="is_own"></div>
         </div>
         <div class="message__appendix">
             <span class="user">

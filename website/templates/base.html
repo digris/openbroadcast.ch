@@ -83,9 +83,9 @@
 
 
 {% block top-bar %}
-<div id="topbar_container" data-livebg>
-    <nav class="row medium-collapse align-center" id="top_bar">
-        <section class="medium-2 column logo hoverable">
+<div id="topbar_container" class="topbar-container" data-livebg>
+    <nav id="top_bar" class="topbar">
+        <section class="topbar__logo">
             <a href="/"><span data-livefg>Open Broadcast</span></a>
             <div class="quick-contact">
                 <p class="address" data-livefg>
@@ -96,22 +96,22 @@
                 <p class="network"  data-livefg>
                     <span data-livefg>
                         <i class="fa fa-angle-right" aria-hidden="true"></i>
-                        <a href="http://www.digris.ch/">Digris AG</a>
+                        <a href="http://www.digris.ch/" target="_blank">Digris AG</a>
                     </span>
                     <br>
                     <span data-livefg>
                         <i class="fa fa-angle-right" aria-hidden="true"></i>
-                        <a href="https://www.openbroadcast.org/">Open Broadcast Plattform</a>
+                        <a href="https://www.openbroadcast.org/" target="_blank">Open Broadcast Plattform</a>
                     </span>
                 </p>
             </div>
         </section>
-        <section class="small-12 medium-8 column main-menu" data-livefg>
+        <section class="topbar__main-menu" data-livefg>
             <ul class="menu menu-centered align-center">
                 {% show_menu 0 100 100 100 "_layout/_navigation.html" %}
             </ul>
         </section>
-        <section class="small-12 medium-2 column account" data-livefg>
+        <section class="topbar__account" data-livefg>
             <ul class="menu menu-centered">
                 {% include "_layout/_accountbar.html" %}
             </ul>
