@@ -11,53 +11,29 @@ class LiveColor {
   constructor(opts) {
     if (DEBUG) console.log('LiveColor: - constructor');
 
-    // this.bg_color = '#efefef';
-    // this.fg_color = '#000000';
+    const initial_color = '#fff';
 
-    this.bg_color = '#ffffff';
-    this.fg_color = '#000000';
+    $('head').append('<style id="livecolor_stylesheet"></style>');
+    this.stylesheet = $('#livecolor_stylesheet');
 
+    setTimeout(() => {
+      this.set_color(initial_color, 1);
+    }, 1);
 
-    $("head").append("<style id='livecolor_stylesheet_bg'></style>");
-    $("head").append("<style id='livecolor_stylesheet_fg'></style>");
-
-    this.stylesheet_bg = $('#livecolor_stylesheet_bg');
-    this.stylesheet_fg = $('#livecolor_stylesheet_fg');
-
-    if (this.bg_color !== undefined) {
-      setTimeout(() => {
-        this.set_color(this.bg_color, this.fg_color, 1);
-      }, 1)
-    }
 
     this.bindings();
 
-
+    // TODO: more elegant way to handle debounce?
     this.set_color_from_src = debounce(this._set_color_from_src, 200);
-
 
   };
 
   bindings() {
-    if (DEBUG) console.log('LiveColor: - bindings');
-
-    // window.addEventListener('livecolor:changed', (e) => {
-    //   if (DEBUG) console.info('livecolor:changed', e);
-    //   this.set_color(e.detail.bg, e.detail.fg, e.detail.duration);
-    // }, false);
 
     window.addEventListener('livecolor:from_src', (e) => {
       if (DEBUG) console.info('livecolor:from_src', e);
-      // this.set_color(e.detail.bg, e.detail.fg, e.detail.duration);
-
-
       this.set_color_from_src(e.detail.src, e.detail.duration || 1000)
-
-
-      //this.set_color_from_src(e.detail.src, e.detail.duration || 1000)
-
     }, false);
-
 
   };
 
@@ -73,128 +49,43 @@ class LiveColor {
       const color_rgb = ct.getColor(src_img);
       const color_hex = rgb_to_hex(color_rgb);
 
-      this.set_color(color_hex, null, duration);
+      this.set_color(color_hex, duration);
 
     }
   };
 
 
-  set_color(bg_color, fg_color, duration) {
+  set_color(color, duration) {
 
     if (DEBUG) console.group('LiveColor: - set_color', bg_color, fg_color, duration);
 
-    duration = duration || 100;
-    fg_color = fg_color || get_contrast_color(bg_color);
-
+    duration = duration || 1000;
 
     /////////////////////////////////////////////////////////////////
-    // backgrounds
+    // animate colored backgrounds
     /////////////////////////////////////////////////////////////////
+
     $('html *[data-livebg]').animate({
-      backgroundColor: bg_color
+      backgroundColor: color
     }, duration);
 
-    $('html *[data-livefill]').animate({
-      svgFill: bg_color
+    // $('html *[data-livefill]').animate({
+    //   svgFill: color
+    // }, duration);
+
+    // in the middle of the animation (50% of duration) we have to set the foreground colors
+    setTimeout(() => {
+      const style = get_stylesheet(color);
+      this.stylesheet.text(style);
+    }, (Math.round(duration / 2) - 0));
+
+    // at the end of the animation the new bg-color has to be added to the stylesheet
+    setTimeout(() => {
+      const style = `[data-livebg] {
+          background-color: ${color};
+        }`;
+      this.stylesheet.text(this.stylesheet.text() + style);
     }, duration);
-
-    // we need to remove the stylesheet from the dom as it would override the animations
-    this.stylesheet_bg.text('');
-
-    // add colors and re-add styles after animation
-    let style_bg = '';
-    style_bg += '[data-livebg] { background-color: ' + bg_color + '; }';
-    style_bg += '[data-livefill] { fill: ' + bg_color + '; }';
-
-    // TODO: not so nice. these styles have to be added immediately, as no animations possible
-    let style_bg_immediate = '';
-    style_bg_immediate += '[data-livehover]:hover { background-color: ' + fg_color + ' !important; color: ' + bg_color + ';}';
-    style_bg_immediate += '[data-livehover]:hover polyline { stroke: ' + bg_color + ' !important;}';
-
-    this.stylesheet_bg.text(style_bg_immediate);
-    if (DEBUG) console.debug('set immediate bg stylesheet');
-
-    setTimeout(() => {
-      this.stylesheet_bg.text(style_bg_immediate + style_bg);
-      if (DEBUG) console.debug('set delayed bg stylesheet');
-      // console.debug('sheet', style_bg_immediate + style_bg)
-    }, duration);
-
-
-    /////////////////////////////////////////////////////////////////
-    // foreground
-    /////////////////////////////////////////////////////////////////
-
-    let duration_fg = 1000;
-    let delay = Number((duration - duration_fg) / 2);
-
-    if (duration < duration_fg) {
-      duration_fg = duration;
-      delay = 0;
-    }
-
-
-    setTimeout(() => {
-
-      /**/
-      $('html *[data-livefg]').animate({
-        color: fg_color,
-        borderColor: fg_color
-      }, duration_fg);
-
-      $('html *[data-livefg] a').animate({
-        color: fg_color,
-        borderColor: fg_color
-      }, duration_fg);
-
-      $('html *[data-livefg-inverse]').animate({
-        color: bg_color,
-        borderColor: bg_color
-      }, duration_fg);
-
-      // $('html *[data-livestroke]').animate({
-      //   svgStroke: fg_color
-      // }, duration_fg);
-
-      $('html *[data-livestroke]').css('stroke', fg_color);
-
-      $('html *[data-livefill-inverse]').animate({
-        svgFill: fg_color
-      }, duration);
-
-      //$('html *[data-livefill-inverse]').css('fill', fg_color);
-
-
-      $('html *[data-livebg-inverse]').animate({
-        backgroundColor: fg_color
-      }, duration);
-
-      if (DEBUG) console.debug('initialized fg animations');
-      setTimeout(() => {
-        if (DEBUG) console.debug('finished fg animations');
-      }, duration)
-
-
-      // we need to remove the stylesheet from the dom as it would override the animations
-      this.stylesheet_fg.text('');
-      if (DEBUG) console.debug('emptied fg stylesheet');
-
-      const fg_sheet = get_fg_stylesheet(fg_color, bg_color);
-      // if (DEBUG) console.debug('fg - sheet', fg_sheet);
-
-      // styles replacement
-      setTimeout(() => {
-        //this.stylesheet_fg.text(style_fg);
-        this.stylesheet_fg.text(fg_sheet);
-        if (DEBUG) console.debug('set delayed fg stylesheet');
-      }, duration_fg);
-
-    }, delay);
-
-
-    setTimeout(() => {
-      console.groupEnd();
-    }, delay * 2 + duration_fg + 2000)
 
   };
 
@@ -203,55 +94,23 @@ class LiveColor {
 module.exports = LiveColor;
 
 
-const get_bg_stylesheet = (fg_color, bg_color) => {
-  const style = `
-    [data-livebg] {
-      background-color: ${bg_color} !important;
-    }
-    [data-livefill] {
-      fill: ${bg_color};
-    }
-  `;
-  return style;
-};
-
-
-const get_fg_stylesheet = (fg_color, bg_color) => {
-  const style = `
-    [data-livefg] {
-      color: ${fg_color} !important;
-      border-color: ${fg_color};
-    }
-    [data-livefg] a {
-      color: ${fg_color};
-      border-color: ${fg_color};
-    }
-    [data-livefg-inverse] {
-      color: ${bg_color} !important;
-      border-color: ${bg_color} !important;
-    }
-    [data-livefill-inverse] {
-      fill: ${fg_color};
-    }
-    [data-livebg-inverse] {
-      background-color: ${fg_color} !important;
-    }
-    html.turbolinks-progress-bar::before {
-      background-color: ${fg_color} !important;
-    }
-    .menu :hover {
-      background-color: ${fg_color} !important;
-    }
-    .menu :hover a,
-    .menu > li > ul a{
-      color: ${bg_color} !important;
-    }
-  `;
-  return style;
-};
+function rgb_to_hex(rgb) {
+  let r = rgb[0];
+  let g = rgb[1];
+  let b = rgb[2];
+  return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
 
 
 const get_contrast_color = (color) => {
+
+  if(color === '#000') {
+    return '#fff';
+  }
+
+  if(color === '#fff') {
+    return '#000';
+  }
 
   var n_threshold = 105;
 
@@ -261,12 +120,63 @@ const get_contrast_color = (color) => {
 
   var bg_delta = (r * 0.299) + (g * 0.587) + (b * 0.114);
 
-  return ((255 - bg_delta) < n_threshold) ? "#000000" : "#ffffff";
+  return ((255 - bg_delta) < n_threshold) ? "#000" : "#fff";
 };
 
-function rgb_to_hex(rgb) {
-  let r = rgb[0];
-  let g = rgb[1];
-  let b = rgb[2];
-  return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-}
+
+const get_stylesheet = (color) => {
+
+  color = get_contrast_color(color);
+  const contrast = get_contrast_color(color);
+
+  const style = `
+  [data-livefg] {
+    color: ${color};
+    border-color: ${color} !important;
+  }
+  [data-livefg] a {
+    color: inherit;
+    border-color: inherit;
+  }
+  [data-livebg-inverse] {
+    background-color: ${color} !important;
+    color: ${contrast};
+  }
+  [data-livefill-inverse] {
+    fill: ${color};
+  }
+  [data-livestroke] {
+    stroke: ${color};
+  }
+  [data-livehover] polyline {
+    stroke: ${color} !important;
+  }
+  [data-livehover]:hover {
+    background-color: ${color};
+  }
+  [data-livehover]:hover polyline {
+    stroke: ${contrast} !important;
+  }
+  .topbar .menu .menu-item:hover {
+    background-color: ${color};
+    color: ${contrast};
+  }
+  .topbar .menu .menu-item.selected {
+    background-color: ${color};
+    color: ${contrast};
+  }
+  .topbar .menu .menu-item .submenu {
+    background-color: ${color};
+  }
+  .topbar .menu .menu-item .submenu .menu-item {
+    color: ${contrast};
+  }
+  .turbolinks-progress-bar {
+    background-color: ${color};
+  }
+  `;
+
+  return style
+
+
+};

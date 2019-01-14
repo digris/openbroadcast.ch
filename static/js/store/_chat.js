@@ -45,13 +45,10 @@ const actions = {
       let {data} = await _r(url);
       context.commit('update_chat_messages', data.results);
 
-      // data.results.forEach((message) => {
-      //   context.commit('add_chat_message', message);
-      // });
-
-      if(data.next !== null) {
-        context.dispatch('get_chat_messages', data.next);
-      }
+      // fetch message history
+      // if(data.next !== null) {
+      //   context.dispatch('get_chat_messages', data.next);
+      // }
 
     },
 };

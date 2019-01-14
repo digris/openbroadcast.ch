@@ -1,45 +1,43 @@
 {% load menu_tags i18n  %}
 
 
-<p class="show-for-medium">
-
 {% if user.is_authenticated  %}
 
-    <li class="hoverable show-for-medium">
-        <a data-livefg href="#">{% firstof user.get_display_name %}</a>
-        <ul>
+    <li class="menu-item">
+        <a href="#">{% firstof user.get_display_name %}</a>
+        <ul class="submenu">
             {% if user.is_staff %}
 
                 {% if not cms_toolbar_disabled %}
-                    <li data-livebg-inverse class="hoverable">
-                        <a data-no-turbolink data-livefg href="?toolbar_off">{% trans 'Hide Toolbar' %}</a>
+                    <li class="menu-item ">
+                        <a data-no-turbolink href="?toolbar_off">{% trans 'Hide Toolbar' %}</a>
                     </li>
                 {% else %}
-                    <li data-livebg-inverse class="hoverable">
-                        <a data-no-turbolink data-livefg href="?edit">{% trans 'Show Toolbar' %}</a>
+                    <li class="menu-item ">
+                        <a data-no-turbolink href="?edit">{% trans 'Show Toolbar' %}</a>
                     </li>
                 {% endif %}
 
-                <li data-livebg-inverse class="hoverable">
-                    <a data-no-turbolink data-livefg target="_blank" href="/admin/">{% trans 'Administration' %}</a>
+                <li class="menu-item ">
+                    <a data-no-turbolink target="_blank" href="/admin/">{% trans 'Administration' %}</a>
                 </li>
 
             {% endif %}
 
-            <li data-livebg-inverse class="hoverable">
-                <a data-no-turbolink data-livefg href="#" data-account-profile>{% trans 'profile & settings'|capfirst %}</a>
+            <li class="menu-item ">
+                <a data-no-turbolink href="#" data-account-profile>{% trans 'profile & settings'|capfirst %}</a>
             </li>
-            <li data-livebg-inverse class="hoverable">
+            <li class="menu-item ">
                 <a data-livefg href="{% url 'account:logout' %}" data-account-logout>{% trans 'logout'|capfirst %}</a>
             </li>
         </ul>
     </li>
 
 {% else %}
-    <li class="hoverable">
+    <li class="menu-item">
         <a data-account-login-required data-livefg href="#" data-login-action="login">{% trans 'login'|capfirst %}</a>
     </li>
-    <li class="hoverable hide-for-medium-only">
+    <li class="menu-item hide-for-medium-only">
         <a data-account-login-required data-livefg href="#" data-login-action="register">{% trans 'register'|capfirst %}</a>
     </li>
 {% endif %}

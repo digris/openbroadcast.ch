@@ -220,9 +220,14 @@
   }
 </script>
 <style lang="scss">
+    // initialize app & dimensions - shift element out of viewport
     body:not(.cms-home) {
-        .onair-app {
-            display: none;
+        #onair_app_container {
+            position: fixed;
+            width: 100vw;
+            left: 100vw;
+            opacity: 0;
+            pointer-events: none;
         }
     }
 </style>

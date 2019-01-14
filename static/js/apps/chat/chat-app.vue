@@ -67,6 +67,11 @@
       },
 
       enable() {
+
+        if(!this.user) {
+          return;
+        }
+
         this.visible = true;
         localStorage.chat_enabled = true;
       }
