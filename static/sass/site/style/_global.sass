@@ -9,19 +9,8 @@ html.turbolinks-progress-bar::before
 //////////////////////////////////////////////////////////////////////////////////////
 // show/hide elements on home screen
 //////////////////////////////////////////////////////////////////////////////////////
-
 .cms-debug-bar
   height: 0 !important
-
-body
-  #onair_container,
-  #achat_container
-    display: none
-body.cms-home
-  #onair_container,
-  #achat_container
-    display: block
-
 
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -33,19 +22,6 @@ body, html
   letter-spacing: 1px
   -webkit-text-size-adjust: 100%
   -ms-text-size-adjust: 100%
-
-
-///////////////////////////////////////////////////////////////////////
-// cms in admin state, hide some parts
-///////////////////////////////////////////////////////////////////////
-//html.cms-toolbar-expanded
-//  #onair_container,
-//  #achat_container
-//    width: 1px
-//    height: 1px
-//    overflow: hidden
-//    position: absolute
-//    left: -10px
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -62,87 +38,25 @@ body, html
 body
   > .container
     height: 100%
-    //padding-top: 30px
+    padding-top: 40px
 
 
   section.content
     padding: 20px 0
 
     &:first-child
-      padding: 0px 0px 20px 0
+      padding: 0 0 20px 0
 
-///////////////////////////////////////////////////////////////////////
-// special actions
-///////////////////////////////////////////////////////////////////////
-.item-actions
-  input.button, a.button, button.button
-    &.tiny, &.small
-      background: scale-color($secondary-color, $lightness: -1%)
-      text-transform: uppercase
-      font-weight: normal
-      color: $body-bg
-
-      text-align: left
-      padding: 3px 3px 3px 10px
-
-      span
-        line-height: 22px
-
-      small
-        text-transform: none
-        font-size: rem-calc(9)
-        padding-left: 5px
-      i
-        margin-right: 10px
-        opacity: 0.9
-
-      &:hover
-        background: scale-color($secondary-color, $lightness: -20%)
 
 
 ///////////////////////////////////////////////////////////////////////
-// helpers
+// helpers / typo
 ///////////////////////////////////////////////////////////////////////
-//.dim
-//  opacity: 0.5
-
 .upper
   text-transform: uppercase
 
-.center-vertical
-  display: table !important
-  width: 100%
-
-  > div, ul
-    display: table-cell !important
-    text-align: center !important
-    vertical-align: middle !important
-
-.item[data-permalink]
-  cursor: pointer
-
-///////////////////////////////////////////////////////////////////////
-// content formatting
-///////////////////////////////////////////////////////////////////////
-dl.horizontal
-  dt
-    font-weight: normal
-    opacity: 0.5
-    margin: 0 0 4px 0
-    float: left
-    clear: left
-    width: 160px
-
-  dd
-    margin: 0 0 4px 100px
-    &:after
-      content: ''
-      display: block
-      clear: both
-
 h1, h2, h3, h4, h5, h6
   color: inherit
-
 
 body
   text-rendering: geometricPrecision
@@ -153,59 +67,3 @@ body
 ///////////////////////////////////////////////////////////////////////
 figure
   margin: 0
-
-
-///////////////////////////////////////////////////////////////////////
-// custom button & button-group styles
-///////////////////////////////////////////////////////////////////////
-.button-group
-  &.simple
-    li:first-child button, .button-group li:first-child .button
-      border-left: 1px solid red
-      border-left-width: 1px
-    button, .button
-      margin-left: 20px
-      min-width: 160px
-  &.bottom
-    margin-top: 20px !important
-
-.button
-  @include button-style($background:#fff)
-  border-color: #999999 !important
-  //min-width: 120px
-
-  &.disabled, &[disabled]
-    @include button-style($background:$grey-light)
-    cursor: wait
-
-.button.black
-  @include button-style($background:#000)
-  border-color: #999999 !important
-  //min-width: 120px
-
-.button.dimmed
-  @include button-style($background:#999999)
-  border-color: #CECDCD !important
-  //min-width: 120px
-
-
-//////////////////////////////////////////////////////
-// reveal responsive overrides
-//////////////////////////////////////////////////////
-@include breakpoint(small only)
-  .reveal-modal,
-  #reveal_container
-    position: fixed
-    top: 0
-    height: 50vh
-    overflow-y: scroll
-
-@media #{$medium-only}
-  #reveal_container
-    width: 60%
-    //margin-left: -30%
-
-@media #{$large-up}
-  #reveal_container
-    width: 30%
-    //margin-left: -15%

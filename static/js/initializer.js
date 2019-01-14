@@ -2,6 +2,7 @@ import Vue from 'vue';
 import store from './store';
 import hotEmitter from 'webpack/hot/emitter'
 
+import SiteUI from './apps/site';
 import LiveColor from './apps/live-color';
 import AccountApp from './apps/account-app.vue';
 import OnairApp from './apps/onair/onair-app.vue';
@@ -33,7 +34,10 @@ class AppInitializer {
 
     setup_apps() {
 
-
+        // components (one time setup)
+        if(this.apps['SiteUI'] === undefined) {
+            this.apps['SiteUI'] = new SiteUI();
+        }
         if(this.apps['LiveColor'] === undefined) {
             this.apps['LiveColor'] = new LiveColor();
         }

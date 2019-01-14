@@ -84,7 +84,7 @@
 
 {% block top-bar %}
 <div id="topbar_container" class="topbar-container" data-livebg>
-    <nav id="top_bar" class="topbar">
+    <nav id="top_bar" class="topbar" data-livefg>
         <section class="topbar__logo">
             <a href="/"><span data-livefg>Open Broadcast</span></a>
             <div class="quick-contact">
@@ -93,13 +93,13 @@
                     8038 Zürich<br>
                     <a href="mailto:info@openbroadcast.ch">info@openbroadcast.ch</a>
                 </p>
-                <p class="network"  data-livefg>
-                    <span data-livefg>
+                <p class="network" data-livefg>
+                    <span>
                         <i class="fa fa-angle-right" aria-hidden="true"></i>
                         <a href="http://www.digris.ch/" target="_blank">Digris AG</a>
                     </span>
                     <br>
-                    <span data-livefg>
+                    <span>
                         <i class="fa fa-angle-right" aria-hidden="true"></i>
                         <a href="https://www.openbroadcast.org/" target="_blank">Open Broadcast Plattform</a>
                     </span>
@@ -107,15 +107,22 @@
             </div>
         </section>
         <section class="topbar__main-menu" data-livefg>
-            <ul class="menu menu-centered align-center">
+            <ul class="menu">
                 {% show_menu 0 100 100 100 "_layout/_navigation.html" %}
             </ul>
         </section>
         <section class="topbar__account" data-livefg>
-            <ul class="menu menu-centered">
+            <ul class="menu">
                 {% include "_layout/_accountbar.html" %}
             </ul>
         </section>
+
+        <div class="topbar__toggle">
+            <div div class="toggle-icon" data-toggle-navigation>
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </div>
+        </div>
+
     </nav>
 </div>
 {% endblock %}
@@ -150,9 +157,6 @@
 </div>
 {% endblock %}
 {% include "_layout/_footer.html" %}
-
-<!-- dialog container -->
-<div id="reveal_container" class="reveal" data-reveal></div>
 
 <div id="fb-root"></div>
 

@@ -90,14 +90,19 @@
     // transitions
     .modal-enter-active {
         transition: opacity 500ms;
+        @include breakpoint(small only) {
+            transition: opacity 0ms;
+        }
     }
 
     .modal-leave-active {
         transition: opacity 200ms;
+        @include breakpoint(small only) {
+            transition: opacity 0ms;
+        }
     }
 
     .modal-enter, .modal-leave-to {
-        //transform: translateY(100vh);
         opacity: 0;
     }
 
@@ -113,7 +118,7 @@
                             <slot name="title"></slot>
                         </div>
                         <div class="modal-topbar-menu">
-                            <a @click="close" class="">Close (esc)</a>
+                            <a @click="close" class="">Close<span> (esc)</span></a>
                         </div>
                     </div>
                 </header>

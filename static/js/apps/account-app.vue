@@ -253,6 +253,10 @@
             }
         }
 
+        #input_id_tos {
+            font-size: 80%;
+        }
+
     }
 
     .social-login-container {

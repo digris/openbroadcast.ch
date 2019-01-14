@@ -238,14 +238,14 @@
     .onair-app {
         //@include flex-grid;
         @include xy-grid-container;
-        padding: 80px 40px 40px;
+        padding: 40px 40px 40px;
 
         @include breakpoint(medium only) {
-            padding: 70px 20px 40px;
+            padding: 30px 20px 40px;
         }
 
         @include breakpoint(small only) {
-            padding: 20px 10px;
+            padding: 30px 10px;
         }
     }
 

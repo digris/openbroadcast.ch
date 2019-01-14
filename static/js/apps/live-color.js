@@ -101,6 +101,22 @@ function rgb_to_hex(rgb) {
   return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
+// https://stackoverflow.com/a/5624139/469111
+function hex_to_rgb(hex) {
+    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, (m, r, g, b) => {
+        return r + r + g + g + b + b;
+    });
+
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
 
 const get_contrast_color = (color) => {
 
@@ -127,7 +143,10 @@ const get_contrast_color = (color) => {
 const get_stylesheet = (color) => {
 
   color = get_contrast_color(color);
+  const color_rgb = hex_to_rgb(color);
   const contrast = get_contrast_color(color);
+
+
 
   const style = `
   [data-livefg] {
@@ -158,7 +177,7 @@ const get_stylesheet = (color) => {
     stroke: ${contrast} !important;
   }
   .topbar .menu .menu-item:hover {
-    background-color: ${color};
+    background-color: rgba(${color_rgb.r}, ${color_rgb.g}, ${color_rgb.b}, .9);
     color: ${contrast};
   }
   .topbar .menu .menu-item.selected {
@@ -166,7 +185,7 @@ const get_stylesheet = (color) => {
     color: ${contrast};
   }
   .topbar .menu .menu-item .submenu {
-    background-color: ${color};
+    background-color: rgba(${color_rgb.r}, ${color_rgb.g}, ${color_rgb.b}, .9);
   }
   .topbar .menu .menu-item .submenu .menu-item {
     color: ${contrast};

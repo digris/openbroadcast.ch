@@ -27,9 +27,20 @@ class ProgramPlugin(CMSPluginBase):
 
         objects = r.json().get('objects', [])
 
+        # hackish way to extract emissions (we don't need dayparts here..)
+        emissions = []
+        for obj in objects:
+            for emission in reversed(obj['emissions']):
+                if not emission in emissions:
+                    emissions.append(emission)
+
+
+
+
         context.update({
             'instance': instance,
             'objects': objects,
+            'emissions': emissions,
             'placeholder': placeholder,
         })
         return context

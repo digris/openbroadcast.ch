@@ -2,63 +2,27 @@
 
 <div class="program-plugin">
     <div class="program-list">
-
-        {% for item in objects %}
-        <div class="item program" data-livefg>
-            <div class="row">
-
-                <div class="small-12 columns">
-
-                    <h3 data-livefg><span class="time">{{ item.time_start }}</span>{{ item.name }}</h3>
-
-
-                    {% for emission in item.emissions reversed %}
-
-
-                        <div class="row">
-
-                            <div class="small-12 columns">
-
-                                <div class="row">
-
-                                    <div class="small-3 columns">
-                                        <p>
-                                            <span>{{ emission.time_start|slice:'11:16' }} - {{ emission.time_end|slice:'11:16' }}</span>
-                                        </p>
-                                    </div>
-                                    <div class="small-9 columns">
-
-                                        {% if emission.series %}
-                                            <h4>
-                                                {{ emission.series }}
-                                                {% if emission.series_number %}#{{ emission.series_number }}{% endif %}
-                                                -
-                                                {{ emission.name }}
-                                            </h4>
-                                        {% else %}
-                                            <h4>{{ emission.name }}</h4>
-                                        {% endif %}
-
-                                        <p>
-                                            <span><span class="dim">{% trans 'Kuratiert' %}:</span> {{ emission.user_co.pseudonym }}</span>
-                                            &mdash;
-                                            <span><span class="dim">{% trans 'Programmiert' %}:</span> {{ emission.user.pseudonym }}</span>
-                                        </p>
-
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    {% endfor %}
-
-                </div>
-
+        {% for emission in emissions %}
+            <div class="emission" data-livefg>
+                <h3 class="emission__title">
+                    <span class="emission__title__time">
+                        {{ emission.time_start|slice:'11:16' }}
+                    </span>
+                    <span class="emission__title__name">
+                    {% if emission.series %}
+                        {{ emission.series }}
+                        {% if emission.series_number %}#{{ emission.series_number }}{% endif %}
+                    {% else %}
+                        {{ emission.name }}
+                    {% endif %}
+                    </span>
+                </h3>
+                <p class="emission__text">
+                    <span><span class="dim">{% trans 'Kuratiert' %}:</span> {{ emission.user_co.pseudonym }}</span>
+                    &mdash;
+                    <span><span class="dim">{% trans 'Programmiert' %}:</span> {{ emission.user.pseudonym }}</span>
+                </p>
             </div>
-        </div>
         {% endfor %}
-
     </div>
 </div>

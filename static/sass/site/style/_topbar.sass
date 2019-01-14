@@ -1,30 +1,99 @@
-.topbar-container
+@charset "UTF-8"
 
-  // TODO: rework navigation styles & get rid of 'foundation-menu'
+.topbar-container
 
   position: fixed
   width: 100%
   z-index: 999
-
-  background: rgba(12, 194, 170, 0.5)
-
-  a, span
-    font-size: 16px
-
+  font-size: 16px
 
   .topbar
+
     display: flex
     text-rendering: initial
 
-    //&__logo
-    //  background: yellow
 
     &__main-menu
       flex-grow: 1
+      .menu
+        justify-content: center
+
+    &__toggle
+      display: none
+
+    &__main-menu,
+    &__account
+
+      .menu
+
+        top: 0
+        position: relative
+        list-style: none
+        display: flex
+        margin: 0
+
+        // top level items
+        > .menu-item
+          position: relative
+          top: 0
+
+        // all items
+        .menu-item
+          height: 37px
+          display: flex
+          align-items: center
+          transition: background-color 0.55s
+          background-color: rgba(0,0,0,0)
+          > a
+            white-space: nowrap
+            padding-left: 20px
+            padding-right: 20px
+            transition: color 0.15s
+
+          &:hover,
+          .selected
+            transition: background-color 0.01s
+            > a
+              transition: color 0.01s
 
 
-    //&__account
-    //  background: yellow
+          // second level
+          .submenu
+            position: absolute
+            top: 38px
+            left: 0
+            margin-left: 0
+            list-style: none
+
+            max-height: 0
+            overflow: hidden
+            transition: max-height 0.25s, background 1.0s
+
+            .menu-item
+              opacity: 0.95
+              transition: opacity 0.25s
+
+              &:hover,
+              .selected
+                transition: opacity 0.05s
+                opacity: 1.0
+
+          &:hover
+            .submenu
+              transition: max-height 0.25s, background 0.01s
+              max-height: 1000px
+              position: absolute
+              top: 38px
+              margin-left: 0
+              list-style: none
+
+
+
+    // align submenu to right
+    &__account
+      .submenu
+        right: 0
+        left: auto !important
 
 
     &__logo
@@ -33,7 +102,6 @@
         display: inline-block
         padding: 7px 0 0 20px
 
-
       .quick-contact
         position: absolute
         max-height: 0
@@ -41,16 +109,16 @@
         transition: max-height 0.25s
         margin-left: 20px
 
+        p,
+        a
+          font-size: $global-font-size
+
         p
           padding-top: 4px
           margin-bottom: 2px
 
-      .address,
-      .network
-        a
-          font-size: $global-font-size !important
-          &:hover
-            text-decoration: underline
+        a:hover
+          text-decoration: underline
 
 
       &:hover
@@ -60,88 +128,135 @@
 
 
 
-    &__main-menu,
-    &__account
-
-      .menu
-        top: 0
-        position: relative
-
-        a
-          white-space: nowrap !important
-
-        > li
-          transition: background-color 0.55s
-          background-color: rgba(0,0,0,0)
-          > a
-            padding-left: 20px
-            padding-right: 20px
-            transition: color 0.15s
-
-        li:hover,
-        li.ancestor,
-        li.selected
-          transition: background-color 0.01s
-          > a
-            transition: color 0.01s
-
-        > li
-          position: relative
-          top: 0
-        > li > ul
-          max-height: 0
-          overflow: hidden
-          transition: max-height 0.25s, background 1.0s
-
-        > li
-          > ul
-
-            position: absolute
-            top: 38px
-            left: 0
-            margin-left: 0
-            list-style: none
-
-            li
-              padding: 0 8px
-              // padding: 0
-              text-align: left
-              opacity: 0.95
-              transition: opacity 0.25s
-              &:hover,
-              &.selected
-                transition: opacity 0.05s
-                opacity: 1.0
-
-        li:hover
-          > ul
-            transition: max-height 0.25s, background 0.01s
-            max-height: 1000px
-            position: absolute
-            top: 38px
-            margin-left: 0
-            list-style: none
-            li
-              // padding: 7px 14px
-              text-align: left
-
-    &__account
-      ul.menu
-        > li
-          > ul
-            right: 0
-            left: auto
-
 
 
 
 //////////////////////////////////////////////////////
-// navigation styling
-// this is quite hackish. maybe improve at some
-// point of time...
+// mobile navigation
 //////////////////////////////////////////////////////
 @include breakpoint(small down)
   .topbar-container
-    display: none
+    // display: none
 
+    .topbar
+
+      border-bottom: 2px solid transparent
+      height: 42px
+
+      flex-direction: column
+
+      &__logo
+        flex-grow: 1
+        text-align: center
+        height: 40px
+
+        > a
+          display: inline-block
+          height: 40px
+          padding: 7px 0 0
+
+
+        .quick-contact
+          display: none
+
+
+
+      &__toggle
+        display: flex
+        height: 40px
+        width: 40px
+        position: absolute
+        right: 0
+        top: 0
+        align-items: center
+        justify-content: center
+
+
+        .toggle-icon
+          width: 100%
+          height: 100%
+          display: inline-block
+          text-align: center
+          font-size: 24px
+
+
+      &__main-menu,
+      &__account
+        display: none
+
+
+
+
+
+    .topbar
+
+      //transition: height 0ms
+
+      &.extended
+        height: 100vh
+        background: #fff
+        //transition: height 200ms
+
+
+        border-bottom: 0
+
+
+        .topbar__logo
+          display: none
+
+
+        .topbar__account
+          padding-top: 80px
+
+
+        .topbar__main-menu
+          order: 2
+
+
+
+
+
+        .topbar__toggle
+          color: #000
+
+
+
+
+        .topbar__main-menu,
+        .topbar__account
+          display: block
+
+
+          .menu-item
+            a
+              color: #000
+
+            &.selected
+              background-color: #000
+              a
+                color: #fff
+
+
+          .menu
+
+            padding: 40px 0
+
+            background-color: #fff
+            display: flex
+            flex-direction: column
+            border-bottom: 2px solid #000
+
+            .menu-item
+              text-align: center
+              > a
+                display: flex
+                width: 100%
+                height: 100%
+                align-items: center
+                justify-content: center
+
+
+            // TODO: implement 2nd level
+            .submenu
+              display: none !important
 
