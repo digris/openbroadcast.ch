@@ -1,5 +1,0 @@
-{
-    "local_port" : 4000,
-    "proxy_port" : 8081,
-    "hostname" : "local.openbroadcast.ch"
-}
