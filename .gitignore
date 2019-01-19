@@ -6,11 +6,32 @@
 .project
 .pydevproject
 *.ipynb_checkpoints
-util/remote_to_local.conf
 env
+env*
 node_modules
+
+doc/_build
+
+app/data.sqlite3
+app/logs
+app/media
+app/settings/local_*
+app/dev
+app/env
+app/static-src/dist
+app/static-src/font
+app/static-src/img
+app/static-src/js
+app/static-src/css
+app/static-dist/*
+
+yarn.lock
+yarn-error.log
+npm-debug.log
+
+
+# legacy
 website/env
-changelog.txt
 website/project/local_settings.py
 website/smedia
 website/data.sqlite3
@@ -18,7 +39,6 @@ website/logs
 website/media
 website/components
 website/static
-# website/site-static/css
 website/site-static/.sass-cache
 website/reports
 website/device_data
@@ -26,6 +46,3 @@ website/dev
 website/static/CACHE
 website/celerybeat*
 
-doc/_build
-
-node_modules

@@ -5,15 +5,12 @@ windows:
 - window_name: obp
   layout: tiled
   shell_command_before:
-    - 'source ~/srv/openbroadcast.ch3/bin/activate'
+    - 'source ~/srv/openbroadcast.ch/bin/activate'
+    - 'export DJANGO_SETTINGS_MODULE=app.settings.local_development'
   panes:
     - shell_command:
-        - cd website
         - ./manage.py runserver 0.0.0.0:8081
     - shell_command:
-        - cd website
-        - celery -A project worker --beat -c 1 -l DEBUG
-    - shell_command:
-        - cd services/pushy
-        - node pushy.js
+        - celery -A app worker --beat -c 1 -l INFO
     - npm run watch
+    - ls

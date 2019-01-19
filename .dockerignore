@@ -1,0 +1,12 @@
+bundles
+.DS_Store
+*.pyc
+*.bak
+.idea
+.project
+.tox
+.git
+node_modules
+app/media
+app/data.sqlite3
+app/settings/local_development.py

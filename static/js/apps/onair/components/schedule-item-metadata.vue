@@ -4,7 +4,7 @@
   import {template_filters} from '../../../utils/template-filters';
   import {remote_url_prefix} from '../../../api/utils';
 
-  const DEBUG = true;
+  const DEBUG = false;
 
 
   export default {

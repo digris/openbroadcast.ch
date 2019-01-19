@@ -48,9 +48,6 @@
         "hard-source-webpack-plugin": "^0.12.0",
         "vue-masonry": "^0.11.7"
     },
-    "engines": {
-        "node": "~10.14.1"
-    },
     "babel": {
         "presets": [
             "env"

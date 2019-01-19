@@ -12,7 +12,7 @@ const path = require('path');
 const dev_mode = process.env.NODE_ENV !== 'production';
 
 // points to STATIC_ROOT configured in django
-const STATIC_ROOT = path.resolve(__dirname, 'website', 'static-src');
+const STATIC_ROOT = path.resolve(__dirname, 'app', 'static-src');
 
 // pints to static source folder, un project root
 const STATIC_SRC = path.resolve(__dirname, 'static');

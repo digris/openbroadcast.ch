@@ -1,9 +1,0 @@
-<script src="{{ SOCKET_SERVER }}socket.io/socket.io.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}pushy_client/js/pushy_client.js"></script>
-
-<script>
-	pushy_client = new PushyClientApp;
-	pushy_client.socket_url = '{{ SOCKET_SERVER }}';
-	{% if DEBUG %}pushy_client.debug = true;{% endif %}
-	pushy_client.init();
-</script>

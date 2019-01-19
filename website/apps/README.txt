@@ -1,1 +1,0 @@
-# project related apps

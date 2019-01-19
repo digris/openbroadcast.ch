@@ -339,6 +339,22 @@
                 padding: 18px 0 0 22px;
             }
 
+            .dab {
+                display: flex;
+                align-items: center;
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+
+                span {
+                    padding-right: 10px;
+                }
+
+                img {
+                    height: 30px;
+                }
+            }
+
         }
 
         &__prev-next {
@@ -389,17 +405,17 @@
                         Broadcast<br>
                         Radio<br>
                     </p>
-                    <span class="dab">
-                        DAB+
-                    </span>
+                    <div class="dab">
+                        <span>live on</span>
+                        <img src="/static/img/base/logo.dab.white.png">
+                    </div>
 
                     <div v-if="(!schedule || schedule.length < 1)">
-                        <div @click="play_fallback">** PLAY **</div>
-                        <div @click="stop">** STOP **</div>
+                        <div @click="play_fallback">PLAY</div>
+                        <div @click="stop">STOP</div>
                     </div>
 
                 </div>
-
 
                 <div class="carousel" v-bind:class="{ 'is-visible': carousel_visible }">
                     <schedule-item-detail
@@ -432,7 +448,7 @@
             </div>
 
 
-            <div class="schedule-container__prev-next">
+            <div v-if="onair" class="schedule-container__prev-next">
                 <div class="switch switch--prev" v-bind:style="{ top: (container_size.height / 2) - 20 + 'px' }">
                     <arrow @click="select(-1)" v-bind:disabled="(! has_previous)" direction="left"></arrow>
                 </div>
@@ -443,7 +459,7 @@
 
         </div>
         <div class="rating-container">
-            <thumb-rating v-if="presented_item" v-bind:media="presented_item.item"></thumb-rating>
+            <thumb-rating v-if="(presented_item && onair)" v-bind:media="presented_item.item"></thumb-rating>
         </div>
         <!--
         <div class="debug">
