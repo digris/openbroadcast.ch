@@ -24,7 +24,7 @@ class ScheduleViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets
 
     def get_queryset(self):
         qs = ScheduledItem.objects.filter(
-            time_start__lte=datetime.now()
+            time_start__lte=timezone.now()
         ).order_by('-time_start')
         return qs
 
@@ -35,12 +35,12 @@ class ScheduleViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets
         # add additional meta information
         ###############################################################
         onair_qs = ScheduledItem.objects.filter(
-            time_start__lte=datetime.now(),
-            time_end__gte=datetime.now()
+            time_start__lte=timezone.now(),
+            time_end__gte=timezone.now()
         )
 
         next_item = ScheduledItem.objects.filter(
-            time_start__gte=datetime.now()
+            time_start__gte=timezone.now()
         ).order_by('time_start').first()
 
         response.data.update({

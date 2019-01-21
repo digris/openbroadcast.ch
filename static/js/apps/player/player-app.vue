@@ -188,7 +188,7 @@
             }
 
             this.set_mode('on-demand');
-            opts.url = 'http://local.openbroadcast.ch:8000' + action.item.item.stream.uri;
+            opts.url = action.item.item.stream.uri;
             this.set_current_uuid(action.item.uuid);
             this.select_item(action.item.uuid);
 

@@ -26,7 +26,7 @@ module.exports = {
   output: {
     path: dev_mode ? path.resolve(STATIC_ROOT, 'js') : path.resolve(STATIC_ROOT, 'dist', 'js'),
     filename: "bundle.js",
-    publicPath: 'http://local.openbroadcast.ch:4000/static/js/',
+    publicPath: '/static/js/',
   },
   devtool: 'source-map',
   module: {

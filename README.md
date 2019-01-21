@@ -17,6 +17,26 @@
     dokku tags:deploy ch-openbroadcast latest
 
 
+### dokku app
+
+    dokku apps:create ch-openbroadcast
+    dokku postgres:create ch-openbroadcast
+    dokku postgres:link ch-openbroadcast ch-openbroadcast
+    dokku redis:create ch-openbroadcast 
+    dokku redis:link ch-openbroadcast ch-openbroadcast
+
+    # initial config
+    dokku config:set --no-restart ch-openbroadcast DJANGO_MANAGE_MIGRATE=on
+    dokku config:set --no-restart ch-openbroadcast DJANGO_MANAGE_COLLECTSTATIC=on
+
+    # storage
+    mkdir /data/openbroadcast.ch
+    chown -R dokku:dokku /data/openbroadcast.ch
+    dokku storage:mount ch-openbroadcast /data/openbroadcast.ch:/data/openbroadcast.ch
+    
+    dokku ps:scale ch-openbroadcast web=1 worker=1
+
+
 ### dokku settings
 
 dokku config:set --no-restart ch-openbroadcast \
@@ -26,11 +46,4 @@ dokku config:set --no-restart ch-openbroadcast \
     DJANGO_MANAGE_COLLECTSTATIC=on \
     GANALYTICS_TRACKING_CODE=UA-xxxxxx-X
 
-dokku config:set --no-restart ch-openbroadcast \
-    SOCIAL_AUTH_GOOGLE_OAUTH2_KEY=902566650308-cj6dipb2kcb3b7sl32ms36esousrjr0q.apps.googleusercontent.com \
-    SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET=Rf4Um7pgjnIcSu0mB_bAICek \
-    SOCIAL_AUTH_FACEBOOK_KEY=746436298732388 \
-    SOCIAL_AUTH_FACEBOOK_SECRET=47f8e5a7e926521a78bb13fce12d89bc \
-    REMOTE_API_AUTH_USER=remote \
-    REMOTE_API_AUTH_KEY=d65b075c593f27a42c26e65be74c047e5b50d215
 

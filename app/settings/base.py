@@ -473,12 +473,17 @@ TASTYPIE_DEFAULT_FORMATS = ['json', ]
 ##################################################################
 # channels
 ##################################################################
+if REDIS_URL:
+    CHANNELS_REDIS_HOST = '{}/3'.format(REDIS_URL.rstrip('/'))
+else:
+    CHANNELS_REDIS_HOST = 'redis://localhost:6379/3'
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
             "hosts": [
-                'redis://localhost:6379/3',
+                CHANNELS_REDIS_HOST,
             ],
         },
     },
@@ -493,8 +498,13 @@ from datetime import timedelta
 ##################################################################
 # queues
 ##################################################################
-CELERY_BROKER_URL = 'redis://localhost:6379/6'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/6'
+if REDIS_URL:
+    CELERY_REDIS_HOST = '{}/6'.format(REDIS_URL.rstrip('/'))
+else:
+    CELERY_REDIS_HOST = 'redis://localhost:6379/6'
+
+CELERY_BROKER_URL = CELERY_REDIS_HOST
+CELERY_RESULT_BACKEND = CELERY_REDIS_HOST
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT = ['json',]
 
@@ -680,7 +690,7 @@ LOGGING = {
         'remoteauth': {
             'handlers': ['console', ],
             'propagate': False,
-            'level': 'DEBUG',
+            'level': 'INFO',
         },
     },
 }
