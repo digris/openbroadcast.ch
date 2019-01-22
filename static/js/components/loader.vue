@@ -31,6 +31,8 @@
         height: 14px;
         text-align: center;
         font-size: 0;
+        display: flex;
+        justify-content: space-between;
     }
 
     .spinner > div {

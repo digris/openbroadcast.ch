@@ -242,7 +242,7 @@
                 <span v-if="(player_state === 'stopped')" v-bind:data-account-login-required="(! is_onair)" @click="play(schedule_item)" class="action">
                     <i class="fa fa-play"></i>
                 </span>
-                <span v-if="(player_state === 'buffering')" class="status">
+                <span v-if="(player_state === 'buffering')" @click="stop(schedule_item)" class="status">
                     <loader></loader>
                 </span>
                 <span v-if="(player_state === 'playing')" @click="stop(schedule_item)" class="action">

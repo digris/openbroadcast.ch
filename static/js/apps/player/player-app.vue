@@ -1,8 +1,9 @@
 <script>
 
   import soundmanager from 'soundmanager2/script/soundmanager2-html5';
+  //import soundmanager from 'soundmanager2/script/soundmanager2';
 
-  const DEBUG = false;
+  const DEBUG = true;
 
 
   const STREAMS = {
@@ -123,13 +124,19 @@
           // TODO: not so nice... resetting position.
           this.set_position(0);
 
+          // TODO: not so nice... assume buffering
+          this.set_player_state('buffering');
+
           let opts = {
             url: null,
             type: 'audio/mp3',
             whileplaying: () => {
               // console.debug('PlayerApp - whileplaying:', this.player);
 
+              // console.debug('PlayerApp - whileplaying: playState', this.player.playState, 'readyState', this.player.readyState, this.player);
+
               if (this.player.position > 0 && this.player.playState === 1) {
+
                 this.set_player_state('playing');
 
                 const position = this.player.position / (this.player.duration || this.player.durationEstimate);
@@ -164,11 +171,11 @@
               //   do: 'play',
               //   item: this.schedule[0]
               // })
+            },
+            onsuspend: () => {
+              console.debug('sm2 - onsuspend', this.player)
             }
           };
-
-
-          let url = null;
 
           // check if stream or on-demand
           if (action.item && action.item.uuid === this.onair) {
@@ -195,6 +202,8 @@
           }
 
           this.player.stop();
+          //this.player.unload();
+          //console.debug('this.player.play(opts);')
           this.player.play(opts);
 
         }
@@ -212,6 +221,8 @@
           this.player.unload();
           this.player.stop();
           this.set_current_uuid(null);
+
+          //window.stop();
 
           this.set_player_state('stopped');
         }
@@ -238,7 +249,7 @@
       initialize_player: function () {
         if (DEBUG) console.debug('PlayerApp: - initialize_player');
         soundManager.setup({
-          forceUseGlobalHTML5Audio: true,
+          //forceUseGlobalHTML5Audio: true,
           html5PollingInterval: 50,
           debugMode: DEBUG,
           onready: () => {

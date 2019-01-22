@@ -372,11 +372,13 @@
 
                         <div v-if="(player_state === 'playing')" @click.prevent="stop" class="action action--stop">
                             <div class="action__text">
-                                <i class="fa fa-stop"></i>
+                                <!--<i class="fa fa-stop"></i>-->
+                                <loader v-bind:scale="3"
+                                        v-bind:color="((actions_hover) ? '#000' : '#fff')"></loader>
                             </div>
                         </div>
 
-                        <div v-if="(player_state === 'buffering')" class="action action--buffering">
+                        <div v-if="(player_state === 'buffering')" @click.prevent="stop" class="action action--buffering">
                             <div class="action__text">
                                 <loader v-bind:scale="3"
                                         v-bind:color="((actions_hover) ? '#000' : '#fff')"></loader>

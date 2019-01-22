@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import store from './store';
-import hotEmitter from 'webpack/hot/emitter'
+import hotEmitter from 'webpack/hot/emitter';
+import NoSleep from 'nosleep.js';
 
 import SiteUI from './apps/site';
 import LiveColor from './apps/live-color';
@@ -26,6 +27,20 @@ class AppInitializer {
         this.bindings();
         this.setup_apps();
         this.setup_legacy();
+
+        // if(navigator && navigator.platform && navigator.platform === 'iPhone') {
+        //
+        //     const noSleep = new NoSleep();
+        //
+        //     document.addEventListener('click', function enableNoSleep() {
+        //       document.removeEventListener('click', enableNoSleep, false);
+        //       noSleep.enable();
+        //
+        //       console.log('noSleep', noSleep);
+        //
+        //     }, false);
+        //
+        // }
     };
 
     bindings() {

@@ -26,7 +26,7 @@
 
     {% block meta_opengraph %}{% endblock %}
 
-    <link rel="icon" type="image/png" href="{{ STATIC_URL }}img/base/icon.png"/>
+    {% include '_artwork/_icons.html' %}
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" />
 
@@ -61,7 +61,7 @@
     {% render_block "js-post" %}
 
 </head>
-<body id="base" class="{% block body_extra_class %}{% endblock %}" data-livebg data-bplayer_state="init">
+<body id="base" class="{% block body_extra_class %}{% endblock %}" data-livebg data-bplayer_state="init" ontouchstart="">
 
 
 
