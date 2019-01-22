@@ -1,0 +1,74 @@
+before_script:
+  - docker info
+  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  # ssh
+  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+  - mkdir -p ~/.ssh
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
+
+variables:
+  PROJECT_KEY: ch-openbroadcast
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+  DOKKU_IMAGE_TAG: dokku/$PROJECT_KEY:$CI_COMMIT_REF_NAME
+
+
+stages:
+  - build
+  - deploy
+  - deploy-sites
+  - post-deploy
+
+
+build:
+  stage: build
+  only:
+    - branches
+  script:
+    - echo "IMAGE_TAG:"           $IMAGE_TAG
+    - echo "PROJECT_KEY:"         $PROJECT_KEY
+    - echo "DOKKU_IMAGE_TAG:"     $DOKKU_IMAGE_TAG
+    - echo "DOKKU_HOST:"          $DOKKU_HOST
+    - echo "CI_DEPLOY_USER:"      $CI_DEPLOY_USER
+    - echo "CI_DEPLOY_PASSWORD:"  $CI_DEPLOY_PASSWORD
+    # build and add image for internal registry
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+
+
+deploy-image:
+  stage: deploy
+  only:
+    - master
+  script:
+    - echo "CI_DEPLOY_USER:"      $CI_DEPLOY_USER
+    - echo "CI_DEPLOY_PASSWORD:"  $CI_DEPLOY_PASSWORD
+    - echo "CI_REGISTRY:"         $CI_REGISTRY
+    - echo "IMAGE_TAG:"           $IMAGE_TAG
+    - echo "PROJECT_KEY:"         $PROJECT_KEY
+    - echo "CI_COMMIT_REF_NAME:"  $CI_COMMIT_REF_NAME
+    - echo "DOKKU_HOST:"          $DOKKU_HOST
+    # pull image on dokku host
+    - ssh root@$DOKKU_HOST "docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY"
+    - ssh root@$DOKKU_HOST "docker pull $IMAGE_TAG"
+    - ssh root@$DOKKU_HOST "docker tag $IMAGE_TAG $DOKKU_IMAGE_TAG"
+
+
+deploy-sites:
+  stage: deploy-sites
+  only:
+    - master
+  script:
+    # openbroadcast.ch
+    - ssh root@$DOKKU_HOST "docker tag dokku/ch-openbroadcast:master dokku/ch-openbroadcast:master"
+    - ssh root@$DOKKU_HOST "dokku tags:deploy ch-openbroadcast master"
+
+
+post-deploy:
+  stage: post-deploy
+  only:
+  - master
+  script:
+  - ssh root@$DOKKU_HOST "dokku cleanup --global"
