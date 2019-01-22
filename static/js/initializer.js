@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import store from './store';
+import VueLazyload from 'vue-lazyload';
 import hotEmitter from 'webpack/hot/emitter';
 import NoSleep from 'nosleep.js';
 
@@ -14,8 +15,11 @@ import PlayerApp from './apps/player/player-app.vue';
 const DEBUG = false;
 
 
-hotEmitter.on("webpackHotUpdate", (currentHash) => {
-    if (DEBUG) console.debug('webpackHotUpdate', currentHash);
+Vue.use(VueLazyload, {
+  preLoad: 1.0,
+  error: '/static/img/base/error.png',
+  loading: '/static/img/base/loading.png',
+  attempt: 1
 });
 
 

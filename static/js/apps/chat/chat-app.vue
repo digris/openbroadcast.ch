@@ -190,8 +190,8 @@
 </style>
 
 <template>
-    <div class="chat-app" v-bind:class="{ 'chat-app--enabled': visible }">
-        <div v-if="(! visible)" @click="enable" data-account-login-required class="chat-info">
+    <div class="chat-app" v-bind:class="{ 'chat-app--enabled': (visible && user) }">
+        <div v-if="(! visible || ! user)" @click="enable" data-account-login-required class="chat-info">
 
             <div class="chat-icon">
 

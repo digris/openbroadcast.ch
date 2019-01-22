@@ -19,6 +19,7 @@ server {
 
   # icecast reverse proxy
   location /stream/ {
+    add_header Access-Control-Allow-Origin *;
     rewrite ^/stream/(.*) /$1 break;
     proxy_pass http://81.171.26.66;
   }
@@ -111,6 +112,7 @@ server {
 
   # icecast reverse proxy
   location /stream/ {
+    add_header Access-Control-Allow-Origin *;
     rewrite ^/stream/(.*) /$1 break;
     proxy_pass http://81.171.26.66;
   }

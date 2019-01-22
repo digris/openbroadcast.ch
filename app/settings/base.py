@@ -117,7 +117,7 @@ INSTALLED_APPS = [
     'tastypie', # TODO: remove tastypie (apiv1)
 
     # TODO: check if can be removed
-    'compressor',
+    #'compressor',
     #'analytics',
     'absolute',
 
@@ -650,6 +650,11 @@ LOGGING = {
             'level': 'ERROR',
             'handlers': ['console'],
             'propagate': False,
+        },
+        'django': {
+            'handlers': ['console'],
+            'propagate': False,
+            'level': 'INFO',
         },
         'raven': {
             'level': 'INFO',

@@ -1,7 +1,7 @@
 <script>
 
-  import soundmanager from 'soundmanager2/script/soundmanager2-html5';
-  //import soundmanager from 'soundmanager2/script/soundmanager2';
+  //import soundmanager from 'soundmanager2/script/soundmanager2-html5';
+  import soundmanager from 'soundmanager2/script/soundmanager2';
 
   const DEBUG = true;
 
@@ -180,9 +180,12 @@
           // check if stream or on-demand
           if (action.item && action.item.uuid === this.onair) {
 
+            console.debug(action.item)
+
             this.set_mode('live');
             opts.url = this.stream.url;
             opts.type = this.stream.type;
+            //opts.title = action.item.item.name + ' - On Air';
             this.set_current_uuid(null);
             this.select_item(null)
 
@@ -196,6 +199,7 @@
 
             this.set_mode('on-demand');
             opts.url = action.item.item.stream.uri;
+            //opts.title = action.item.item.name;
             this.set_current_uuid(action.item.uuid);
             this.select_item(action.item.uuid);
 
@@ -220,9 +224,13 @@
         if (action.do === 'stop') {
           this.player.unload();
           this.player.stop();
+
+          if(navigator && navigator.platform && navigator.platform === 'iPhone') {
+            window.stop();
+          }
+
           this.set_current_uuid(null);
 
-          //window.stop();
 
           this.set_player_state('stopped');
         }
@@ -249,14 +257,15 @@
       initialize_player: function () {
         if (DEBUG) console.debug('PlayerApp: - initialize_player');
         soundManager.setup({
-          //forceUseGlobalHTML5Audio: true,
+          forceUseGlobalHTML5Audio: true,
           html5PollingInterval: 50,
           debugMode: DEBUG,
           onready: () => {
             if (DEBUG) console.debug('PlayerApp: - soundManager ready');
             this.player = soundManager.createSound({
               multiShot: false,
-              id: 'player_app_player'
+              id: 'player_app_player',
+              title: 'Open Broadcast'
             });
           }
         });

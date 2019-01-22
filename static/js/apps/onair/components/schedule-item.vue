@@ -47,7 +47,11 @@
       visible() {
         // we have 2 visible positions at the right side & 4 at the left side
         // to keep things more or less fast elements have to be removed from dom
-        return (this.relative_offset < 15 && this.relative_offset > -30)
+        return (this.relative_offset < 30 && this.relative_offset > -30)
+      },
+
+      load_image() {
+        return (this.relative_offset < 10 && this.relative_offset > -30)
       },
 
       transform() {
@@ -353,8 +357,11 @@
              v-bind:style="transform">
             <div class="schedule-item__visual">
                 <picture>
-                    <source :srcset="key_image">
-                    <img :src="key_image">
+                    <!--<img :src="key_image">-->
+                    <div v-if="(load_image && key_image)">
+                        <!--<img v-lazy="key_image">-->
+                        <img :src="key_image">
+                    </div>
                 </picture>
                 <transition name="fade">
                     <div v-if="is_current" class="actions" @mouseover="actions_hover = true" @mouseout="actions_hover = false">
@@ -372,9 +379,9 @@
 
                         <div v-if="(player_state === 'playing')" @click.prevent="stop" class="action action--stop">
                             <div class="action__text">
-                                <!--<i class="fa fa-stop"></i>-->
-                                <loader v-bind:scale="3"
-                                        v-bind:color="((actions_hover) ? '#000' : '#fff')"></loader>
+                                <i class="fa fa-stop"></i>
+                                <!--<loader v-bind:scale="3"
+                                        v-bind:color="((actions_hover) ? '#000' : '#fff')"></loader>-->
                             </div>
                         </div>
 

@@ -1,5 +1,36 @@
-{% load menu_tags i18n %}
-<footer id="footer" data-livebg_>
+{% load i18n %}
+<footer id="footer" class="footer-container">
+
+    <div class="footer">
+        <div class="footer-social">
+            <div class="footer-social__item">
+                <div class="social-profile">
+                    <a href="https://www.facebook.com/OpenBroadcast/"
+                       target="_blank"
+                       class="social-profile__link"
+                       title="{% trans 'Visit us on Facebook' %}">
+                        <div class="fa fa-facebook fa-2x"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-social__item">
+                <div class="social-profile">
+                    <a href="https://twitter.com/openbroadcast"
+                       target="_blank"
+                       class="social-profile__link"
+                       title="@Digrisag">
+                        <div class="fa fa-twitter fa-2x"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+    <!--
     <div class="row">
         <div class="small-12 medium-10 medium-offset-1 columns">
             <div class="row">
@@ -28,4 +59,6 @@
             </div>
         </div>
     </div>
+    -->
+
 </footer>

@@ -26,7 +26,10 @@
         return this.$store.getters['account/user'];
       },
       is_own() {
-        return (this.user && this.message && (this.user.uuid == this.message.sender.id))
+        if (! (this.user && this.message)) {
+          return false;
+        }
+        return (this.user.uuid == this.message.sender.id) || (this.user.id == this.message.sender.id)
       }
     },
     filters: template_filters
@@ -131,7 +134,7 @@
         </div>
         <div class="message__appendix">
             <span class="user">
-                <span v-if="is_own">me</span>
+                <span v-if="is_own">du</span>
                 <span v-else>{{ message.sender.display_name }}</span>
             </span>
             |
