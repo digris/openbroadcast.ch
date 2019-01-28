@@ -13,22 +13,18 @@
     &:focus
       border-color: $dark-gray
 
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active
+    -webkit-box-shadow: 0 0 0 30px white inset
+
   //button
   //  outline: none
 
 
 
-
-
-
-// django-simple-captcha
-=captcha
-  display: flex
-  .captcha-text
-    flex-grow: 1
-  .captcha-image
-    img
-      height: 32px
 
 =input-container
   margin: 0 0 16px 0
@@ -38,28 +34,48 @@
     display: flex
     flex-wrap: wrap
     width: 100%
-    &__label
-      display: flex
-      align-items: center
-      width: 34%
-    &__input
-      width: 66%
-      input
-        width: 100%
-        padding: 6px 8px 6px
+
+
+
+    .fl-wrap-input
+      width: 100%
+
+      .fl-label
+        //color: black
+        //background: #fff
+        //padding: 2px
+        //left: 10px
+        //top: 0px
+
+      //input
+      //  padding: 8px 12px
+      //  width: 100%
+
+    //&__label
+    //  display: flex
+    //  align-items: center
+    //  width: 34%
+    //
+    //&__input
+    //  width: 66%
+    //  input
+    //    width: 100%
+    //    padding: 6px 8px 6px
+
   &__appendix
   &__field-help
     display: none
     width: 100%
-    text-align: right
+    //text-align: right
     font-size: 80%
     opacity: 0.8
   &__field-errors
     width: 100%
-    text-align: right
+    //text-align: right
     font-size: 80%
     font-weight: 400
     color: $alert-color
+    padding-left: 4px
   &--has-errors &
     &__field__input
       input
@@ -71,6 +87,7 @@
         border-left: 0
         img
           height: 30px !important
+
   // special elements
-  .captcha-container
-    +captcha
+  //.captcha-container
+  //  +captcha

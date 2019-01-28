@@ -319,7 +319,7 @@
     }
 
     .player-container {
-        @include xy-grid-container(960px, 0);
+        @include xy-grid-container(800px, 0);
     }
 
     .playlist {

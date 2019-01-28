@@ -37,26 +37,22 @@
 
 
         .modal-container {
-            width: 600px;
+            background: $white;
+            width: 440px;
             max-width: 100%;
             min-height: 400px;
             display: flex;
             flex-direction: column;
-
-
 
             @include breakpoint(small only) {
                 width: 100vw;
                 height: 100vh;
             }
 
-
-
             .modal-header {
                 .modal-topbar {
-                    background: $white;
                     display: flex;
-                    height: 28px;
+                    height: 36px;
 
                     .modal-topbar-title {
                         flex-grow: 1;
@@ -64,13 +60,12 @@
 
                     .modal-topbar-menu {
                         display: flex;
-
+                        z-index: 999;
                         a {
                             background: $white;
                             color: $primary-color;
-                            //line-height: 28px;
                             display: block;
-                            padding: 6px 10px 0 10px;
+                            padding: 10px 10px 0 0;
                             text-transform: uppercase;
                         }
                     }
@@ -78,7 +73,8 @@
             }
 
             .modal-content {
-                background: $white;
+                margin-top: -32px;
+                //background: $white;
                 flex: 1;
                 overflow: auto;
             }
@@ -118,7 +114,23 @@
                             <slot name="title"></slot>
                         </div>
                         <div class="modal-topbar-menu">
-                            <a @click="close" class="">Close<span> (esc)</span></a>
+                            <a @click="close" class="">
+                                <svg version="1.1"
+                                     xmlns="http://www.w3.org/2000/svg"
+                                     xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     x="0px"
+                                     y="0px"
+                                     width="22px"
+                                     height="22px"
+                                     viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;"
+                                     xml:space="preserve">
+                                    <polygon fill="#000" points="22.5,0 12,10.5 1.5,0 0,1.5 10.5,12 0,22.5 1.5,24 12,13.5 22.5,24 24,22.5 13.5,12 24,1.5 "/>
+                                </svg>
+
+                                <!--
+                                <i class="fa fa-times"></i>
+                                -->
+                            </a>
                         </div>
                     </div>
                 </header>

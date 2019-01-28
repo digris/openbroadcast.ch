@@ -3,23 +3,30 @@
 {% block app_content %}
 
 
+
         <div class="auth-card">
 
-            <span class="title">{% trans "Sign up"|title %}</span>
+            <span class="title">{% trans "Sign in"|title %}</span>
 
             <p class="text">
                 Melde dich bei open broadcast an, um unser Radioprogramm zu kommentieren oder bei der Community mitzumachen.
             </p>
 
             <div class="form-container">
-                <form method="post" class="form-base form-account account-partial" data-xhr-exclude action="{% url 'account:register-partial' %}">
+                <form method="post" class="form-base account-partial" data-xhr-exclude action="{% url 'account:login-partial' %}">
                     {% csrf_token %}
 
-                    {% for field in form.visible_fields %}
+                    {{ form.non_field_errors }}
+
+                    {% for field in form %}
                         <div class="input-container{% if field.errors %} input-container--has-errors{% endif %}" id="input_{{ field.id_for_label }}">
                             <div class="input-container__field">
-                                {{ field.label_tag }}
-                                {{ field }}
+                                <div class="input-container__field__label">
+                                    {{ field.label_tag }}
+                                </div>
+                                <div class="input-container__field__input">
+                                    {{ field }}
+                                </div>
                             </div>
                             <div class="input-container__appendix">
                                 {% if field.help_text and not field.errors %}
@@ -39,31 +46,34 @@
                     {% endfor %}
 
                     <div class="actions">
-                        <button class="actions__action button" type="submit">{% trans "Create Account" %}</button>
+                        <button class="actions__action button" type="submit">{% trans "Login" %}</button>
                     </div>
                 </form>
             </div>
             <div class="form-appendix">
 
                 <span>
-                    <a @click.prevent="$emit('show', 'login')"
-                       href="#">{% trans 'login'|capfirst %}</a>
-                    <span>{% trans "if you already have an account" %}</span>
+                    <a @click.prevent="$emit('show', 'register')"
+                       href="#">Neues Konto erstellen?</a>
+                    <!--<a @click.prevent="$emit('show', 'register')"
+                       href="#">{% trans 'sign up'|capfirst %}</a><span>{% trans "if you don\'t have an account yet" %}</span>-->
+
                 </span>
 
             </div>
 
             <div class="form-separator">
-                {% trans "or use your e-mail address" %}
+                Oder anmelden mit:
             </div>
 
             <div class="social-login-container">
                 {% for backend in backends.backends %}
                     <div class="auth-social auth-social-{{ backend }}" data-turbolinks="false">
-                        {% backend_detail backend 'register' %}
+                        {% backend_detail backend %}
                     </div>
                 {% endfor %}
             </div>
+
 
         </div>
 

@@ -11,15 +11,31 @@
                 Melde dich bei open broadcast an, um unser Radioprogramm zu kommentieren oder bei der Community mitzumachen.
             </p>
 
+            <div class="social-login-container">
+                {% for backend in backends.backends %}
+                    <div class="auth-social auth-social-{{ backend }}" data-turbolinks="false">
+                        {% backend_detail backend 'register' %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="form-separator">
+                {% trans "or use your e-mail address" %}
+            </div>
+
             <div class="form-container">
-                <form method="post" class="form-base form-account account-partial" data-xhr-exclude action="{% url 'account:register-partial' %}">
+                <form method="post" class="form-base account-partial" data-xhr-exclude action="{% url 'account:register-partial' %}">
                     {% csrf_token %}
 
-                    {% for field in form.visible_fields %}
+                    {% for field in form %}
                         <div class="input-container{% if field.errors %} input-container--has-errors{% endif %}" id="input_{{ field.id_for_label }}">
                             <div class="input-container__field">
-                                {{ field.label_tag }}
-                                {{ field }}
+                                <div class="input-container__field__label">
+                                    {{ field.label_tag }}
+                                </div>
+                                <div class="input-container__field__input">
+                                    {{ field }}
+                                </div>
                             </div>
                             <div class="input-container__appendix">
                                 {% if field.help_text and not field.errors %}
@@ -52,19 +68,6 @@
                 </span>
 
             </div>
-
-            <div class="form-separator">
-                {% trans "or use your e-mail address" %}
-            </div>
-
-            <div class="social-login-container">
-                {% for backend in backends.backends %}
-                    <div class="auth-social auth-social-{{ backend }}" data-turbolinks="false">
-                        {% backend_detail backend 'register' %}
-                    </div>
-                {% endfor %}
-            </div>
-
         </div>
 
 {% endblock %}

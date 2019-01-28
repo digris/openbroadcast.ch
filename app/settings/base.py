@@ -28,6 +28,7 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, 'tools'))
 SITE_ID = config('SITE_ID', cast=int, default=1)
 SITE_URL = config('SITE_URL', default='http://localhost:8080/')
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*,', cast=Csv())
+PREPEND_WWW = config('PREPEND_WWW', default=False, cast=bool)
 
 
 ##################################################################
@@ -596,6 +597,18 @@ FILE_UPLOAD_HANDLERS = [
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
+##################################################################
+# captcha
+##################################################################
+CAPTCHA_FILTER_FUNCTIONS = []
+CAPTCHA_LETTER_ROTATION = (-12, 12)
+CAPTCHA_BACKGROUND_COLOR = '#ffffff'
+CAPTCHA_FOREGROUND_COLOR = '#000000'
+CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_dots',)
+CAPTCHA_FILTER_FUNCTIONS = []
+CAPTCHA_PUNCTUATION = '''_"',.;:-'''
+CAPTCHA_LENGTH = 6
+CAPTCHA_IMAGE_SIZE = (160, 50)
 
 
 ##################################################################

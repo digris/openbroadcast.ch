@@ -1080,10 +1080,6 @@ builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
 
-buzz@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/buzz/-/buzz-1.2.0.tgz#f93d07eaebe00c8069b66ee2510062b3f9f6100f"
-
 bytes@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.0.0.tgz#d32815404d689699f85a4ea4fa8755dd13a96048"
@@ -2206,6 +2202,10 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
+float-labels.js@^3.3.6:
+  version "3.3.6"
+  resolved "https://registry.yarnpkg.com/float-labels.js/-/float-labels.js-3.3.6.tgz#898c3efad1f35f419b061eae594a6f919a4df1c4"
+
 flush-write-stream@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/flush-write-stream/-/flush-write-stream-1.0.3.tgz#c5d586ef38af6097650b49bc41b55fabb19f35bd"
@@ -2567,10 +2567,6 @@ home-or-tmp@^2.0.0:
 hosted-git-info@^2.1.4:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.7.1.tgz#97f236977bd6e125408930ff6de3eec6281ec047"
-
-howler@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/howler/-/howler-2.1.1.tgz#b8ae44b83f4b8a5b5ef354030ed0927314d8a996"
 
 hpack.js@^2.1.6:
   version "2.1.6"
@@ -3081,10 +3077,6 @@ kind-of@^5.0.0:
 kind-of@^6.0.0, kind-of@^6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.2.tgz#01146b36a6218e64e58f3a8d66de5d7fc6f6d051"
-
-laziestloader@^0.7.3:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/laziestloader/-/laziestloader-0.7.3.tgz#6257b082442c751ea1eca9f0d2aa59f690a1a214"
 
 lcid@^1.0.0:
   version "1.0.0"

@@ -1,5 +1,8 @@
 <script>
 
+  import Vue from 'vue';
+  import FloatLabels from 'float-labels.js';
+
   import APIClient from '../api/client';
   import ClickOutside from 'vue-click-outside';
   import Modal from '../components/modal.vue'
@@ -19,7 +22,8 @@
       return {
         show_modal: false,
         is_authenticated: false,
-        body: '<h1></h1>'
+        body: '<h1></h1>',
+        float_labels: null
       }
     },
     mounted() {
@@ -93,6 +97,11 @@
         APIClient.get(url)
           .then((response) => {
             this.body = response.data;
+
+            Vue.nextTick(() => {
+              this.initialize_form();
+            })
+
           }, (error) => {
             console.error('AccountApp - error loading item', error)
           });
@@ -104,7 +113,17 @@
         this.hide();
         Turbolinks.visit(url);
       },
+      initialize_form() {
 
+        if (this.float_labels) {
+          this.float_labels.destroy();
+        }
+
+        this.float_labels = new FloatLabels('.form-account', {
+          style: 2,
+          inputRegex: /email|number|password|search|tel|text|url|date/,
+        });
+      },
       process_form(form) {
 
         const _form = $(form);
@@ -139,6 +158,11 @@
 
             } else {
               this.body = response.data;
+
+              Vue.nextTick(() => {
+                this.initialize_form();
+              })
+
             }
             //this.content_bindings();
           }, (error) => {
@@ -163,6 +187,7 @@
 <style lang="scss">
     @import '../../sass/site/settings';
     @import '../../sass/site/element/form';
+    @import '../../sass/site/element/float-labels';
     @import '~foundation-sites/scss/foundation';
 
     .account-app {
@@ -172,15 +197,18 @@
 
     .auth-card {
 
-        padding: 10px 20px;
+        padding: 10px 20px 20px;
         min-height: 360px;
         display: flex;
         flex-direction: column;
 
         height: 100%;
 
+        position: relative;
+
         .title {
-            margin-bottom: 24px;
+
+            margin-bottom: 12px;
             font-weight: normal;
         }
 
@@ -189,8 +217,8 @@
         }
 
         .form-separator {
-            text-align: center;
-            margin: 24px 0;
+            //text-align: center;
+            margin: 18px 0 8px;
             display: inline-block;
         }
 
@@ -229,7 +257,7 @@
                     align-items: center;
                     align-content: center;
                     flex-direction: column;
-                    margin: 24px 0;
+                    margin: 24px 0 8px;
 
                     .button {
                         width: 100%;
@@ -254,7 +282,79 @@
         }
 
         #input_id_tos {
-            font-size: 80%;
+            // font-size: 90%;
+            .input-container__field {
+                display: flex;
+
+                /*
+                input {
+                    height: 24px;
+                    //font-size: 24px;
+                    transform: scale(1.4);
+                }
+                */
+
+                input[type="checkbox"] {
+                    cursor: pointer;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    position: relative;
+                    box-sizing: content-box;
+                    width: 24px;
+                    height: 24px;
+                    border: 1px solid #000;
+                    transition: all 240ms;
+
+                    &:focus {
+                    outline: 0 none;
+                    box-shadow: none;
+                    }
+
+                    &:checked {
+                        background-color: #000;
+                    }
+
+                    &:after {
+                        /*position: absolute;*/
+                        /*top: 2px;*/
+                        /*bottom: 0;*/
+                        /*left: 1px;*/
+                        /*right: 0;*/
+                        /*content: "\274c";*/
+                        /*font-size: 20px;*/
+                        /*line-height: 24px;*/
+                        /*text-align: center;*/
+                    }
+
+
+                }
+
+                label {
+                    order: 2;
+                    padding-left: 8px;
+                }
+            }
+        }
+
+        // hacks...
+        #input_id_captcha_1 {
+
+            .input-container__field {
+                display: flex;
+
+                .fl-wrap-input {
+                    width: auto;
+                    flex-grow: 1;
+                }
+
+                img {
+                    order: 2;
+                    height: 50px;
+                }
+
+            }
+
+
         }
 
     }
@@ -262,35 +362,25 @@
     .social-login-container {
 
         display: flex;
+        flex-direction: column;
 
-        @include breakpoint(small only) {
-            flex-direction: column;
-            .auth-social {
-                padding: 0 !important;
-                margin-bottom: 10px;
-            }
+        .auth-social {
+            //padding: 0 !important;
+            margin-bottom: 2px;
         }
-
 
 
         .auth-social {
             flex-grow: 1;
 
-            &:nth-child(1) {
-                padding-right: 10px;
-            }
-
-            &:nth-child(2) {
-                padding-left: 10px;
-            }
-
             .auth-social-button {
-                display: block;
+                display: flex;
                 color: $black;
                 padding: 6px 6px;
-                border: 1px solid black;
+                //border: 1px solid rgba(0, 0, 0, .1);
                 width: 100%;
                 transition: background 0.2s;
+                background: rgba(0, 0, 0, .1);
 
                 &:hover {
                     //ackground: rgba($primary-color, .05);
@@ -298,7 +388,7 @@
                     color: $white;
                 }
 
-                @include clearfix;
+                //@include clearfix;
 
                 .icon-container {
                     display: block;
@@ -307,6 +397,7 @@
 
                     img.icon {
                         height: 18px;
+                        filter: grayscale(100%);
                     }
                 }
 
@@ -320,13 +411,19 @@
             // provider styles
             .auth-social-button-google {
                 color: $black;
+
+                &:hover {
+                    img.icon {
+                        filter: grayscale(0%);
+                    }
+                }
             }
 
             .auth-social-button-facebook {
                 color: $black;
 
                 &:hover {
-                    .icon {
+                    img.icon {
                         filter: brightness(500%);
                     }
                 }

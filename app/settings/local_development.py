@@ -5,7 +5,6 @@ from .development import *
 #######################################################################
 DEBUG = True
 
-
 API_BASE_AUTH = {
     'username': 'remote',
     'api_key': 'd65b075c593f27a42c26e65be74c047e5b50d215',

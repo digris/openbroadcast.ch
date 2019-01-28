@@ -43,6 +43,11 @@ class RegistrationForm(UserCreationForm):
             'required': _('You must agree to the Terms of Service to register.'),
         }
     )
+    # TODO: implement own loqic without password repeat
+    password2 = forms.CharField(
+        widget=forms.HiddenInput,
+        required=False
+    )
 
     field_order = [
         'email',
@@ -60,6 +65,10 @@ class RegistrationForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
+
+    # TODO: implement own loqic without password repeat
+    def clean_password2(self):
+        return True
 
 
     def clean_username(self):
