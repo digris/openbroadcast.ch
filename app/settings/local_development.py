@@ -3,7 +3,7 @@ from .development import *
 #######################################################################
 # use this file to extend / override `settings.development`
 #######################################################################
-DEBUG = False
+DEBUG = True
 
 API_BASE_AUTH = {
     'username': 'remote',
