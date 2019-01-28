@@ -4,64 +4,25 @@
 
 .program-plugin .program-list
 
+  .header,
   .emission
-    border-top: 2px solid transparent
-    padding: 10px 0 20px
+    display: flex
+    flex-direction: row
+
+    &__airtime
+      width: 10%
+      min-width: 80px
+      padding: 4px 2px
 
     &__title
-      display: flex
-      &__time
-        width: 25%
-        text-align: right
-        padding-right: 10px
-      &__name
-        padding-left: 10px
-        width: 75%
+      width: 40%
+      padding: 4px 2px
+
+    &__author
+      width: 40%
+      padding: 4px 2px
+
+  .header
+    border-bottom: 1px solid #fff
 
 
-    &__text
-      margin-left: 25%
-      padding-left: 10px
-      //text-align: center
-
-
-
-.program-plugin .program-list
-
-  .date-separator
-    margin-bottom: 20px
-
-  .item
-
-    margin: 0 0 0
-    padding: 10px 10px 20px
-    border-top-width: 2px
-    border-top-style: solid
-
-    h3
-      text-align: center
-      margin-bottom: 20px
-      .time
-        padding-right: 20px
-
-    .classification
-
-      .header
-        text-align: center
-        margin: 10px 0 10px
-        span
-          opacity: 0.7
-          padding-left: 10px
-      .body
-        padding: 0 10px
-
-    .credits
-      text-align: center
-
-      span
-        opacity: 0.7
-
-      a
-        text-decoration: underline
-        &:hover
-          opacity: 0.5

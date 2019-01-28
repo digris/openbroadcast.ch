@@ -2,26 +2,39 @@
 
 <div class="program-plugin">
     <div class="program-list">
+
+            <div class="header" data-livefg>
+                <div class="header__airtime">
+                    Airtime
+                </div>
+                <div class="header__title">
+                    Program
+                </div>
+                <div class="header__author">
+                    Editor
+                </div>
+            </div>
+
         {% for emission in emissions %}
-            <div class="emission" data-livefg>
-                <h3 class="emission__title">
-                    <span class="emission__title__time">
-                        {{ emission.time_start|slice:'11:16' }}
-                    </span>
-                    <span class="emission__title__name">
-                    {% if emission.series %}
-                        {{ emission.series }}
-                        {% if emission.series_number %}#{{ emission.series_number }}{% endif %}
-                    {% else %}
-                        {{ emission.name }}
-                    {% endif %}
-                    </span>
-                </h3>
-                <p class="emission__text">
-                    <span><span class="dim">{% trans 'Kuratiert' %}:</span> {{ emission.user_co.pseudonym }}</span>
-                    &mdash;
-                    <span><span class="dim">{% trans 'Programmiert' %}:</span> {{ emission.user.pseudonym }}</span>
-                </p>
+
+            <div class="emission">
+
+                <div class="emission__airtime">
+                     {{ emission.time_start|slice:'11:16' }}
+                </div>
+                <div class="emission__title">
+                    <a href="{{ settings.REMOTE_BASE_URL }}{{ emission.content_object.absolute_url }}" target="_blank">
+                        {% if emission.series %}
+                            {{ emission.series }}
+                            {% if emission.series_number %}#{{ emission.series_number }}{% endif %}
+                        {% else %}
+                            {{ emission.name }}
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="emission__author">
+                    <a href="{{ settings.REMOTE_BASE_URL }}{{ emission.user_co.absolute_url }}" target="_blank">{{ emission.user_co.display_name }}</a>
+                </div>
             </div>
         {% endfor %}
     </div>

@@ -1,6 +1,7 @@
 <script>
 
   import Loader from '../../../components/loader.vue';
+  import Playing from '../../../components/playing.vue';
   import {template_filters} from '../../../utils/template-filters';
 
   const DEBUG = false;
@@ -14,7 +15,8 @@
       'index',
     ],
     components: {
-      Loader
+      Loader,
+      Playing
     },
     computed: {
 
@@ -246,7 +248,8 @@
                     <loader></loader>
                 </span>
                 <span v-if="(player_state === 'playing')" @click="stop(schedule_item)" class="action">
-                    <i class="fa fa-stop"></i>
+                    <playing></playing>
+                    <!--<i class="fa fa-stop"></i>-->
                 </span>
             </div>
 

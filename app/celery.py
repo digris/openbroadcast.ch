@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import
+from __future__ import absolute_import, unicode_literals
 import os
 from django.conf import settings
 from celery import Celery
-from datetime import timedelta
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
 

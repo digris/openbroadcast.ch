@@ -241,16 +241,20 @@
         padding: 40px 40px 40px;
 
         @include breakpoint(medium only) {
-            padding: 30px 20px 40px;
+            padding: 30px 20px 30px;
         }
 
         @include breakpoint(small only) {
-            padding: 30px 10px;
+            padding: 28px 10px 20px;
         }
     }
 
     .stationtime-container {
         margin-bottom: 32px;
+
+        @include breakpoint(small only) {
+            margin-bottom: 24px;
+        }
     }
 
     .schedule-container {
@@ -382,6 +386,10 @@
 
     .rating-container {
         margin-top: 32px;
+
+        @include breakpoint(small only) {
+            margin-top: 24px;
+        }
     }
 
 </style>
@@ -401,9 +409,9 @@
                 <div class="schedule-container__placeholder" ref="schedule_item_placeholder"
                      v-bind:class="{ 'is-visible': show_logo }">
                     <p class="logo">
-                        Open<br>
-                        Broadcast<br>
-                        Radio<br>
+                        open<br>
+                        broadcast<br>
+                        radio<br>
                     </p>
                     <div class="dab">
                         <span>live on</span>

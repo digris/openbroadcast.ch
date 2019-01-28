@@ -190,9 +190,6 @@
                 <span class="line__value">
                     <span v-if="is_onair">
                         {{ schedule_item.time_start | datetime2hhmmss }}
-                        <!-- TODO: remove after debugging -->
-                        -
-                        {{ schedule_item.time_end | datetime2hhmmss }}
                     </span>
                     <span v-else>
                         {{ schedule_item.time_start | datetime2hhmmss }}

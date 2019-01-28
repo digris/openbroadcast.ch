@@ -568,6 +568,7 @@ ADMIN_TOOLS_INDEX_DASHBOARD = 'app.dashboard.AdminIndexDashboard'
 SETTINGS_EXPORT = [
     'DEBUG',
     'SITE_URL',
+    'REMOTE_BASE_URL',
     # 'API_BASE_URL',
     # 'STREAM_URL',
     # 'STATIC_BASE_URL',

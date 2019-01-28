@@ -68,12 +68,17 @@
 
       enable() {
 
-        if(!this.user) {
+        if (!this.user) {
           return;
         }
 
         this.visible = true;
         localStorage.chat_enabled = true;
+      },
+
+      disable() {
+        this.visible = false;
+        localStorage.removeItem('chat_enabled');
       }
 
 
@@ -114,16 +119,34 @@
         }
     }
 
-    .chat-info {
+    .toggle-container {
         display: flex;
-        flex-direction: column;
-        text-align: center;
-        cursor: pointer;
-        padding: 10px 0 60px;
+        flex-direction: row;
+        justify-content: center;
 
-        .chat-icon {
-            margin: 0 auto;
-            width: 34px;
+        .toggle {
+            width: 100px;
+            cursor: pointer;
+            text-align: center;
+            .chat-icon {
+                margin: 0 auto;
+                width: 34px;
+            }
+
+
+            .label {
+                &--show {
+
+                }
+                &--hide {
+                    margin-top: 32px;
+                    display: inline-block;
+                    opacity: .5;
+                    &:hover {
+                        opacity: .8;
+                    }
+                }
+            }
         }
     }
 
@@ -146,7 +169,6 @@
             flex-grow: 1;
             border: 1px solid black;
             padding: 2px 4px;
-            border-radius: 2px 0 0 2px;
 
             p {
                 text-rendering: optimizeSpeed;
@@ -187,90 +209,108 @@
     }
 
 
+    .fade-enter-active {
+        transition: opacity 800ms;
+    }
+
+    .fade-leave-active {
+        transition: opacity 0s;
+    }
+
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
+    }
+
 </style>
 
 <template>
     <div class="chat-app" v-bind:class="{ 'chat-app--enabled': (visible && user) }">
-        <div v-if="(! visible || ! user)" @click="enable" data-account-login-required class="chat-info">
-
-            <div class="chat-icon">
-
-                <svg version="1.1"
-                     id="chat_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                     x="0px" y="0px"
-                     viewBox="0 0 511.999 511.999" xml:space="preserve">
-                    <g>
-                        <g>
-                            <path data-livefill-inverse d="M493.123,23.914H18.876C8.468,23.914,0,32.382,0,42.791v312.572c0,10.408,8.468,18.876,18.876,18.876h229.025v113.845
-                                l113.847-113.845h131.374c10.408,0,18.876-8.468,18.876-18.876V42.791C511.999,32.382,503.532,23.914,493.123,23.914z
-                                 M495.804,355.363c0,1.453-1.228,2.681-2.681,2.681H355.04l-90.943,90.942v-90.942H18.876c-1.452,0-2.681-1.228-2.681-2.681
-                                V42.791c0-1.453,1.228-2.681,2.681-2.681h474.247c1.452,0,2.681,1.228,2.681,2.681V355.363z"/>
-                        </g>
-                    </g>
-                    <g>
-                        <g>
-                            <rect data-livefill-inverse x="61.985" y="83.2" width="307.181" height="16.195"/>
-                        </g>
-                    </g>
-                    <g>
-                        <g>
-                            <rect data-livefill-inverse x="61.985" y="137.087" width="388.017" height="16.195"/>
-                        </g>
-                    </g>
-                    <g>
-                        <g>
-                            <rect data-livefill-inverse x="61.985" y="190.974" width="388.017" height="16.195"/>
-                        </g>
-                    </g>
-                    <g>
-                        <g>
-                            <rect data-livefill-inverse x="61.985" y="244.872" width="388.017" height="16.195"/>
-                        </g>
-                    </g>
-                    <g>
-                        <g>
-                            <rect data-livefill-inverse x="61.985" y="298.759" width="388.017" height="16.195"/>
-                        </g>
-                    </g>
-                </svg>
-
-            </div>
 
 
-            <span data-livefg>Chat</span>
-
-
-        </div>
-        <div v-else>
-            <div class="chat-input-container">
-                <form data-account-login-required
-                      id="chat_input_form"
-                      class="chat-input form-base"
-                      v-bind:class="{ 'chat-input--has-focus': input_focus }"
-                      @submit.prevent="submit_message">
-                    <div class="chat-input__message">
-                        <editable ref="editable"
-                                  :content="message"
-                                  @update="message = $event"
-                                  @commit="submit_message()"
-                                  @focus="input_focus = true"
-                                  @blur="input_focus = false"></editable>
+        <transition name="fade">
+            <div v-if="(visible && user)">
+                <div class="chat-input-container">
+                    <form data-account-login-required
+                          id="chat_input_form"
+                          class="chat-input form-base"
+                          v-bind:class="{ 'chat-input--has-focus': input_focus }"
+                          @submit.prevent="submit_message">
+                        <div class="chat-input__message">
+                            <editable ref="editable"
+                                      :content="message"
+                                      @update="message = $event"
+                                      @commit="submit_message()"
+                                      @focus="input_focus = true"
+                                      @blur="input_focus = false"></editable>
+                        </div>
+                        <div class="chat-input__actions">
+                            <button type="submit" class="button button--cta">Senden</button>
+                        </div>
+                    </form>
+                </div>
+                <!--
+                <div>{{ user }}</div>
+                -->
+                <div class="message-list-container">
+                    <div class="message-list" id="chat_message_list">
+                        <message v-for="message in messages"
+                                 :key="message.uuid"
+                                 v-bind:message="message"></message>
                     </div>
-                    <div class="chat-input__actions">
-                        <button type="submit" class="button button--cta">Talk!</button>
-                    </div>
-                </form>
-            </div>
-            <!--
-            <div>{{ user }}</div>
-            -->
-            <div class="message-list-container">
-                <div class="message-list" id="chat_message_list">
-                    <message v-for="message in messages"
-                             :key="message.uuid"
-                             v-bind:message="message"></message>
                 </div>
             </div>
+        </transition>
+
+
+        <div class="toggle-container">
+            <div v-if="(! visible || ! user)" @click="enable" data-account-login-required class="toggle">
+                <div class="chat-icon">
+                    <svg version="1.1"
+                         id="chat_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                         x="0px" y="0px"
+                         viewBox="0 0 511.999 511.999" xml:space="preserve">
+                        <g>
+                            <g>
+                                <path data-livefill-inverse d="M493.123,23.914H18.876C8.468,23.914,0,32.382,0,42.791v312.572c0,10.408,8.468,18.876,18.876,18.876h229.025v113.845
+                                    l113.847-113.845h131.374c10.408,0,18.876-8.468,18.876-18.876V42.791C511.999,32.382,503.532,23.914,493.123,23.914z
+                                     M495.804,355.363c0,1.453-1.228,2.681-2.681,2.681H355.04l-90.943,90.942v-90.942H18.876c-1.452,0-2.681-1.228-2.681-2.681
+                                    V42.791c0-1.453,1.228-2.681,2.681-2.681h474.247c1.452,0,2.681,1.228,2.681,2.681V355.363z"/>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <rect data-livefill-inverse x="61.985" y="83.2" width="307.181" height="16.195"/>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <rect data-livefill-inverse x="61.985" y="137.087" width="388.017" height="16.195"/>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <rect data-livefill-inverse x="61.985" y="190.974" width="388.017" height="16.195"/>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <rect data-livefill-inverse x="61.985" y="244.872" width="388.017" height="16.195"/>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <rect data-livefill-inverse x="61.985" y="298.759" width="388.017" height="16.195"/>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+                <span class="label label--show"data-livefg>Chat</span>
+            </div>
+            <div v-else @click="disable" class="toggle">
+                <span class="label label--hide">Hide chat</span>
+            </div>
         </div>
+
+
     </div>
 </template>

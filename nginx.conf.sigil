@@ -40,8 +40,8 @@ server {
   # see: onair/views.py
   location /media/private {
     internal;
-    limit_rate_after 2000k;
-    limit_rate 500k;
+    limit_rate_after 200000k;
+    limit_rate 5000k;
     add_header accept_ranges bytes;
     root /data/openbroadcast.ch/ ;
   }
@@ -133,8 +133,8 @@ server {
   # see: onair/views.py
   location /media/private {
     internal;
-    limit_rate_after 2000k;
-    limit_rate 500k;
+    limit_rate_after 200000k;
+    limit_rate 5000k;
     add_header accept_ranges bytes;
     root /data/openbroadcast.ch/ ;
   }

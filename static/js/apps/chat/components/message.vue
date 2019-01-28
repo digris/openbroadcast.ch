@@ -2,6 +2,7 @@
   import Vue from 'vue';
   import VueTimeago from 'vue-timeago';
   import {template_filters} from '../../../utils/template-filters';
+  import UserPopover from './user-popover.vue'
 
   let loc = require('date-fns/locale/de');
 
@@ -15,6 +16,9 @@
   export default {
     props: {
       message: Object
+    },
+    components: {
+      UserPopover
     },
     data() {
       return {
@@ -43,12 +47,18 @@
         margin: 10px;
         position: relative;
 
+        // z-index is needed for user popover
+        z-index: 1;
+        &:hover {
+            z-index: 2;
+        }
+
         &__bubble {
             padding: 10px 0 10px 10px;
-            border-radius: 2px;
+            border-radius: 3px;
 
             &:not([data-livebg]) {
-                background: #efefef;
+                background: #f0f0f0;
             }
 
             .content {
@@ -76,32 +86,32 @@
             height: 10px;
             align-items: center;
 
-            svg {
-                width: 20px;
-            }
-
             .triangle {
-                width: 0;
-                height: 0;
-                border-left: 10px solid transparent !important;
-                border-right: 10px solid transparent !important;
-                border-top: 10px solid #efefef;
+                &:not([data-livebg]) {
+                    background: #f0f0f0;
+                }
+                width: 20px;
+                height: 10px;
+                clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
             }
 
         }
 
         &__appendix {
             font-size: 80%;
-            opacity: .7;
+            //opacity: .7;
+            color: #999;
             text-align: center;
 
             .user {
                 border-bottom: 1px dotted #000;
+                cursor: pointer;
             }
 
         }
 
 
+        /*
         &--own & {
             &__bubble {
                 background: #000;
@@ -119,6 +129,7 @@
                 }
             }
         }
+        */
     }
 </style>
 
@@ -126,19 +137,33 @@
     <div :key="message.uuid"
          class="message"
          v-bind:class="{ 'message--own': is_own }">
-        <div class="message__bubble" :data-livebg__="is_own" :data-livefg__="is_own">
+        <div class="message__bubble" :data-livebg="is_own" :data-livefg="is_own">
             <div class="content" v-html="$options.filters.linebreaksbr(message.html)"></div>
         </div>
         <div class="message__separator">
-            <div class="triangle" :data-livefg-inverse__="is_own"></div>
+            <div class="triangle" :data-livebg="is_own"></div>
         </div>
         <div class="message__appendix">
             <span class="user">
+                <!--
                 <span v-if="is_own">du</span>
                 <span v-else>{{ message.sender.display_name }}</span>
+-->
+
+                <!---->
+                <user-popover name="default" :user="message.sender" :text="message.sender.display_name">
+                    <div slot="face">
+                        <span v-if="is_own">du</span>
+                        <span v-else>{{ message.sender.display_name }}</span>
+                    </div>
+                </user-popover>
+
+
             </span>
             |
-            <timeago :datetime="timestamp" :auto-update="60"></timeago>
+            <span :title="timestamp">
+                <timeago :datetime="timestamp" :auto-update="60"></timeago>
+            </span>
         </div>
     </div>
 </template>

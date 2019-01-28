@@ -1,4 +1,4 @@
-# Open Broadcast - Radio Website
+# open broadcast - Radio Website
 
 
 ### Docker

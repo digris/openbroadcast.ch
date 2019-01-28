@@ -2,6 +2,7 @@
 
 
   import Loader from '../../../components/loader.vue';
+  import Playing from '../../../components/playing.vue';
   import {static_proxy_prefix} from '../../../api/utils';
 
   import Playhead from './playhead.vue';
@@ -19,6 +20,7 @@
     },
     components: {
       Loader,
+      Playing,
       Playhead,
     },
     data() {
@@ -380,8 +382,8 @@
                         <div v-if="(player_state === 'playing')" @click.prevent="stop" class="action action--stop">
                             <div class="action__text">
                                 <i class="fa fa-stop"></i>
-                                <!--<loader v-bind:scale="3"
-                                        v-bind:color="((actions_hover) ? '#000' : '#fff')"></loader>-->
+                                <!--<playing v-bind:scale="3"
+                                        v-bind:color="((actions_hover) ? '#000' : '#fff')"></playing>-->
                             </div>
                         </div>
 

@@ -1,9 +1,9 @@
 <script>
 
-  //import soundmanager from 'soundmanager2/script/soundmanager2-html5';
-  import soundmanager from 'soundmanager2/script/soundmanager2';
+  import soundmanager from 'soundmanager2/script/soundmanager2-html5';
+  //import soundmanager from 'soundmanager2/script/soundmanager2';
 
-  const DEBUG = true;
+  const DEBUG = false;
 
 
   const STREAMS = {
@@ -265,7 +265,7 @@
             this.player = soundManager.createSound({
               multiShot: false,
               id: 'player_app_player',
-              title: 'Open Broadcast'
+              title: 'open broadcast'
             });
           }
         });
@@ -428,6 +428,11 @@
                 max-height: calc(100vh - 60px);
             }
 
+            // ios scroll handling
+            @supports (-webkit-overflow-scrolling: touch) {
+                overflow-y: scroll;
+                -webkit-overflow-scrolling: touch;
+            }
 
             // TODO: create scrollbar mixin
             &::-webkit-scrollbar {
