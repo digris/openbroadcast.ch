@@ -86,12 +86,12 @@
 
       },
 
-      mouseenter: function () {
-        this.$emit('mouseenter');
+      show_logo: function () {
+        this.$emit('show_logo');
       },
 
-      mouseleave: function () {
-        this.$emit('mouseleave');
+      hide_logo: function () {
+        this.$emit('hide_logo');
       },
 
       click: function () {
@@ -108,11 +108,14 @@
         .display {
             border: 2px solid transparent;
             display: inline-block;
-            padding: 6px 28px;
-            &__time {
 
+            transition: background-color 200ms, color 200ms;
+            &__time {
+                padding: 6px 28px;
+                cursor: pointer;
             }
             &__back {
+                padding: 6px 28px;
                 cursor: pointer;
             }
         }
@@ -131,16 +134,17 @@
 <template>
     <div class="stationtime"
          v-bind:class="{ 'is-live': is_live }"
-         @mouseenter="mouseenter"
-         @mouseleave="mouseleave"
          @click.prevent="click">
-        <div class="display" data-livefg>
+        <div class="display"
+             @mouseleave="hide_logo"
+             data-livefg
+             data-livehover>
             <transition name="fade" mode="out-in">
-                <div v-if="is_live" key="time" class="display__time" data-livefg>
-                    <span data-livefg>{{ formated_time }}</span>
+                <div v-if="is_live" key="time" class="display__time" @mouseenter="show_logo">
+                    <span>{{ formated_time }}</span>
                 </div>
-                <div v-else key="back" class="display__back" data-livefg>
-                    <a data-livefg href="#">Back to what's on air now...</a>
+                <div v-else key="back" class="display__back">
+                    <a href="#">Back to what's on air now...</a>
                 </div>
             </transition>
         </div>

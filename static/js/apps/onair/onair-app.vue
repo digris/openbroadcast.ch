@@ -47,13 +47,12 @@
       });
       this.update_container_size();
 
-
       // hide logo after a while...
       setTimeout(() => {
         this.carousel_visible = true;
       }, 1500);
       setTimeout(() => {
-        this.logo_visible = false;
+        this.hide_logo();
       }, 4000);
 
     },
@@ -65,6 +64,7 @@
         locked_item_uuid: null,
         mode: 'live',
         selected_metadata_scope: null,
+        //selected_metadata_scope: 'release',
         container_size: {width: 0, height: 0},
       }
     },
@@ -101,18 +101,6 @@
           return
         }
         return this.schedule[this.offset];
-      },
-
-      show_logo() {
-
-        if (this.logo_visible) {
-          return true;
-        }
-
-        // TODO: implement other conditions
-        if (! this.onair) {
-          return true;
-        }
       },
       has_next() {
         return this.offset > 0;
@@ -183,7 +171,12 @@
       reset_offset: function () {
         this.locked_item_uuid = null;
       },
-
+      show_logo: function() {
+        this.logo_visible = true;
+      },
+      hide_logo: function() {
+        this.logo_visible = false;
+      },
       play_fallback: function () {
         const _c = {
           do: 'play_fallback'
@@ -238,7 +231,7 @@
     .onair-app {
         //@include flex-grid;
         @include xy-grid-container;
-        padding: 40px 40px 40px;
+        padding: 40px 40px 20px;
 
         @include breakpoint(medium only) {
             padding: 30px 20px 30px;
@@ -309,9 +302,8 @@
             background: #000;
             color: #fff;
             opacity: .0;
-            z-index: 0;
             position: relative;
-            transition: opacity 200ms;
+            transition: opacity 500ms;
 
 
             max-width: 360px;
@@ -326,6 +318,7 @@
             pointer-events: none;
 
             &.is-visible {
+                transition: opacity 100ms;
                 opacity: 1;
             }
 
@@ -385,10 +378,10 @@
     }
 
     .rating-container {
-        margin-top: 32px;
+        margin-top: 20px;
 
         @include breakpoint(small only) {
-            margin-top: 24px;
+            margin-top: 20px;
         }
     }
 
@@ -399,6 +392,8 @@
         <div class="stationtime-container">
             <station-time
                     @click="reset_offset"
+                    @show_logo="show_logo"
+                    @hide_logo="hide_logo"
                     v-bind:mode="mode"
                     v-bind:locked_item_uuid="locked_item_uuid"></station-time>
         </div>
@@ -407,7 +402,7 @@
             <div class="schedule-container__items">
 
                 <div class="schedule-container__placeholder" ref="schedule_item_placeholder"
-                     v-bind:class="{ 'is-visible': show_logo }">
+                     v-bind:class="{ 'is-visible': logo_visible }">
                     <p class="logo">
                         open<br>
                         broadcast<br>

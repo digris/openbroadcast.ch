@@ -248,6 +248,23 @@
           this.set_player_state('paused');
         }
 
+
+        // event tracking
+        let event = {
+          eventCategory: 'audio',
+          eventAction: action.do
+        };
+
+        if(action.do === 'play') {
+          if(this.mode === 'live') {
+            event.eventLabel = 'livestream'
+          } else if (action.item.item) {
+            event.eventLabel = action.item.item.name;
+          }
+        }
+
+        this.$ga.event(event)
+
       },
 
 
@@ -341,7 +358,7 @@
 
             div {
                 &:first-child {
-                    width: 100px;
+                    width: 80px;
                 }
 
                 &:last-child {

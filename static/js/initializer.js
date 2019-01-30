@@ -1,19 +1,27 @@
 import Vue from 'vue';
 import store from './store';
 import VueLazyload from 'vue-lazyload';
+import VueAnalytics from 'vue-analytics';
 import hotEmitter from 'webpack/hot/emitter';
 import NoSleep from 'nosleep.js';
 
 import SiteUI from './apps/site';
 import LiveColor from './apps/live-color';
+import CoverageMap from './apps/coverage-map';
 import AccountApp from './apps/account-app.vue';
 import OnairApp from './apps/onair/onair-app.vue';
 import ChatApp from './apps/chat/chat-app.vue';
 import PlayerApp from './apps/player/player-app.vue';
 
 
-const DEBUG = false;
+const DEBUG = document.settings.DEBUG;
 
+Vue.use(VueAnalytics, {
+  id: document.settings.GANALYTICS_TRACKING_CODE,
+  debug: {
+    enabled: DEBUG
+  }
+});
 
 Vue.use(VueLazyload, {
   preLoad: 1.0,
@@ -22,7 +30,6 @@ Vue.use(VueLazyload, {
   attempt: 1
 });
 
-
 class AppInitializer {
 
     constructor(opts) {
@@ -30,7 +37,6 @@ class AppInitializer {
         this.apps = [];
         this.bindings();
         this.setup_apps();
-        this.setup_legacy();
 
         // if(navigator && navigator.platform && navigator.platform === 'iPhone') {
         //
@@ -59,6 +65,9 @@ class AppInitializer {
         }
         if(this.apps['LiveColor'] === undefined) {
             this.apps['LiveColor'] = new LiveColor();
+        }
+        if(this.apps['CoverageMap'] === undefined) {
+            this.apps['CoverageMap'] = new CoverageMap();
         }
 
         /**************************************************************
@@ -125,12 +134,6 @@ class AppInitializer {
         }
 
     };
-
-    setup_legacy() {
-
-
-    };
-
 
 }
 

@@ -33,6 +33,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = get_user_model()
         fields = [
             'id',
+            'remote_id',
             'display_name',
             'username',
         ]

@@ -1,4 +1,4 @@
-{% load cms_tags staticfiles slick_admin_tags sekizai_tags i18n menu_tags raven %}<!DOCTYPE html>
+{% load cms_tags staticfiles slick_admin_tags sekizai_tags i18n menu_tags settings_export_tags ganalytics raven %}<!DOCTYPE html>
 <html class="no-js{% if user.is_authenticated %} is-authenticated{% endif %}" lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="utf-8"/>
@@ -22,13 +22,21 @@
         if(window.location.hash == '#_=_') {
             window.location.hash = '';
         }
+
+        /*
+         * exported settings
+         */
+        document.settings = {% json_settings settings %};
+
     </script>
+
 
     {% block meta_opengraph %}{% endblock %}
 
     {% include '_syndication/_og.html' %}
     {% include '_artwork/_icons.html' %}
 
+    {% comment %}TODO: handle icons in a better way!{% endcomment %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" />
 
     <!-- start: bundled js -->
@@ -40,19 +48,11 @@
     {% endif %}
     <!-- end: bundled js -->
 
-    {% comment %}
-    {% if not request.toolbar.edit_mode %}
-        <script src="{{ STATIC_URL }}turbolinks/turbolinks.js"></script>
-    {% endif %}
-    {% endcomment %}
-
     {% block link %}{% endblock link %}
 
     {% render_block "css" %}
 
-    {# analytics #}
-
-    {# pushy_client_scripts #}
+    {% ganalytics %}
 
     {% render_block "js_ext" %}
     {% render_block "js" %}
@@ -94,7 +94,7 @@
                 <p class="network" data-livefg>
                     <span>
                         <i class="fa fa-angle-right" aria-hidden="true"></i>
-                        <a href="http://www.digris.ch/" target="_blank">Digris AG</a>
+                        <a href="http://www.digris.ch/" target="_blank">digris AG</a>
                     </span>
                     <br>
                     <span>
@@ -131,12 +131,6 @@
 
 {% block container %}
 <div class="container" id="content_base">
-
-    {% block splash %}<!-- passed by: cms_base.html -->{% endblock %}
-
-    {#include "onair/container.html" #}
-    {# include "achat/container.html" #}
-
 
     <div data-turbolinks-permanent id="onair_app_container" style="overflow: hidden;">
         <div id="onair_app"></div>
@@ -177,5 +171,7 @@
         var current_user = false;
     {% endif %}
 </script>
+
+
 </body>
 </html>

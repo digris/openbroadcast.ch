@@ -57,7 +57,7 @@ class LiveColor {
 
   set_color(color, duration) {
 
-    if (DEBUG) console.group('LiveColor: - set_color', bg_color, fg_color, duration);
+    if (DEBUG) console.group('LiveColor: - set_color', color, duration);
 
     duration = duration || 1000;
 
@@ -173,8 +173,14 @@ const get_stylesheet = (color) => {
   [data-livehover]:hover {
     background-color: ${color};
   }
+  [data-livehover]:hover {
+    color: ${contrast} !important;
+  }
   [data-livehover]:hover polyline {
     stroke: ${contrast} !important;
+  }
+  [data-livebg] ::-webkit-scrollbar-thumb {
+    background-color: ${color} !important;
   }
   .topbar .menu .menu-item:hover {
     background-color: rgba(${color_rgb.r}, ${color_rgb.g}, ${color_rgb.b}, .9);

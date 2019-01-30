@@ -59,9 +59,6 @@
 
     .metadata {
 
-
-
-
         &--minimal {
             display: none;
             @include breakpoint(small only) {
@@ -76,6 +73,8 @@
             @include breakpoint(small only) {
                 display: none;
             }
+
+            max-width: 320px;
         }
 
 
@@ -166,7 +165,7 @@
                     Playlist
                 </span>
                 <a class="line__value line__value--has-link"
-                   @click.prevent="visit(emission.absolute_url)"
+                   @click.prevent="visit(emission.content_object.absolute_url)"
                    @mouseover="trigger('playlist')"
                    @mouseleave="trigger()">
                     {{ emission.name }}

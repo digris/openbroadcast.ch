@@ -115,22 +115,31 @@
         padding: 20px 20px 16px;
         display: flex;
         flex-direction: column;
+        //font-size: 14px;
+
+        color: rgba(#fff, .5);
+        font-size: 14px;
 
         &__header {
             display: flex;
             margin-bottom: 10px;
-            min-height: 96px;
-
+            min-height: 150px;
+            word-wrap: break-word;
 
             &__visual {
-                width: 30%;
-                margin-right: 10px;
+                width: 50%;
+                padding-right: 10px;
             }
 
             &__title {
-                flex-grow: 1;
+                width: 50%;
+                padding-left: 10px;
                 h3 {
+                    color: #fff;
                     margin: 0;
+                    font-size: 25px;
+                    line-height: 30px;
+                    margin-top: -5px;
                 }
             }
         }
@@ -142,14 +151,14 @@
 
         &__appendix {
             // background: yellow;
-            margin-top: 20px;
+            margin-top: 24px;
             .tag {
                 color: #000;
-                font-size: 90%;
+                //font-size: 90%;
                 background: #999999;
                 display: inline-block;
                 padding: 0 4px;
-                margin: 0 4px 4px 0;
+                margin: 0 2px 2px 0;
                 border-radius: 2px;
                 // text-transform: uppercase;
                 text-transform: capitalize;
@@ -215,11 +224,10 @@
                 <div v-if="(scope === 'release')">
                     <div v-if="content.obj.releasetype">
                         <span>{{ content.obj.releasetype | capitalize }}</span>
+                        <span v-if="content.obj.country_code">({{ content.obj.country_code }})</span>
                         <br>
                     </div>
-                    <div v-if="(content.obj.country_code || content.obj.releasedate_approx)">
-                        <span v-if="content.obj.country_code">{{ content.obj.country_code }}</span>
-                        <span v-if="(content.obj.country_code && content.obj.releasedate_approx)">-</span>
+                    <div v-if="content.obj.releasedate_approx">
                         <span v-if="content.obj.releasedate_approx">{{ content.obj.releasedate_approx }}</span>
                     </div>
                 </div>
@@ -239,8 +247,8 @@
         <div class="card__body">
             <div v-if="content.description" v-html="$options.filters.linebreaksbr($options.filters.strip_markdown(content.description))"></div>
         </div>
-        <div class="card__appendix">
-            <div v-if="content.tags">
+        <div class="card__appendix" v-if="(content.tags && content.tags.length > 0)">
+            <div>
                 <span v-for="tag in content.tags.slice(0, 6)" class="tag">{{ tag }}</span>
             </div>
         </div>

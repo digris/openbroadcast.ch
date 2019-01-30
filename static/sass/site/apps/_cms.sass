@@ -5,6 +5,9 @@ body.app-base
     padding-top: 60px
     padding-bottom: 100px
 
+    @include breakpoint(small only)
+      padding-top: 0
+
 body.cms-home
   .content-container
     display: none
@@ -35,7 +38,10 @@ body.cms-home
       border-bottom: 1px solid black
 
 
-
+  @include breakpoint(small only)
+    padding: 0 16px
+    &:first-child
+      border-top: none
 
 
 

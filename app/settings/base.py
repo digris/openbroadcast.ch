@@ -48,14 +48,16 @@ CSRF_COOKIE_NAME = "csrftoken"
 ##################################################################
 # language, translation & localisation
 ##################################################################
-LANGUAGE_CODE = 'de-ch'
+LANGUAGE_CODE = 'de'
 TIME_ZONE = 'Europe/Zurich'
-USE_I18N = False
+USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
 LANGUAGES = [
-    ('de-ch', _('Deutsch')),
+    ('de', _('Deutsch')),
+    # ('de-ch', _('Deutsch (Schweiz)')),
+    # ('en', _('English')),
 ]
 
 LOCALE_PATHS = [os.path.join(PROJECT_ROOT, 'locale')]
@@ -94,8 +96,8 @@ INSTALLED_APPS = [
     # 'ganalytics', # TODO: install module
 
     # TODO: remove filer
-    'filer',
-    'easy_thumbnails',
+    #'filer',
+    #'easy_thumbnails',
 
     # cms base
     'cms',
@@ -104,10 +106,10 @@ INSTALLED_APPS = [
     'treebeard',
 
     # cms modules
-    'djangocms_picture',
+    #'djangocms_picture',
     'djangocms_link',
     'djangocms_snippet',
-    'cmsplugin_youtube',
+    #'cmsplugin_youtube',
     'djangocms_text_ckeditor',
 
     # cms custom modules
@@ -120,7 +122,8 @@ INSTALLED_APPS = [
     # TODO: check if can be removed
     #'compressor',
     #'analytics',
-    'absolute',
+    'ganalytics',
+    #'absolute',
 
     # project apps
     'base',
@@ -135,32 +138,6 @@ INSTALLED_APPS = [
     'program',
     'swissradioplayer',
 ]
-
-TO_BE_UNINSTALLED_APPS = [
-    'partnerlink',
-    'team',
-    'ticker',
-    'achat',
-    'remotelink',
-    'profiles',
-    # plugins
-    'djangocms_gmaps',
-    'cmsplugin_filer_file',
-    'cmsplugin_filer_image',
-    'djangocms_column',
-]
-
-# ./manage.py migrate partnerlink zero
-# ./manage.py migrate team zero
-# ./manage.py migrate ticker zero
-# ./manage.py migrate achat zero
-# ./manage.py migrate djangocms_gmaps zero
-# ./manage.py migrate cmsplugin_filer_file zero
-# ./manage.py migrate cmsplugin_filer_image zero
-# ./manage.py migrate djangocms_column zero
-
-
-# INSTALLED_APPS += TO_BE_UNINSTALLED_APPS
 
 
 ##################################################################
@@ -570,6 +547,7 @@ SETTINGS_EXPORT = [
     'DEBUG',
     'SITE_URL',
     'REMOTE_BASE_URL',
+    'GANALYTICS_TRACKING_CODE',
     # 'API_BASE_URL',
     # 'STREAM_URL',
     # 'STATIC_BASE_URL',
@@ -621,6 +599,13 @@ FACEBOOK_APP_ID = config('FACEBOOK_APP_ID', default='---')
 # analytics & co
 ##################################################################
 GANALYTICS_TRACKING_CODE = config('GANALYTICS_TRACKING_CODE', default=None)
+
+
+##################################################################
+# telegram bot
+##################################################################
+TELEGRAM_BOT_TOKEN = config('TELEGRAM_BOT_TOKEN', default=None)
+TELEGRAM_CHAT_ID = config('TELEGRAM_CHAT_ID', default=None)
 
 
 ##################################################################

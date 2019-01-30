@@ -38,9 +38,9 @@ class RegistrationForm(UserCreationForm):
 
     tos = forms.BooleanField(
         widget=forms.CheckboxInput,
-        label=_('I have read and agree to the Terms of Service.'),
+        label=_('I have read and agree to the privacy policy.'),
         error_messages={
-            'required': _('You must agree to the Terms of Service to register.'),
+            'required': _('You must agree to the privacy policy to register.'),
         }
     )
     # TODO: implement own loqic without password repeat

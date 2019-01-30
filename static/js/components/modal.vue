@@ -38,7 +38,7 @@
 
         .modal-container {
             background: $white;
-            width: 440px;
+            width: 480px;
             max-width: 100%;
             min-height: 400px;
             display: flex;

@@ -63,6 +63,9 @@ class RemoteUserBackend(ModelBackend):
 
         data = r.json()
 
+        import json
+        print(json.dumps(data, indent=4))
+
 
         # print '///////////////////////////////////////'
         # print 'got user:     %s' % data['username']

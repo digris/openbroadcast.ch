@@ -27,7 +27,7 @@
       //   this.visible = document.getElementsByTagName('body')[0].classList.contains('cms-home');
       // }, false);
 
-      this.$store.dispatch('get_chat_messages');
+      this.$store.dispatch('chat/get_messages');
 
       if (localStorage.chat_enabled) {
         this.visible = localStorage.chat_enabled;
@@ -40,8 +40,10 @@
         return this.$store.getters['account/user'];
       },
       messages() {
-        //return []
-        return this.$store.getters.messages;
+        return this.$store.getters['chat/messages'];
+      },
+      enabled() {
+        return this.$store.getters['chat/enabled'];
       },
     },
 
@@ -57,8 +59,8 @@
           text: this.message
         };
 
-        this.$store.dispatch('post_chat_message', payload).then((response) => {
-          if (DEBUG) console.debug('post_chat_message dispatched', response);
+        this.$store.dispatch('chat/post_message', payload).then((response) => {
+          if (DEBUG) console.debug('chat/post_message dispatched', response);
           this.message = '';
           this.$refs.editable.reset();
         }, (error) => {
@@ -66,19 +68,8 @@
         });
       },
 
-      enable() {
-
-        if (!this.user) {
-          return;
-        }
-
-        this.visible = true;
-        localStorage.chat_enabled = true;
-      },
-
       disable() {
-        this.visible = false;
-        localStorage.removeItem('chat_enabled');
+        this.$store.dispatch('chat/disable');
       }
 
 
@@ -224,11 +215,10 @@
 </style>
 
 <template>
-    <div class="chat-app" v-bind:class="{ 'chat-app--enabled': (visible && user) }">
-
+    <div class="chat-app" v-bind:class="{ 'chat-app--enabled': (enabled && user) }">
 
         <transition name="fade">
-            <div v-if="(visible && user)">
+            <div v-if="(enabled && user)">
                 <div class="chat-input-container">
                     <form data-account-login-required
                           id="chat_input_form"
@@ -263,50 +253,7 @@
 
 
         <div class="toggle-container">
-            <div v-if="(! visible || ! user)" @click="enable" data-account-login-required class="toggle">
-                <div class="chat-icon">
-                    <svg version="1.1"
-                         id="chat_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                         x="0px" y="0px"
-                         viewBox="0 0 511.999 511.999" xml:space="preserve">
-                        <g>
-                            <g>
-                                <path data-livefill-inverse d="M493.123,23.914H18.876C8.468,23.914,0,32.382,0,42.791v312.572c0,10.408,8.468,18.876,18.876,18.876h229.025v113.845
-                                    l113.847-113.845h131.374c10.408,0,18.876-8.468,18.876-18.876V42.791C511.999,32.382,503.532,23.914,493.123,23.914z
-                                     M495.804,355.363c0,1.453-1.228,2.681-2.681,2.681H355.04l-90.943,90.942v-90.942H18.876c-1.452,0-2.681-1.228-2.681-2.681
-                                    V42.791c0-1.453,1.228-2.681,2.681-2.681h474.247c1.452,0,2.681,1.228,2.681,2.681V355.363z"/>
-                            </g>
-                        </g>
-                        <g>
-                            <g>
-                                <rect data-livefill-inverse x="61.985" y="83.2" width="307.181" height="16.195"/>
-                            </g>
-                        </g>
-                        <g>
-                            <g>
-                                <rect data-livefill-inverse x="61.985" y="137.087" width="388.017" height="16.195"/>
-                            </g>
-                        </g>
-                        <g>
-                            <g>
-                                <rect data-livefill-inverse x="61.985" y="190.974" width="388.017" height="16.195"/>
-                            </g>
-                        </g>
-                        <g>
-                            <g>
-                                <rect data-livefill-inverse x="61.985" y="244.872" width="388.017" height="16.195"/>
-                            </g>
-                        </g>
-                        <g>
-                            <g>
-                                <rect data-livefill-inverse x="61.985" y="298.759" width="388.017" height="16.195"/>
-                            </g>
-                        </g>
-                    </svg>
-                </div>
-                <span class="label label--show"data-livefg>Chat</span>
-            </div>
-            <div v-else @click="disable" class="toggle">
+            <div v-if="(enabled && user)" @click="disable" class="toggle">
                 <span class="label label--hide">Hide chat</span>
             </div>
         </div>

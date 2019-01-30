@@ -8,25 +8,30 @@ const DEBUG = false;
 const CHAT_ENDPOINT = '/api/v2/chat/message/';
 
 const state = {
-  messages: []
+  messages: [],
+  enabled: false
 };
 const getters = {
-  messages: state => state.messages
+  messages: state => state.messages,
+  enabled: state => state.enabled
 };
 const mutations = {
-    add_chat_message : (state, payload) => {
-      if (DEBUG) console.debug('mutations - add_chat_message', payload);
+    add_message : (state, payload) => {
+      if (DEBUG) console.debug('mutations - add_message', payload);
       state.messages.unshift(payload);
     },
-    update_chat_messages: (state, payload) => {
+    update_messages: (state, payload) => {
       //if (DEBUG) console.debug('mutations - update_chat_messages', payload);
       state.messages = state.messages.concat(payload);
+    },
+    set_enabled: (state, payload) => {
+      state.enabled = payload;
     },
 };
 
 const actions = {
-    post_chat_message: async (context, payload) => {
-      if (DEBUG) console.debug('actions - post_chat_message', payload);
+    post_message: async (context, payload) => {
+      if (DEBUG) console.debug('actions - post_message', payload);
 
       let _r = wrapRequest(APIClient.post);
       let {data} = await _r(CHAT_ENDPOINT, payload);
@@ -34,16 +39,16 @@ const actions = {
       // back channel (sending posted message back to browser)
       // is handled via websockets
 
-      // context.commit('add_chat_message', data);
+      // context.commit('add_message', data);
       // wsb.send(payload);
 
     },
-    get_chat_messages: async (context, url) => {
+    get_messages: async (context, url) => {
       url = url || CHAT_ENDPOINT;
-      if (DEBUG) console.debug('actions - get_chat_messages', url);
+      if (DEBUG) console.debug('actions - get_messages', url);
       let _r = wrapRequest(APIClient.get);
       let {data} = await _r(url);
-      context.commit('update_chat_messages', data.results);
+      context.commit('update_messages', data.results);
 
       // fetch message history
       // if(data.next !== null) {
@@ -51,6 +56,12 @@ const actions = {
       // }
 
     },
+    enable: (context) => {
+      context.commit('set_enabled', true);
+    },
+    disable: (context) => {
+      context.commit('set_enabled', false);
+    }
 };
 
 /**********************************************************************
@@ -70,11 +81,12 @@ const wsb = new WebSocketBridge();
 wsb.connect(ws_url);
 wsb.listen((data, stream) => {
     console.log('ws chat listen:', data, stream);
-    store.commit('add_chat_message', data);
+    store.commit('chat/add_message', data);
 });
 
 
 export default {
+  namespaced: true,
   state,
   getters,
   mutations,

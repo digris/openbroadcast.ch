@@ -10,6 +10,9 @@ API_BASE_AUTH = {
     'api_key': 'd65b075c593f27a42c26e65be74c047e5b50d215',
 }
 
+
+GANALYTICS_TRACKING_CODE = 'UA-64750998-1'
+
 ##################################################################
 # db
 ##################################################################
@@ -27,3 +30,7 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesSto
 
 
 RAVEN_SENTRY_DSN = 'https://f63f7f43d43244dda24b38f2aa947965:ae4118b11737401a823902e55c17d2c7@sentry.pbi.io/8'
+
+
+TELEGRAM_BOT_TOKEN = '769656029:AAGPM-Eto_-pf_zN8ONUP6V8uqh9UaR6Zf0'
+#TELEGRAM_CHAT_ID = '-339332230'

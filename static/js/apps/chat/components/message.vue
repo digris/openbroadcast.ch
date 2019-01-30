@@ -26,14 +26,14 @@
       }
     },
     computed: {
-      user() {
+      current_user() {
         return this.$store.getters['account/user'];
       },
       is_own() {
-        if (! (this.user && this.message)) {
+        if (! (this.current_user && this.message)) {
           return false;
         }
-        return (this.user.uuid == this.message.sender.id) || (this.user.id == this.message.sender.id)
+        return (this.current_user.uuid == this.message.sender.id) || (this.current_user.id == this.message.sender.id)
       }
     },
     filters: template_filters
@@ -104,7 +104,6 @@
             text-align: center;
 
             .user {
-                border-bottom: 1px dotted #000;
                 cursor: pointer;
             }
 
@@ -148,17 +147,13 @@
                 <!--
                 <span v-if="is_own">du</span>
                 <span v-else>{{ message.sender.display_name }}</span>
--->
-
-                <!---->
+                -->
                 <user-popover name="default" :user="message.sender" :text="message.sender.display_name">
                     <div slot="face">
                         <span v-if="is_own">du</span>
                         <span v-else>{{ message.sender.display_name }}</span>
                     </div>
                 </user-popover>
-
-
             </span>
             |
             <span :title="timestamp">

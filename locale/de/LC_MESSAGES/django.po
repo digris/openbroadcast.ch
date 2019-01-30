@@ -1,0 +1,395 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-29 14:43+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: app/account/forms.py:22 app/account/templates/account/user_detail.html:58
+#: app/account/templates/account/user_detail.html:80 app/remoteauth/forms.py:14
+msgid "Username"
+msgstr "Benutzername"
+
+#: app/account/forms.py:25 app/remoteauth/forms.py:15
+msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
+msgstr "Bitte nur Buchstaben, Zahlen und @/./+/-/_ Zeichen verwenden."
+
+#: app/account/forms.py:29
+msgid "Email"
+msgstr "E-Mail"
+
+#: app/account/forms.py:35
+msgid "Security Code"
+msgstr "Sicherheits-Code"
+
+#: app/account/forms.py:36
+msgid "Please enter the characters shown beside."
+msgstr "Nebenstehenden Code eingeben."
+
+#: app/account/forms.py:41
+msgid "I have read and agree to the privacy policy."
+msgstr "Ich bin mit der Datenschutzvereinbarung einverstanden."
+
+#: app/account/forms.py:43
+msgid "You must agree to the privacy policy to register."
+msgstr "Dein Einverständnis zur Datenschutzvereinbarung ist notwendig."
+
+#: app/account/settings.py:12
+msgid "your Email Account"
+msgstr "E-Mail Konto"
+
+#: app/account/settings.py:17
+msgid "Continue with Facebook"
+msgstr "Mit Facebook weiterfahren"
+
+#: app/account/settings.py:22
+msgid "your Google Account"
+msgstr "Mit Google Account weiterfahren"
+
+#: app/account/settings.py:27
+msgid "your Github Account"
+msgstr ""
+
+#: app/account/settings.py:32
+msgid "your VK Account"
+msgstr ""
+
+#: app/account/settings.py:37
+msgid "your Spotify Account"
+msgstr ""
+
+#: app/account/templates/account/__no-floatlabels/login_form_partial.html:9
+#: app/account/templates/account/login_form_partial.html:9
+msgid "Sign in"
+msgstr "Login"
+
+#: app/account/templates/account/__no-floatlabels/login_form_partial.html:49
+#: app/account/templates/account/login_form_partial.html:48
+msgid "Login"
+msgstr "Login"
+
+#: app/account/templates/account/__no-floatlabels/login_form_partial.html:59
+#: app/account/templates/account/login_form_partial.html:58
+msgid "sign up"
+msgstr "Registrieren"
+
+#: app/account/templates/account/__no-floatlabels/login_form_partial.html:59
+#: app/account/templates/account/login_form_partial.html:58
+msgid "if you don\\'t have an account yet"
+msgstr ""
+
+#: app/account/templates/account/__no-floatlabels/register_form_partial.html:8
+#: app/account/templates/account/register_form_partial.html:8
+#: app/account/templates/account/templatetags/_inline.html:31
+msgid "Sign up"
+msgstr "Registrieren"
+
+#: app/account/templates/account/__no-floatlabels/register_form_partial.html:23
+#: app/account/templates/account/register_form_partial.html:57
+msgid "or use your e-mail address"
+msgstr ""
+
+#: app/account/templates/account/__no-floatlabels/register_form_partial.html:58
+#: app/account/templates/account/register_form_partial.html:42
+msgid "Create Account"
+msgstr "Konto erstellen"
+
+#: app/account/templates/account/__no-floatlabels/register_form_partial.html:66
+#: app/account/templates/account/register_form_partial.html:50
+#: app/templates/_layout/_accountbar.html:40
+msgid "login"
+msgstr "login"
+
+#: app/account/templates/account/__no-floatlabels/register_form_partial.html:67
+#: app/account/templates/account/register_form_partial.html:51
+msgid "if you already have an account"
+msgstr ""
+
+#: app/account/templates/account/password_recover_email.txt:1
+#, python-format
+msgid "Dear %(username)s,"
+msgstr "Hallo %(username)s,"
+
+#: app/account/templates/account/password_recover_email.txt:3
+#, python-format
+msgid ""
+"You -- or someone pretending to be you -- has requested a password reset on "
+"%(domain)s."
+msgstr ""
+
+#: app/account/templates/account/password_recover_email.txt:5
+msgid "You can set your new password by following this link:"
+msgstr ""
+
+#: app/account/templates/account/password_recover_email.txt:9
+msgid ""
+"If you don't want to reset your password, simply ignore this email and it "
+"will stay unchanged."
+msgstr ""
+
+#: app/account/templates/account/password_recover_email_subject.txt:1
+#, python-format
+msgid "Password Recovery on %(domain)s"
+msgstr ""
+
+#: app/account/templates/account/password_recover_form.html:4
+#: app/account/templates/account/password_recover_form.html:14
+#: app/account/templates/account/password_recover_sent.html:15
+#: app/account/templates/account/password_reset_form.html:16
+msgid "Password Recovery"
+msgstr ""
+
+#: app/account/templates/account/password_recover_sent.html:4
+msgid "Password Recovery sent"
+msgstr ""
+
+#: app/account/templates/account/password_recover_sent.html:20
+#, python-format
+msgid ""
+"An email was sent to <strong>%(email)s</strong> %(ago)s ago. Follow the link "
+"to set a new password."
+msgstr ""
+
+#: app/account/templates/account/password_reset_done.html:11
+msgid "New Password set"
+msgstr ""
+
+#: app/account/templates/account/password_reset_done.html:14
+msgid ""
+"Your password has successfully been reset. You can now use it on the login "
+"page."
+msgstr ""
+
+#: app/account/templates/account/password_reset_done.html:15
+msgid "Log in"
+msgstr ""
+
+#: app/account/templates/account/password_reset_form.html:4
+msgid "Password reset"
+msgstr ""
+
+#: app/account/templates/account/password_reset_form.html:23
+#, python-format
+msgid ""
+"Sorry, this password reset link is invalid. You can still <a href="
+"\"%(recovery_url)s\">request a new one</a>."
+msgstr ""
+
+#: app/account/templates/account/password_reset_form.html:30
+#, python-format
+msgid "Hi, <strong>%(username)s</strong>. Please choose a new password."
+msgstr ""
+
+#: app/account/templates/account/templatetags/_backend_detail.html:14
+#, python-format
+msgid "Sign in with %(provider_name)s"
+msgstr ""
+
+#: app/account/templates/account/templatetags/_backend_detail.html:18
+#, python-format
+msgid "Sign up with %(provider_name)s"
+msgstr ""
+
+#: app/account/templates/account/templatetags/_backend_detail.html:22
+#, python-format
+msgid "Connect with %(provider_name)s"
+msgstr ""
+
+#: app/account/templates/account/templatetags/_backend_detail.html:26
+#, python-format
+msgid "Disconnect from %(provider_name)s"
+msgstr ""
+
+#: app/account/templates/account/templatetags/_inline.html:8
+msgid "Account Settings"
+msgstr ""
+
+#: app/account/templates/account/templatetags/_inline.html:15
+msgid "Dashboard"
+msgstr ""
+
+#: app/account/templates/account/templatetags/_inline.html:24
+msgid "Log out"
+msgstr ""
+
+#: app/account/templates/account/templatetags/_inline.html:32
+msgid "Reset Password"
+msgstr ""
+
+#: app/account/templates/account/user_detail.html:4
+msgid "User"
+msgstr "User"
+
+#: app/account/templates/account/user_detail.html:38
+msgid "Joined"
+msgstr ""
+
+#: app/account/templates/account/user_detail.html:51
+msgid "E-Mail"
+msgstr "E-Mail"
+
+#: app/account/templates/account/user_detail.html:65
+msgid "Managing"
+msgstr ""
+
+#: app/account/templates/account/user_detail.html:103
+msgid "favorite labels"
+msgstr ""
+
+#: app/account/templates/account/user_detail.html:108
+msgid "favorite releases"
+msgstr ""
+
+#: app/account/templates/account/user_detail.html:113
+msgid "favorite artists"
+msgstr ""
+
+#: app/account/templates/account/user_detail.html:137
+msgid "See also"
+msgstr ""
+
+#: app/coverage/cms_plugins.py:12
+msgid "Coverage MAp Plugin"
+msgstr ""
+
+#: app/coverage/models.py:12
+msgid "Map"
+msgstr ""
+
+#: app/coverage/templates/coverage/cmsplugin/coverage_map.html:7
+msgid "Verbreitungsgebiete"
+msgstr ""
+
+#: app/coverage/templates/coverage/cmsplugin/coverage_map.html:12
+msgid "Fullscreen"
+msgstr ""
+
+#: app/media_embed/models.py:15
+#, python-brace-format
+msgid "Supported Services: {services}"
+msgstr ""
+
+#: app/media_embed/models.py:26
+msgid "Multimedia einbetten"
+msgstr ""
+
+#: app/media_embed/models.py:41
+msgid "Unable to process url"
+msgstr ""
+
+#: app/onair/admin.py:14
+msgid "On Air"
+msgstr ""
+
+#: app/onair/admin.py:19
+msgid "Starts in"
+msgstr ""
+
+#: app/onair/admin.py:23
+msgid "Ends in"
+msgstr ""
+
+#: app/onair/models.py:61
+msgid "Initial"
+msgstr ""
+
+#: app/onair/models.py:62
+msgid "Done"
+msgstr ""
+
+#: app/onair/models.py:63
+msgid "Error"
+msgstr ""
+
+#: app/onair/models.py:71
+msgid "Scheduled Item"
+msgstr ""
+
+#: app/onair/models.py:72
+msgid "Scheduled Items"
+msgstr ""
+
+#: app/program/cms_plugins.py:14
+msgid "Program Plugin"
+msgstr ""
+
+#: app/program/templates/program/cmsplugin/program-including-dayparts.html:43
+msgid "Kuratiert"
+msgstr ""
+
+#: app/program/templates/program/cmsplugin/program-including-dayparts.html:45
+msgid "Programmiert"
+msgstr ""
+
+#: app/remoteauth/forms.py:16
+msgid "E-mail"
+msgstr "E-Mail"
+
+#: app/remoteauth/forms.py:18
+msgid "Password"
+msgstr "Passwort"
+
+#: app/remoteauth/forms.py:20
+msgid "Password (again)"
+msgstr ""
+
+#: app/remoteauth/forms.py:22
+msgid "Sicherheits code"
+msgstr "Sicherheits-Code"
+
+#: app/remoteauth/forms.py:25
+msgid "Code empty or invalid"
+msgstr ""
+
+#: app/remoteauth/forms.py:57
+msgid "The two password fields didn't match."
+msgstr ""
+
+#: app/settings/base.py:58
+msgid "Deutsch"
+msgstr ""
+
+#: app/settings/base.py:342
+msgid "Content"
+msgstr ""
+
+#: app/templates/_layout/_accountbar.html:13
+msgid "Hide Toolbar"
+msgstr ""
+
+#: app/templates/_layout/_accountbar.html:17
+msgid "Show Toolbar"
+msgstr ""
+
+#: app/templates/_layout/_accountbar.html:22
+msgid "Administration"
+msgstr ""
+
+#: app/templates/_layout/_accountbar.html:29
+msgid "profile & settings"
+msgstr "Einstellungen"
+
+#: app/templates/_layout/_accountbar.html:33
+msgid "logout"
+msgstr "abmelden"
+
+#: app/templates/_layout/_accountbar.html:43
+msgid "register"
+msgstr "Registrieren"
+
+#: app/templates/_layout/_footer.html:11
+msgid "Visit us on Facebook"
+msgstr ""
