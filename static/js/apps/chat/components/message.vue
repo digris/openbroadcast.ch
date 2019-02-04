@@ -54,7 +54,7 @@
         }
 
         &__bubble {
-            padding: 10px 0 10px 10px;
+            padding: 3px 0 5px 10px;
             border-radius: 3px;
 
             &:not([data-livebg]) {
@@ -87,12 +87,19 @@
             align-items: center;
 
             .triangle {
+
                 &:not([data-livebg]) {
                     background: #f0f0f0;
                 }
                 width: 20px;
                 height: 10px;
                 clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
+
+                @include breakpoint(medium down) {
+                    display: none;
+                }
+
+
             }
 
         }

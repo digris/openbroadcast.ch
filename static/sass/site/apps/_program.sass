@@ -4,6 +4,9 @@
 
 .program-plugin .program-list
 
+  .header
+    border-bottom: 1px solid #fff
+
   .header,
   .emission
     display: flex
@@ -22,7 +25,26 @@
       width: 40%
       padding: 4px 2px
 
-  .header
-    border-bottom: 1px solid #fff
+  @include breakpoint(small only)
+
+    .header
+      display: none
+
+    .emission
+      flex-wrap: wrap
+      margin-bottom: 4px
+
+      &__title
+        flex-grow: 1
+        padding: 4px 2px 0
+
+      &__author
+        margin-left: 80px
+        padding: 0 2px 8px
+
+      &__mixdown
+        display: none
+
+
 
 

@@ -10,7 +10,7 @@
   .topbar
 
     display: flex
-    text-rendering: auto
+    // text-rendering: auto
 
 
     &__main-menu
@@ -39,7 +39,7 @@
 
         // all items
         .menu-item
-          height: 37px
+          height: 40px
           display: flex
           align-items: center
           transition: background-color 0.55s
@@ -60,7 +60,7 @@
           // second level
           .submenu
             position: absolute
-            top: 38px
+            top: 41px
             left: 0
             margin-left: 0
             list-style: none
@@ -83,7 +83,7 @@
               transition: max-height 0.25s, background 0.01s
               max-height: 1000px
               position: absolute
-              top: 38px
+              top: 41px
               margin-left: 0
               list-style: none
 
@@ -134,7 +134,7 @@
 //////////////////////////////////////////////////////
 // mobile navigation
 //////////////////////////////////////////////////////
-@include breakpoint(small down)
+@include breakpoint(medium down)
   .topbar-container
     // display: none
 
@@ -173,12 +173,27 @@
         cursor: pointer
 
 
-        .toggle-icon
+        .toggle-icon-container
           width: 100%
           height: 100%
           display: inline-block
-          text-align: center
-          font-size: 24px
+          //text-align: center
+          //font-size: 24px
+
+          .toggle-icon
+            width: 40px
+            height: 40px
+            display: flex
+            flex-direction: column
+            align-content: space-between
+            flex-flow: row wrap
+            padding: 10px 7px
+
+            &__line
+              height: 2px
+              width: 100%
+              border-bottom-width: 2px
+              border-bottom-style: solid
 
 
       &__main-menu,
@@ -191,73 +206,89 @@
 
     .topbar
 
-      //transition: height 0ms
+      //transition: height 200ms
 
       &.extended
         height: 100vh
-        background: #fff
-        //transition: height 200ms
-
-
+        // background: #fff
+        margin-top: 42px
         border-bottom: 0
 
-
         .topbar__logo
-          display: none
-
-
-        .topbar__account
-          padding-top: 80px
-
+          // display: none
+          top: 0
+          position: absolute
+          width: 100%
 
         .topbar__main-menu
+          flex-grow: 0
+
+        .topbar__account
           order: 2
+          flex-grow: 1
 
-
-
-
-
-        .topbar__toggle
-          color: #000
-
-
-
+          .menu
+            border-top: 2px solid #000
 
         .topbar__main-menu,
         .topbar__account
           display: block
 
-
           .menu-item
             a
               color: #000
+
+            &:hover
+              background: transparent
 
             &.selected
               background-color: #000
               a
                 color: #fff
 
-
           .menu
 
-            padding: 40px 0
+            padding: 0
 
             background-color: #fff
             display: flex
             flex-direction: column
-            border-bottom: 2px solid #000
 
             .menu-item
               text-align: center
+              height: auto
+              flex-direction: column
+
+              &:not(.has-parent)
+                border-bottom: 1px solid rgba(#000, .1)
+
+                &:last-child
+                  border-bottom: 0
+
+
+              &.selected
+                background: transparent
+                a
+                  color: $black
+                > a
+                  background: $black
+                  color: $white
+
               > a
                 display: flex
                 width: 100%
-                height: 100%
+                //height: 100%
+                height: 40px
                 align-items: center
                 justify-content: center
 
-
             // TODO: implement 2nd level
             .submenu
-              display: none !important
+              display: block
+              position: relative
+              max-height: 100%
+              width: 100%
+              top: 0
+              background: transparent
+              //display: none !important
 

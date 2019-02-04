@@ -259,6 +259,9 @@
             @include xy-cell(4);
             @include xy-cell-offset(4);
 
+
+            //height: 380px;
+
             @include breakpoint(medium only) {
                 @include xy-cell(6);
                 @include xy-cell-offset(0);
@@ -306,8 +309,8 @@
             transition: opacity 500ms;
 
 
-            max-width: 360px;
-            max-height: 360px;
+            max-width: 380px;
+            max-height: 380px;
 
             @include breakpoint(medium only) {
                 max-width: 460px;
@@ -452,10 +455,10 @@
 
 
             <div v-if="onair" class="schedule-container__prev-next">
-                <div class="switch switch--prev" v-bind:style="{ top: (container_size.height / 2) - 20 + 'px' }">
+                <div class="switch switch--prev" v-bind:style="{ top: (container_size.height / 2) + 12 + 'px' }">
                     <arrow @click="select(-1)" v-bind:disabled="(! has_previous)" direction="left"></arrow>
                 </div>
-                <div class="switch switch--next" v-bind:style="{ top: (container_size.height / 2) - 20 + 'px' }">
+                <div class="switch switch--next" v-bind:style="{ top: (container_size.height / 2) + 12 + 'px' }">
                     <arrow @click="select(+1)" v-bind:disabled="(! has_next)" direction="right"></arrow>
                 </div>
             </div>

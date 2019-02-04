@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 import requests
+import dateutil
+import datetime
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 from django.conf import settings
+from django.utils import timezone
 from django.utils.translation import ugettext as _
 
 API_BASE_URL = getattr(settings, 'API_BASE_URL', None)
@@ -32,10 +35,8 @@ class ProgramPlugin(CMSPluginBase):
         for obj in objects:
             for emission in reversed(obj['emissions']):
                 if not emission in emissions:
+                    emission['is_history'] = dateutil.parser.parse(emission['time_end']) < datetime.datetime.now()
                     emissions.append(emission)
-
-
-
 
         context.update({
             'instance': instance,

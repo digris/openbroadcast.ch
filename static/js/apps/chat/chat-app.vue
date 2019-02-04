@@ -95,11 +95,13 @@
             background: $white;
         }
 
+
+
         .chat-input-container {
             display: flex;
             align-items: center;
             flex-direction: column;
-            padding: 20px 0;
+            padding: 26px 0 20px;
 
             @include breakpoint(small only) {
                 @include xy-grid-container;
@@ -130,7 +132,7 @@
 
                 }
                 &--hide {
-                    margin-top: 32px;
+                    margin: 32px 0;
                     display: inline-block;
                     opacity: .5;
                     &:hover {
@@ -180,7 +182,7 @@
 
     .message-list-container {
         @include xy-grid-container;
-        max-width: 80rem;
+        max-width: 1070px;
         margin: 0 auto;
     }
 
@@ -194,7 +196,7 @@
                 @include xy-cell(6);
             }
             @include breakpoint(large) {
-                @include xy-cell(3);
+                @include xy-cell(3, true, 10px);
             }
         }
     }

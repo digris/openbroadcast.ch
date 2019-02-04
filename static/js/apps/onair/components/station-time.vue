@@ -111,11 +111,11 @@
 
             transition: background-color 200ms, color 200ms;
             &__time {
-                padding: 6px 28px;
+                padding: 6px 20px;
                 cursor: pointer;
             }
             &__back {
-                padding: 6px 28px;
+                padding: 6px 20px;
                 cursor: pointer;
             }
         }

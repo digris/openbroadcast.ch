@@ -75,6 +75,7 @@
             }
 
             max-width: 320px;
+            padding-left: 20px;
         }
 
 

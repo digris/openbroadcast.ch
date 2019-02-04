@@ -123,7 +123,7 @@
         &__header {
             display: flex;
             margin-bottom: 10px;
-            min-height: 150px;
+            min-height: 165px;
             word-wrap: break-word;
 
             &__visual {

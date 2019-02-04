@@ -82,7 +82,7 @@
         flex-direction: row;
 
         svg {
-            margin: 0 10px;
+            margin: 0 20px;
 
             rect,
             polyline {

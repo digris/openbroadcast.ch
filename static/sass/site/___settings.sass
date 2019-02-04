@@ -1,0 +1,123 @@
+@import ~foundation-sites/scss/util/color
+@import ~foundation-sites/scss/util/unit
+@import ~foundation-sites/scss/util/value
+
+// TODO: refactor. taken from 5.2 settings
+$body-font-weight: 300
+$input-font-color: #00ffff
+$info-color: #00ffff
+$body-bg: #ffff00
+$grey-light: #ff0033
+$global-flexbox: true
+
+// 1. Global
+// ---------
+
+$global-font-size: 16px
+$global-width: rem-calc(1200)
+$global-lineheight: 25px
+$foundation-palette: (primary: #000000, secondary: #777, success: #3adb76, warning: #ffae00, alert: #ec5840)
+$light-gray: #e6e6e6
+$medium-gray: #cacaca
+$dark-gray: #8a8a8a
+$black: #0a0a0a
+$white: #fefefe
+$body-background: $white
+$body-font-color: $black
+$body-font-family: "Helvetica Neue", "Source Sans Pro", sans-serif
+$body-antialiased: false
+$global-margin: 1rem
+$global-padding: 1rem
+$global-weight-normal: 300
+$global-weight-bold: bold
+$global-radius: 0
+$global-text-direction: ltr
+$global-flexbox: true
+$print-transparent-backgrounds: true
+
+@include add-foundation-colors
+
+// 2. Breakpoints
+// --------------
+
+$breakpoints: (small: 0, medium: 640px, large: 1201px)
+$breakpoint-classes: (small medium large)
+
+// 3. The Grid
+// -----------
+
+$grid-row-width: $global-width
+$grid-column-count: 12
+//$grid-column-gutter: (
+//  small: 20px,
+//  medium: 30px,
+//)
+$grid-column-align-edge: true
+$block-grid-max: 8
+
+// 4. Base Typography
+// ------------------
+
+$header-font-family: $body-font-family
+$header-font-weight: $global-weight-normal
+$header-font-style: normal
+$font-family-monospace: Consolas, 'Liberation Mono', Courier, monospace
+
+$header-sizes: (small: ("h1": 24, "h2": 20, "h3": 19, "h4": 18, "h5": 17, "h6": 16), medium: ("h1": 32, "h2": 24, "h3": 20, "h4": 18, "h5": 18, "h6": 18))
+
+$header-color: inherit
+$header-lineheight: 1.4
+$header-margin-bottom: 0.5rem
+//$header-text-rendering: optimizeLegibility
+$header-text-rendering: auto
+$small-font-size: 80%
+$header-small-font-color: $medium-gray
+$paragraph-lineheight: 1.6
+$paragraph-margin-bottom: 1rem
+//$paragraph-text-rendering: optimizeLegibility
+$paragraph-text-rendering: auto
+$code-color: $black
+$code-font-family: $font-family-monospace
+$code-font-weight: $global-weight-normal
+$code-background: $light-gray
+$code-border: 1px solid $medium-gray
+$code-padding: rem-calc(2 5 1)
+$anchor-color: $primary-color
+$anchor-color-hover: scale-color($anchor-color, $lightness: -14%)
+$anchor-text-decoration: none
+$anchor-text-decoration-hover: none
+$hr-width: $global-width
+$hr-border: 1px solid $medium-gray
+$hr-margin: rem-calc(20) auto
+$list-lineheight: $paragraph-lineheight
+$list-margin-bottom: $paragraph-margin-bottom
+$list-style-type: disc
+$list-style-position: outside
+$list-side-margin: 1.25rem
+$list-nested-side-margin: 1.25rem
+$defnlist-margin-bottom: 1rem
+$defnlist-term-weight: $global-weight-bold
+$defnlist-term-margin-bottom: 0.3rem
+$blockquote-color: $dark-gray
+$blockquote-padding: rem-calc(9 20 0 19)
+$blockquote-border: 1px solid $medium-gray
+$cite-font-size: rem-calc(13)
+$cite-color: $dark-gray
+$keystroke-font: $font-family-monospace
+$keystroke-color: $black
+$keystroke-background: $light-gray
+$keystroke-padding: rem-calc(2 4 0)
+$keystroke-radius: $global-radius
+$abbr-underline: 1px dotted $black
+
+// 5. Typography Helpers
+// ---------------------
+
+$lead-font-size: $global-font-size * 1.25
+$lead-lineheight: 1.6
+$subheader-lineheight: 1.4
+$subheader-color: $dark-gray
+$subheader-font-weight: $global-weight-normal
+$subheader-margin-top: 0.2rem
+$subheader-margin-bottom: 0.5rem
+$stat-font-size: 2.5rem

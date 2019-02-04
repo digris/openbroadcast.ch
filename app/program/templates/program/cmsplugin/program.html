@@ -23,7 +23,7 @@
                      {{ emission.time_start|slice:'11:16' }}
                 </div>
                 <div class="emission__title">
-                    <a href="{{ settings.REMOTE_BASE_URL }}{{ emission.content_object.absolute_url }}" target="_blank">
+                    <a href="{{ settings.REMOTE_BASE_URL }}{{ emission.absolute_url }}" target="_blank">
                         {% if emission.series %}
                             {{ emission.series }}
                             {% if emission.series_number %}#{{ emission.series_number }}{% endif %}
@@ -35,6 +35,13 @@
                 <div class="emission__author">
                     <a href="{{ settings.REMOTE_BASE_URL }}{{ emission.user_co.absolute_url }}" target="_blank">{{ emission.user_co.display_name }}</a>
                 </div>
+
+                <div class="emission__mixdown">
+                    {% if emission.is_history and user.is_authenticated and user.is_staff and emission.content_object.mixdown_file %}
+                        <a href="{{ settings.REMOTE_BASE_URL }}{{ emission.content_object.mixdown_file }}" target="_blank">Podcast</a>
+                    {% endif %}
+                </div>
+
             </div>
         {% endfor %}
     </div>

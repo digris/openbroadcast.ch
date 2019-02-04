@@ -2,7 +2,7 @@
 
 
 {% for child in children %}
-<li class="menu-item {% if child.selected or child.ancestor %} selected{% endif %}{% if child.parent %} has-parent{% endif %}">
+<li class="menu-item {% if child.selected %} selected{% endif %} {% if child.ancestor %} ancestor{% endif %}{% if child.parent %} has-parent{% endif %}">
 	<a
         {% if child.attr.redirect_url and child.attr.redirect_url|startswith:'http' %}target="_blank" {% endif %}
         href="{{ child.attr.redirect_url|default:child.get_absolute_url }}">

@@ -1,63 +1,126 @@
 
-body.cms-base,
-body.app-base
-  .content-container
-    padding-top: 60px
-    padding-bottom: 100px
-
-    @include breakpoint(small only)
-      padding-top: 0
-
-body.cms-home
-  .content-container
-    display: none
-
-
-.main-content
-
-  font-weight: 300
-  padding: 4px 0 16px
-  border-top-width: 2px
-  border-top-style: solid
-
-  h1, h2
-    &:first-child
-      padding: 12px 0 8px
-
-  p
-    text-indent: 30px
-    text-indent: 14px
-    img
-      margin-left: -30px
-      margin-left: -14px
-
-  a
-    //text-decoration: underline
-    border-bottom: 1px dotted black
-    &:hover
-      border-bottom: 1px solid black
-
-
-  @include breakpoint(small only)
-    padding: 0 16px
-    &:first-child
-      border-top: none
 
 
 
-///////////////////////////////////////////////////////////////////////
-// filer plugins
-///////////////////////////////////////////////////////////////////////
-.filer-image
-  figcaption
-    opacity: 0.7
-    font-size: 90%
 
-  img.left
-    float: left
+.main-content-container
+  display: flex
+  justify-content: center
 
-  &.inline img
-    display: inline
-    padding-top: 6px
-    padding-right: 12px
-    padding-bottom: 2px
+  .main-content
+    padding-top: 18px
+    padding-bottom: 32px
+    max-width: 760px
+    width: 100%
+
+    h1, h2
+      border-top-width: 2px
+      border-top-style: solid
+
+      margin: 33px 0 0
+      padding-top: 20px
+
+      &:first-child
+        margin-top: 20px
+
+    // paragraph styles
+    p
+      text-indent: 30px
+
+      letter-spacing: 1px
+      line-height: 25px
+      //margin-block-end: 25px
+      //margin-block-start: 16px
+      margin-top: 14px
+      margin-bottom: 16px
+      padding-right: 20px
+
+
+      &:last-child
+        padding-bottom: 34px
+        border-bottom-width: 2px
+        border-bottom-style: solid
+
+    a
+      border-bottom-width: 1px
+      border-bottom-style: dotted
+      border-bottom-color: inherit
+
+
+    // mobile / pad styles
+    @include breakpoint(medium down)
+
+      padding-left: 20px
+      padding-right: 20px
+
+      h1, h2
+        &:first-child
+          border-top: 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//body.cms-base,
+//body.app-base
+//  .content-container
+//    padding-top: 60px
+//    padding-bottom: 100px
+//
+//    @include breakpoint(medium down)
+//      padding-top: 20px
+//
+//body.cms-home
+//  .content-container
+//    display: none
+//
+//
+//.main-content
+//
+//  font-weight: 300
+//  padding: 4px 0 16px
+//  border-top-width: 2px
+//  border-top-style: solid
+//
+//  //h1, h2
+//  //  &:first-child
+//  //    padding: 12px 0 8px
+//
+//  //h1,
+//  //h2,
+//  //h3
+//  //  font-size: 24px
+//  //  line-height: 30px
+//  //  font-weight: 400
+//
+//
+//
+//  // paragraph styles
+//  p
+//    text-indent: 30px
+//    text-indent: 14px
+//    img
+//      margin-left: -30px
+//      margin-left: -14px
+//
+//  a
+//    //text-decoration: underline
+//    border-bottom: 1px dotted black
+//    &:hover
+//      border-bottom: 1px solid black
+//
+//
+//  @include breakpoint(medium down)
+//    padding: 0 16px
+//    &:first-child
+//      border-top: none
+//

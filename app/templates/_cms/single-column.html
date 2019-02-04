@@ -2,11 +2,9 @@
 {% load cms_tags %}
 
 {% block cms_content %}
-
-    <div class="row align-center">
-        <div class="small-12 medium-10 large-8 columns main-content" data-livefg>
+    <div class="main-content-container">
+        <div class="main-content" data-livefg>
             {% placeholder content %}
         </div>
     </div>
-
 {% endblock %}
