@@ -263,8 +263,8 @@
             //height: 380px;
 
             @include breakpoint(medium only) {
-                @include xy-cell(6);
-                @include xy-cell-offset(0);
+                @include xy-cell(4);
+                @include xy-cell-offset(4);
             }
 
             @include breakpoint(small only) {
@@ -289,7 +289,7 @@
             @include xy-cell(4);
 
             @include breakpoint(medium only) {
-                @include xy-cell(6);
+                @include xy-cell(12);
             }
 
             @include breakpoint(small only) {

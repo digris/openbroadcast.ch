@@ -17,12 +17,13 @@
     props: [
       'loginUrl',
       'registerUrl',
+      'passwordRecoverUrl',
     ],
     data() {
       return {
         show_modal: false,
         is_authenticated: false,
-        body: '<h1></h1>',
+        body: '',
         float_labels: null
       }
     },
@@ -92,6 +93,10 @@
 
         if (scope === 'register') {
           url = this.registerUrl;
+        }
+
+        if (scope === 'password_recover') {
+          url = this.passwordRecoverUrl;
         }
 
         APIClient.get(url)
@@ -276,16 +281,19 @@
         }
 
         .form-appendix {
+            .alt {
+                display: block;
+            }
             a {
                 text-decoration: underline;
             }
         }
 
         #input_id_tos {
-            // font-size: 90%;
+            font-size: 90%;
             .input-container__field {
                 display: flex;
-
+                align-items: center;
                 /*
                 input {
                     height: 24px;
@@ -305,25 +313,30 @@
                     border: 1px solid #000;
                     transition: all 240ms;
 
+                    flex: 0 0 24px;
+
                     &:focus {
-                    outline: 0 none;
-                    box-shadow: none;
+                        outline: 0 none;
+                        box-shadow: none;
                     }
 
+                    color: transparent;
+
                     &:checked {
-                        background-color: #000;
+                        // background-color: #000;
+                        color: #000;
                     }
 
                     &:after {
-                        /*position: absolute;*/
-                        /*top: 2px;*/
-                        /*bottom: 0;*/
-                        /*left: 1px;*/
-                        /*right: 0;*/
-                        /*content: "\274c";*/
-                        /*font-size: 20px;*/
-                        /*line-height: 24px;*/
-                        /*text-align: center;*/
+                        position: absolute;
+                        top: 0;
+                        bottom: 0;
+                        left: 0;
+                        right: 0;
+                        content: "\2573";
+                        font-size: 22px;
+                        line-height: 24px;
+                        text-align: center;
                     }
 
 
@@ -331,7 +344,7 @@
 
                 label {
                     order: 2;
-                    padding-left: 8px;
+                    padding-left: 12px;
                 }
             }
         }

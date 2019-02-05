@@ -162,8 +162,9 @@
 <div id="account_container" data-turbolinks-permanent>
     <div
         id="account_app"
-        data-login-url="{% url 'account:login-partial' %}"
-        data-register-url="{% url 'account:register-partial' %}"
+        data-login-url="{% url 'account:login' %}"
+        data-register-url="{% url 'account:register' %}"
+        data-password-recover-url="{% url 'account:password_recover' %}"
     ></div>
 </div>
 

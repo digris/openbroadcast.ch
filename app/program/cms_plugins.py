@@ -23,19 +23,18 @@ class ProgramPlugin(CMSPluginBase):
 
         uri = 'v1/abcast/channel/1/program/'
 
-        #print API_BASE_URL
-        #print uri
-
         r = requests.get(API_BASE_URL + uri, verify=True)
 
         objects = r.json().get('objects', [])
 
         # hackish way to extract emissions (we don't need dayparts here..)
         emissions = []
+        emission_ids = []
         for obj in objects:
             for emission in reversed(obj['emissions']):
-                if not emission in emissions:
+                if not emission['id'] in emission_ids:
                     emission['is_history'] = dateutil.parser.parse(emission['time_end']) < datetime.datetime.now()
+                    emission_ids.append(emission['id'])
                     emissions.append(emission)
 
         context.update({

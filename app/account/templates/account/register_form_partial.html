@@ -1,69 +1,63 @@
 {% load i18n account_tags %}
 
 {% block app_content %}
-
-
-        <div class="auth-card">
-
-            <span class="title">{% trans "Sign up"|title %}</span>
-
-            <p class="text">
-                Melde dich bei open broadcast an, um unser Radioprogramm zu kommentieren oder bei der Community mitzumachen.
-            </p>
-
-            <div class="form-container">
-                <form method="post" class="form-base form-account account-partial" data-xhr-exclude action="{% url 'account:register-partial' %}">
-                    {% csrf_token %}
-
-                    {% for field in form.visible_fields %}
-                        <div class="input-container{% if field.errors %} input-container--has-errors{% endif %}" id="input_{{ field.id_for_label }}">
-                            <div class="input-container__field">
-                                {{ field.label_tag }}
-                                {{ field }}
-                            </div>
-                            <div class="input-container__appendix">
-                                {% if field.help_text and not field.errors %}
-                                <div class="input-container__field-help">
-                                    <span>{{ field.help_text|safe }}</span>
-                                </div>
-                                {% endif %}
-                                {% if field.errors %}
-                                    <div class="input-container__field-errors">
-                                     {% for error in field.errors %}
-                                        <span>{{ error|escape }}</span>
-                                    {% endfor %}
-                                    </div>
-                                {% endif %}
-                            </div>
+    <div class="auth-card">
+        <span class="title">{% trans "Sign up"|title %}</span>
+        <p class="text">
+            Melde dich bei open broadcast an, um unser Radioprogramm zu kommentieren oder bei der Community mitzumachen.
+        </p>
+        <div class="form-container">
+            <form method="post" class="form-base form-account account-partial" data-xhr-exclude action="{% url 'account:register' %}">
+                {% csrf_token %}
+                {% for field in form.visible_fields %}
+                    <div class="input-container{% if field.errors %} input-container--has-errors{% endif %}" id="input_{{ field.id_for_label }}">
+                        <div class="input-container__field">
+                            {{ field.label_tag }}
+                            {{ field }}
                         </div>
-                    {% endfor %}
-
-                    <div class="actions">
-                        <button class="actions__action button" type="submit">{% trans "Create Account" %}</button>
-                    </div>
-                </form>
-            </div>
-            <div class="form-appendix">
-
-                <span>
-                    <a @click.prevent="$emit('show', 'login')"
-                       href="#">Mit bestehendem Konto anmelden?</a>
-                </span>
-
-            </div>
-
-            <div class="form-separator">
-                Oder anmelden mit:
-            </div>
-
-            <div class="social-login-container">
-                {% for backend in backends.backends %}
-                    <div class="auth-social auth-social-{{ backend }}" data-turbolinks="false">
-                        {% backend_detail backend 'register' %}
+                        <div class="input-container__appendix">
+                            {% if field.help_text and not field.errors %}
+                            <div class="input-container__field-help">
+                                <span>{{ field.help_text|safe }}</span>
+                            </div>
+                            {% endif %}
+                            {% if field.errors %}
+                                <div class="input-container__field-errors">
+                                 {% for error in field.errors %}
+                                    <span>{{ error|escape }}</span>
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
                     </div>
                 {% endfor %}
-            </div>
-
+                <div class="actions">
+                    <button class="actions__action button" type="submit">{% trans "Create Account" %}</button>
+                </div>
+            </form>
+        </div>
+        <div class="form-appendix">
+            <span class="alt">
+                <a @click.prevent="$emit('show', 'login')"
+                   href="#">Mit bestehendem Konto anmelden?</a>
+            </span>
+            <!--
+            <span class="alt">
+                <a @click.prevent="$emit('show', 'password_recover')" href="#">Passwort vergessen?</a>
+            </span>
+            -->
         </div>
 
+        <div class="form-separator">
+            Oder anmelden mit:
+        </div>
+
+        <div class="social-login-container">
+            {% for backend in backends.backends %}
+                <div class="auth-social auth-social-{{ backend }}" data-turbolinks="false">
+                    {% backend_detail backend 'register' %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

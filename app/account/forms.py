@@ -97,8 +97,17 @@ class RegistrationForm(UserCreationForm):
 
 class PasswordRecoverForm(BasePasswordRecoveryForm):
 
+    # TODO: implement password recovery logic
     def __init__(self, *args, **kwargs):
         super(PasswordRecoverForm, self).__init__(*args, **kwargs)
+
+
+    def get_user_by_both(self, username):
+
+
+        raise forms.ValidationError(_("Unable to find user...."))
+
+        return user
 
 
 class PasswordResetForm(BasePasswordResetForm):

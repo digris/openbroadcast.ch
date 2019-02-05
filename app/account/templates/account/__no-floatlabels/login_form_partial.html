@@ -13,7 +13,7 @@
             </p>
 
             <div class="form-container">
-                <form method="post" class="form-base account-partial" data-xhr-exclude action="{% url 'account:login-partial' %}">
+                <form method="post" class="form-base account-partial" data-xhr-exclude action="{% url 'account:login' %}">
                     {% csrf_token %}
 
                     {{ form.non_field_errors }}

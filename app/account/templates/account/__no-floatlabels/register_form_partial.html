@@ -24,7 +24,7 @@
             </div>
 
             <div class="form-container">
-                <form method="post" class="form-base account-partial" data-xhr-exclude action="{% url 'account:register-partial' %}">
+                <form method="post" class="form-base account-partial" data-xhr-exclude action="{% url 'account:register' %}">
                     {% csrf_token %}
 
                     {% for field in form %}

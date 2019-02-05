@@ -63,8 +63,8 @@ class RemoteUserBackend(ModelBackend):
 
         data = r.json()
 
-        import json
-        print(json.dumps(data, indent=4))
+        # import json
+        # print(json.dumps(data, indent=4))
 
 
         # print '///////////////////////////////////////'

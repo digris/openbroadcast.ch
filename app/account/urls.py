@@ -12,8 +12,8 @@ urlpatterns = [
     url(r'^logout/$', views.UserLogoutView.as_view(), {'next_page': '/'},  name='logout'),
 
     # login / register partials (ajax/modal usage)
-    url(r'^p/login/$', views.UserLoginView.as_view(), name='login-partial'),
-    url(r'^p/sign-up/$', views.UserRegisterView.as_view(), name='register-partial'),
+    url(r'^p/login/$', views.UserLoginView.as_view(), name='login'),
+    url(r'^p/sign-up/$', views.UserRegisterView.as_view(), name='register'),
 
     # password reset flow
     url(r'^password/recover/(?P<signature>.+)/$', views.PasswordRecoverSentView.as_view(), name='password_recover_sent'),

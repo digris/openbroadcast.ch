@@ -61,7 +61,7 @@
 
         &--minimal {
             display: none;
-            @include breakpoint(small only) {
+            @include breakpoint(medium down) {
                 display: block;
             }
 
@@ -70,7 +70,7 @@
         }
 
         &--extended {
-            @include breakpoint(small only) {
+            @include breakpoint(medium down) {
                 display: none;
             }
 

@@ -1,79 +1,66 @@
 {% load i18n account_tags %}
 
 {% block app_content %}
-
-
-
-        <div class="auth-card">
-
-            <span class="title">{% trans "Sign in"|title %}</span>
-
-            <p class="text">
-                Melde dich bei open broadcast an, um unser Radioprogramm zu kommentieren oder bei der Community mitzumachen.
-            </p>
-
-            <div class="form-container">
-                <form method="post" class="form-base form-account account-partial" data-xhr-exclude action="{% url 'account:login-partial' %}">
-                    {% csrf_token %}
-
-                    {{ form.non_field_errors }}
-
-                    {% for field in form %}
-                        <div class="input-container{% if field.errors %} input-container--has-errors{% endif %}" id="input_{{ field.id_for_label }}">
-                            <div class="input-container__field">
-
-                                    {{ field.label_tag }}
-
-                                    {{ field }}
-
-                            </div>
-                            <div class="input-container__appendix">
-                                {% if field.help_text and not field.errors %}
-                                <div class="input-container__field-help">
-                                    <span>{{ field.help_text|safe }}</span>
-                                </div>
-                                {% endif %}
-                                {% if field.errors %}
-                                    <div class="input-container__field-errors">
-                                     {% for error in field.errors %}
-                                        <span>{{ error|escape }}</span>
-                                    {% endfor %}
-                                    </div>
-                                {% endif %}
-                            </div>
+    <div class="auth-card">
+        <span class="title">{% trans "Sign in"|title %}</span>
+        <p class="text">
+            Melde dich bei open broadcast an, um unser Radioprogramm zu kommentieren oder bei der Community mitzumachen.
+        </p>
+        <div class="form-container">
+            <form method="post" class="form-base form-account account-partial" data-xhr-exclude action="{% url 'account:login' %}">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                {% for field in form %}
+                    <div class="input-container{% if field.errors %} input-container--has-errors{% endif %}" id="input_{{ field.id_for_label }}">
+                        <div class="input-container__field">
+                            {{ field.label_tag }}
+                            {{ field }}
                         </div>
-                    {% endfor %}
-
-                    <div class="actions">
-                        <button class="actions__action button" type="submit">{% trans "Login" %}</button>
-                    </div>
-                </form>
-            </div>
-            <div class="form-appendix">
-
-                <span>
-                    <a @click.prevent="$emit('show', 'register')"
-                       href="#">Neues Konto erstellen?</a>
-                    <!--<a @click.prevent="$emit('show', 'register')"
-                       href="#">{% trans 'sign up'|capfirst %}</a><span>{% trans "if you don\'t have an account yet" %}</span>-->
-
-                </span>
-
-            </div>
-
-            <div class="form-separator">
-                Oder anmelden mit:
-            </div>
-
-            <div class="social-login-container">
-                {% for backend in backends.backends %}
-                    <div class="auth-social auth-social-{{ backend }}" data-turbolinks="false">
-                        {% backend_detail backend %}
+                        <div class="input-container__appendix">
+                            {% if field.help_text and not field.errors %}
+                            <div class="input-container__field-help">
+                                <span>{{ field.help_text|safe }}</span>
+                            </div>
+                            {% endif %}
+                            {% if field.errors %}
+                                <div class="input-container__field-errors">
+                                 {% for error in field.errors %}
+                                    <span>{{ error|escape }}</span>
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
                     </div>
                 {% endfor %}
-            </div>
-
-
+                <div class="actions">
+                    <button class="actions__action button" type="submit">{% trans "Login" %}</button>
+                </div>
+            </form>
         </div>
+        <div class="form-appendix">
+            <span class="alt">
+                <a @click.prevent="$emit('show', 'register')" href="#">Neues Konto erstellen?</a>
+            </span>
+            <!--
+            <span class="alt">
+                <a @click.prevent="$emit('show', 'password_recover')" href="#">Passwort vergessen?</a>
+            </span>
+            -->
+        </div>
+
+        <div class="form-separator">
+            Oder anmelden mit:
+        </div>
+
+        <div class="social-login-container">
+            {% for backend in backends.backends %}
+                <div class="auth-social auth-social-{{ backend }}" data-turbolinks="false">
+                    {% backend_detail backend %}
+                </div>
+            {% endfor %}
+        </div>
+
+
+    </div>
 
 {% endblock %}
