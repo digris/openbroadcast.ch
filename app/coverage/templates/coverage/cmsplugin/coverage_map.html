@@ -1,28 +1,20 @@
 {% load i18n %}
 <div class="coverage-map-plugin">
-    <div class="coverage-map" data-livebg>
+    <div class="coverage-map">
         <div class="fs-handler">
-            <div class="row">
-                <div class="columns small-8">
-                    <h3 data-livefg>{% trans 'Verbreitungsgebiete' %}</h3>
-                </div>
-                <div class="columns small-4">
-                    <div class="text-right">
-                        <a href="#" data-map-toggle-fs data-livefg>
-                            <span>{% trans 'Fullscreen' %}</span>
-                            <i class="fa fa-arrows-alt"></i>
-                        </a>
-                    </div>
-                </div>
+            <div class="fs-handler__title">
+                <h3 data-livefg>{% trans 'Verbreitungsgebiete' %}</h3>
+            </div>
+            <div class="fs-handler__toggle">
+                <a href="#" data-map-toggle-fs data-livefg>
+                    <span>{% trans 'Fullscreen' %}</span>
+                    <i class="fa fa-arrows-alt"></i>
+                </a>
             </div>
         </div>
-
-        <div class="row iframe-row">
-            <div class="columns small-12">
-                <iframe width="800" height="480" frameborder="0" src="{{ instance.url }}" frameborder="0" allowfullscreen></iframe>
-            </div>
+        <div class="iframe-container">
+            <iframe width="100%" height="480" frameborder="0" src="{{ instance.url }}" frameborder="0" allowfullscreen></iframe>
         </div>
-
     </div>
 </div>
 

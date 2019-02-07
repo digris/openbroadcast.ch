@@ -23,9 +23,11 @@ class CoverageMap {
         $('body').addClass('fullscreen-map');
 
         // recalculate heights
-        const iframe_container = $('.iframe-row');
+        const iframe_container = $('.iframe-container');
         const iframe_height = $(window).height() - iframe_container.position().top;
+        const iframe_width = $(window).width();
         iframe_container.height(iframe_height);
+        // iframe_container.width(iframe_width);
 
       } else {
         container.removeClass('fullscreen');
