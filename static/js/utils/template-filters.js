@@ -84,6 +84,10 @@ export function linebreaksbr(value) {
   return (value + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
 }
 
+export function truncate(text, length, clamp) {
+  return text.slice(0, length) + (length < text.length ? clamp || '...' : '')
+}
+
 export function strip_markdown(md, options) {
 
   options = options || {};
@@ -148,7 +152,7 @@ export function strip_markdown(md, options) {
   }
   return output;
 
-};
+}
 
 export const template_filters = {
   ms_to_time: function (value) {
@@ -171,5 +175,8 @@ export const template_filters = {
   },
   strip_markdown: function (value) {
     return strip_markdown(value)
+  },
+  truncate: function (text, length, clamp) {
+    return truncate(text, length, clamp)
   }
 };

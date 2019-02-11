@@ -33,11 +33,13 @@
     [contenteditable] {
         text-rendering: optimizeSpeed;
         margin: 0;
+        height: 100%;
         outline: none;
     }
 </style>
 <template>
     <div contenteditable="true"
+         class="foo-bar-baz"
          @input="update"
          @focus="focus"
          @blur="blur"

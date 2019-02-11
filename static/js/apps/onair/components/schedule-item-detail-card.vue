@@ -175,7 +175,8 @@
                 <visual v-bind:url="content.image"></visual>
             </div>
             <div class="card__header__title">
-                <h3 v-if="content.name">{{ content.name }}</h3>
+                <h3 v-if="content.name" v-html="$options.filters.truncate(content.name, 30)"></h3>
+
                 <!-- ugly layout handling for various content types. see get_content_for_scope -->
 
                 <!-- emission metadata -->

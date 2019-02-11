@@ -354,7 +354,6 @@
                     height: 30px;
                 }
             }
-
         }
 
         &__prev-next {
@@ -375,9 +374,7 @@
                     right: 30px;
                 }
             }
-
         }
-
     }
 
     .rating-container {

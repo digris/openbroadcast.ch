@@ -16,11 +16,6 @@
     mounted: function () {
 
     },
-    // data() {
-    //   return {
-    //     remote_window: null,
-    //   }
-    // },
     computed: {
       media() {
         return this.schedule_item.item;
