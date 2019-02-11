@@ -46,9 +46,9 @@ RUN DJANGO_SETTINGS_MODULE=app.settings.build python manage.py check
 #RUN DJANGO_SETTINGS_MODULE=app.settings.build python manage.py collectstatic --noinput \
 #    && rm -R /app/app/static-src/
 
-RUN adduser -D app
-RUN chown -R app ./app/static-dist
-USER app
+#RUN adduser -D app
+#RUN chown -R app ./app/static-dist
+#USER app
 
 #COPY docker-entrypoint.sh /app/
 # entrypoint (contains migration/static handling)
