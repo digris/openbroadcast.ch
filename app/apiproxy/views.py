@@ -43,17 +43,19 @@ class ResourceView(View):
 
             try:
                 r = requests.get(url, verify=True)
+                r.encoding = 'utf-8'
+
             except ConnectionError as e:
                 return HttpResponse('{}'.format(e), status=503)
 
             if not r.status_code == 200:
                 return HttpResponse('', status=r.status_code)
 
+
             cache.set(cache_key, r, CACHE_DURATION)
 
         else:
             log.debug('serving {0} from cache'.format(path))
-
 
         response = HttpResponse(r.text, content_type='application/json', status=r.status_code, charset='utf-8')
         if r.headers and r.headers.get('Content-Length'):
