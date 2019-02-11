@@ -116,6 +116,10 @@ module.exports = {
         from: path.resolve(STATIC_SRC, 'img'),
         to: path.resolve(STATIC_ROOT, 'img')
       },
+      {
+        from: path.resolve(STATIC_SRC, 'icons'),
+        to: path.resolve(STATIC_ROOT, 'icons')
+      },
     ], {debug: 'warning'}),
     new webpack.ProvidePlugin({
       $: "jquery",
