@@ -17,7 +17,7 @@ services:
     #volumes:
     #    - ./app/:/app/app
     #command: /app/manage.py runserver 0.0.0.0:8000
-    command: daphne --port 8000 --bind 0.0.0.0 app.asgi:application
+    #command: daphne --port 8000 --bind 0.0.0.0 app.asgi:application
     environment:
       - DJANGO_MANAGE_MIGRATE=off
       - DJANGO_MANAGE_COLLECTSTATIC=off
