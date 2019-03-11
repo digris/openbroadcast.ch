@@ -44,9 +44,8 @@ class ScheduleViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets
         ).order_by('time_start').first()
 
         response.data.update({
-            # 'onair': onair_qs.exists(),
             'onair': onair_qs.first().uuid if onair_qs.exists() else None,
-            'next_starts_in': next_item.starts_in if next_item else None,
+            'next_starts_in': next_item.starts_in_offset if next_item else None,
         })
 
         return response

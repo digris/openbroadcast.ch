@@ -18,6 +18,8 @@ from base.models.mixins import UUIDModelMixin
 API_BASE_URL = getattr(settings, 'API_BASE_URL', None)
 API_BASE_AUTH = getattr(settings, 'API_BASE_AUTH', None)
 
+PLAYOUT_OFFSET = 30
+
 log = logging.getLogger(__name__)
 
 if not API_BASE_URL:
@@ -83,10 +85,29 @@ class ScheduledItem(UUIDModelMixin, models.Model):
         return (self.time_start < now and self.time_end > now)
 
     @property
+    def time_start_offset(self):
+        if not self.time_start:
+            return
+        return self.time_start + datetime.timedelta(seconds=PLAYOUT_OFFSET)
+
+    @property
+    def time_end_offset(self):
+        if not self.time_end:
+            return
+        return self.time_end + datetime.timedelta(seconds=PLAYOUT_OFFSET)
+
+    @property
     def starts_in(self):
         now = timezone.now()
         if self.time_start > now:
             return (self.time_start - now).total_seconds()
+        return 0
+
+    @property
+    def starts_in_offset(self):
+        now = timezone.now()
+        if self.time_start_offset > now:
+            return (self.time_start_offset - now).total_seconds()
         return 0
 
     @property

@@ -57,7 +57,7 @@ def fetch_from_api(range_start=0, range_end=0, channel=None):
     else:
         qs.delete()
 
-    # map
+    # map to local structure
     for remote_item in remote_schedule['objects']:
         item, created = ScheduledItem.objects.get_or_create(
             time_start=remote_item['time_start'],

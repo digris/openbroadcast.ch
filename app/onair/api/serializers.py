@@ -40,22 +40,15 @@ class ScheduledItemSerializer(serializers.ModelSerializer):
         read_only=True
     )
 
-    # emission = serializers.SerializerMethodField()
-    # def get_emission(self, obj):
-    #     try:
-    #         return json.loads(obj.emission_data)
-    #     except:
-    #         return obj.emission_data
-    #
-    # item = serializers.SerializerMethodField()
-    # def get_item(self, obj):
-    #     try:
-    #         return json.loads(obj.item_data)
-    #     except:
-    #         return obj.item_data
+    time_start = serializers.DateTimeField(
+        read_only=True,
+        source='time_start_offset'
+    )
 
-
-
+    time_end = serializers.DateTimeField(
+        read_only=True,
+        source='time_end_offset'
+    )
 
     class Meta:
         model = ScheduledItem
