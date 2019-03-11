@@ -18,7 +18,7 @@ from base.models.mixins import UUIDModelMixin
 API_BASE_URL = getattr(settings, 'API_BASE_URL', None)
 API_BASE_AUTH = getattr(settings, 'API_BASE_AUTH', None)
 
-PLAYOUT_OFFSET = 30
+PLAYOUT_OFFSET = 28
 
 log = logging.getLogger(__name__)
 
