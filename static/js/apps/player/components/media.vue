@@ -180,7 +180,7 @@
         }
 
         &.is-expanded {
-            border-top: 1px solid rgba(#fff, 0.4);
+            border-top: 2px solid rgba(#fff, 0.4);
 
             &.no-border {
                 border-color: transparent;

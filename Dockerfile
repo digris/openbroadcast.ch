@@ -57,7 +57,7 @@ ENTRYPOINT ["/app/docker-entrypoint.sh"]
 # Add any custom, static environment variables needed by Django or your settings file here:
 ENV DJANGO_SETTINGS_MODULE=app.settings.base
 
-# uWSGI port
+# ASGI port
 EXPOSE 8000
 
 CMD [ "daphne", \

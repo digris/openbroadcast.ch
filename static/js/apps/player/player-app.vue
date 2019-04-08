@@ -295,7 +295,7 @@
     @import '../../../sass/site/settings';
     @import '~foundation-sites/scss/foundation';
 
-    $player-max-height: 431px;
+    $player-max-height: 440px;
 
     .player-app {
         position: fixed;
@@ -349,7 +349,7 @@
             padding: 0 8px;
             min-height: 40px;
             align-items: center;
-            border-bottom: 1px solid rgba(#fff, 0.4);
+            border-bottom: 2px solid rgba(#fff, 0.4);
 
             @include breakpoint(small only) {
                 display: none;
@@ -378,7 +378,7 @@
             padding: 0 8px;
             min-height: 40px;
             align-items: center;
-            border-top: 1px solid rgba(#fff, 0.4);
+            border-top: 2px solid rgba(#fff, 0.4);
 
             @include breakpoint(small only) {
                 min-height: 60px;
@@ -399,16 +399,13 @@
                 height: 38px;
                 align-items: center;
                 justify-content: center;
-
                 font-size: 32px;
                 line-height: 0;
-
                 opacity: 0.7;
 
                 &:hover {
                     opacity: 1;
                 }
-
                 transition: transform 100ms, opacity 200ms;
             }
 
@@ -420,16 +417,11 @@
                 }
             }
 
-
             &.is-expanded {
-
                 .action {
                     transform: scaleY(-1);
                 }
-
-
             }
-
         }
 
         &__media {

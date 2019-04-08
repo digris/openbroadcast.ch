@@ -160,7 +160,7 @@
 
         &__message {
             flex-grow: 1;
-            border: 1px solid black;
+            border: 2px solid black;
             padding: 2px 4px;
 
             p {
@@ -173,7 +173,7 @@
         &__actions {
             .button {
                 height: 100%;
-                max-height: 30px;
+                max-height: 32px;
                 padding: 2px 20px;
                 border: 0;
             }

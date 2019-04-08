@@ -7,7 +7,7 @@
   input
     // remove webkit glow
     outline: none
-    border: 1px solid $light-gray
+    border: 2px solid $light-gray
     &:hover
       border-color: $medium-gray
     &:focus
@@ -32,62 +32,33 @@
   flex-direction: column
   &__field
     display: flex
-    //flex-wrap: wrap
     width: 100%
-
-
 
     .fl-wrap-input
       width: 100%
 
-      .fl-label
-        //color: black
-        //background: #fff
-        //padding: 2px
-        //left: 10px
-        //top: 0px
-
-      //input
-      //  padding: 8px 12px
-      //  width: 100%
-
-    //&__label
-    //  display: flex
-    //  align-items: center
-    //  width: 34%
-    //
-    //&__input
-    //  width: 66%
-    //  input
-    //    width: 100%
-    //    padding: 6px 8px 6px
-
-  &__appendix
   &__field-help
     display: none
     width: 100%
-    //text-align: right
     font-size: 80%
     opacity: 0.8
+
   &__field-errors
     width: 100%
-    //text-align: right
     font-size: 80%
     font-weight: 400
     color: $alert-color
     padding-left: 4px
+
   &--has-errors &
     &__field__input
       input
-        border: 1px solid $alert-color
+        border: 2px solid $alert-color
+
   &--has-errors
     .captcha-container
       .captcha-image
-        border: 1px solid $alert-color
+        border: 2px solid $alert-color
         border-left: 0
         img
           height: 30px !important
-
-  // special elements
-  //.captcha-container
-  //  +captcha

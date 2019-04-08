@@ -5,7 +5,6 @@ import datetime
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 from django.conf import settings
-from django.utils import timezone
 from django.utils.translation import ugettext as _
 
 API_BASE_URL = getattr(settings, 'API_BASE_URL', None)
@@ -19,12 +18,9 @@ class ProgramPlugin(CMSPluginBase):
     render_template = "program/cmsplugin/program.html"
 
     def render(self, context, instance, placeholder):
-        #objects = Profile.objects.all()
 
         uri = 'v1/abcast/channel/1/program/'
-
         r = requests.get(API_BASE_URL + uri, verify=True)
-
         objects = r.json().get('objects', [])
 
         # hackish way to extract emissions (we don't need dayparts here..)

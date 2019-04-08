@@ -310,7 +310,7 @@
                     box-sizing: content-box;
                     width: 24px;
                     height: 24px;
-                    border: 1px solid #000;
+                    border: 2px solid #000;
                     transition: all 240ms;
 
                     flex: 0 0 24px;
@@ -362,7 +362,7 @@
 
                 img {
                     order: 2;
-                    height: 50px;
+                    height: 52px;
                 }
 
             }
@@ -390,7 +390,6 @@
                 display: flex;
                 color: $black;
                 padding: 6px 6px;
-                //border: 1px solid rgba(0, 0, 0, .1);
                 width: 100%;
                 transition: background 0.2s;
                 background: rgba(0, 0, 0, .1);

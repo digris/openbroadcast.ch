@@ -170,7 +170,7 @@
 
                 <span class="line">
                 <span class="line__label">
-                    By
+                    by
                 </span>
                 <a class="line__value line__value--has-link"
                    @click.prevent="visit(emission.user_co.absolute_url)"
