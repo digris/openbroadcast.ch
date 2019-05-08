@@ -15,12 +15,12 @@ from .serializers import ScheduledItemSerializer
 
 log = logging.getLogger(__name__)
 
+
 class ScheduleViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
     lookup_field = 'uuid'
     serializer_class = ScheduledItemSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
-
 
     def get_queryset(self):
         qs = ScheduledItem.objects.filter(

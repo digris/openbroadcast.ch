@@ -21,9 +21,9 @@ if not API_BASE_URL:
 if not API_BASE_AUTH:
     raise ImproperlyConfigured('settings.API_BASE_AUTH is required')
 
+
 def fetch_from_api(range_start=0, range_end=0, channel=None):
 
-    #now = datetime.datetime.now()
     now = timezone.now()
 
     # get schedule from API

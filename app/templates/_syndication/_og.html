@@ -1,11 +1,28 @@
-{% load static %}
+{% load static onair_tags %}
+
+{% onair_item as onair_item %}
 
 <meta property="og:title" content="open broadcast radio"/>
 <meta property="og:url" content="https://www.openbroadcast.ch/"/>
+
+{% if onair_item %}
+<meta property="og:description" content='Now playing "{{ onair_item.name }}" by "{{ onair_item.artist.name }}"'/>
+{% else %}
 <meta property="og:description" content="Das erste vollständig user-generierte Radio der Schweiz."/>
+{% endif %}
+
+{% if onair_item.release.main_image %}
+<meta property="og:image" content="https://www.openbroadcast.ch/static-proxy/{{ onair_item.release.main_image }}" />
+<meta property="og:image:width" content="240" />
+<meta property="og:image:height" content="240" />
+{% else %}
 <meta property="og:image" content="https://www.openbroadcast.ch/static/img/asset/logo-og.png" />
 <meta property="og:image:width" content="1440" />
 <meta property="og:image:height" content="920" />
+{% endif %}
+
+
+
 
 <meta property="og:site_name" content="open broadcast radio" />
 <meta property="og:type" content="music.radio_station" />

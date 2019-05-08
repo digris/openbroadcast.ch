@@ -30,9 +30,18 @@ if not API_BASE_AUTH:
 
 
 class ScheduledItemManager(models.Manager):
+
     def history(self):
-        #return self.get_query_set().filter(time_start__lte=timezone.now())
-        return self.get_query_set().filter(time_start__lte=datetime.datetime.now())
+        return self.get_queryset().filter(
+            time_start__lte=datetime.datetime.now()
+        )
+
+    def get_onair(self):
+        now = timezone.now()
+        return self.get_queryset().filter(
+            time_start__lte=now,
+            time_end__gt=now,
+        ).first()
 
 
 class ScheduledItem(UUIDModelMixin, models.Model):
@@ -74,15 +83,13 @@ class ScheduledItem(UUIDModelMixin, models.Model):
         verbose_name_plural = _('Scheduled Items')
         ordering = ('-time_start',)
 
-
     def __unicode__(self):
         return u'%s' % self.name
-
 
     @property
     def is_onair(self):
         now = timezone.now()
-        return (self.time_start < now and self.time_end > now)
+        return self.time_start < now < self.time_end
 
     @property
     def time_start_offset(self):
@@ -133,7 +140,6 @@ class ScheduledItem(UUIDModelMixin, models.Model):
         if self.item_data:
             return self.item_data
         return self.item_url
-
 
     def populate_from_api(self):
 
