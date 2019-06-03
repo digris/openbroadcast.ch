@@ -33,6 +33,8 @@ django_redis==4.10.0
 # django modules
 ################################################
 django-click==2.1.0
+celery==4.2.1
+kombu==4.3.0
 django-celery-beat==1.4.0
 django-ganalytics==0.7.0
 

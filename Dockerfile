@@ -42,6 +42,8 @@ RUN npm run dist \
     && rm -R /app/node_modules/ \
     && rm -R /app/static/
 
+RUN addgroup -g 1000 -S app && adduser -u 1000 -S app -G app
+
 RUN DJANGO_SETTINGS_MODULE=app.settings.build python manage.py check
 #RUN DJANGO_SETTINGS_MODULE=app.settings.build python manage.py collectstatic --noinput \
 #    && rm -R /app/app/static-src/
