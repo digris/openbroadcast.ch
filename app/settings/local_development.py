@@ -10,6 +10,8 @@ API_BASE_AUTH = {
     'api_key': 'd65b075c593f27a42c26e65be74c047e5b50d215',
 }
 
+API_BASE_URL = 'http://local.openbroadcast.org:8080/api/'
+
 
 GANALYTICS_TRACKING_CODE = 'UA-64750998-1'
 
