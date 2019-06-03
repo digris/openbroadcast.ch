@@ -10,8 +10,14 @@ API_BASE_AUTH = {
     'api_key': 'd65b075c593f27a42c26e65be74c047e5b50d215',
 }
 
-API_BASE_URL = 'http://local.openbroadcast.org:8080/api/'
 
+REMOTE_BASE_URL = 'http://local.openbroadcast.org:8080'
+API_BASE_URL = 'http://local.openbroadcast.org:8080/api/'
+REMOTE_AUTH_ENDPOINT = '{}/api/v1/auth/user/'.format(REMOTE_BASE_URL)
+
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "156254740327-tfocn6kqllr23vn14ggrd6nij31bmhi9.apps.googleusercontent.com"
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "esB0FzmXUU_9A7iDsNH_s93V"
 
 GANALYTICS_TRACKING_CODE = 'UA-64750998-1'
 

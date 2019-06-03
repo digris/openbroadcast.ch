@@ -34,7 +34,7 @@
                     <a href="{{ emission.co.user.detail_url }}" target="_blank">{{ emission.co.user.display_name }}</a>
                 </div>
                 <div class="emission__mixdown">
-                    {% if emission.is_history and user.is_authenticated and user.is_staff and emission.co.mixdown_file %}
+                    {% if emission.is_history and user.is_authenticated and emission.co.mixdown_file %}
                         <a href="{{ emission.co.mixdown_file }}" target="_blank">Podcast</a>
                     {% endif %}
                 </div>
