@@ -28,7 +28,6 @@ RUN set -ex \
         libxml2-dev \
         libxslt-dev \
     && pip3 install -U pip \
-    && LIBRARY_PATH=/lib:/usr/lib /bin/sh -c "pip3 install --upgrade pip" \
     && LIBRARY_PATH=/lib:/usr/lib /bin/sh -c "pip3 install --no-cache-dir -r ./requirements.txt" \
     && yarn install \
     && apk del .build-deps
