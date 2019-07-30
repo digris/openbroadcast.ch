@@ -9,7 +9,7 @@
         "babel-polyfill": "^6.26.0",
         "babel-preset-env": "^1.6.1",
         "copy-webpack-plugin": "^4.5.1",
-        "css-loader": "^0.28.11",
+        "css-loader": "^1.0.0",
         "debounce": "^1.2.0",
         "django-channels": "^1.1.6",
         "float-labels.js": "^3.3.6",
