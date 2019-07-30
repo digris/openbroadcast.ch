@@ -1,64 +1,68 @@
 {
-    "dependencies": {
-        "@mariotacke/color-thief": "^3.0.1",
-        "autoprefixer": "^8.4.1",
-        "axios": "^0.18.0",
-        "babel-core": "^6.26.3",
-        "babel-loader": "^7.1.4",
-        "babel-plugin-transform-regenerator": "^6.26.0",
-        "babel-polyfill": "^6.26.0",
-        "babel-preset-env": "^1.6.1",
-        "copy-webpack-plugin": "^4.5.1",
-        "css-loader": "^0.28.11",
-        "debounce": "^1.2.0",
-        "django-channels": "^1.1.6",
-        "float-labels.js": "^3.3.6",
-        "foundation-sites": "6.5.1",
-        "jquery": "^3.3.1",
-        "jquery-color": "3.0.0-alpha.1",
-        "matches-selector": "^1.2.0",
-        "mini-css-extract-plugin": "^0.4.0",
-        "motion-ui": "^1.2.3",
-        "node-sass": "^4.9.0",
-        "nosleep.js": "^0.9.0",
-        "postcss-cli": "^5.0.0",
-        "postcss-loader": "^2.1.5",
-        "sass-loader": "^7.0.1",
-        "soundmanager2": "https://github.com/scottschiller/SoundManager2#cf9896a4dc17055f232578dd54586704badba665",
-        "style-loader": "^0.21.0",
-        "turbolinks": "^5.2.0",
-        "vue": "^2.5.16",
-        "vue-analytics": "^5.16.2",
-        "vue-click-outside": "^1.0.7",
-        "vue-lazyload": "^1.2.6",
-        "vue-loader": "^15.2.0",
-        "vue-template-compiler": "^2.5.16",
-        "vue-timeago": "^5.0.0",
-        "vuex": "^3.0.1",
-        "webpack": "^4.20.2",
-        "webpack-cli": "^3.1.1",
-        "webpack-dev-server": "^3.1.4"
-    },
-    "scripts": {
-        "watch": "NODE_ENV=development webpack-dev-server --mode development",
-        "dist": "NODE_ENV=production webpack --mode production"
-    },
-    "private": true,
-    "devDependencies": {
-        "hard-source-webpack-plugin": "^0.12.0",
-        "vue-masonry": "^0.11.7"
-    },
-    "babel": {
-        "presets": [
-            "env"
-        ],
-        "plugins": [
-            "transform-regenerator"
-        ]
-    },
-    "name": "openbroadcast.ch",
-    "version": "0.0.2",
-    "main": "./static/js/bundle.js",
-    "author": "digris AG - Jonas Ohrstrom",
-    "license": "GPL V3"
+  "dependencies": {
+    "@mariotacke/color-thief": "^3.0.1",
+    "autoprefixer": "^8.4.1",
+    "axios": "^0.18.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-regenerator": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "copy-webpack-plugin": "^4.5.1",
+    "css-loader": "^1.0.0",
+    "debounce": "^1.2.0",
+    "django-channels": "^1.1.6",
+    "float-labels.js": "^3.3.6",
+    "foundation-sites": "6.5.1",
+    "jquery": "^3.3.1",
+    "jquery-color": "3.0.0-alpha.1",
+    "matches-selector": "^1.2.0",
+    "mini-css-extract-plugin": "^0.4.0",
+    "motion-ui": "^1.2.3",
+    "node-sass": "^4.9.0",
+    "nosleep.js": "^0.9.0",
+    "postcss-cli": "^6.0.0",
+    "postcss-loader": "^2.1.5",
+    "sass-loader": "^7.0.1",
+    "soundmanager2": "https://github.com/scottschiller/SoundManager2#cf9896a4dc17055f232578dd54586704badba665",
+    "style-loader": "^0.21.0",
+    "turbolinks": "^5.2.0",
+    "vue": "^2.5.16",
+    "vue-analytics": "^5.16.2",
+    "vue-click-outside": "^1.0.7",
+    "vue-lazyload": "^1.2.6",
+    "vue-loader": "^15.2.0",
+    "vue-template-compiler": "^2.5.16",
+    "vue-timeago": "^5.0.0",
+    "vuex": "^3.0.1",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.1.4",
+    "snyk": "^1.161.1"
+  },
+  "scripts": {
+    "watch": "NODE_ENV=development webpack-dev-server --mode development",
+    "dist": "NODE_ENV=production webpack --mode production",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "private": true,
+  "devDependencies": {
+    "hard-source-webpack-plugin": "^0.12.0",
+    "vue-masonry": "^0.11.7"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ],
+    "plugins": [
+      "transform-regenerator"
+    ]
+  },
+  "name": "openbroadcast.ch",
+  "version": "0.0.2",
+  "main": "./static/js/bundle.js",
+  "author": "digris AG - Jonas Ohrstrom",
+  "license": "GPL V3",
+  "snyk": true
 }
