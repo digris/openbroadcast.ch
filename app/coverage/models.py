@@ -11,5 +11,5 @@ class CoverageMap(CMSPlugin):
         app_label = 'coverage'
         verbose_name = _('Map')
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s' % self.url

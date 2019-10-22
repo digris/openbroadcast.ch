@@ -47,5 +47,5 @@ class MentionedUser(models.Model):
         app_label = 'chat'
         verbose_name = 'Mentioned User'
 
-    def __unicode__(self):
+    def __str__(self):
         return '{}'.format(self.user)

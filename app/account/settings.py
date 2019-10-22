@@ -13,7 +13,7 @@ BACKEND_DETAILS = {
     },
     'facebook': {
         'name': 'Facebook',
-        'icon': 'facebook',
+        'icon': 'facebook-f-white',
         'hint': _('Continue with Facebook')
     },
     'google-oauth2': {

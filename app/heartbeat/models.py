@@ -26,7 +26,7 @@ class Beat(models.Model):
         verbose_name = 'Beat'
         ordering = ('-updated',)
 
-    def __unicode__(self):
+    def __str__(self):
         return '{0} {1}'.format(self.user.username, self.updated)
 
     @property

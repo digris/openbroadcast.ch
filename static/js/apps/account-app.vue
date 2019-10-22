@@ -378,8 +378,7 @@
         flex-direction: column;
 
         .auth-social {
-            //padding: 0 !important;
-            margin-bottom: 2px;
+            margin: 12px 0 6px;
         }
 
 
@@ -388,19 +387,20 @@
 
             .auth-social-button {
                 display: flex;
+                align-items: center;
+                justify-content: center;
                 color: $black;
-                padding: 6px 6px;
+                padding: 10px 10px;
                 width: 100%;
-                transition: background 0.2s;
+                transition: background 200ms, border-radius 100ms;
                 background: rgba(0, 0, 0, .1);
+                border: 1px solid transparent;
 
                 &:hover {
-                    //ackground: rgba($primary-color, .05);
-                    background: $primary-color;
-                    color: $white;
+                    // background: $primary-color;
+                    // color: $white;
+                    border-radius: 6px;
                 }
-
-                //@include clearfix;
 
                 .icon-container {
                     display: block;
@@ -408,8 +408,7 @@
                     margin-right: 14px;
 
                     img.icon {
-                        height: 18px;
-                        filter: grayscale(100%);
+                        height: 20px;
                     }
                 }
 
@@ -421,22 +420,18 @@
             }
 
             // provider styles
-            .auth-social-button-google {
-                color: $black;
-
-                &:hover {
-                    img.icon {
-                        filter: grayscale(0%);
-                    }
-                }
+            .auth-social-button-google-oauth2 {
+                color: #5a5a5a;
+                background: white;
+                border-color: #5a5a5a;
             }
 
             .auth-social-button-facebook {
-                color: $black;
-
-                &:hover {
+                color: #fff;
+                background: #1877F2;
+                .icon-container {
                     img.icon {
-                        filter: brightness(500%);
+                        height: 24px;
                     }
                 }
             }

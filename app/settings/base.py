@@ -380,8 +380,8 @@ LOGIN_URL = '/account/login/'
 
 AUTHENTICATION_BACKENDS = [
     # social-auth
-    'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
     # remote api auth
     'remoteauth.backends.RemoteUserBackend',
 ]
@@ -526,6 +526,8 @@ API_BASE_AUTH = {
     'username': config('REMOTE_API_AUTH_USER', default='none'),
     'api_key': config('REMOTE_API_AUTH_KEY', default='none'),
 }
+
+REMOTE_API_AUTH_TOKEN = config('REMOTE_API_AUTH_TOKEN', default=None)
 
 
 ##################################################################

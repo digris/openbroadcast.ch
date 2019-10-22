@@ -4,7 +4,7 @@ import { wrapRequest } from './requests';
 import { WebSocketBridge } from 'django-channels';
 import APIClient from "../api/client";
 
-const DEBUG = false;
+const DEBUG = true;
 
 const VOTE_ENDPOINT = '/api/v2/rating/vote/';
 
@@ -17,7 +17,7 @@ const getters = {
 const mutations = {
     update_votes: (state, payload) => {
       if (DEBUG) console.debug('mutations - update_votes', payload);
-      const key = `${payload.ct}:${payload.object_id}`;
+      const key = `${payload.ct}:${payload.uuid}`;
       Vue.set(state.votes, key, payload)
     },
 };
@@ -63,8 +63,9 @@ const wsb = new WebSocketBridge();
 wsb.connect(ws_url);
 wsb.listen((data, stream) => {
     if (DEBUG) console.log('ws rating listen:', data, stream);
-    //store.commit('add_chat_message', data);
-    store.commit('rating/update_votes', data);
+    const key = `${data.ct}:${data.uuid}`;
+    store.dispatch('rating/get_votes', key);
+    // store.commit('rating/update_votes', data);
 });
 
 

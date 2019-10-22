@@ -43,7 +43,7 @@ class CachedMedia(models.Model):
         verbose_name = _('Cached Media')
         verbose_name_plural = _('Cached Media')
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s' % self.uuid
 
     @property
@@ -130,7 +130,7 @@ class CachedEvent(models.Model):
         app_label = 'contentproxy'
         verbose_name = _('Cached Event')
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s - %s - %s' % (self.ct, self.user, self.action)
 
     def create_remote_event(self):

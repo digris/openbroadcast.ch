@@ -30,6 +30,7 @@ Vue.use(VueLazyload, {
   attempt: 1
 });
 
+
 class AppInitializer {
 
     constructor(opts) {

@@ -1,6 +1,6 @@
 <script>
 
-  const DEBUG = false;
+  const DEBUG = true;
 
   export default {
     name: 'ThumbRating',
@@ -24,7 +24,7 @@
         if (!this.media) {
           return null;
         }
-        return `${this.obj_ct}:${this.media.id}`
+        return `${this.obj_ct}:${this.media.uuid}`;
       },
       votes() {
         if (!this.key) {
@@ -39,15 +39,22 @@
 
         return votes;
       },
+        user_vote() {
+          if(! this.votes) {
+              return null;
+          }
+          return this.votes.user_vote;
+        },
       chat_enabled() {
         return this.$store.getters['chat/enabled'];
       },
     },
     methods: {
-      vote: function (value) {
+      vote: function (vote) {
         if (!this.key) {
           return null;
         }
+        const value = (vote === this.user_vote) ? 0 : vote;
         if (DEBUG) console.debug('vote', value);
         this.$store.dispatch('rating/update_vote', {key: this.key, value: value});
       },
@@ -86,7 +93,15 @@
 
             rect,
             polyline {
+                fill-opacity: .1;
                 transition: fill-opacity 200ms;
+            }
+
+            &.user-vote {
+                rect,
+                polyline {
+                    fill-opacity: 1;
+                }
             }
         }
 
@@ -95,6 +110,13 @@
                 rect,
                 polyline {
                     fill-opacity: 0.4;
+                }
+
+                &.user-vote {
+                    rect,
+                    polyline {
+                        fill-opacity: .6;
+                    }
                 }
             }
         }
@@ -156,18 +178,18 @@
 
         <div @click.prevent="vote(1)" class="vote vote--up">
             <span data-livefg class="vote__value">
-                <span v-if="(votes)">{{ votes.up }}</span>
+                <span v-if="(votes)">{{ votes.upvotes }}</span>
                 <span v-else>-</span>
             </span>
             <svg version="1.1"
                  id="Layer_1"
+                 :class="{ 'user-vote': (user_vote === 1) }"
                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                  x="0px" y="0px"
                  width="33px" height="33px"
                  viewBox="0 0 33 33" xml:space="preserve">
                 <g>
                     <polyline
-                            fill-opacity="0.1"
                             data-livefill-inverse
                             stroke="#000000"
                             stroke-width="2"
@@ -176,7 +198,6 @@
                             points="8,15 14,15 20,1 23,1 23,14,32,14 32,26 29,31 19,31 16,29 8,29"/>
                     <rect
                             x="1" y="13"
-                            fill-opacity="0.1"
                             data-livefill-inverse
                             stroke="#000000"
                             stroke-width="2"
@@ -186,7 +207,6 @@
                 </g>
             </svg>
         </div>
-
 
         <div v-if="chat_enabled" class="separator" data-livebg-inverse></div>
         <div v-else class="chat-toggle" @click.prevent="enable_chat" data-account-login-required>
@@ -236,20 +256,18 @@
                     </g>
                 </svg>
             </div>
-
         </div>
-
 
         <div @click.prevent="vote(-1)" class="vote vote--down">
             <svg version="1.1"
-                 id="Layer_1"
+                 id="Layer_1b"
+                 :class="{ 'user-vote': (user_vote === -1) }"
                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                  x="0px" y="0px"
                  width="34px" height="33px"
                  viewBox="0 0 34 32" xml:space="preserve">
                 <g>
                     <polyline
-                            fill-opacity="0.1"
                             data-livefill-inverse
                             stroke="#000000"
                             stroke-width="2"
@@ -258,7 +276,6 @@
                             points="8,15 14,15 20,1 23,1 23,14,32,14 32,26 29,31 19,31 16,29 8,29"/>
                     <rect
                             x="1" y="13"
-                            fill-opacity="0.1"
                             data-livefill-inverse
                             stroke="#000000"
                             stroke-width="2"
@@ -268,7 +285,7 @@
                 </g>
             </svg>
             <span data-livefg class="vote__value">
-                <span v-if="(votes)">{{ votes.down }}</span>
+                <span v-if="(votes)">{{ votes.downvotes }}</span>
                 <span v-else>-</span>
             </span>
         </div>

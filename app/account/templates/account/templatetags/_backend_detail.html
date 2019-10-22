@@ -3,7 +3,7 @@
 {% spaceless %}
 
 <!---->
-<a href="{% url 'social:begin' key %}?next=/" class="auth-social-button auth-social-button-{{ icon }}">
+<a href="{% url 'social:begin' key %}?next=/" class="auth-social-button auth-social-button-{{ key }}">
     {% if icon %}
     <span class="icon-container">
         <img class="icon icon-brand" src="/static/icons/brands/{{ icon }}.svg" />
@@ -11,11 +11,11 @@
     {% endif %}
     <span class="text-container">
         {% if action == 'login' %}
-        {% blocktrans trimmed with provider_name=name %}Sign in with {{ provider_name }}{% endblocktrans %}
+        {% blocktrans trimmed with provider_name=name %}Login with {{ provider_name }}{% endblocktrans %}
         {% endif %}
 
         {% if action == 'register' %}
-        {% blocktrans trimmed with provider_name=name %}Sign up with {{ provider_name }}{% endblocktrans %}
+        {% blocktrans trimmed with provider_name=name %}Continue with {{ provider_name }}{% endblocktrans %}
         {% endif %}
 
         {% if action == 'connect' %}

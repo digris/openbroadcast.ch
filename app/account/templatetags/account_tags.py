@@ -45,17 +45,7 @@ def backend_detail(context, backend_key, action='login'):
             'name': backend_key,
         })
 
-    # context['action'] = action
-    # context['key'] = backend_key
-    # context['name'] = backend_key
-
     return context
-
-    # return {
-    #     'action': action,
-    #     'key': backend_key,
-    #     'name': backend_key,
-    # }
 
 
 @register.inclusion_tag('account/templatetags/_user_pickup.html', takes_context=True)

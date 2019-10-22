@@ -25,7 +25,7 @@ class Media(CMSPlugin):
     class Meta:
         verbose_name = _('Multimedia einbetten')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.url
 
     def process_media(self):

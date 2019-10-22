@@ -63,14 +63,14 @@
                  viewBox="0 0 50 72"
                  enable-background="new 0 0 40 72"
                  xml:space="preserve">
-                        <polyline data-livestroke
-                                  fill="none"
-                                  stroke="#000000"
-                                  stroke-width="2"
-                                  stroke-miterlimit="10"
-                                  points="37.854,71 2.927,36.073 38,1 "
-                                  style="stroke: rgb(255, 255, 255);">
-                        </polyline>
+                <polyline data-livestroke
+                        fill="none"
+                        stroke="#000000"
+                        stroke-width="2"
+                        stroke-miterlimit="10"
+                        points="37.854,71 2.927,36.073 38,1 "
+                        style="stroke: rgb(255, 255, 255);">
+                </polyline>
             </svg>
         </div>
     </div>
