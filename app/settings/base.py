@@ -527,6 +527,7 @@ API_BASE_AUTH = {
     'api_key': config('REMOTE_API_AUTH_KEY', default='none'),
 }
 
+REMOTE_API_BASE_URL = config('REMOTE_API_BASE_URL', default='https://www.openbroadcast.org/api/v2/')
 REMOTE_API_AUTH_TOKEN = config('REMOTE_API_AUTH_TOKEN', default=None)
 
 
