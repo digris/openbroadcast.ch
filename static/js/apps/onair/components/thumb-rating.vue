@@ -179,7 +179,7 @@
         <div @click.prevent="vote(1)" class="vote vote--up">
             <span data-livefg class="vote__value">
                 <span v-if="(votes)">{{ votes.upvotes }}</span>
-                <span v-else>-</span>
+                <span v-else>&nbsp;</span>
             </span>
             <svg version="1.1"
                  id="Layer_1"
@@ -286,7 +286,7 @@
             </svg>
             <span data-livefg class="vote__value">
                 <span v-if="(votes)">{{ votes.downvotes }}</span>
-                <span v-else>-</span>
+                <span v-else>&nbsp;</span>
             </span>
         </div>
     </div>

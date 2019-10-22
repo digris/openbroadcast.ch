@@ -23,12 +23,6 @@
                 </li>
 
             {% endif %}
-
-            <!--
-            <li class="menu-item ">
-                <a data-turbolinks="false" href="#" data-account-profile>{% trans 'profile & settings'|capfirst %}</a>
-            </li>
-            -->
             <li class="menu-item ">
                 <a data-livefg href="{% url 'account:logout' %}" data-account-logout>{% trans 'logout'|capfirst %}</a>
             </li>
@@ -39,7 +33,9 @@
     <li class="menu-item">
         <a data-account-login-required data-livefg href="#" data-login-action="login">{% trans 'login'|capfirst %}</a>
     </li>
+    {% comment %}
     <li class="menu-item hide-for-medium-only">
         <a data-account-login-required data-livefg href="#" data-login-action="register">{% trans 'register'|capfirst %}</a>
     </li>
+    {% endcomment %}
 {% endif %}

@@ -3,10 +3,8 @@
 import logging
 
 from django.conf import settings
-
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
-
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly

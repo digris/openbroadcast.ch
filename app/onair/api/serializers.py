@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import json
-
-from django.conf import settings
-from bleach.linkifier import Linker
-from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from ..models import ScheduledItem

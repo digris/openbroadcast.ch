@@ -33,7 +33,16 @@ class ScheduledItemManager(models.Manager):
     def history(self):
         return self.get_queryset().filter(time_start__lte=datetime.datetime.now())
 
-    def get_onair(self):
+    def get_next(self):
+        now = timezone.now()
+        return (
+            self.get_queryset()
+            .filter(time_start__gte=now)
+            .order_by("time_start")
+            .first()
+        )
+
+    def get_current(self):
         now = timezone.now()
         return self.get_queryset().filter(time_start__lte=now, time_end__gt=now).first()
 

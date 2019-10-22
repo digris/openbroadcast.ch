@@ -10,6 +10,8 @@ env
 env*
 node_modules
 
+celerybeat-schedule
+
 doc/_build
 
 app/data.sqlite3
