@@ -29,6 +29,9 @@ channel_layer = get_channel_layer()
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def vote_detail(request, obj_ct, obj_uuid):
 
+    if not len(obj_uuid) == 36:
+        return Response({}, status=400)
+
     if request.user and request.user.is_authenticated:
         user_id = request.user.remote_id
     else:
