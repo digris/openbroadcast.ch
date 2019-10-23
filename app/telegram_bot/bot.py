@@ -23,7 +23,8 @@ class TGBot(object):
 
     def __init__(self):
         log.debug('initialising telegram bot')
-        self._tg_bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
+        if TELEGRAM_BOT_TOKEN:
+            self._tg_bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
 
     def send(self, channel, message):
         log.debug('send message - id: {} - {}'.format(channel, message))
