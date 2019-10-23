@@ -11,4 +11,4 @@ log = logging.getLogger(__name__)
 @app.task
 def send_channel_message(channel, message):
     log.info("sending message to channel: {} - {}".format(channel, message))
-    bot.send(channel=channel, text=message)
+    bot.send(channel=channel, message=message)
