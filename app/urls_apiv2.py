@@ -8,18 +8,20 @@ from rest_framework.permissions import AllowAny
 from rest_framework.reverse import reverse, reverse_lazy
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 @permission_classes([AllowAny])
 def api_root(request, format=None):
-    return Response({
-        'chat': reverse('api:chat-message-list', request=request, format=format),
-        'onair': reverse('api:onair-schedule-list', request=request, format=format),
-    })
+    return Response(
+        {
+            "chat": reverse("api:chat-message-list", request=request, format=format),
+            "onair": reverse("api:onair-schedule-list", request=request, format=format),
+        }
+    )
 
 
 urlpatterns = [
-    url(r'^$', api_root),
-    url('^chat/', include('chat.api.urls')),
-    url('^onair/', include('onair.api.urls')),
-    url('^rating/', include('rating.api.urls')),
+    url(r"^$", api_root),
+    url("^chat/", include("chat.api.urls")),
+    url("^onair/", include("onair.api.urls")),
+    url("^rating/", include("rating.api.urls")),
 ]

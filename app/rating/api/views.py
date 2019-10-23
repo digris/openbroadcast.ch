@@ -12,6 +12,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import authentication_classes, permission_classes
 
 from ..utils import get_remote_votes, put_remote_vote
+from .. import signals as rating_signals
 
 
 API_BASE_URL = getattr(settings, "API_BASE_URL", None)
@@ -44,6 +45,7 @@ def vote_detail(request, obj_ct, obj_uuid):
         data = {"type": "votes", "content": votes}
 
         async_to_sync(channel_layer.group_send)(channel, data)
+        rating_signals.user_rated_object.send(sender='vote', user=request.user, votes=votes)
 
     else:
         votes, status_code = get_remote_votes(obj_ct, obj_uuid, user_id)

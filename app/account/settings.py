@@ -6,34 +6,26 @@ from django.utils.translation import ugettext_lazy as _
 # TODO: this is not really nice... think about a better implementation
 
 BACKEND_DETAILS = {
-    'email': {
-        'name': 'Login',
-        'icon': 'icon-email-secure slim',
-        'hint': _('your Email Account')
+    "email": {
+        "name": "Login",
+        "icon": "icon-email-secure slim",
+        "hint": _("your Email Account"),
     },
-    'facebook': {
-        'name': 'Facebook',
-        'icon': 'facebook-f-white',
-        'hint': _('Continue with Facebook')
+    "facebook": {
+        "name": "Facebook",
+        "icon": "facebook-f-white",
+        "hint": _("Continue with Facebook"),
     },
-    'google-oauth2': {
-        'name': 'Google',
-        'icon': 'google',
-        'hint': _('your Google Account')
+    "google-oauth2": {
+        "name": "Google",
+        "icon": "google",
+        "hint": _("your Google Account"),
     },
-    'github': {
-        'name': 'Github',
-        'icon': 'github',
-        'hint': _('your Github Account')
-    },
-    'vk-oauth2': {
-        'name': 'VK',
-        'icon': 'vk',
-        'hint': _('your VK Account')
-    },
-    'spotify': {
-        'name': 'Spotify',
-        'icon': 'spotify',
-        'hint': _('your Spotify Account')
+    "github": {"name": "Github", "icon": "github", "hint": _("your Github Account")},
+    "vk-oauth2": {"name": "VK", "icon": "vk", "hint": _("your VK Account")},
+    "spotify": {
+        "name": "Spotify",
+        "icon": "spotify",
+        "hint": _("your Spotify Account"),
     },
 }

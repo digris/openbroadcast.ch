@@ -9,8 +9,8 @@ except ImportError:
 
 EMBED_SERVICE_PROVIDERS = [
     # Video
-    'Youtube',
-    'Vimeo',
+    "Youtube",
+    "Vimeo",
     # Audio
 ]
 
@@ -21,15 +21,15 @@ def process_provider_url(url, exclude_providers=[]):
     object_id = None
 
     # youtube
-    if not 'youtube' in exclude_providers:
-        if '//youtube.com' in url or '//www.youtube.com' in url or '//youtu.be' in url:
-            provider = 'youtube'
+    if not "youtube" in exclude_providers:
+        if "//youtube.com" in url or "//www.youtube.com" in url or "//youtu.be" in url:
+            provider = "youtube"
             object_id = get_youtube_id_by_url(url)
 
     # vimeo
-    if not 'vimeo' in exclude_providers:
-        if '//vimeo.com' in url:
-            provider = 'vimeo'
+    if not "vimeo" in exclude_providers:
+        if "//vimeo.com" in url:
+            provider = "vimeo"
             object_id = get_vimeo_id_by_url(url)
 
     return provider, object_id
@@ -44,16 +44,16 @@ def get_youtube_id_by_url(url):
     - http://www.youtube.com/v/SA2iWivDJiE?version=3&amp;hl=en_US
     """
     query = urlparse(url)
-    if query.hostname == 'youtu.be':
+    if query.hostname == "youtu.be":
         return query.path[1:]
-    if query.hostname in ('www.youtube.com', 'youtube.com', 'm.youtube.com'):
-        if query.path == '/watch':
+    if query.hostname in ("www.youtube.com", "youtube.com", "m.youtube.com"):
+        if query.path == "/watch":
             p = parse_qs(query.query)
-            return p['v'][0]
-        if query.path[:7] == '/embed/':
-            return query.path.split('/')[2]
-        if query.path[:3] == '/v/':
-            return query.path.split('/')[2]
+            return p["v"][0]
+        if query.path[:7] == "/embed/":
+            return query.path.split("/")[2]
+        if query.path[:3] == "/v/":
+            return query.path.split("/")[2]
 
     return None
 
@@ -65,4 +65,4 @@ def get_vimeo_id_by_url(url):
     """
     query = urlparse(url)
 
-    return query.path.split('/')[1]
+    return query.path.split("/")[1]

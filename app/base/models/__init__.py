@@ -2,6 +2,7 @@ from django.db import models
 
 # TODO: refactor to mixins
 
+
 class TimestampedModel(models.Model):
 
     created = models.DateTimeField(auto_now_add=True, editable=False)

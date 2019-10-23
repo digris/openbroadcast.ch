@@ -8,19 +8,17 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('onair', '0003_auto_20180827_1715'),
-    ]
+    dependencies = [("onair", "0003_auto_20180827_1715")]
 
     operations = [
         migrations.AlterField(
-            model_name='scheduleditem',
-            name='emission_data',
+            model_name="scheduleditem",
+            name="emission_data",
             field=django.contrib.postgres.fields.jsonb.JSONField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='scheduleditem',
-            name='item_data',
+            model_name="scheduleditem",
+            name="item_data",
             field=django.contrib.postgres.fields.jsonb.JSONField(blank=True, null=True),
         ),
     ]

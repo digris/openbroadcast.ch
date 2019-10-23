@@ -4,11 +4,29 @@ from itertools import starmap
 import six
 
 
-
-PROTOCOLS = ['ed2k', 'ftp', 'http', 'https', 'irc',
-             'news', 'gopher', 'nntp', 'telnet', 'webcal',
-             'xmpp', 'callto', 'feed', 'urn', 'aim', 'rsync', 'tag',
-             'ssh', 'sftp', 'rtsp', 'afs']
+PROTOCOLS = [
+    "ed2k",
+    "ftp",
+    "http",
+    "https",
+    "irc",
+    "news",
+    "gopher",
+    "nntp",
+    "telnet",
+    "webcal",
+    "xmpp",
+    "callto",
+    "feed",
+    "urn",
+    "aim",
+    "rsync",
+    "tag",
+    "ssh",
+    "sftp",
+    "rtsp",
+    "afs",
+]
 
 TLDS = """ac ad ae aero af ag ai al am an ao aq ar arpa as asia at au aw ax az
        ba bb bd be bf bg bh bi biz bj bm bn bo br bs bt bv bw by bz ca cat
@@ -32,11 +50,13 @@ url_re = r"""\(*  # Match any opening parentheses.
     (?:[/?][^\s\{{\}}\|\\\^\[\]`<>"]*)?
         # /path/zz (excluding "unsafe" chars from RFC 1738,
         # except for # and ~, which happen in practice)
-    """.format('|'.join(PROTOCOLS), '|'.join(TLDS))
+    """.format(
+    "|".join(PROTOCOLS), "|".join(TLDS)
+)
 
-proto_re = re.compile(r'^[\w-]+:/{0,3}', re.IGNORECASE)
+proto_re = re.compile(r"^[\w-]+:/{0,3}", re.IGNORECASE)
 
-punct_re = re.compile(r'([\.,]*)$')
+punct_re = re.compile(r"([\.,]*)$")
 
 email_re = r"""(?<!//|.:)(mailto:)?
     \b(([-!#$%&'*+/=?^_`{0!s}|~0-9A-Z]+
@@ -46,29 +66,32 @@ email_re = r"""(?<!//|.:)(mailto:)?
     )@(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6})\.?  # domain
     """
 
-combined_re = re.compile("(?P<url>{0})|(?P<email>{1})".format(url_re, email_re),
-                         re.IGNORECASE | re.MULTILINE | re.VERBOSE | re.UNICODE)
+combined_re = re.compile(
+    "(?P<url>{0})|(?P<email>{1})".format(url_re, email_re),
+    re.IGNORECASE | re.MULTILINE | re.VERBOSE | re.UNICODE,
+)
 
 
 def linkify(text, attrs={}):
     """
     Convert URL-like and email-like strings into links.
     """
+
     def separate_parentheses(s):
-        start = re_find(r'^\(*', s)
-        end = re_find(r'\)*$', s)
+        start = re_find(r"^\(*", s)
+        end = re_find(r"\)*$", s)
         n = min(len(start), len(end))
         if n:
             return s[:n], s[n:-n], s[-n:]
         else:
-            return '', s, ''
+            return "", s, ""
 
-    def link_repl(url, proto='http://'):
+    def link_repl(url, proto="http://"):
         opening, url, closing = separate_parentheses(url)
 
         punct = re_find(punct_re, url)
         if punct:
-            url = url[:-len(punct)]
+            url = url[: -len(punct)]
 
         if re.search(proto_re, url):
             href = url
@@ -77,30 +100,28 @@ def linkify(text, attrs={}):
         href = escape_url(href)
 
         repl = u'{0!s}<a href="{1!s}"{2!s}>{3!s}</a>{4!s}{5!s}'
-        return repl.format(opening,
-                           href, attrs_text, url, punct,
-                           closing)
+        return repl.format(opening, href, attrs_text, url, punct, closing)
 
     def repl(match):
         matches = match.groupdict()
-        if matches['url']:
-            return link_repl(matches['url'])
+        if matches["url"]:
+            return link_repl(matches["url"])
         else:
-            return link_repl(matches['email'], proto='mailto:')
+            return link_repl(matches["email"], proto="mailto:")
 
     # Prepare attrs
     attr = ' {0!s}="{1!s}"'
-    attrs_text = ''.join(starmap(attr.format, attrs.items()))
+    attrs_text = "".join(starmap(attr.format, attrs.items()))
 
     # Make replaces
     return re.sub(combined_re, repl, force_unicode(text))
 
 
 def escape_url(url):
-    return url.replace('&', '&amp;')
+    return url.replace("&", "&amp;")
 
 
-def force_unicode(s, encoding='utf-8', errors='strict'):
+def force_unicode(s, encoding="utf-8", errors="strict"):
     """
     Similar to smart_text, except that lazy instances are resolved to
     strings, rather than kept as lazy objects.

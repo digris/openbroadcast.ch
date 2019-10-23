@@ -11,15 +11,15 @@ from .development import *
 # django default staticfiles storage
 # (for simple testing without whitenoise/manifest)
 ##################################################################
-#STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 
 ##################################################################
 # db
 ##################################################################
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ch_openbroadcast_local',
-    },
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "ch_openbroadcast_local",
+    }
 }

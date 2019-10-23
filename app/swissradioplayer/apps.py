@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class SwissradioplayerConfig(AppConfig):
-    name = 'swissradioplayer'
+    name = "swissradioplayer"

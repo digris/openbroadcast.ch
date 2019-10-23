@@ -5,8 +5,7 @@ from django.conf.urls import url
 
 from . import views
 
-app_name = 'swissradioplayer'
+app_name = "swissradioplayer"
 urlpatterns = [
-    url(r'^console/$', views.ConsoleIndexView.as_view(), name='console-index'),
+    url(r"^console/$", views.ConsoleIndexView.as_view(), name="console-index")
 ]
-

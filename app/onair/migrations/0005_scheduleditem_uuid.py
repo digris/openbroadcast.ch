@@ -8,14 +8,12 @@ import uuid
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('onair', '0004_auto_20180827_1759'),
-    ]
+    dependencies = [("onair", "0004_auto_20180827_1759")]
 
     operations = [
         migrations.AddField(
-            model_name='scheduleditem',
-            name='uuid',
+            model_name="scheduleditem",
+            name="uuid",
             field=models.UUIDField(db_index=True, default=uuid.uuid4, editable=False),
-        ),
+        )
     ]

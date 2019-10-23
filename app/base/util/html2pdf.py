@@ -1,6 +1,7 @@
 import xhtml2pdf.pisa as pisa
 import cStringIO as StringIO
 
+
 def render_html(html):
 
     result = StringIO.StringIO()
@@ -9,4 +10,4 @@ def render_html(html):
     if not pdf.err:
         return result.getvalue()
     else:
-        raise Exception('%s' % pdf.err)
+        raise Exception("%s" % pdf.err)

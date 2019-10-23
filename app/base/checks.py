@@ -5,13 +5,13 @@ from django.conf import settings
 
 
 REQUIRED_SETTINGS = (
-    'REMOTE_BASE_URL',
-    'API_BASE_URL',
-    'API_BASE_AUTH',
-    'STATIC_BASE_URL',
-    'ASSET_BASE_URL',
-    'STREAM_URL',
-    'REMOTE_AUTH_ENDPOINT',
+    "REMOTE_BASE_URL",
+    "API_BASE_URL",
+    "API_BASE_AUTH",
+    "STATIC_BASE_URL",
+    "ASSET_BASE_URL",
+    "STREAM_URL",
+    "REMOTE_AUTH_ENDPOINT",
 )
 
 
@@ -21,15 +21,15 @@ def check_remote_settings(app_configs, **kwargs):
     errors = []
 
     for key in REQUIRED_SETTINGS:
-        if getattr(settings, 'DEBUG'):
-            print('{}: {}'.format(key, getattr(settings, key, '-')))
+        if getattr(settings, "DEBUG"):
+            print("{}: {}".format(key, getattr(settings, key, "-")))
 
         if not getattr(settings, key, False):
             errors.append(
                 Error(
-                    'missing setting',
-                    hint='binary location {} not specified in settings'.format(key),
-                    id='base.E001',
+                    "missing setting",
+                    hint="binary location {} not specified in settings".format(key),
+                    id="base.E001",
                 )
             )
 

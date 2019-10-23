@@ -10,20 +10,26 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        ('cms', '0015_auto_20160421_0000'),
-    ]
+    dependencies = [("cms", "0015_auto_20160421_0000")]
 
     operations = [
         migrations.CreateModel(
-            name='CoverageMap',
+            name="CoverageMap",
             fields=[
-                ('cmsplugin_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='cms.CMSPlugin')),
-                ('url', models.URLField(blank=True, null=True)),
+                (
+                    "cmsplugin_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="cms.CMSPlugin",
+                    ),
+                ),
+                ("url", models.URLField(blank=True, null=True)),
             ],
-            options={
-                'verbose_name': 'Map',
-            },
-            bases=('cms.cmsplugin',),
-        ),
+            options={"verbose_name": "Map"},
+            bases=("cms.cmsplugin",),
+        )
     ]

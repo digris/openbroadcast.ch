@@ -4,6 +4,4 @@ from django.conf.urls import url
 
 from . import views
 
-urlpatterns = [
-    url(r'^time/$', views.current_time, name='stationtime-current-time'),
-]
+urlpatterns = [url(r"^time/$", views.current_time, name="stationtime-current-time")]

@@ -14,29 +14,23 @@ log = logging.getLogger(__name__)
 
 User = settings.AUTH_USER_MODEL
 
+
 def shorten_url(attrs, new=False):
-    attrs[(None, 'title')] = attrs['_text']
-    attrs['_text'] = '(link)'
+    attrs[(None, "title")] = attrs["_text"]
+    attrs["_text"] = "(link)"
     return attrs
+
 
 linker = Linker(callbacks=[shorten_url])
 
 
 class UserSerializer(serializers.ModelSerializer):
 
-    display_name = serializers.CharField(
-        source='get_display_name',
-        read_only=True
-    )
+    display_name = serializers.CharField(source="get_display_name", read_only=True)
 
     class Meta:
         model = get_user_model()
-        fields = [
-            'id',
-            'remote_id',
-            'display_name',
-            'username',
-        ]
+        fields = ["id", "remote_id", "display_name", "username"]
 
 
 class MessageSerializer(serializers.ModelSerializer):
@@ -46,17 +40,14 @@ class MessageSerializer(serializers.ModelSerializer):
     #     lookup_field='uuid'
     # )
 
-    sender = UserSerializer(
-        source='user',
-        read_only=True
-    )
-    #text = serializers.CharField(source='text', read_only=True)
+    sender = UserSerializer(source="user", read_only=True)
+    # text = serializers.CharField(source='text', read_only=True)
 
     html = serializers.SerializerMethodField()
-    def get_html(self, obj):
-        #return obj.text
-        return linker.linkify(obj.text)
 
+    def get_html(self, obj):
+        # return obj.text
+        return linker.linkify(obj.text)
 
     # me = serializers.SerializerMethodField()
     # def get_me(self, obj):
@@ -65,13 +56,13 @@ class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Message
-        #depth=1
+        # depth=1
         fields = [
             #'url',
-            'uuid',
-            'sender',
-            'created',
-            'text',
-            'html',
+            "uuid",
+            "sender",
+            "created",
+            "text",
+            "html",
             # 'me',
         ]

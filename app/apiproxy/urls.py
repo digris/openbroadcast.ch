@@ -4,6 +4,4 @@ from django.conf.urls import include, url
 
 from .views import ResourceView
 
-urlpatterns = [
-    url(r'^(?P<path>.*)$', ResourceView.as_view(), name='apiproxy-root'),
-]
+urlpatterns = [url(r"^(?P<path>.*)$", ResourceView.as_view(), name="apiproxy-root")]

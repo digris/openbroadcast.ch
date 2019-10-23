@@ -18,22 +18,21 @@ User = settings.AUTH_USER_MODEL
 
 class Beat(models.Model):
 
-    user = models.OneToOneField(User, related_name='beat')
+    user = models.OneToOneField(User, related_name="beat")
     updated = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta(object):
-        app_label = 'heartbeat'
-        verbose_name = 'Beat'
-        ordering = ('-updated',)
+        app_label = "heartbeat"
+        verbose_name = "Beat"
+        ordering = ("-updated",)
 
     def __str__(self):
-        return '{0} {1}'.format(self.user.username, self.updated)
+        return "{0} {1}".format(self.user.username, self.updated)
 
     @property
     def last_beat(self):
         if self.updated:
             return timezone.now() - self.updated
-
 
     def save(self, *args, **kwargs):
         super(Beat, self).save(*args, **kwargs)

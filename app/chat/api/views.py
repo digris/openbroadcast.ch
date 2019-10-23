@@ -20,25 +20,26 @@ from .serializers import MessageSerializer
 
 log = logging.getLogger(__name__)
 
-class MessageViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
-    queryset = Message.objects.all().order_by('-created')
-    lookup_field = 'uuid'
+
+class MessageViewSet(
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
+    viewsets.GenericViewSet,
+):
+    queryset = Message.objects.all().order_by("-created")
+    lookup_field = "uuid"
     serializer_class = MessageSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def perform_create(self, serializer):
-        cleaned_text = serializer.validated_data.get('text')
+        cleaned_text = serializer.validated_data.get("text")
 
-        log.debug('ct: {}'.format(cleaned_text))
+        log.debug("ct: {}".format(cleaned_text))
 
         serializer.save(user=self.request.user, text=cleaned_text)
 
 
-chatmessage_list = MessageViewSet.as_view({
-    'get': 'list',
-    'post': 'create',
-})
+chatmessage_list = MessageViewSet.as_view({"get": "list", "post": "create"})
 
-chatmessage_detail = MessageViewSet.as_view({
-    'get': 'retrieve',
-})
+chatmessage_detail = MessageViewSet.as_view({"get": "retrieve"})

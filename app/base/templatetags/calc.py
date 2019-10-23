@@ -2,22 +2,27 @@ from django import template
 
 register = template.Library()
 
-@register.filter 
+
+@register.filter
 def multiply(value, arg):
-    return int(value) * int(arg) 
+    return int(value) * int(arg)
 
-@register.filter 
+
+@register.filter
 def divide(value, arg):
-    return int(int(value) / int(arg)) 
+    return int(int(value) / int(arg))
 
-@register.filter 
+
+@register.filter
 def subtract(value, arg):
-    return int(int(value) - int(arg)) 
+    return int(int(value) - int(arg))
 
-@register.filter 
+
+@register.filter
 def squaretuple(value):
-    return '%sx%s' % (value, value) 
+    return "%sx%s" % (value, value)
 
-@register.filter 
+
+@register.filter
 def halftuple(value):
-    return '%sx%s' % (value, int(value) / 2) 
+    return "%sx%s" % (value, int(value) / 2)

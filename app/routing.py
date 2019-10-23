@@ -11,12 +11,18 @@ from chat.consumers import ChatJSONConsumer
 from rating.consumers import RatingJSONConsumer
 from onair.consumers import OnairJSONConsumer
 
-application = StaticFilesWrapper(ProtocolTypeRouter({
-    'websocket': AuthMiddlewareStack(
-        URLRouter([
-            url('^ws/onair/$', OnairJSONConsumer),
-            url('^ws/chat/$', ChatJSONConsumer),
-            url('^ws/rating/$', RatingJSONConsumer),
-        ])
-    ),
-}))
+application = StaticFilesWrapper(
+    ProtocolTypeRouter(
+        {
+            "websocket": AuthMiddlewareStack(
+                URLRouter(
+                    [
+                        url("^ws/onair/$", OnairJSONConsumer),
+                        url("^ws/chat/$", ChatJSONConsumer),
+                        url("^ws/rating/$", RatingJSONConsumer),
+                    ]
+                )
+            )
+        }
+    )
+)

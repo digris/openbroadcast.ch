@@ -1,45 +1,58 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import
 import logging
-import os
+from threading import Timer
+import threading
+import time
+
 from datetime import datetime, timedelta
-from django.conf import settings
-from project.celery import app
-from contentproxy.models import CachedEvent, CachedMedia
+from app.celery import app
+from .models import CachedMedia
+from .utils import put_remote_event
 
 log = logging.getLogger(__name__)
 
-SECONDS_DUPLICATE = 30
+
+def debounce(wait):
+    """ Decorator that will postpone a functions
+        execution until after wait seconds
+        have elapsed since the last time it was invoked. """
+
+    def decorator(fn):
+        def debounced(*args, **kwargs):
+            def call_it():
+                debounced._timer = None
+                debounced._last_call = time.time()
+                return fn(*args, **kwargs)
+
+            time_since_last_call = time.time() - debounced._last_call
+            if time_since_last_call >= wait:
+                return call_it()
+
+            if debounced._timer is None:
+                debounced._timer = threading.Timer(wait - time_since_last_call, call_it)
+                debounced._timer.start()
+
+        debounced._timer = None
+        debounced._last_call = 0
+
+        return debounced
+
+    return decorator
+
 
 @app.task
-def create_cached_event(ct, ct_uuid, user, action):
+@debounce(wait=10)
+def create_event(obj_ct, obj_uuid, event_type, user_remote_id):
+    log.debug('create remote event')
+    put_remote_event(obj_ct, obj_uuid, event_type, user_remote_id)
 
-    log.debug('event creation requested: %s %s %s %s' % (ct, ct_uuid, user, action))
-
-    events = CachedEvent.objects.filter(created__range=[
-        datetime.now() - timedelta(seconds=SECONDS_DUPLICATE),
-        datetime.now() + timedelta(seconds=SECONDS_DUPLICATE)
-    ], ct=ct, ct_uuid=ct_uuid, user=user, action=action)
-
-    if not events.exists():
-        event = CachedEvent(
-            ct = ct,
-            ct_uuid = ct_uuid,
-            user = user,
-            action = action
-        )
-        event.save()
-        log.debug('event created: %s %s %s %s' % (ct, ct_uuid, user, action))
-    else:
-        log.debug('duplicate event, skipped: %s %s %s %s' % (ct, ct_uuid, user, action))
 
 
 @app.task
 def cleanup_cache(max_age=3600):
-    log.info('cleaning up contentproxy cache: max age: %s' % (max_age))
+    log.info("cleaning up contentproxy cache: max age: %s" % (max_age))
     old_entries = CachedMedia.objects.filter(
         updated__lte=datetime.now() - timedelta(seconds=max_age)
     )
-    log.debug('%s cached items to delete' % old_entries.count())
+    log.debug("%s cached items to delete" % old_entries.count())
     old_entries.delete()
-
