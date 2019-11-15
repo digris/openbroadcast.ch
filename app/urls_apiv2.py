@@ -24,4 +24,5 @@ urlpatterns = [
     url("^chat/", include("chat.api.urls")),
     url("^onair/", include("onair.api.urls")),
     url("^rating/", include("rating.api.urls")),
+    url("^listener/", include("listener.api.urls")),
 ]

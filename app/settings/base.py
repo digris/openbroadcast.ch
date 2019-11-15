@@ -109,6 +109,7 @@ INSTALLED_APPS = [
     "media_embed",
     # api
     "rest_framework",
+    "rest_framework.authtoken",
     "tastypie",  # TODO: remove tastypie (apiv1)
     # TODO: check if can be removed
     # 'compressor',
@@ -122,6 +123,7 @@ INSTALLED_APPS = [
     "contentproxy",
     "chat",
     "onair",
+    "listener",
     "rating",
     "stationtime",
     "heartbeat",
@@ -413,7 +415,12 @@ LOGIN_REDIRECT_URL = "/"
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 20,
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ],
 }
+
 
 # TODO: remove tastypie
 TASTYPIE_DEFAULT_FORMATS = ["json"]
