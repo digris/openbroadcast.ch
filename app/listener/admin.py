@@ -85,7 +85,7 @@ class StreamEventAdmin(admin.ModelAdmin):
         # return '{:%H:%M:%S %Y/%m/%d}'.format(obj.time_end)
 
     disconnected.admin_order_field = "time_start"
-    disconnected.short_description = "Diesconnected"
+    disconnected.short_description = "Disconnected"
 
     def time_connected(self, obj):
 

@@ -20,7 +20,7 @@ class StreamEvent(TimestampedModelMixin, UUIDModelMixin, models.Model):
         verbose_name="request method", max_length=6, null=True, blank=True
     )
     path = models.CharField(
-        verbose_name="status code", max_length=250, null=True, blank=True
+        verbose_name="mountpoint", max_length=250, null=True, blank=True
     )
     status = models.PositiveIntegerField(null=True, blank=True)
     bytes_sent = models.PositiveIntegerField(null=True, blank=True)
