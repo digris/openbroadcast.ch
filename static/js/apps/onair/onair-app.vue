@@ -25,14 +25,6 @@
     props: [],
     mounted() {
 
-      // TODO: maybe there is a nicer alternative to show/hide
-      /*
-      this.visible = document.getElementsByTagName('body')[0].classList.contains('cms-home');
-      window.addEventListener("content:changed", (e) => {
-        this.visible = document.getElementsByTagName('body')[0].classList.contains('cms-home');
-      }, false);
-      */
-
       // TODO: eventually there is a more elegant way to handle this
       window.addEventListener('onair:force_item', (e) => {
         const uuid = e.detail;
@@ -300,14 +292,16 @@
 
 
         &__placeholder {
-            height: 100%;
-            width: 100%;
             background: #000;
+            background-image: url("/static/img/base/logo-square.png");
+            background-size: contain;
             color: #fff;
             opacity: .0;
             position: relative;
             transition: opacity 500ms;
 
+            height: 100%;
+            width: 100%;
 
             max-width: 380px;
             max-height: 380px;
@@ -331,29 +325,6 @@
                 padding-bottom: 100%;
             }
 
-            .logo {
-                margin: 0;
-                font-size: 36px;
-                line-height: 42px;
-                font-weight: 500;
-                padding: 18px 0 0 22px;
-            }
-
-            .dab {
-                display: flex;
-                align-items: center;
-                position: absolute;
-                bottom: 10px;
-                right: 10px;
-
-                span {
-                    padding-right: 10px;
-                }
-
-                img {
-                    height: 30px;
-                }
-            }
         }
 
         &__prev-next {
@@ -403,21 +374,12 @@
 
                 <div class="schedule-container__placeholder" ref="schedule_item_placeholder"
                      v-bind:class="{ 'is-visible': logo_visible }">
-                    <p class="logo">
-                        open<br>
-                        broadcast<br>
-                        radio<br>
-                    </p>
-                    <div class="dab">
-                        <span>live on</span>
-                        <img src="/static/img/base/logo.dab.white.png">
-                    </div>
-
+                    <!--
                     <div v-if="(!schedule || schedule.length < 1)">
                         <div @click="play_fallback">PLAY</div>
                         <div @click="stop">STOP</div>
                     </div>
-
+                    -->
                 </div>
 
                 <div class="carousel" v-bind:class="{ 'is-visible': carousel_visible }">
