@@ -108,8 +108,6 @@ INSTALLED_APPS = [
     # api
     "rest_framework",
     "rest_framework.authtoken",
-    "tastypie",  # TODO: remove tastypie (apiv1)
-    # TODO: check if can be removed
     # 'compressor',
     # 'analytics',
     "ganalytics",
@@ -117,7 +115,6 @@ INSTALLED_APPS = [
     # project apps
     "base",
     "telegram_bot",
-    "apiproxy",
     "contentproxy",
     "chat",
     "onair",
@@ -420,9 +417,6 @@ REST_FRAMEWORK = {
 }
 
 
-# TODO: remove tastypie
-TASTYPIE_DEFAULT_FORMATS = ["json"]
-
 ##################################################################
 # channels
 ##################################################################
@@ -634,7 +628,6 @@ LOGGING = {
         "rating": {"handlers": ["console"], "propagate": False, "level": "DEBUG"},
         "chat": {"handlers": ["console"], "propagate": False, "level": "DEBUG"},
         "contentproxy": {"handlers": ["console"], "propagate": False, "level": "DEBUG"},
-        "apiproxy": {"handlers": ["console"], "propagate": False, "level": "DEBUG"},
         "telegram_bot": {"handlers": ["console"], "propagate": False, "level": "DEBUG"},
         "remoteauth": {"handlers": ["console"], "propagate": False, "level": "INFO"},
     },

@@ -25,4 +25,5 @@ urlpatterns = [
     url("^onair/", include("onair.api.urls")),
     url("^rating/", include("rating.api.urls")),
     url("^listener/", include("listener.api.urls")),
+    url("^profiles/", include("profiles.api.urls")),
 ]

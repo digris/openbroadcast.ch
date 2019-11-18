@@ -8,7 +8,6 @@ admin.autodiscover()
 urlpatterns = [
     # api v2 patterns
     url(r"^api/v2/", include("app.urls_apiv2", namespace="api")),
-    url(r"^api/", include("app.urls_api")),
     url(r"^", include("contentproxy.urls")),
 ]
 
