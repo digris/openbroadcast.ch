@@ -10,6 +10,7 @@ bundles
 node_modules
 app/media
 app/data.sqlite3
+celerybeat-schedule
 app/settings/local_development.py
 build/*
 dist/*

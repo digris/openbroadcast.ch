@@ -55,6 +55,7 @@ COPY --from=node-builder /root/build/ ./build
 RUN DJANGO_SETTINGS_MODULE=app.settings.build python manage.py check
 RUN DJANGO_SETTINGS_MODULE=app.settings.build python manage.py collectstatic -v 0 --clear --no-input
 
+RUN rm -f ./celerybeat-schedule
 
 RUN addgroup -g 1000 -S app && adduser -u 1000 -S app -G app
 USER app
