@@ -79,7 +79,7 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     #
     "channels",
-    #"raven.contrib.django.raven_compat",
+    # "raven.contrib.django.raven_compat",
     # 'django_celery_beat',
     # authentication
     "account",
@@ -247,10 +247,8 @@ TEMPLATES = [
                 (
                     "django.template.loaders.cached.Loader",
                     [
-                        # 'admin_tools.template_loaders.Loader',
                         "django.template.loaders.filesystem.Loader",
                         "django.template.loaders.app_directories.Loader",
-                        "django.template.loaders.eggs.Loader",
                     ],
                 )
             ],
@@ -611,7 +609,7 @@ __LOGGING = {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
             "formatter": "verbose",
-        },
+        }
     },
     "loggers": {
         "django.db.backends": {
@@ -620,7 +618,7 @@ __LOGGING = {
             "propagate": False,
         },
         "django": {"handlers": ["console"], "propagate": False, "level": "INFO"},
-        #"raven": {"level": "INFO", "handlers": ["console"], "propagate": False},
+        # "raven": {"level": "INFO", "handlers": ["console"], "propagate": False},
         #
         "onair": {"handlers": ["console"], "propagate": False, "level": "DEBUG"},
         "rating": {"handlers": ["console"], "propagate": False, "level": "DEBUG"},

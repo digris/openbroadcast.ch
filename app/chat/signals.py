@@ -35,4 +35,4 @@ def message_post_save(sender, instance, *args, **kwargs):
     message = '{} posted: "{}"'.format(instance.user.get_display_name(), instance.text)
     if len(message) > 200:
         message = message[0:200] + " ..."
-    send_channel_message.delay('chat', message)
+    send_channel_message.delay("chat", message)

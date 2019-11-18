@@ -30,5 +30,5 @@ def schedule_next_start():
 @worker_ready.connect
 def celery_worker_ready(**kwargs):
     app.control.purge()
-    log.info('celery worker ready. schedule next start in 10s')
+    log.info("celery worker ready. schedule next start in 10s")
     schedule_next_start.apply_async(countdown=10)

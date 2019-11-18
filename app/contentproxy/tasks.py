@@ -43,9 +43,8 @@ def debounce(wait):
 @app.task
 @debounce(wait=10)
 def create_event(obj_ct, obj_uuid, event_type, user_remote_id):
-    log.debug('create remote event')
+    log.debug("create remote event")
     put_remote_event(obj_ct, obj_uuid, event_type, user_remote_id)
-
 
 
 @app.task

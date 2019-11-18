@@ -7,16 +7,9 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('contentproxy', '0004_cachedmedia_updated'),
-    ]
+    dependencies = [("contentproxy", "0004_cachedmedia_updated")]
 
     operations = [
-        migrations.RemoveField(
-            model_name='cachedevent',
-            name='user',
-        ),
-        migrations.DeleteModel(
-            name='CachedEvent',
-        ),
+        migrations.RemoveField(model_name="cachedevent", name="user"),
+        migrations.DeleteModel(name="CachedEvent"),
     ]

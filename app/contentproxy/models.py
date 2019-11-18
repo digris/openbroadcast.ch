@@ -115,5 +115,3 @@ def cached_media_pre_delete(sender, **kwargs):
             os.rmdir(obj.directory)
         except Exception as e:
             log.debug("unable to delete directory: %s - %s" % (obj.path, e))
-
-

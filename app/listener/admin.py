@@ -37,7 +37,9 @@ class BANConnectionFilter(admin.SimpleListFilter):
 
     def queryset(self, request, queryset):
 
-        _ban_ua = Q(user_agent__istartswith='DABplayer') | Q(user_agent__istartswith='Liquidsoap')
+        _ban_ua = Q(user_agent__istartswith="DABplayer") | Q(
+            user_agent__istartswith="Liquidsoap"
+        )
 
         if self.value() == "y":
             return queryset.distinct().filter(_ban_ua)
@@ -52,7 +54,13 @@ class StreamEventAdmin(admin.ModelAdmin):
     ordering = ("-time_end",)
     date_hierarchy = "time_start"
 
-    list_filter = [SecondsConnectedFilter, BANConnectionFilter,  "time_start", "method", "status"]
+    list_filter = [
+        SecondsConnectedFilter,
+        BANConnectionFilter,
+        "time_start",
+        "method",
+        "status",
+    ]
 
     search_fields = ["path", "ip", "user_agent", "referer"]
 

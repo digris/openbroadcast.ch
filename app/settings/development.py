@@ -20,7 +20,6 @@ DATABASES = {
 TEMPLATES[0]["OPTIONS"]["loaders"] = [
     "django.template.loaders.filesystem.Loader",
     "django.template.loaders.app_directories.Loader",
-    "django.template.loaders.eggs.Loader",
 ]
 
 DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
@@ -29,16 +28,7 @@ DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
 ##################################################################
 # cache
 ##################################################################
-CACHES = {
-    "default": {"BACKEND": "django.core.cache.backends.dummy.DummyCache"},
-    # 'default': {
-    #     'BACKEND': 'django_redis.cache.RedisCache',
-    #     'LOCATION': 'redis://127.0.0.1:6379/7',
-    #     'OPTIONS': {
-    #         'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-    #     },
-    # },
-}
+CACHES = {"default": {"BACKEND": "django.core.cache.backends.dummy.DummyCache"}}
 #
 # SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 # SESSION_CACHE_ALIAS = 'default'
@@ -60,18 +50,18 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 
 INSTALLED_APPS += [
-    #'debug_toolbar',
+    # 'debug_toolbar',
     "django_extensions",
-    #'dev',
-    #'devserver',
+    # 'dev',
+    # 'devserver',
 ]
 
 MIDDLEWARE_CLASSES += [
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 DEBUG_TOOLBAR_PANELS = [
-    #'cachalot.panels.CachalotPanel',
+    # 'cachalot.panels.CachalotPanel',
 ]
 
 # this fixes strange behaviour when running app through gunicorn

@@ -8,6 +8,7 @@ from ...schedule import scheduler
 DEFAULT_RANGE = (-3600, 3600)
 DEFAULT_MAX_AGE = 3600
 
+
 @click.group()
 def cli():
     pass

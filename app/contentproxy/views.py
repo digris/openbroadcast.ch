@@ -80,6 +80,7 @@ class StaticResourceView(View):
     """
     TODO: refactor to nginx reverse proxy
     """
+
     def get(self, *args, **kwargs):
 
         path = kwargs.get("path", None)

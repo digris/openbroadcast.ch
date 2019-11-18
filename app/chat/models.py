@@ -31,7 +31,9 @@ class Message(TimestampedModelMixin, UUIDModelMixin, models.Model):
 
 class MentionedUser(models.Model):
 
-    message = models.ForeignKey(Message, related_name="mentioned_users", on_delete=models.CASCADE)
+    message = models.ForeignKey(
+        Message, related_name="mentioned_users", on_delete=models.CASCADE
+    )
     user = models.ForeignKey(User, related_name="+", on_delete=models.CASCADE)
 
     class Meta(object):

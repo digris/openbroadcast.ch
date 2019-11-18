@@ -114,7 +114,9 @@ class Scheduler(object):
         # get current item, emit signal if changed since last run
         current_item = ScheduledItem.objects.get_current()
         if current_item and current_item != self._current_item:
-            log.info('current item changed: {} > {}'.format(self._current_item, current_item))
+            log.info(
+                "current item changed: {} > {}".format(self._current_item, current_item)
+            )
             onair_signals.item_start_playing.send(
                 sender=self.__class__,
                 item=current_item,
@@ -122,13 +124,15 @@ class Scheduler(object):
             )
             self._current_item = current_item
         else:
-            log.debug('current unchanged: {}'.format(current_item))
+            log.debug("current unchanged: {}".format(current_item))
 
         # get next item, schedule rerun to start time (or retry interval)
         next_item = ScheduledItem.objects.get_next()
 
         if next_item:
-            log.debug("next item: {} - starts at: {}".format(next_item, next_item.time_start))
+            log.debug(
+                "next item: {} - starts at: {}".format(next_item, next_item.time_start)
+            )
 
             if (next_item.time_start - timezone.now()).total_seconds() < 90:
                 return next_item.time_start
