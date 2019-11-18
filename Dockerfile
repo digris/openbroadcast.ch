@@ -17,7 +17,8 @@ RUN yarn build
 
 FROM python:3.7-alpine3.10
 
-WORKDIR /root/
+RUN mkdir /app/
+WORKDIR /app/
 
 # COPY ["Pipfile","Pipfile.lock", "./"]
 COPY ["requirements.txt", "./"]
@@ -46,7 +47,7 @@ RUN set -ex \
     && apk del .build-deps
 
 # Copy application code to context
-COPY ["manage.py", "docker-entrypoint.sh", "./"]
+COPY ["Procfile", "manage.py", "docker-entrypoint.sh", "./"]
 ADD ./app/ ./app/
 
 COPY --from=node-builder /root/build/ ./build
