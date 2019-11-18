@@ -16,7 +16,7 @@ User = settings.AUTH_USER_MODEL
 
 class Message(TimestampedModelMixin, UUIDModelMixin, models.Model):
 
-    user = models.ForeignKey(User, related_name="+")
+    user = models.ForeignKey(User, related_name="+", on_delete=models.CASCADE)
     text = models.TextField()
 
     class Meta:
@@ -31,8 +31,8 @@ class Message(TimestampedModelMixin, UUIDModelMixin, models.Model):
 
 class MentionedUser(models.Model):
 
-    message = models.ForeignKey(Message, related_name="mentioned_users")
-    user = models.ForeignKey(User, related_name="+")
+    message = models.ForeignKey(Message, related_name="mentioned_users", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name="+", on_delete=models.CASCADE)
 
     class Meta(object):
         app_label = "chat"

@@ -13,7 +13,7 @@ User = settings.AUTH_USER_MODEL
 
 class Beat(models.Model):
 
-    user = models.OneToOneField(User, related_name="beat")
+    user = models.OneToOneField(User, related_name="beat", on_delete=models.CASCADE)
     updated = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta(object):

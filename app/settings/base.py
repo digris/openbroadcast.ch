@@ -90,10 +90,6 @@ INSTALLED_APPS = [
     "remoteauth",
     "captcha",
     # analytics (google & co)
-    # 'ganalytics', # TODO: install module
-    # TODO: remove filer
-    # 'filer',
-    # 'easy_thumbnails',
     # cms base
     "cms",
     "menus",
@@ -105,6 +101,8 @@ INSTALLED_APPS = [
     "djangocms_snippet",
     # 'cmsplugin_youtube',
     "djangocms_text_ckeditor",
+    "filer",
+    "easy_thumbnails",
     # cms custom modules
     "media_embed",
     # api
