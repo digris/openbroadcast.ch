@@ -55,7 +55,7 @@ COPY --from=node-builder /root/build/ ./build
 RUN DJANGO_SETTINGS_MODULE=app.settings.build python manage.py check
 RUN DJANGO_SETTINGS_MODULE=app.settings.build python manage.py collectstatic --clear --no-input
 
-ENTRYPOINT ["/root/docker-entrypoint.sh"]
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
 
 ENV DJANGO_SETTINGS_MODULE=app.settings.base
 
