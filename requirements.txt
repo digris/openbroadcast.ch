@@ -20,7 +20,7 @@ python-telegram-bot==11.1.0
 # server
 ################################################
 uwsgi==2.0.17.1
-psycopg2-binary
+psycopg2==2.7.7
 redis==2.10.5
 dj-database-url==0.5.0
 channels==2.2.0
