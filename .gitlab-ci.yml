@@ -34,7 +34,7 @@ build:
     - echo "CI_DEPLOY_USER:"      $CI_DEPLOY_USER
     - echo "CI_DEPLOY_PASSWORD:"  $CI_DEPLOY_PASSWORD
     # build and add image for internal registry
-    - docker build -t $IMAGE_TAG . --no-cache
+    - docker build -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
 
 

@@ -596,7 +596,7 @@ if RAVEN_SENTRY_DSN:
 
 LOGGING_ROOT_HALNDLERS = ["console"]
 
-LOGGING = {
+__LOGGING = {
     "version": 1,
     "disable_existing_loggers": True,
     "root": {"level": "WARNING", "handlers": LOGGING_ROOT_HALNDLERS},

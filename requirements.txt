@@ -21,21 +21,23 @@ python-telegram-bot==11.1.0
 ################################################
 uwsgi==2.0.17.1
 psycopg2==2.7.7
-redis==2.10.5
 dj-database-url==0.5.0
-channels==2.2.0
-channels-redis==2.4.0
+
+# channels / asgi
 daphne==2.3.0
+channels==2.3.1
+channels-redis==2.4.1
+redis==3.3.11
 django_redis==4.10.0
 
+# celery
+celery==4.3.0
+django-celery-beat==1.5.0
 
 ################################################
 # django modules
 ################################################
 django-click==2.1.0
-celery==4.2.1
-# kombu==4.3.0
-django-celery-beat==1.4.0
 django-ganalytics==0.7.0
 
 

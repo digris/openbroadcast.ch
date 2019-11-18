@@ -1,37 +1,36 @@
 version: '3'
 services:
-  db:
-    image: postgres:alpine
-    volumes:
-      - 'pg_data_ch_openbroadcast:/var/lib/postgresql/data/'
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-
   redis:
     image: redis
-
-  app:
+  web:
     image: ch-openbroadcast:latest
-    #build: .
-    #volumes:
-    #    - ./app/:/app/app
-    #command: /app/manage.py runserver 0.0.0.0:8000
     #command: daphne --port 8000 --bind 0.0.0.0 app.asgi:application
     environment:
       - DJANGO_MANAGE_MIGRATE=off
       - DJANGO_MANAGE_COLLECTSTATIC=off
-      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
+      - DATABASE_URL=postgres://ohrstrom@docker.for.mac.localhost:5432/ch_openbroadcast_local
       - REDIS_URL=redis://redis:6379
-      - DEBUG=True
+      - DEBUG=False
       - DJANGO_SETTINGS_MODULE=app.settings.default
     depends_on:
-      - db
       - redis
     ports:
       - 8090:8000
     links:
-      - db
+      - redis
+  worker:
+    image: ch-openbroadcast:latest
+    command: celery -A app worker --beat -c 1 -l INFO
+    environment:
+      - DJANGO_MANAGE_MIGRATE=off
+      - DJANGO_MANAGE_COLLECTSTATIC=off
+      - DATABASE_URL=postgres://ohrstrom@docker.for.mac.localhost:5432/ch_openbroadcast_local
+      - REDIS_URL=redis://redis:6379
+      - DEBUG=False
+      - DJANGO_SETTINGS_MODULE=app.settings.default
+    depends_on:
+      - redis
+    links:
       - redis
 
 volumes:

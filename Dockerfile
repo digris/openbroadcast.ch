@@ -57,7 +57,10 @@ RUN DJANGO_SETTINGS_MODULE=app.settings.build python manage.py collectstatic -v 
 
 RUN rm -f ./celerybeat-schedule
 
-RUN addgroup -g 1000 -S app && adduser -u 1000 -S app -G app
+RUN addgroup -g 1000 -S app \
+    && adduser -u 1000 -S app -G app \
+    && chown -R app:app /app/
+
 USER app
 
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
