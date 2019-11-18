@@ -6,6 +6,11 @@
 #### build image
 
     docker build -t ch-openbroadcast:latest .
+    
+#### run docker locally
+
+    docker run -e DEBUG=True -e DATABASE_URL=postgres://ohrstrom@docker.for.mac.localhost:5432/ch_openbroadcast_local -p 8080:8000 ch-openbroadcast:latest
+    
 
 
 #### load image to dokku

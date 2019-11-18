@@ -10,7 +10,8 @@ set -e
 
 if [ "x$DJANGO_MANAGE_COLLECTSTATIC" = 'xon' ]; then
     # staticfile app fails in LIVE mode -> enable DEBUG for collectstatic
-    DEBUG=True ./manage.py collectstatic --noinput
+    # DEBUG=True ./manage.py collectstatic --noinput
+    echo "collectstatic refactored to docker build step"
 fi
 
 if [ "x$DJANGO_MANAGE_MIGRATE" = 'xon' ]; then

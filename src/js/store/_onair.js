@@ -74,8 +74,8 @@ const actions = {
 const ws_url = `${settings.WS_SCHEME}://${settings.WS_HOST}/ws/onair/`;
 const wsb = new WebSocketBridge();
 wsb.connect(ws_url);
-wsb.listen((data) => {
-  if (DEBUG) console.log('ws onair:', data);
+wsb.addEventListener("message", (event) => {
+    if (DEBUG) console.log('ws onair:', event.data);
 });
 
 export default {

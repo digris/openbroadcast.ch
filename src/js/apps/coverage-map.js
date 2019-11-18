@@ -40,4 +40,5 @@ class CoverageMap {
 
 }
 
-module.exports = CoverageMap;
+export default CoverageMap;
+// module.exports = CoverageMap;

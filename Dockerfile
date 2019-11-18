@@ -1,10 +1,26 @@
-FROM python:3.6-alpine3.8
+FROM node:lts-alpine as node-builder
 
-RUN mkdir /app/
-WORKDIR /app/
+WORKDIR /root/
 
-ADD requirements.txt /app/requirements.txt
-ADD package.json /app/package.json
+COPY ["yarn.lock", "package.json", "./"]
+RUN set -ex \
+    && apk add --no-cache --virtual .build-deps \
+        git \
+    && yarn install \
+    && apk del .build-deps
+
+COPY ["postcss.config.js", "./"]
+ADD ./webpack/ ./webpack/
+ADD ./src/ ./src/
+RUN yarn build
+
+
+FROM python:3.7-alpine3.10
+
+WORKDIR /root/
+
+# COPY ["Pipfile","Pipfile.lock", "./"]
+COPY ["requirements.txt", "./"]
 
 RUN set -ex \
     && apk add --no-cache --virtual .build-deps \
@@ -12,7 +28,6 @@ RUN set -ex \
         libffi-dev \
         linux-headers \
         postgresql-dev \
-        yarn \
         libev \
         libevdev \
     && apk add --no-cache --virtual .run-deps \
@@ -20,43 +35,27 @@ RUN set -ex \
         git \
         pcre-dev \
         postgresql-client \
-        nodejs \
-        nodejs-npm \
         libjpeg-turbo-dev \
         libpng-dev \
         freetype-dev \
-        libxml2-dev \
         libxslt-dev \
-    && pip3 install -U pip \
+        libxml2-dev \
+    && pip3 install -U pip pipenv \
     && LIBRARY_PATH=/lib:/usr/lib /bin/sh -c "pip3 install --no-cache-dir -r ./requirements.txt" \
-    && yarn install \
+    # && LIBRARY_PATH=/lib:/usr/lib /bin/sh -c "pipenv install --system --deploy --ignore-pipfile" \
     && apk del .build-deps
 
-# Copy your application code to the container
-# (make sure you create a .dockerignore file if any large files or directories should be excluded)
-ADD . /app/
-WORKDIR /app/
+# Copy application code to context
+COPY ["manage.py", "docker-entrypoint.sh", "./"]
+ADD ./app/ ./app/
 
-# install npm dependencies, build static src & cleanup
-RUN npm run dist \
-    && rm -R /app/node_modules/ \
-    && rm -R /app/static/
-
-RUN addgroup -g 1000 -S app && adduser -u 1000 -S app -G app
+COPY --from=node-builder /root/build/ ./build
 
 RUN DJANGO_SETTINGS_MODULE=app.settings.build python manage.py check
-#RUN DJANGO_SETTINGS_MODULE=app.settings.build python manage.py collectstatic --noinput \
-#    && rm -R /app/app/static-src/
+RUN DJANGO_SETTINGS_MODULE=app.settings.build python manage.py collectstatic --clear --no-input
 
-#RUN adduser -D app
-#RUN chown -R app ./app/static-dist
-#USER app
+ENTRYPOINT ["/root/docker-entrypoint.sh"]
 
-#COPY docker-entrypoint.sh /app/
-# entrypoint (contains migration/static handling)
-ENTRYPOINT ["/app/docker-entrypoint.sh"]
-
-# Add any custom, static environment variables needed by Django or your settings file here:
 ENV DJANGO_SETTINGS_MODULE=app.settings.base
 
 # ASGI port

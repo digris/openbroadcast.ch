@@ -1,4 +1,4 @@
-{% load cms_tags staticfiles slick_admin_tags sekizai_tags i18n menu_tags settings_export_tags ganalytics raven %}<!DOCTYPE html>
+{% load cms_tags staticfiles slick_admin_tags sekizai_tags i18n menu_tags settings_export_tags ganalytics %}<!DOCTYPE html>
 <html class="no-js{% if user.is_authenticated %} is-authenticated{% endif %}" lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="utf-8"/>
@@ -43,8 +43,8 @@
     {% if webpack_devserver %}
         <script src="{% static 'js/bundle.js' %}"></script>
     {% else %}
-        <link rel="stylesheet" href="{% static 'dist/css/bundle.css' %}"/>
-        <script src="{% static 'dist/js/bundle.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'css/bundle.css' %}"/>
+        <script src="{% static 'js/bundle.js' %}"></script>
     {% endif %}
     <!-- end: bundled js -->
 

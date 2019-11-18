@@ -51,15 +51,16 @@ const actions = {
 const ws_url = `${settings.WS_SCHEME}://${settings.WS_HOST}/ws/rating/`;
 const wsb = new WebSocketBridge();
 wsb.connect(ws_url);
-wsb.listen((data, stream) => {
+
+wsb.addEventListener("message", (event) => {
   // we have to re-fetch the rating from the API,
   // to make sure the user specific vote is available.
   // TODO: this step could be excluded for anonymous users.
-  if (DEBUG) console.log('ws rating listen:', data, stream);
-  const key = `${data.ct}:${data.uuid}`;
+  if (DEBUG) console.log('ws rating listen:', event.data);
+  const key = `${event.data.ct}:${event.data.uuid}`;
   store.dispatch('rating/get_votes', key);
-  // store.commit('rating/update_votes', data);
 });
+
 
 
 export default {

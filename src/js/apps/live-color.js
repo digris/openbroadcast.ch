@@ -91,7 +91,8 @@ class LiveColor {
 
 }
 
-module.exports = LiveColor;
+export default LiveColor;
+// module.exports = LiveColor;
 
 
 function rgb_to_hex(rgb) {

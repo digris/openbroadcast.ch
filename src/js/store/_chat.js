@@ -79,9 +79,10 @@ if(parseInt(window.location.port) === 4000){
 const ws_url = ws_scheme + '://' + ws_host + "/ws/chat/";
 const wsb = new WebSocketBridge();
 wsb.connect(ws_url);
-wsb.listen((data, stream) => {
-    console.log('ws chat listen:', data, stream);
-    store.commit('chat/add_message', data);
+
+wsb.addEventListener("message", (event) => {
+    console.log('ws chat listen:', event.data);
+    store.commit('chat/add_message', event.data);
 });
 
 

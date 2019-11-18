@@ -17,9 +17,6 @@ APP_ROOT = os.path.join(PROJECT_ROOT, "app")
 # add app path
 sys.path.insert(0, APP_ROOT)
 
-# add additional paths
-sys.path.insert(0, os.path.join(PROJECT_ROOT, "tools"))
-
 
 ##################################################################
 # multisite settings
@@ -82,7 +79,7 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     #
     "channels",
-    "raven.contrib.django.raven_compat",
+    #"raven.contrib.django.raven_compat",
     # 'django_celery_beat',
     # authentication
     "account",
@@ -181,7 +178,8 @@ else:
 MEDIA_ROOT = config("MEDIA_ROOT", default=os.path.join(APP_ROOT, "media"))
 MEDIA_URL = config("MEDIA_URL", "/media/")
 
-STATIC_ROOT = config("STATIC_ROOT", default=os.path.join(APP_ROOT, "static-dist"))
+# STATIC_ROOT = config("STATIC_ROOT", default=os.path.join(APP_ROOT, "static-dist"))
+STATIC_ROOT = os.path.join(PROJECT_ROOT, "dist")
 STATIC_URL = config("STATIC_URL", default="/static/")
 
 ADMIN_MEDIA_PREFIX = "/static/admin/"
@@ -190,7 +188,10 @@ ADMIN_MEDIA_PREFIX = "/static/admin/"
 
 WHITENOISE_MIMETYPES = {".ttf": "application/x-font-ttf"}
 
-STATICFILES_DIRS = [config("STATIC_ROOT", default=os.path.join(APP_ROOT, "static-src"))]
+STATICFILES_DIRS = [
+    # config("STATIC_ROOT", default=os.path.join(APP_ROOT, "static-src")),
+    os.path.join(PROJECT_ROOT, "build")
+]
 
 STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.FileSystemFinder",
@@ -588,10 +589,12 @@ RAVEN_SENTRY_DSN = config("RAVEN_SENTRY_DSN", default=None)
 if RAVEN_SENTRY_DSN:
     RAVEN_CONFIG = {"dsn": RAVEN_SENTRY_DSN}
 
-if RAVEN_SENTRY_DSN:
-    LOGGING_ROOT_HALNDLERS = ["sentry"]
-else:
-    LOGGING_ROOT_HALNDLERS = ["console"]
+# if RAVEN_SENTRY_DSN:
+#     LOGGING_ROOT_HALNDLERS = ["sentry"]
+# else:
+#     LOGGING_ROOT_HALNDLERS = ["console"]
+
+LOGGING_ROOT_HALNDLERS = ["console"]
 
 LOGGING = {
     "version": 1,
@@ -604,10 +607,6 @@ LOGGING = {
         }
     },
     "handlers": {
-        "sentry": {
-            "level": "ERROR",
-            "class": "raven.contrib.django.raven_compat.handlers.SentryHandler",
-        },
         "console": {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
@@ -621,8 +620,7 @@ LOGGING = {
             "propagate": False,
         },
         "django": {"handlers": ["console"], "propagate": False, "level": "INFO"},
-        "raven": {"level": "INFO", "handlers": ["console"], "propagate": False},
-        "sentry.errors": {"level": "INFO", "handlers": ["console"], "propagate": False},
+        #"raven": {"level": "INFO", "handlers": ["console"], "propagate": False},
         #
         "onair": {"handlers": ["console"], "propagate": False, "level": "DEBUG"},
         "rating": {"handlers": ["console"], "propagate": False, "level": "DEBUG"},

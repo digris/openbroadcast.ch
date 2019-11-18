@@ -443,10 +443,8 @@
 
 <template>
     <modal :show="show_modal" @close="show_modal=false">
-        <!--<span slot="title">The REAL Title</span>-->
         <div class="account-app" slot="content">
             <component :is="compiled_body" @show="show(...arguments)"></component>
-            <!--<div v-html="body" class="body_"></div>-->
         </div>
     </modal>
 </template>

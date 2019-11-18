@@ -29,4 +29,5 @@ class SiteUI {
 
 }
 
-module.exports = SiteUI;
+export default SiteUI;
+// module.exports = SiteUI;

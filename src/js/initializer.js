@@ -138,4 +138,5 @@ class AppInitializer {
 
 }
 
-module.exports = AppInitializer;
+export default AppInitializer;
+// module.exports = AppInitializer;

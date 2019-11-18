@@ -18,17 +18,13 @@ app/data.sqlite3
 app/logs
 app/media
 app/settings/local_*
+build/*
+dist/*
 app/dev
 app/env
-app/static-src/dist
-app/static-src/font
-app/static-src/img
-app/static-src/js
-app/static-src/css
-app/static-dist/*
 celerybeat-schedule
 
-yarn.lock
+# yarn.lock
 yarn-error.log
 npm-debug.log
 
