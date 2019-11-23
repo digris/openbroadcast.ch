@@ -26,9 +26,17 @@ def rating_received(sender, user, votes, **kwargs):
 
     if user_vote and current_item:
 
+        try:
+            str_item = '[{}](https://www.openbroadcast.org{})'.format(
+                current_item.name,
+                current_item.item_data.get('absolute_url')
+            )
+        except:
+            str_item = current_item.name
+
         vote_char = VOTE_CHARACTER_MAP.get(user_vote, user_vote)
         message = '{} by {} for "{}"'.format(
-            vote_char, user.get_display_name(), current_item.name
+            vote_char, user.get_display_name(), str_item
         )
 
         send_channel_message.delay("rating", message)

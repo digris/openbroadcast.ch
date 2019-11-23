@@ -128,7 +128,7 @@ INSTALLED_APPS = [
 ##################################################################
 # middleware
 ##################################################################
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     "cms.middleware.utils.ApphookReloadMiddleware",
     "webpack.middleware.WebpackDevserverMiddleware",
     "turbolinks.middleware.TurbolinksMiddleware",
@@ -140,8 +140,6 @@ MIDDLEWARE_CLASSES = [
     "django.middleware.locale.LocaleMiddleware",
     "account.middleware.CustomSocialAuthExceptionMiddleware",
     "django.contrib.admindocs.middleware.XViewMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.locale.LocaleMiddleware",
     "cms.middleware.page.CurrentPageMiddleware",
     "cms.middleware.user.CurrentUserMiddleware",
     "cms.middleware.toolbar.ToolbarMiddleware",

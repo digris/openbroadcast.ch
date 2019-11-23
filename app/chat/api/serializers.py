@@ -52,7 +52,7 @@ class MessageSerializer(serializers.ModelSerializer):
     # me = serializers.SerializerMethodField()
     # def get_me(self, obj):
     #     request = self.context['request']
-    #     return request.user.is_authenticated() and (obj.user == request.user)
+    #     return request.user.is_authenticated and (obj.user == request.user)
 
     class Meta:
         model = Message

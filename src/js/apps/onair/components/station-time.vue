@@ -22,7 +22,7 @@
     ],
     data() {
       return {
-        api_url: '/stationtime/time/',
+        api_url: '/api/v2/stationtime/time/',
         interval: false,
         interval_duration: 1000,
         current_time: null,

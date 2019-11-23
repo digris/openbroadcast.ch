@@ -56,7 +56,7 @@ INSTALLED_APPS += [
     # 'devserver',
 ]
 
-MIDDLEWARE_CLASSES += [
+MIDDLEWARE += [
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 

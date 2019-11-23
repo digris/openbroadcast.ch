@@ -1,16 +1,20 @@
 # -*- coding: utf-8 -*-
-import logging
+from __future__ import unicode_literals
 
 from django.conf import settings
 
-DEVSERVER_HEADER = "HTTP_" + getattr(
-    settings, "WEBPACK_DEVSERVER_HEADER", "X-WEBPACK-DEVSERVER"
-).replace("-", "_")
+try:
+    from django.utils.deprecation import MiddlewareMixin
+except ImportError:
+    MiddlewareMixin = object
 
-log = logging.getLogger(__name__)
+DEVSERVER_HEADER = 'HTTP_' + getattr(settings, 'WEBPACK_DEVSERVER_HEADER', 'X-WEBPACK-DEVSERVER').replace('-', '_')
 
+class WebpackDevserverMiddleware(MiddlewareMixin):
 
-class WebpackDevserverMiddleware(object):
+    def __init__(self, *args, **kwargs):
+        super(WebpackDevserverMiddleware, self).__init__(*args, **kwargs)
+
     def process_request(self, request):
 
         if request.META.get(DEVSERVER_HEADER, False):

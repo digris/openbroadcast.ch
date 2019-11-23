@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.core.checks import register, Tags, Error, Warning, Info, Debug, Critical
+from django.core.checks import register, Error
 from django.conf import settings
 
 
@@ -21,8 +21,8 @@ def check_remote_settings(app_configs, **kwargs):
     errors = []
 
     for key in REQUIRED_SETTINGS:
-        if getattr(settings, "DEBUG"):
-            print("{}: {}".format(key, getattr(settings, key, "-")))
+        # if getattr(settings, "DEBUG"):
+        #     print("{}: {}".format(key, getattr(settings, key, "-")))
 
         if not getattr(settings, key, False):
             errors.append(

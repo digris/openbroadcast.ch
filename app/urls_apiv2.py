@@ -23,6 +23,7 @@ urlpatterns = [
     url(r"^$", api_root),
     url("^chat/", include("chat.api.urls")),
     url("^onair/", include("onair.api.urls")),
+    url("^stationtime/", include("stationtime.api.urls")),
     url("^rating/", include("rating.api.urls")),
     url("^listener/", include("listener.api.urls")),
     url("^profiles/", include("profiles.api.urls")),

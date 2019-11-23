@@ -1,49 +1,63 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 try:
-    from urlparse import urlparse
+    from django.utils.deprecation import MiddlewareMixin
 except ImportError:
-    from urllib.parse import urlparse
-from django.http import HttpResponseForbidden
+    MiddlewareMixin = object
 
 
-def same_origin(current_uri, redirect_uri):
-    a = urlparse(current_uri)
-    if not a.scheme:
-        return True
-    b = urlparse(redirect_uri)
-    return (a.scheme, a.hostname, a.port) == (b.scheme, b.hostname, b.port)
+class TurbolinksMiddleware(MiddlewareMixin):
+    """
+    Send the `Turbolinks-Location` header in response to a visit that was redirected,
+    and Turbolinks will replace the browser’s topmost history entry.
+    """
 
-
-class TurbolinksMiddleware(object):
-    def process_request(self, request):
-        referrer = request.META.get("HTTP_X_XHR_REFERER")
-        if referrer:
-            # overwrite referrer
-            request.META["HTTP_REFERER"] = referrer
-        return
+    def __init__(self, *args, **kwargs):
+        super(TurbolinksMiddleware, self).__init__(*args, **kwargs)
 
     def process_response(self, request, response):
-        referrer = request.META.get("HTTP_X_XHR_REFERER")
-        if not referrer:
-            # turbolinks not enabled
-            return response
 
-        method = request.COOKIES.get("request_method")
-        if not method or method != request.method:
-            response.set_cookie("request_method", request.method)
+        is_turbolinks = request.META.get("HTTP_TURBOLINKS_REFERRER")
+        is_response_redirect = response.has_header("Location")
 
-        if response.has_header("Location"):
-            # this is a redirect response
-            loc = response["Location"]
-            request.session["_turbolinks_redirect_to"] = loc
+        # if is_turbolinks:
+        #
+        #     if is_response_redirect:
+        #         location = response["Location"]
+        #         prev_location = request.session.pop(
+        #             "_redirect_to", None
+        #         )
+        #         if prev_location is not None:
+        #             # relative subsequent redirect
+        #             if location.startswith("."):
+        #                 location = prev_location.split("?")[0] + location
+        #         request.session["_redirect_to"] = location
+        #
+        #     else:
+        #         if request.session.get("_redirect_to"):
+        #             location = request.session.pop("_redirect_to")
+        #             response["Turbolinks-Location"] = location
 
-            # cross domain blocker
-            if referrer and not same_origin(loc, referrer):
-                return HttpResponseForbidden()
-        else:
-            if request.session.get("_turbolinks_redirect_to"):
-                loc = request.session.pop("_turbolinks_redirect_to")
-                response["X-XHR-Redirected-To"] = loc
+        """
+        we have to use cookies for 'caching' as session is deleted during
+        login/logout.
+        """
+        if is_turbolinks:
+
+            if is_response_redirect:
+                location = response["Location"]
+                prev_location = request.COOKIES.pop("_redirect_to", None)
+                if prev_location is not None:
+                    # relative subsequent redirect
+                    if location.startswith("."):
+                        location = prev_location.split("?")[0] + location
+                response.set_cookie("_redirect_to", location)
+
+            else:
+                if request.COOKIES.get("_redirect_to"):
+                    location = request.COOKIES.get("_redirect_to")
+                    response.delete_cookie("_redirect_to")
+                    response["Turbolinks-Location"] = location
+
         return response

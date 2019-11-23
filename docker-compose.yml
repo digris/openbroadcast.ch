@@ -6,8 +6,6 @@ services:
     image: ch-openbroadcast:latest
     #command: daphne --port 8000 --bind 0.0.0.0 app.asgi:application
     environment:
-      - DJANGO_MANAGE_MIGRATE=off
-      - DJANGO_MANAGE_COLLECTSTATIC=off
       - DATABASE_URL=postgres://ohrstrom@docker.for.mac.localhost:5432/ch_openbroadcast_local
       - REDIS_URL=redis://redis:6379
       - DEBUG=False
@@ -22,8 +20,6 @@ services:
     image: ch-openbroadcast:latest
     command: celery -A app worker --beat -c 1 -l INFO
     environment:
-      - DJANGO_MANAGE_MIGRATE=off
-      - DJANGO_MANAGE_COLLECTSTATIC=off
       - DATABASE_URL=postgres://ohrstrom@docker.for.mac.localhost:5432/ch_openbroadcast_local
       - REDIS_URL=redis://redis:6379
       - DEBUG=False

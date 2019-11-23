@@ -20,8 +20,8 @@ FROM python:3.7-alpine3.10
 RUN mkdir /app/
 WORKDIR /app/
 
-# COPY ["Pipfile","Pipfile.lock", "./"]
-COPY ["requirements.txt", "./"]
+COPY ["Pipfile","Pipfile.lock", "./"]
+# COPY ["requirements.txt", "./"]
 
 RUN set -ex \
     && apk add --no-cache --virtual .build-deps \
@@ -42,8 +42,8 @@ RUN set -ex \
         libxslt-dev \
         libxml2-dev \
     && pip3 install -U pip pipenv \
-    && LIBRARY_PATH=/lib:/usr/lib /bin/sh -c "pip3 install --no-cache-dir -r ./requirements.txt" \
-    # && LIBRARY_PATH=/lib:/usr/lib /bin/sh -c "pipenv install --system --deploy --ignore-pipfile" \
+    # && LIBRARY_PATH=/lib:/usr/lib /bin/sh -c "pip3 install --no-cache-dir -r ./requirements.txt" \
+    && LIBRARY_PATH=/lib:/usr/lib /bin/sh -c "pipenv install --system --deploy --ignore-pipfile" \
     && apk del .build-deps
 
 # Copy application code to context
