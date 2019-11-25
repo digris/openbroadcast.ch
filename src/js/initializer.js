@@ -19,7 +19,7 @@ const DEBUG = document.settings.DEBUG;
 Vue.use(VueAnalytics, {
   id: document.settings.GANALYTICS_TRACKING_CODE,
   debug: {
-    enabled: DEBUG
+    enabled: false
   }
 });
 

@@ -47,7 +47,7 @@ RUN set -ex \
     && apk del .build-deps
 
 # Copy application code to context
-COPY ["Procfile", "manage.py", "docker-entrypoint.sh", "./"]
+COPY ["Procfile", "nginx.conf.sigil", "manage.py", "docker-entrypoint.sh", "./"]
 ADD ./app/ ./app/
 
 COPY --from=node-builder /root/build/ ./build

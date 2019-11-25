@@ -38,12 +38,10 @@ class MediaResourceView(LoginRequiredMixin, View):
 
         uuid = kwargs.get("uuid", None)
 
-        log.debug("media request for %s by %s" % (self.request.user, uuid))
-
         requested_range = self.request.META.get("HTTP_RANGE", None)
 
         log.info(
-            "media request - uuid: {} - user: {} - range: {}".format(
+            "media request - uuid: {} user: {} range: {}".format(
                 uuid, self.request.user, requested_range
             )
         )
@@ -69,6 +67,8 @@ class MediaResourceView(LoginRequiredMixin, View):
 
         if created:
             log.debug("created media cache version - uuid: {}".format(uuid))
+
+        log.debug('serve cached media from: {}'.format(cached_media.path))
 
         sf_response = sendfile(self.request, cached_media.path)
         sf_response["X-Accel-Buffering"] = "yes"
