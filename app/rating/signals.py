@@ -24,6 +24,8 @@ def rating_received(sender, user, votes, **kwargs):
     user_vote = votes.get("user_vote")
     current_item = ScheduledItem.objects.get_current()
 
+    # TODO: implement logic to work correctly for current 'on-demand' object!
+
     if user_vote and current_item:
 
         try:

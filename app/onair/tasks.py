@@ -27,6 +27,19 @@ def schedule_next_start():
     schedule_next_start.apply_async(eta=next_time_start)
 
 
+@app.task
+def clear_facebook_og_cache():
+    print('clear_facebook_og_cache task')
+    log.info("clear facebook open-graph cache")
+
+
+@app.task
+def update_stream_metadata(*args, **kwargs):
+    print('update_stream_metadata task')
+    print(kwargs)
+    log.info("update stream metadata")
+
+
 @worker_ready.connect
 def celery_worker_ready(**kwargs):
     app.control.purge()

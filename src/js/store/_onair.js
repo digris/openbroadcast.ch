@@ -9,23 +9,16 @@ const SCHEDULE_ENDPOINT = '/api/v2/onair/schedule/?limit=20';
 
 const state = {
   schedule: [],
-  onair: false,
-  next_starts_in: null
+  onair: false
 };
 
 const getters = {
   schedule: state => state.schedule,
-  onair: state => state.onair,
-  next_starts_in: state => state.next_starts_in
+  onair: state => state.onair
 };
 
 const mutations = {
-  /* TODO: not used a.t.m.
-  add_schedule_item : (state, payload) => {
-    if (DEBUG) console.debug('mutations - add_schedule_item', payload);
-    state.schedule.unshift(payload);
-  },
-  */
+
   update_schedule: (state, payload) => {
     if (DEBUG) console.debug('mutations - update_schedule', payload);
     payload.results.reverse();
@@ -42,8 +35,14 @@ const mutations = {
     });
 
     state.onair = payload.onair;
-    state.next_starts_in = payload.next_starts_in;
   },
+
+  update_current_item: (state, payload) => {
+    if (DEBUG) console.debug('mutations - update_current_item', payload);
+    state.schedule.unshift(payload);
+    state.onair = payload.uuid;
+
+  }
 };
 
 const actions = {
@@ -54,16 +53,23 @@ const actions = {
     let {data} = await _r(url);
     context.commit('update_schedule', data);
 
-    let timeout = (data.next_starts_in + 0) * 1000 || 10000;
-    if (timeout > 60000) timeout = 60000;
+    // NOTE: subsequent updates are pushed via websocket
 
-    if (DEBUG) console.debug(`set timeout to update schedule in ${timeout}s`);
-
-    setTimeout(() => {
-      context.dispatch('get_schedule');
-    }, timeout);
+    // let timeout = (data.next_starts_in + 0) * 1000 || 10000;
+    // if (timeout > 60000) timeout = 60000;
+    //
+    // if (DEBUG) console.debug(`set timeout to update schedule in ${timeout}s`);
+    //
+    // setTimeout(() => {
+    //   context.dispatch('get_schedule');
+    // }, timeout);
 
   },
+
+  set_current_item: (context, payload) => {
+    context.commit('update_current_item', payload);
+  }
+
 };
 
 // TODO: implement onair handling to use websocket provided data
@@ -75,7 +81,15 @@ const ws_url = `${settings.WS_SCHEME}://${settings.WS_HOST}/ws/onair/`;
 const wsb = new WebSocketBridge();
 wsb.connect(ws_url);
 wsb.addEventListener("message", (event) => {
-    if (DEBUG) console.log('ws onair:', event.data);
+    if (DEBUG) console.debug('ws onair:', event.data);
+    if (DEBUG) console.debug('compensate stream delay, wait 25s until update');
+
+
+    setTimeout(() => {
+      store.dispatch('onair/set_current_item', event.data);
+    }, 25000);
+
+
 });
 
 export default {

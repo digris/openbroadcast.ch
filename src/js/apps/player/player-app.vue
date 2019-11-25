@@ -173,7 +173,7 @@
               // })
             },
             onsuspend: () => {
-              console.debug('sm2 - onsuspend', this.player)
+              // console.debug('sm2 - onsuspend', this.player)
             }
           };
 
