@@ -1,26 +1,27 @@
-{% load static %}
+{% load static onair_tags %}
 
-<meta property="og:title" content="open broadcast radio"/>
-<meta property="og:url" content="https://www.openbroadcast.ch/"/>
-<meta property="og:description" content="eclectic and user driven"/>
-<meta property="og:image" content="https://www.openbroadcast.ch/static/img/asset/logo-og.png" />
-<meta property="og:image:width" content="1440" />
-<meta property="og:image:height" content="920" />
+{% onair_item as onair_item %}
 
 <meta property="og:site_name" content="open broadcast radio" />
 <meta property="og:type" content="music.radio_station" />
 <meta property="og:audio" content="https://openbroadcast.ch/stream/openbroadcast-320.mp3" />
 <meta property="og:audio:type" content="audio/vnd.facebook.bridge" />
-
+<meta property="og:title" content="open broadcast radio"/>
+<meta property="og:url" content="https://www.openbroadcast.ch/"/>
 <meta property="fb:app_id" content="746436298732388" />
 
-{% comment %}
-og:type - 'music.radio_station'
-og:image - An image URL which should represent this radio station within the graph. The image must be at least 50px by 50px (though minimum 200px by 200px is preferred) and have a maximum aspect ratio of 3:1. We support PNG, JPEG and GIF formats.
-og:url - The canonical URL of this radio station.
-og:site_name - A human-readable name for your site, e.g., "IMDb".
-fb:app_id - A Facebook Platform application ID that administers this page.
-og:description - A one to two sentence description of this radio station.
-og:audio - The URL to play this radio station.
-og:audio:type - This should be set to "audio/vnd.facebook.bridge"
-{% endcomment %}
+{% if onair_item %}
+<meta property="og:description" content='Now playing "{{ onair_item.name }}" by "{{ onair_item.artist.name }}"'/>
+{% else %}
+<meta property="og:description" content="eclectic and user driven"/>
+{% endif %}
+
+{% if onair_item.release.main_image %}
+<meta property="og:image" content="https://www.openbroadcast.ch/static-proxy{{ onair_item.release.main_image }}" />
+<meta property="og:image:width" content="240" />
+<meta property="og:image:height" content="240" />
+{% else %}
+<meta property="og:image" content="https://www.openbroadcast.ch/static/img/asset/logo-og.png" />
+<meta property="og:image:width" content="1440" />
+<meta property="og:image:height" content="920" />
+{% endif %}
