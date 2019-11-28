@@ -565,6 +565,7 @@ CAPTCHA_IMAGE_SIZE = (160, 50)
 ##################################################################
 FACEBOOK_APP_ID = config("FACEBOOK_APP_ID", default="---")
 
+FACEBOOK_GRAPH_ACCESS_TOKEN = config("FACEBOOK_GRAPH_ACCESS_TOKEN", default="---")
 
 ##################################################################
 # analytics & co

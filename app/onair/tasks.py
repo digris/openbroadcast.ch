@@ -5,6 +5,7 @@ import logging
 from celery.signals import worker_ready
 from app.celery import app
 from .schedule import scheduler
+from .utils import og_cache
 
 log = logging.getLogger(__name__)
 
@@ -31,6 +32,7 @@ def schedule_next_start():
 def clear_facebook_og_cache():
     print('clear_facebook_og_cache task')
     log.info("clear facebook open-graph cache")
+    og_cache.clear_cache()
 
 
 @app.task
