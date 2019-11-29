@@ -8,7 +8,7 @@ from asgiref.sync import async_to_sync
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from rest_framework.authentication import SessionAuthentication
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.decorators import authentication_classes, permission_classes
 
 from ..utils import get_remote_votes, put_remote_vote
@@ -24,7 +24,7 @@ channel_layer = get_channel_layer()
 
 
 @api_view(["GET", "POST"])
-@authentication_classes((SessionAuthentication,))
+@authentication_classes((SessionAuthentication, TokenAuthentication))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def vote_detail(request, obj_ct, obj_uuid):
 
