@@ -36,4 +36,6 @@ def on_item_start_playing(sender, item, time_start, **kwargs):
     tasks.clear_facebook_og_cache.apply_async(countdown=3)
     # update stream metadata ?????
     # for whatever reasons it is not possible to pass `item`
-    tasks.update_stream_metadata.apply_async(countdown=6, kwargs={"item_uuid": item.uuid})
+    tasks.update_stream_metadata.apply_async(
+        countdown=6, kwargs={"item_uuid": item.uuid}
+    )

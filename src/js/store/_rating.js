@@ -6,7 +6,6 @@ import {WebSocketBridge} from 'django-channels';
 import APIClient from "../api/client";
 
 const DEBUG = false;
-
 const VOTE_ENDPOINT = '/api/v2/rating/vote/';
 
 const state = {

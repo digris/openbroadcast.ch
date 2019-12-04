@@ -10,7 +10,7 @@ from .models import Beat
 @admin.register(Beat)
 class BeatAdmin(admin.ModelAdmin):
     date_hierarchy = "updated"
-    list_display = ["user", "updated", "last_beat", "is_online"]
+    list_display = ["__str__", "updated", "last_beat", "ip", "is_online"]
 
     def last_beat(self, obj):
         if obj.last_beat:

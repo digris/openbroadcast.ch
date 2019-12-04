@@ -26,6 +26,7 @@ urlpatterns += i18n_patterns(
 
 if settings.DEBUG:
     from django.views.static import serve
+
     urlpatterns = [
         url(
             r"^media/(?P<path>.*)$",

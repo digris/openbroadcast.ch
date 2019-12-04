@@ -23,7 +23,7 @@ class RemoteUserBackend(ModelBackend):
     Authenticates against remote API
     """
 
-    def authenticate(self, request,  username=None, password=None):
+    def authenticate(self, request, username=None, password=None):
         log.info("remote login: %s | %s" % (username, "*******************"))
         return self.remote_auth(username, password)
 

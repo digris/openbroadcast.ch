@@ -188,7 +188,7 @@
     }
   }
 </script>
-<!---->
+
 <style lang="scss">
     @import '../../sass/site/settings';
     @import '../../sass/site/element/form';
@@ -198,7 +198,6 @@
     .account-app {
         height: 100%;
     }
-
 
     .auth-card {
 
@@ -364,12 +363,8 @@
                     order: 2;
                     height: 52px;
                 }
-
             }
-
-
         }
-
     }
 
     .social-login-container {
@@ -380,7 +375,6 @@
         .auth-social {
             margin: 12px 0 6px;
         }
-
 
         .auth-social {
             flex-grow: 1;
@@ -436,9 +430,7 @@
                 }
             }
         }
-
     }
-
 </style>
 
 <template>

@@ -6,7 +6,7 @@ import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
 
 
-const DEBUG = false;
+const DEBUG = true;
 
 
 // site apps
@@ -25,28 +25,18 @@ if (use_turbolinks) {
     Turbolinks.start();
 }
 
-document.addEventListener("DOMContentLoaded", (e) => {
-    //window.dispatchEvent(content_changed);
-});
-
-document.addEventListener('turbolinks:load', (e) => {
-    const content_changed = new Event('content:changed')
-    if(Object.keys(e.data.timing).length > 0) {
-        if (DEBUG) console.debug('turbolinks loaded sequential request');
-        window.dispatchEvent(content_changed);
-
-    } else  {
-        if (DEBUG) console.debug('turbolinks loaded initial request');
-        window.dispatchEvent(content_changed);
-    }
-
-});
-
-
-
-
 $((e) => {
     // initializer has to wait for dom ready, as
     // vue apps need container to mount
     const initializer = new AppInitializer({});
+
+    const content_changed_event = new Event('content:changed');
+    setImmediate(() => {
+        window.dispatchEvent(content_changed_event);
+    });
+
+    document.addEventListener('turbolinks:load', (e) => {
+        window.dispatchEvent(content_changed_event);
+    });
+
 });

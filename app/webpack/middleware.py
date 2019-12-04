@@ -8,10 +8,12 @@ try:
 except ImportError:
     MiddlewareMixin = object
 
-DEVSERVER_HEADER = 'HTTP_' + getattr(settings, 'WEBPACK_DEVSERVER_HEADER', 'X-WEBPACK-DEVSERVER').replace('-', '_')
+DEVSERVER_HEADER = "HTTP_" + getattr(
+    settings, "WEBPACK_DEVSERVER_HEADER", "X-WEBPACK-DEVSERVER"
+).replace("-", "_")
+
 
 class WebpackDevserverMiddleware(MiddlewareMixin):
-
     def __init__(self, *args, **kwargs):
         super(WebpackDevserverMiddleware, self).__init__(*args, **kwargs)
 

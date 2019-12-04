@@ -2,9 +2,6 @@ import Vue from 'vue';
 import store from './store';
 import VueLazyload from 'vue-lazyload';
 import VueAnalytics from 'vue-analytics';
-import hotEmitter from 'webpack/hot/emitter';
-import NoSleep from 'nosleep.js';
-
 import SiteUI from './apps/site';
 import LiveColor from './apps/live-color';
 import CoverageMap from './apps/coverage-map';
@@ -12,6 +9,9 @@ import AccountApp from './apps/account-app.vue';
 import OnairApp from './apps/onair/onair-app.vue';
 import ChatApp from './apps/chat/chat-app.vue';
 import PlayerApp from './apps/player/player-app.vue';
+
+// refactored to component
+import Webstream from './components/listener/Webstream.vue';
 
 
 const DEBUG = document.settings.DEBUG;
@@ -37,28 +37,19 @@ class AppInitializer {
         if (DEBUG) console.debug('AppInitializer - constructor');
         this.apps = [];
         this.bindings();
-        this.setup_apps();
+        this.one_time_app_setup();
 
-        // if(navigator && navigator.platform && navigator.platform === 'iPhone') {
-        //
-        //     const noSleep = new NoSleep();
-        //
-        //     document.addEventListener('click', function enableNoSleep() {
-        //       document.removeEventListener('click', enableNoSleep, false);
-        //       noSleep.enable();
-        //
-        //       console.log('noSleep', noSleep);
-        //
-        //     }, false);
-        //
-        // }
+        window.addEventListener('content:changed', (e) => {
+            this.dynamic_app_setup();
+        }, false);
+
     };
 
     bindings() {
         if (DEBUG) console.debug('AppInitializer - bindings');
     };
 
-    setup_apps() {
+    one_time_app_setup() {
 
         // components (one time setup)
         if(this.apps['SiteUI'] === undefined) {
@@ -80,9 +71,7 @@ class AppInitializer {
          **************************************************************/
         const account_app_container = document.getElementById('account_app');
         if (account_app_container) {
-
             const AccountComponent = Vue.extend(AccountApp);
-
             this.apps['AccountApp'] = new AccountComponent({
                 el: account_app_container,
                 store,
@@ -95,13 +84,11 @@ class AppInitializer {
          **************************************************************/
         const onair_app_container = document.getElementById('onair_app');
         if (onair_app_container) {
-
             const OnairComponent = Vue.extend(OnairApp);
-
             this.apps['OnairApp'] = new OnairComponent({
                 el: onair_app_container,
                 store,
-                propsData: onair_app_container.dataset
+                propsData: onair_app_container.dataset,
             });
         }
 
@@ -110,9 +97,7 @@ class AppInitializer {
          **************************************************************/
         const player_app_container = document.getElementById('player_app');
         if (player_app_container) {
-
             const PlayerComponent = Vue.extend(PlayerApp);
-
             this.apps['PlayerApp'] = new PlayerComponent({
                 el: player_app_container,
                 store
@@ -124,9 +109,7 @@ class AppInitializer {
          **************************************************************/
         const chat_app_container = document.getElementById('chat_app');
         if (chat_app_container) {
-
             const ChatComponent = Vue.extend(ChatApp);
-
             this.apps['AccountApp'] = new ChatComponent({
                 el: chat_app_container,
                 store,
@@ -134,6 +117,20 @@ class AppInitializer {
             });
         }
 
+    };
+
+    dynamic_app_setup() {
+        // apps / components that need setup after dom change (likely initialized by turbolinks)
+        if (DEBUG) console.debug('dynamic app setup');
+
+        const webstream_component_container = document.getElementById('webstream_component');
+        if (webstream_component_container) {
+            const WebstreamComponent = Vue.extend(Webstream);
+            new WebstreamComponent({
+                el: webstream_component_container,
+                store
+            });
+        }
     };
 
 }

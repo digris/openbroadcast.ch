@@ -31,7 +31,13 @@ class TGBot(object):
             log.warning("invalid channel: {}".format(channel))
             return
 
-        self._tg_bot.send_message(chat_id, message, parse_mode='markdown', disable_web_page_preview=True)
+        if not TELEGRAM_BOT_TOKEN:
+            print("tg debug (no token set): {}".format(message))
+            return
+
+        self._tg_bot.send_message(
+            chat_id, message, parse_mode="markdown", disable_web_page_preview=True
+        )
 
 
 bot = TGBot()

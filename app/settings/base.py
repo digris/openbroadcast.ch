@@ -138,6 +138,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    "account.middleware.AnonymousSessionMiddleware",
     "account.middleware.CustomSocialAuthExceptionMiddleware",
     "django.contrib.admindocs.middleware.XViewMiddleware",
     "cms.middleware.page.CurrentPageMiddleware",
@@ -411,6 +412,15 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     ],
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "600/hour",
+        "user": "60/minute",
+        "rating.create": "20/hour",
+    },
 }
 
 
@@ -490,6 +500,14 @@ STREAM_URL = config(
     "STREAM_URL", default="https://www.openbroadcast.org/stream/openbroadcast"
 )
 
+ICECAST_INTERNAL_SERVER_URL = config(
+    "ICECAST_INTERNAL_SERVER_URL", default="http://stream.openbroadcast.org/"
+)
+
+ICECAST_PUBLIC_SERVER_URL = config(
+    "ICECAST_PUBLIC_SERVER_URL", default="http://stream.openbroadcast.org/"
+)
+
 API_BASE_AUTH = {
     "username": config("REMOTE_API_AUTH_USER", default="none"),
     "api_key": config("REMOTE_API_AUTH_KEY", default="none"),
@@ -521,6 +539,7 @@ SETTINGS_EXPORT = [
     "SITE_URL",
     "REMOTE_BASE_URL",
     "GANALYTICS_TRACKING_CODE",
+    "FACEBOOK_APP_ID",
     # 'API_BASE_URL',
     # 'STREAM_URL',
     # 'STATIC_BASE_URL',

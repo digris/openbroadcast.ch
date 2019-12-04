@@ -7,6 +7,7 @@ import chat from './_chat';
 import onair from './_onair';
 import rating from './_rating';
 import player from './_player';
+import listener from './_listener';
 
 const DEBUG = false;
 
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     onair,
     rating,
     player,
+    listener,
   },
   // plugins: []
 });

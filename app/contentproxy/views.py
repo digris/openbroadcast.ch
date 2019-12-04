@@ -68,7 +68,7 @@ class MediaResourceView(LoginRequiredMixin, View):
         if created:
             log.debug("created media cache version - uuid: {}".format(uuid))
 
-        log.debug('serve cached media from: {}'.format(cached_media.path))
+        log.debug("serve cached media from: {}".format(cached_media.path))
 
         sf_response = sendfile(self.request, cached_media.path)
         sf_response["X-Accel-Buffering"] = "yes"

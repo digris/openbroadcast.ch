@@ -18,7 +18,7 @@
     }
   }
 </script>
-<!---->
+
 <style lang="scss" scoped>
     @import '../../sass/site/settings';
     @import '~foundation-sites/scss/foundation';
@@ -126,10 +126,6 @@
                                      xml:space="preserve">
                                     <polygon fill="#000" points="22.5,0 12,10.5 1.5,0 0,1.5 10.5,12 0,22.5 1.5,24 12,13.5 22.5,24 24,22.5 13.5,12 24,1.5 "/>
                                 </svg>
-
-                                <!--
-                                <i class="fa fa-times"></i>
-                                -->
                             </a>
                         </div>
                     </div>

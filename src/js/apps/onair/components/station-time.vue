@@ -18,7 +18,7 @@
     name: 'StationTime',
     props: [
       'mode',
-      'locked_item_uuid',
+      'is_live',
     ],
     data() {
       return {
@@ -37,9 +37,6 @@
 
     },
     computed: {
-      is_live() {
-        return (this.locked_item_uuid === null)
-      },
       formated_time() {
         const time = this.current_time;
         if (!time) {

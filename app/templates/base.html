@@ -58,6 +58,20 @@
     {% render_block "js" %}
     {% render_block "js-post" %}
 
+    {% comment %}
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId            : document.settings.FACEBOOK_APP_ID,
+          autoLogAppEvents : true,
+          xfbml            : true,
+          version          : 'v5.0'
+        });
+      };
+    </script>
+    <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
+    {% endcomment %}
+
 </head>
 <body id="base" class="{% block body_extra_class %}{% endblock %}" data-livebg data-bplayer_state="init" ontouchstart="">
 

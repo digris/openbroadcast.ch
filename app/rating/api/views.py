@@ -5,13 +5,16 @@ import logging
 from django.conf import settings
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
-from rest_framework.decorators import api_view
+from rest_framework.viewsets import GenericViewSet
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
-from rest_framework.decorators import authentication_classes, permission_classes
+from rest_framework.throttling import (
+    UserRateThrottle,
+    AnonRateThrottle,
+    ScopedRateThrottle,
+)
 
-from ..utils import get_remote_votes, put_remote_vote
+from ..utils import get_consolidated_votes, set_vote
 from .. import signals as rating_signals
 
 
@@ -23,33 +26,44 @@ log = logging.getLogger(__name__)
 channel_layer = get_channel_layer()
 
 
-@api_view(["GET", "POST"])
-@authentication_classes((SessionAuthentication, TokenAuthentication))
-@permission_classes((IsAuthenticatedOrReadOnly,))
-def vote_detail(request, obj_ct, obj_uuid):
+class RatingThrottle(ScopedRateThrottle):
 
-    if not len(obj_uuid) == 36:
-        return Response({}, status=400)
+    scope = "rating.create"
+    scope_attr = "throttle_scope_sustained"
 
-    if request.user and request.user.is_authenticated:
-        user_id = request.user.remote_id
-    else:
-        user_id = None
 
-    if request.method == "POST":
+class VoteViewSet(GenericViewSet):
+
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
+
+    throttle_classes = [AnonRateThrottle, UserRateThrottle, RatingThrottle]
+
+    def get_throttles(self):
+        if self.action in ["create"]:
+            self.throttle_scope = "rating.create"
+
+        return super().get_throttles()
+
+    def retrieve(self, request, obj_ct, obj_uuid):
+        votes = get_consolidated_votes(obj_ct, obj_uuid, request)
+        return Response(votes)
+
+    def create(self, request, obj_ct, obj_uuid):
+
         value = request.data.get("value")
-        votes, status_code = put_remote_vote(obj_ct, obj_uuid, value, user_id)
+        votes = set_vote(obj_ct, obj_uuid, value, request)
 
-        # TODO: maybe implement in another place.
-        channel = "rating"
-        data = {"type": "votes", "content": votes}
+        # # TODO: maybe implement in a better place...
+        # channel = "rating"
+        # data = {"type": "votes", "content": votes}
+        #
+        # async_to_sync(channel_layer.group_send)(channel, data)
 
-        async_to_sync(channel_layer.group_send)(channel, data)
         rating_signals.user_rated_object.send(
             sender="vote", user=request.user, votes=votes
         )
 
-    else:
-        votes, status_code = get_remote_votes(obj_ct, obj_uuid, user_id)
+        return Response(votes)
 
-    return Response(votes, status=status_code)
+
+vote_detail = VoteViewSet.as_view({"get": "retrieve", "post": "create"})

@@ -30,14 +30,14 @@ def schedule_next_start():
 
 @app.task
 def clear_facebook_og_cache():
-    print('clear_facebook_og_cache task')
+    print("clear_facebook_og_cache task")
     log.info("clear facebook open-graph cache")
     og_cache.clear_cache()
 
 
 @app.task
 def update_stream_metadata(*args, **kwargs):
-    print('update_stream_metadata task')
+    print("update_stream_metadata task")
     print(kwargs)
     log.info("update stream metadata")
 

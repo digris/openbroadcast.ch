@@ -14,6 +14,4 @@ const foo = {
 // merge with document settings
 const settings = Object.assign({}, document.settings, foo);
 
-console.debug('settings', settings);
-
 export default settings;

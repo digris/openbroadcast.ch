@@ -2,9 +2,10 @@
 
   import Vue from 'vue';
   import debounce from 'debounce';
+  import {fbSDK} from '../../utils/fb-sdk';
 
   import StationTime from './components/station-time.vue';
-  import ThumbRating from './components/thumb-rating.vue';
+  import MediaActions from './components/media-actions.vue';
   import ScheduleItem from './components/schedule-item.vue';
   import ScheduleItemMetadata from './components/schedule-item-metadata.vue';
   import ScheduleItemDetail from './components/schedule-item-detail.vue';
@@ -14,12 +15,13 @@
 
   export default {
     name: 'OnairApp',
+    mixins: [fbSDK],
     components: {
       StationTime,
       ScheduleItem,
       ScheduleItemMetadata,
       ScheduleItemDetail,
-      ThumbRating,
+      MediaActions,
       Arrow,
     },
     props: [],
@@ -61,38 +63,32 @@
       }
     },
     computed: {
-
       schedule() {
         return this.$store.getters['onair/schedule'];
       },
-
       onair() {
         return this.$store.getters['onair/onair'];
       },
-
       sm2() {
         return this.$store.getters['player/sm2'];
       },
-
       offset() {
-
         if (!this.onair) {
           //return 0;
         }
-
         if (!this.locked_item_uuid) {
           return 0;
         }
-
         return this.schedule.map(({uuid}) => uuid).indexOf(this.locked_item_uuid);
-
       },
-
       presented_item() {
         if (typeof this.schedule[this.offset] === 'undefined') {
           return
         }
         return this.schedule[this.offset];
+      },
+      presented_item_is_live() {
+        return (this.locked_item_uuid === null);
       },
       has_next() {
         return this.offset > 0;
@@ -110,8 +106,6 @@
         Vue.nextTick(function () {
           const img = $('.schedule-item.is-current img');
           if (img.length > 0) {
-            // console.log('presented_item changed', img.attr('src'));
-
             const _e = new CustomEvent('livecolor:from_src', {
               detail: {
                 src: img.attr('src'),
@@ -120,9 +114,7 @@
             });
             window.dispatchEvent(_e);
           }
-
         })
-
       },
     },
 
@@ -182,6 +174,17 @@
         };
         const _e = new CustomEvent('player:controls', {detail: _c});
         window.dispatchEvent(_e);
+      },
+      fb_share: function() {
+        console.debug('share on FB', this.FB);
+        this.FB.ui({
+          method: 'share',
+          href: 'https://www.openbroadcast.ch/',
+          quote: 'enjoying eclectic music!',
+        }, function(response){
+            console.log('shared...', response)
+        });
+
       },
 
       update_container_size: debounce(function () {
@@ -365,8 +368,9 @@
                     @click="reset_offset"
                     @show_logo="show_logo"
                     @hide_logo="hide_logo"
-                    v-bind:mode="mode"
-                    v-bind:locked_item_uuid="locked_item_uuid"></station-time>
+                    :mode="mode"
+                    :is_live="presented_item_is_live"
+                    :locked_item_uuid="locked_item_uuid"></station-time>
         </div>
         <div class="schedule-container" @mouseover="logo_visible = false, carousel_visible = true">
 
@@ -424,7 +428,13 @@
 
         </div>
         <div class="rating-container">
-            <thumb-rating v-if="(presented_item && onair)" v-bind:media="presented_item.item"></thumb-rating>
+
+            <media-actions
+                v-if="(presented_item && onair)"
+                :media="presented_item.item"
+                :is_live="presented_item_is_live"
+                :fb_loaded="(FB && FB.ui !== undefined)"
+                @fb_share="fb_share" ></media-actions>
         </div>
         <!--
         <div class="debug">

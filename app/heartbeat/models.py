@@ -13,7 +13,11 @@ User = settings.AUTH_USER_MODEL
 
 class Beat(models.Model):
 
-    user = models.OneToOneField(User, related_name="beat", on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User, related_name="beat", on_delete=models.CASCADE, null=True, blank=True
+    )
+    session_key = models.CharField(max_length=64, db_index=True, null=True, blank=True)
+    ip = models.GenericIPAddressField(null=True, blank=True)
     updated = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta(object):
@@ -22,7 +26,9 @@ class Beat(models.Model):
         ordering = ("-updated",)
 
     def __str__(self):
-        return "{0} {1}".format(self.user.username, self.updated)
+        if self.user:
+            return self.user.username
+        return self.session_key
 
     @property
     def last_beat(self):
